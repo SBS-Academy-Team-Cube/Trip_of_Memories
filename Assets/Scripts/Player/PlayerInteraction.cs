@@ -1,49 +1,80 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(SphereCollider))]
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private float interactionDistance = 3.0f;
-    [SerializeField] private LayerMask interactableLayer;
-    [SerializeField] private Transform CameraTransform;
+    [SerializeField] private float interactRadius = 3.0f;
 
-    private IInteractable curInteractable;
+    private List<IInteractable> nearbyInteract = new List<IInteractable>();
+
+    private SphereCollider interCollider;
+    private IInteractable curTarget;
+
+    private void Awake()
+    {
+        nearbyInteract.Clear();
+        interCollider = GetComponent<SphereCollider>();
+        interCollider.radius = interactRadius;
+        interCollider.isTrigger = true;
+    }
 
     private void Update()
     {
-        HandleInteractionRay();
+        if(curTarget != null && Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            curTarget.Interact(gameObject);
+            UpdateCurTarget();
+        }
     }
 
-    private void HandleInteractionRay()
+
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        Ray ray = new Ray(CameraTransform.position, CameraTransform.forward);
-        if(Physics.Raycast(ray,out RaycastHit hit,interactionDistance, interactableLayer))
+        if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
+            return;
+
+        if(!nearbyInteract.Contains(interactable))
         {
-            IInteractable inter = hit.collider.GetComponent<IInteractable>();
-            if(inter != null)
-            {
-                if(inter != curInteractable)
-                {
-                    curInteractable = inter;
-                    Debug.Log($"PlayerInteractable.cs - HandleInteractinRay() - " +
-                        $"Look ->{inter.GetInteractionPrompt()}");
-                }
-                if(Keyboard.current.eKey.wasPressedThisFrame)
-                {
-                    inter.Interact(gameObject);
-                }
-            }
-            else
-            {
-                curInteractable = null;
-            }
+            nearbyInteract.Add(interactable);
+            UpdateCurTarget();
+            Debug.Log($"curTarger : {curTarget.GetInteractionPrompt()}");
         }
-        else
-        {
-            curInteractable = null;
-        }
+
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
+            return;
 
+        nearbyInteract.Remove(interactable);
+        UpdateCurTarget();
+    }
+    private void UpdateCurTarget()
+    {
+        if(nearbyInteract.Count == 0)
+        {
+            curTarget = null;
+            Debug.Log("curTarget = null");
+            return;
+        }
+
+        IInteractable closest = null;
+        float minDistance = float.MaxValue;
+        foreach(var item in nearbyInteract)
+        {
+            float dist = Vector3.Distance(transform.position,(item as MonoBehaviour).transform.position);
+            if(dist < minDistance)
+            {
+                closest = item;
+                minDistance = dist;
+            }
+        }
+        curTarget = closest;
+    }
 }
