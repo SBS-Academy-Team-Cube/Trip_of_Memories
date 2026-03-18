@@ -43,14 +43,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // 상호작용 불가능하면 리턴
+        // Return if interaction is not possible
         if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
             return;
-        // 이미 리스트에있다면 오류상황
+        // Throw error if already present in the list
         if (InteractableList.Contains(interactable))
             return;
 
-        //리스트에 추가하고 거리비교로 curTarget 설정
+        // Add to list and set curTarget based on distance comparison
         InteractableList.Add(interactable);
         UpdateCurTarget();
     }
@@ -59,7 +59,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
             return;
-        //리스트에 없다면 오류
+        // Throw error if not present in the list
         if (!InteractableList.Contains(interactable))
             return;
 
@@ -83,7 +83,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             var item = InteractableList[i];
 
-            // MonoBehaviour인지, 실제로 존재하는지 체크
+            // Check if it is MonoBehaviour and actually exists
             if (item is MonoBehaviour mono)
             {
                 if(mono != null && mono.gameObject.activeInHierarchy)
@@ -99,7 +99,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else
             {
-                // 상호작용으로 SetActive(false)되었으면 리스트에서 삭제
+                // Removed from list if SetActive(false) was called by interaction
                 InteractableList.RemoveAt(i);
             }
         }

@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    public void TryMove(InputValue Value)// 이름교체, PlayerController - OnMove()에서호출
+    public void TryMove(InputValue Value)// Name changed - Called from PlayerController.OnMove()
     {
         MoveInput = Value.Get<Vector2>();
         Animation.SetSpeed(MoveInput.magnitude);
