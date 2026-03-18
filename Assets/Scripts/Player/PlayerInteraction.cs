@@ -7,37 +7,45 @@ using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private float interactRadius = 3.0f;
+    [SerializeField] private float InteractRadius = 3.0f;
 
     private List<IInteractable> nearbyInteract = new List<IInteractable>();
     
     private SphereCollider interCollider;
-
-    private CharacterController CharacterController;
     private IInteractable curTarget;
+    
 
-    private void Awake()
+
+    public void PerformInteraction() // 이벤트호출될때 실행될 함수
     {
-        nearbyInteract.Clear();
-        interCollider = GetComponent<SphereCollider>();
-        interCollider.radius = interactRadius;
-        interCollider.isTrigger = true;
-
-        CharacterController = GetComponent<CharacterController>();
-    }
-
-    private void Update()
-    {
-        if(curTarget != null && Keyboard.current.eKey.wasPressedThisFrame)
+        if(curTarget != null)
         {
             curTarget.Interact(gameObject);
             UpdateCurTarget();
         }
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private void Awake()
     {
-        
+        //collider setting
+        interCollider = GetComponent<SphereCollider>();
+        interCollider.radius = InteractRadius;
+        interCollider.isTrigger = true;
+
+        if(TryGetComponent<PlayerInputController>(out PlayerInputController InputController))
+        {
+            InputController.OnInteractPressed.AddListener(PerformInteraction);//event binding
+            Debug.Log("OnInteract event binding success");
+        } 
+    }
+
+    private void OnDestroy()// event unbinding
+    {
+        PlayerInputController Input = GetComponent<PlayerInputController>();
+        if (Input != null)
+        {
+            Input.OnInteractPressed.RemoveListener(PerformInteraction);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,7 +57,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             nearbyInteract.Add(interactable);
             UpdateCurTarget();
-            Debug.Log($"curTarger : {curTarget.GetInteractionPrompt()}");
+            Debug.Log("Update curTarget");
         }
 
     }

@@ -1,29 +1,18 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
-    private PlayerInteraction InteractionComponent;
-    void Awake()
-    {
-        InteractionComponent = GetComponent<PlayerInteraction>();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public UnityEvent OnInteractPressed = new UnityEvent(); // 이벤트생성
+
 
     public void OnInteract(InputValue Value)
     {
         if(Value.isPressed)
         {
-            Debug.Log("Interaction Key Downed");
-            
-            if(InteractionComponent)
-            {
-                // 
-            }
+            OnInteractPressed.Invoke();//이벤트 발동
+            Debug.Log("Interact Event call");
         }
     }
 }
