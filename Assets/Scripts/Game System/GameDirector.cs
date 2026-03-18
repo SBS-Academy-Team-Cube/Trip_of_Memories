@@ -12,13 +12,12 @@ public class GameDirector : MonoBehaviour
 
     void Awake()
     {
-        // Singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        UI = GetComponent<UIManager>();
+        UI = GetComponentInChildren<UIManager>();
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -29,16 +28,20 @@ public class GameDirector : MonoBehaviour
         {
             Debug.Log("Can't Find UI Manager in Game Director");
         }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        ShowMouseCursor(false);
+    }
+    private void ShowMouseCursor(bool bShowing)
+    {
+        Cursor.lockState = bShowing ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = bShowing;
     }
 
-    void Update()
+    public void ShowMainMenu(bool bShowing)
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if(UI)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            UI.ShowMainMenu(bShowing);
+            ShowMouseCursor(bShowing);
         }
     }
 }

@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController Controller;
     PlayerAnimation Animation;
-    Vector2 MoveInput;
+    private Vector2 MoveInput;
     Vector3 Velocity;
 
     public Transform CameraTransform;
@@ -79,5 +79,16 @@ public class PlayerMovement : MonoBehaviour
     public void OnLook(InputValue Value)
     {
         LookInput = Value.Get<Vector2>();
+    }
+
+    private bool TestPanelbShowing = false;
+
+    public void OnShowPanel(InputValue Value)
+    {
+        if(Value.isPressed)
+        {
+            TestPanelbShowing = !TestPanelbShowing;
+            GameDirector.Instance.ShowMainMenu(TestPanelbShowing);
+        }
     }
 }

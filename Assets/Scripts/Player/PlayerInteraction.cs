@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 [RequireComponent(typeof(SphereCollider))]
 public class PlayerInteraction : MonoBehaviour
 {
@@ -9,8 +10,10 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float interactRadius = 3.0f;
 
     private List<IInteractable> nearbyInteract = new List<IInteractable>();
-
+    
     private SphereCollider interCollider;
+
+    private CharacterController CharacterController;
     private IInteractable curTarget;
 
     private void Awake()
@@ -19,6 +22,8 @@ public class PlayerInteraction : MonoBehaviour
         interCollider = GetComponent<SphereCollider>();
         interCollider.radius = interactRadius;
         interCollider.isTrigger = true;
+
+        CharacterController = GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -30,8 +35,10 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-
-
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
