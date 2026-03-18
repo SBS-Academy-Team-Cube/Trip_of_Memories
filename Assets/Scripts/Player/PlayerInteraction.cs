@@ -1,95 +1,110 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
-[RequireComponent(typeof(SphereCollider))]
+
+
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Setting")]
     [SerializeField] private float InteractRadius = 3.0f;
-
-    private List<IInteractable> nearbyInteract = new List<IInteractable>();
     
-    private SphereCollider interCollider;
-    private IInteractable curTarget;
-    
+    private SphereCollider PlayerInteractCollider;
 
+    private IInteractable CurTarget; 
+    private List<IInteractable> InteractableList; 
 
-    public void PerformInteraction() // 이벤트호출될때 실행될 함수
+    public void PerformInteraction()
     {
-        if(curTarget != null)
+        if(CurTarget != null)
         {
-            curTarget.Interact(gameObject);
+            var Target = CurTarget;
+            CurTarget = null;
+            
+            Target.Interact(gameObject);
+
             UpdateCurTarget();
         }
     }
 
     private void Awake()
     {
-        //collider setting
-        interCollider = GetComponent<SphereCollider>();
-        interCollider.radius = InteractRadius;
-        interCollider.isTrigger = true;
-
-        if(TryGetComponent<PlayerInputController>(out PlayerInputController InputController))
+        if(!TryGetComponent<SphereCollider>(out PlayerInteractCollider))
         {
-            InputController.OnInteractPressed.AddListener(PerformInteraction);//event binding
-            Debug.Log("OnInteract event binding success");
-        } 
-    }
-
-    private void OnDestroy()// event unbinding
-    {
-        PlayerInputController Input = GetComponent<PlayerInputController>();
-        if (Input != null)
-        {
-            Input.OnInteractPressed.RemoveListener(PerformInteraction);
+            PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
         }
+        //collider setting
+        PlayerInteractCollider.radius = InteractRadius;
+        PlayerInteractCollider.isTrigger = true;
+
+        InteractableList = new List<IInteractable>();
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
+        // 상호작용 불가능하면 리턴
         if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
             return;
+        // 이미 리스트에있다면 오류상황
+        if (InteractableList.Contains(interactable))
+            return;
 
-        if(!nearbyInteract.Contains(interactable))
-        {
-            nearbyInteract.Add(interactable);
-            UpdateCurTarget();
-            Debug.Log("Update curTarget");
-        }
-
+        //리스트에 추가하고 거리비교로 curTarget 설정
+        InteractableList.Add(interactable);
+        UpdateCurTarget();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
             return;
+        //리스트에 없다면 오류
+        if (!InteractableList.Contains(interactable))
+            return;
 
-        nearbyInteract.Remove(interactable);
+        InteractableList.Remove(interactable);
         UpdateCurTarget();
     }
     private void UpdateCurTarget()
     {
-        if(nearbyInteract.Count == 0)
+        if(InteractableList.Count == 0)
         {
-            curTarget = null;
+            CurTarget = null;
             Debug.Log("curTarget = null");
             return;
         }
 
         IInteractable closest = null;
         float minDistance = float.MaxValue;
-        foreach(var item in nearbyInteract)
+        Vector3 PlayerPos = transform.position;
+
+        for (int i = InteractableList.Count - 1; i >= 0; i--)
         {
-            float dist = Vector3.Distance(transform.position,(item as MonoBehaviour).transform.position);
-            if(dist < minDistance)
+            var item = InteractableList[i];
+
+            // MonoBehaviour인지, 실제로 존재하는지 체크
+            if (item is MonoBehaviour mono)
             {
-                closest = item;
-                minDistance = dist;
+                if(mono != null && mono.gameObject.activeInHierarchy)
+                {
+                    float dist = Vector3.Distance(PlayerPos, mono.transform.position);
+                    if (dist < minDistance)
+                    {
+                        minDistance = dist;
+                        closest = item;
+                    }
+                }
+                
+            }
+            else
+            {
+                // 상호작용으로 SetActive(false)되었으면 리스트에서 삭제
+                InteractableList.RemoveAt(i);
             }
         }
-        curTarget = closest;
+
+        CurTarget = closest;
+        Debug.Log("Update curTarget");
     }
 }

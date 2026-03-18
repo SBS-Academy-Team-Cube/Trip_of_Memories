@@ -1,18 +1,57 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
-    public UnityEvent OnInteractPressed = new UnityEvent(); // 이벤트생성
+    private PlayerInteraction Interaction;
+    private PlayerMovement Movement;
 
+    private void Awake()
+    {
+        if (!TryGetComponent<PlayerInteraction>(out Interaction))
+            Debug.Log("PlayerInputController.cs - Awake() - interaction component not found");
+        if (!TryGetComponent<PlayerMovement>(out Movement))
+            Debug.Log("PlayerInputController.cs - Awake() - movement component not found");
+    }
 
     public void OnInteract(InputValue Value)
     {
         if(Value.isPressed)
         {
-            OnInteractPressed.Invoke();//이벤트 발동
-            Debug.Log("Interact Event call");
+            if(Interaction != null)
+            {
+                Interaction.PerformInteraction();
+                Debug.Log("press E");
+            }
+            
+        }
+    }
+    public void OnMove(InputValue Value)
+    {
+        if(Movement != null)
+        {
+            Movement.TryMove(Value);
+        }
+    }
+    public void OnJump(InputValue Value)
+    {
+        if (Movement != null)
+        {
+            Movement.TryJump(Value);
+        }
+    }
+    public void OnLook(InputValue Value)
+    {
+        if (Movement != null)
+        {
+            Movement.TryLook(Value);
+        }
+    }
+    public void OnShowPanel(InputValue Value)
+    {
+        if (Movement != null)
+        {
+            Movement.TryShowPanel(Value);
         }
     }
 }

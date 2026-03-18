@@ -62,13 +62,13 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    public void OnMove(InputValue Value)
+    public void TryMove(InputValue Value)// 이름교체, PlayerController - OnMove()에서호출
     {
         MoveInput = Value.Get<Vector2>();
         Animation.SetSpeed(MoveInput.magnitude);
     }
 
-    public void OnJump(InputValue Value)
+    public void TryJump(InputValue Value)
     {
         if (Value.isPressed && Controller.isGrounded)
         {
@@ -76,14 +76,14 @@ public class PlayerMovement : MonoBehaviour
             Animation.SetJump(true);
         }
     }
-    public void OnLook(InputValue Value)
+    public void TryLook(InputValue Value)
     {
         LookInput = Value.Get<Vector2>();
     }
 
     private bool TestPanelbShowing = false;
 
-    public void OnShowPanel(InputValue Value)
+    public void TryShowPanel(InputValue Value)
     {
         if(Value.isPressed)
         {

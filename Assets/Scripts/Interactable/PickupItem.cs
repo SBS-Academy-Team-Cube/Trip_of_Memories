@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PickupItem : MonoBehaviour,IInteractable
@@ -12,9 +13,8 @@ public class PickupItem : MonoBehaviour,IInteractable
 
     public void Interact(GameObject interactor)
     {
-        Debug.Log($"{interactor.name} - {itemName} pickup!");
-        Destroy(gameObject);
+        Debug.Log($"item pickup!");
+        gameObject.SetActive(false);
     }
-
 
 }
