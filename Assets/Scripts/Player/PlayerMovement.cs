@@ -5,12 +5,11 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController Controller;
     PlayerAnimation Animation;
+    // [SerializeField] public Transform CameraPivot { get; private set; }
+    
     private Vector2 MoveInput;
     Vector3 Velocity;
-
     public Transform CameraTransform;
-    public Transform CameraPivot;
-
     public float MoveSpeed = 5f;
     [SerializeField]
     private float RotateSpeed = 20.0f;
@@ -27,7 +26,10 @@ public class PlayerMovement : MonoBehaviour
     {
         DoMove();
     }
-
+    void Start()
+    {
+        // CameraTransform = Camera.main.transform;
+    }
     private void DoMove()
     {
         if (Controller.isGrounded && Velocity.y < 0)
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    public void TryMove(InputValue Value)// Name changed - Called from PlayerController.OnMove()
+    public void TryMove(InputValue Value)// �̸���ü, PlayerController - OnMove()����ȣ��
     {
         MoveInput = Value.Get<Vector2>();
         Animation.SetSpeed(MoveInput.magnitude);
@@ -85,10 +87,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void TryShowPanel(InputValue Value)
     {
-        if(Value.isPressed)
+        if (Value.isPressed)
         {
             TestPanelbShowing = !TestPanelbShowing;
-            GameDirector.Instance.ShowMainMenu(TestPanelbShowing);
+            // GameDirector.Instance.ShowMainMenu(TestPanelbShowing);
         }
     }
 }

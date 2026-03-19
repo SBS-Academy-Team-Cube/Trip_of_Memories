@@ -10,7 +10,6 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float InteractRadius = 3.0f;
     
     private SphereCollider PlayerInteractCollider;
-
     private IInteractable CurTarget; 
     private List<IInteractable> InteractableList; 
 

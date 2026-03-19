@@ -1,47 +1,44 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 
 // Singleton pattern
 // Ensures that only one GameDirector instance exists and provides global access to it
-public class GameDirector : MonoBehaviour
+public class GameDirector : Singleton<GameDirector>
 {
-    public static GameDirector Instance { get; private set; }
-
-    public UIManager UI { get; private set; }
-
-    void Awake()
+    public string NextScene { get; private set; }
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        UI = GetComponentInChildren<UIManager>();
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+        base.Awake();
 
-    void Start()
-    {
-        if(!UI)
-        {
-            Debug.Log("Can't Find UI Manager in Game Director");
-        }
-        ShowMouseCursor(false);
+        // GameManager Initialize
     }
     private void ShowMouseCursor(bool bShowing)
     {
         Cursor.lockState = bShowing ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = bShowing;
     }
-
-    public void ShowMainMenu(bool bShowing)
+    public void LoadScene(string SceneName)
     {
-        if(UI)
+        NextScene = SceneName;
+        SceneManager.LoadScene("LoadingScene");
+    }
+    public void LoadSceneWithOutLoading(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name.Equals("TestScene_LJW"))
         {
-            UI.ShowMainMenu(bShowing);
-            ShowMouseCursor(bShowing);
+            ShowMouseCursor(false);
         }
     }
 }

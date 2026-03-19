@@ -9,9 +9,13 @@ public class PlayerInputController : MonoBehaviour
     private void Awake()
     {
         if (!TryGetComponent<PlayerInteraction>(out Interaction))
+        { 
             Debug.Log("PlayerInputController.cs - Awake() - interaction component not found");
+        }
         if (!TryGetComponent<PlayerMovement>(out Movement))
+        {
             Debug.Log("PlayerInputController.cs - Awake() - movement component not found");
+        }
     }
 
     public void OnInteract(InputValue Value)

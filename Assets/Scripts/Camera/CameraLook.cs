@@ -3,12 +3,11 @@ using Unity.Cinemachine;
 using System;
 public class CameraLook : MonoBehaviour
 {
-    [SerializeField]
     private PlayerMovement PlayerMovement;
-    [SerializeField]
-    private CinemachineRotationComposer RotationComposer;
+    [SerializeField] private PlayerSpawner Spawner;
+    [SerializeField] private CinemachineRotationComposer RotationComposer;
     private Vector2 ScreenOffset;
-    
+
     [SerializeField]
     private float Sensitivity = 0.25f;
 
@@ -19,9 +18,24 @@ public class CameraLook : MonoBehaviour
 
     void Update()
     {
-        if(PlayerMovement != null)
+        if (PlayerMovement != null)
         {
             CameraRotate();
+        }
+        else
+        {
+            Debug.Log("No PlayerMovement");
+        }
+    }
+    void OnEnable()
+    {
+        Spawner.OnPlayerSpawned += OnPlayerSpawned;
+    }
+    private void OnPlayerSpawned(GameObject Player)
+    {
+        if (!Player.TryGetComponent(out PlayerMovement))
+        {
+            Debug.Log($"{name} can't find PlayerMovement Component");
         }
     }
     private void CameraRotate()
