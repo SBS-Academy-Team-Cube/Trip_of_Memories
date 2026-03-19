@@ -46,7 +46,7 @@ public class CameraLook : MonoBehaviour
 
         ScreenOffset.x = Mathf.Clamp(ScreenOffset.x, HorizontalLookOffset.x, HorizontalLookOffset.y);
         ScreenOffset.y = Mathf.Clamp(ScreenOffset.y, VerticalLookOffset.x, VerticalLookOffset.y);
-
+        
         // ScreenPosition indicates the position on the screen where the target should be placed. Range: -0.5 to 0.5
         RotationComposer.Composition.ScreenPosition = ScreenOffset;
     }

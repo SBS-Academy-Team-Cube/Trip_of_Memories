@@ -5,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController Controller;
     PlayerAnimation Animation;
-    // [SerializeField] public Transform CameraPivot { get; private set; }
-    
+    public Transform CameraPivot;
+
     private Vector2 MoveInput;
     Vector3 Velocity;
     public Transform CameraTransform;

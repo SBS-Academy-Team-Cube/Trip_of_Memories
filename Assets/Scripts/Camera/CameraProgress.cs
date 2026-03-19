@@ -3,12 +3,14 @@ using Unity.Cinemachine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 using System;
+using Unity.VisualScripting;
 
 public class CameraProgress : MonoBehaviour
 {
     private Transform PlayerTransform;
     [SerializeField] private SplineContainer spline;
     [SerializeField] private CinemachineSplineDolly DollyCamera;
+    [SerializeField] private CinemachineCamera CineMachine;
     [SerializeField] private PlayerSpawner Spawner;
     private float CurrentT;
 
@@ -21,7 +23,11 @@ public class CameraProgress : MonoBehaviour
     }
     private void OnPlayerSpawned(GameObject Player)
     {
-        // PlayerTransform = Player.CameraPivot;
+        if(Player.TryGetComponent(out PlayerMovement Movement))
+        {
+            PlayerTransform = Movement.CameraPivot;
+            CineMachine.Target.TrackingTarget = PlayerTransform;
+        }
 
     }
     void LateUpdate()
