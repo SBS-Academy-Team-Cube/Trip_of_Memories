@@ -8,8 +8,11 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Transform CameraTransform;
     void Start()
     {
+        if(SaveManager.Instance.Data == null)
+        {
+            SaveManager.Instance.Load();
+        }
         int index = SaveManager.Instance.Data.SelectedCharacterModelIndex;
-
         if (index < 0 || index >= CharacterPrefabs.Length)
         {
             Debug.LogError("Wrong Character Index");

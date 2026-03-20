@@ -10,7 +10,7 @@ public class CameraLook : MonoBehaviour
 
     [SerializeField]
     private float Sensitivity = 0.25f;
-
+    
     [SerializeField]
     private Vector2 HorizontalLookOffset;   // (Leftmost, rightmost) offset values
     [SerializeField]
