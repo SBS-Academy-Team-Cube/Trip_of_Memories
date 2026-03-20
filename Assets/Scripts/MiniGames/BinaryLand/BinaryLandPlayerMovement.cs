@@ -1,3 +1,4 @@
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -12,9 +13,18 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     private Vector3 TargetPos;
     private Vector3 MoveDir;
 
+    private Rigidbody Rigidbody;
+
     public bool IsMoving => isMoving;
 
-    private void Update()
+    private void Awake()
+    {
+        Rigidbody = GetComponent<Rigidbody>();
+
+        
+    }
+
+    private void FixedUpdate()
     {
         DoMove();
     }
@@ -22,19 +32,34 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     {
         if (!isMoving)
             return;
-        transform.Translate(MoveDir * (Time.deltaTime * MoveSpeed));
-        // // Stop movement when the target destination is reached
-        if (Vector3.Distance(transform.position, TargetPos) < 0.1f)
-        {
-            transform.position = TargetPos;
-            isMoving = false;
+        //transform.Translate(MoveDir * (Time.deltaTime * MoveSpeed));
+        //// // Stop movement when the target destination is reached
+        //if (Vector3.Distance(transform.position, TargetPos) < 0.1f)
+        //{
+        //    transform.position = TargetPos;
+        //    isMoving = false;
             
+        //}
+        float TargetPosDistance = Vector3.Distance(transform.position, TargetPos);
+        if(TargetPosDistance < 0.03f)
+        {
+            
+            transform.position = TargetPos;
+
+            Rigidbody.angularVelocity = Vector3.zero;//
+            Rigidbody.linearVelocity = Vector3.zero;
+
+            isMoving = false;
+            return;
         }
+
+        Vector3 directionToTarget = (TargetPos - transform.position).normalized;
+        Rigidbody.linearVelocity = directionToTarget * MoveSpeed;
     }
 
     public void TryMove(InputValue Value,bool IsMoveMirrord)
     {
-        if (isMoving)
+        if (isMoving || Rigidbody.linearVelocity.magnitude > 0.1f)
             return;
 
         MoveDir = Vector3.zero;
