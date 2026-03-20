@@ -20,10 +20,13 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
-
-        
+        TargetPos = transform.position;
     }
 
+    private void Update()
+    {
+
+    }
     private void FixedUpdate()
     {
         DoMove();
@@ -32,22 +35,19 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     {
         if (!isMoving)
             return;
-        //transform.Translate(MoveDir * (Time.deltaTime * MoveSpeed));
-        //// // Stop movement when the target destination is reached
-        //if (Vector3.Distance(transform.position, TargetPos) < 0.1f)
-        //{
-        //    transform.position = TargetPos;
-        //    isMoving = false;
-            
-        //}
+
         float TargetPosDistance = Vector3.Distance(transform.position, TargetPos);
-        if(TargetPosDistance < 0.03f)
+        if(TargetPosDistance < 0.08f)
         {
             
             transform.position = TargetPos;
 
             Rigidbody.angularVelocity = Vector3.zero;//
             Rigidbody.linearVelocity = Vector3.zero;
+
+            transform.position = Snap(transform.position);
+            transform.rotation = Quaternion.Euler(Snap((new Vector3
+                (transform.rotation.x, transform.rotation.y, transform.rotation.z))));
 
             isMoving = false;
             return;
@@ -100,4 +100,11 @@ public class BinaryLandPlayerMovement : MonoBehaviour
         }
     }
 
+    private Vector3 Snap(Vector3 vector)
+    {
+        return new Vector3(
+            Mathf.Round((vector.x * 100f)) / 100f,
+            Mathf.Round((vector.y * 100f)) / 100f,
+            Mathf.Round((vector.z * 100f)) / 100f);
+    }
 }
