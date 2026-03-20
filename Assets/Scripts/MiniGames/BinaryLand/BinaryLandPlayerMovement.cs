@@ -1,3 +1,4 @@
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -12,9 +13,21 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     private Vector3 TargetPos;
     private Vector3 MoveDir;
 
+    private Rigidbody Rigidbody;
+
     public bool IsMoving => isMoving;
 
+    private void Awake()
+    {
+        Rigidbody = GetComponent<Rigidbody>();
+        TargetPos = transform.position;
+    }
+
     private void Update()
+    {
+
+    }
+    private void FixedUpdate()
     {
         DoMove();
     }
@@ -22,19 +35,31 @@ public class BinaryLandPlayerMovement : MonoBehaviour
     {
         if (!isMoving)
             return;
-        transform.Translate(MoveDir * (Time.deltaTime * MoveSpeed));
-        // // Stop movement when the target destination is reached
-        if (Vector3.Distance(transform.position, TargetPos) < 0.1f)
+
+        float TargetPosDistance = Vector3.Distance(transform.position, TargetPos);
+        if(TargetPosDistance < 0.08f)
         {
-            transform.position = TargetPos;
-            isMoving = false;
             
+            transform.position = TargetPos;
+
+            Rigidbody.angularVelocity = Vector3.zero;//
+            Rigidbody.linearVelocity = Vector3.zero;
+
+            transform.position = Snap(transform.position);
+            transform.rotation = Quaternion.Euler(Snap((new Vector3
+                (transform.rotation.x, transform.rotation.y, transform.rotation.z))));
+
+            isMoving = false;
+            return;
         }
+
+        Vector3 directionToTarget = (TargetPos - transform.position).normalized;
+        Rigidbody.linearVelocity = directionToTarget * MoveSpeed;
     }
 
     public void TryMove(InputValue Value,bool IsMoveMirrord)
     {
-        if (isMoving)
+        if (isMoving || Rigidbody.linearVelocity.magnitude > 0.1f)
             return;
 
         MoveDir = Vector3.zero;
@@ -75,4 +100,11 @@ public class BinaryLandPlayerMovement : MonoBehaviour
         }
     }
 
+    private Vector3 Snap(Vector3 vector)
+    {
+        return new Vector3(
+            Mathf.Round((vector.x * 100f)) / 100f,
+            Mathf.Round((vector.y * 100f)) / 100f,
+            Mathf.Round((vector.z * 100f)) / 100f);
+    }
 }
