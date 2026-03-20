@@ -7,12 +7,12 @@ using Unity.VisualScripting;
 
 public class CameraProgress : MonoBehaviour
 {
-    private Transform PlayerTransform;
+    [SerializeField] private Transform PlayerTransform;
     [SerializeField] private SplineContainer spline;
     [SerializeField] private CinemachineSplineDolly DollyCamera;
     [SerializeField] private CinemachineCamera CineMachine;
     [SerializeField] private PlayerSpawner Spawner;
-    private float CurrentT;
+    [SerializeField] private float CurrentT;
 
     [SerializeField]
     private float CameraLerpSpeed = 5f;
@@ -25,7 +25,7 @@ public class CameraProgress : MonoBehaviour
     {
         if(Player.TryGetComponent(out PlayerMovement Movement))
         {
-            PlayerTransform = Movement.CameraPivot;
+            PlayerTransform = Movement.transform;
             CineMachine.Target.TrackingTarget = PlayerTransform;
         }
 
