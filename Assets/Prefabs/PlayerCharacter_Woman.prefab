@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4559340257370813838}
   m_Layer: 0
   m_Name: PlayerCharacter_Woman
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   CameraPivot: {fileID: 5617650553871249110}
   CameraTransform: {fileID: 0}
-  MoveSpeed: 4.5
+  MoveSpeed: 2.5
   RotateSpeed: 20
   Gravity: -9.81
   JumpForce: 4
@@ -108,7 +108,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1720477095896354735
