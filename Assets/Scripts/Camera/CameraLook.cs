@@ -3,14 +3,15 @@ using Unity.Cinemachine;
 using System;
 public class CameraLook : MonoBehaviour
 {
-    private PlayerMovement PlayerMovement;
+
+    [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerSpawner Spawner;
     [SerializeField] private CinemachineRotationComposer RotationComposer;
     private Vector2 ScreenOffset;
 
     [SerializeField]
     private float Sensitivity = 0.25f;
-    
+
     [SerializeField]
     private Vector2 HorizontalLookOffset;   // (Leftmost, rightmost) offset values
     [SerializeField]
@@ -29,7 +30,10 @@ public class CameraLook : MonoBehaviour
     }
     void OnEnable()
     {
-        Spawner.OnPlayerSpawned += OnPlayerSpawned;
+        if (Spawner != null)
+        {
+            Spawner.OnPlayerSpawned += OnPlayerSpawned;
+        }
     }
     private void OnPlayerSpawned(GameObject Player)
     {
@@ -46,7 +50,7 @@ public class CameraLook : MonoBehaviour
 
         ScreenOffset.x = Mathf.Clamp(ScreenOffset.x, HorizontalLookOffset.x, HorizontalLookOffset.y);
         ScreenOffset.y = Mathf.Clamp(ScreenOffset.y, VerticalLookOffset.x, VerticalLookOffset.y);
-        
+
         // ScreenPosition indicates the position on the screen where the target should be placed. Range: -0.5 to 0.5
         RotationComposer.Composition.ScreenPosition = ScreenOffset;
     }

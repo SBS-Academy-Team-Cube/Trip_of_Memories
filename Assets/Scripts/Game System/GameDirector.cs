@@ -26,6 +26,7 @@ public class GameDirector : Singleton<GameDirector>
     {
         SceneManager.LoadScene(SceneName);
     }
+    
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
