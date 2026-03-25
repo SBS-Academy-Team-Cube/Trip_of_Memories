@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,8 @@ public class RotatingTile : MonoBehaviour
     public int RotationIndex;
     public ETileType Type;
     public List<Material> Materials;
+
+    [SerializeField] private GameObject RoadPrefab;
     [SerializeField] private MeshRenderer BaseRenderer;
     [SerializeField] private MeshRenderer RoadRenderer;
     public void Init(int InRotationIndex, ETileType InType)
