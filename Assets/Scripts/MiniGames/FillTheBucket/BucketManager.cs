@@ -11,7 +11,9 @@ public class BucketManager : MonoBehaviour
     [Header("Bucket")]
     [SerializeField] private Bucket Bucket_3L;
     [SerializeField] private Bucket Bucket_7L;
-    [SerializeField] private Bucket Bucket_5L; 
+    [SerializeField] private Bucket Bucket_5L;
+
+    [SerializeField] private WaterGameManager BucketGameManager;
 
     private IBucket CurBucket = null;
     private IBucket PrevBucket = null;
@@ -21,6 +23,9 @@ public class BucketManager : MonoBehaviour
         Button_3L.onClick.AddListener(() => SelectBucket(Bucket_3L));
         Button_5L.onClick.AddListener(() => SelectBucket(Bucket_5L));
         Button_7L.onClick.AddListener(() => SelectBucket(Bucket_7L));
+
+        Bucket_5L.ClearEvent.AddListener(() => GameClear());
+        Bucket_5L.FailEvent.AddListener(() => ResetGame());
     }
 
     public void Init()
@@ -58,5 +63,15 @@ public class BucketManager : MonoBehaviour
         float temp = CurBucket.AddWater(PrevBucket.CurrentWater());
         // Remove as much as was filled
         PrevBucket.AddWater(-temp);
+
+    }
+
+    private void GameClear()
+    {
+        BucketGameManager.GameClear();
+    }
+    private void ResetGame()
+    {
+        BucketGameManager.GameReset();
     }
 }
