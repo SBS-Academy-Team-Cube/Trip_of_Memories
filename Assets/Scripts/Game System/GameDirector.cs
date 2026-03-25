@@ -26,6 +26,11 @@ public class GameDirector : Singleton<GameDirector>
     {
         SceneManager.LoadScene(SceneName);
     }
+    
+    private void Start()
+    {
+        ShowMouseCursor(false);
+    }
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
