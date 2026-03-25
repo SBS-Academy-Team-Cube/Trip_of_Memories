@@ -50,7 +50,6 @@ public class GridManager : MonoBehaviour
         }
 
         DFS(start);
-
         BuildConnections();
     }
     private bool DFS(Vector2Int current)
@@ -63,7 +62,7 @@ public class GridManager : MonoBehaviour
             return true;
         }
 
-        List<Vector2Int> shuffled = [.. dirs];
+        List<Vector2Int> shuffled = new List<Vector2Int>(dirs);
         Shuffle(shuffled);
 
         foreach (var dir in shuffled)
