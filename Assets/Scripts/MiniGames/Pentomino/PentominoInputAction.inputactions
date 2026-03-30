@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "PentominoInputAction",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "3fe04c09-5393-43d2-b472-ae2ecad18c8d",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "912a27e3-f28a-44ea-b734-06858e31194c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "a27616f9-8956-4e33-b7db-ccd0817bf591",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e847c56-c548-4ab5-8137-c044569e33e5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0236235-63ed-4225-a26b-61a3877cfbe3",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
