@@ -31,7 +31,8 @@ public class PentominoInputHandler : MonoBehaviour
         if (_currentPicked != null)
         {
             FollowMouse();
-            HandleRotation();
+
+            HandleRotation();//sss
         }
     }
 
