@@ -28,7 +28,11 @@ public class PentominoInputHandler : MonoBehaviour
     private void Update()
     {
         HandleHover();
-        if (_currentPicked != null) FollowMouse();
+        if (_currentPicked != null)
+        {
+            FollowMouse();
+            HandleRotation();
+        }
     }
 
     private void HandleHover()
@@ -75,16 +79,9 @@ public class PentominoInputHandler : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
             {
                 Vector3 snappedPos = SnapToGrid(hit.point);
+                _currentPicked.Place(snappedPos);//
+                _currentPicked = null;//
 
-                if (!IsPositionOccupied(snappedPos))
-                {
-                    _currentPicked.Place(snappedPos);
-                    _currentPicked = null;
-                }
-                else
-                {
-                    Debug.LogWarning("rrr");
-                }
             }
         }
     }
@@ -102,6 +99,22 @@ public class PentominoInputHandler : MonoBehaviour
         }
     }
 
+    private void HandleRotation()
+    {
+        // A키 누르면 왼쪽으로 90도 회전
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
+            Debug.Log("회전 ← (A키)");
+        }
+
+        // D키 누르면 오른쪽으로 90도 회전
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);
+            Debug.Log("회전 → (D키)");
+        }
+    }
     private Vector3 SnapToGrid(Vector3 worldPos)
     {
         float x = Mathf.Round(worldPos.x / _tileSize) * _tileSize;
@@ -109,30 +122,6 @@ public class PentominoInputHandler : MonoBehaviour
         return new Vector3(x, 0.01f, z);
     }
 
-    private bool IsPositionOccupied(Vector3 targetPos)
-    {
-        PentominoPiece[] allPieces = FindObjectsOfType<PentominoPiece>();
 
-        // 놓으려는 위치를 더 여유 있게 만듦
-        Bounds targetBounds = new Bounds(targetPos,
-            new Vector3(_tileSize * _targetBoundsMultiplier,
-                        0.15f,
-                        _tileSize * _targetBoundsMultiplier));
-
-        foreach (var other in allPieces)
-        {
-            if (other.IsPicked) continue;
-
-            Bounds otherBounds = other.GetBounds();
-
-            bool intersects = otherBounds.Intersects(targetBounds);
-
-            Debug.Log($"[Bounds Check] {other.gameObject.name} → Intersects = {intersects} (Multiplier: {_targetBoundsMultiplier})");
-
-            if (intersects)
-                return true;
-        }
-        return false;
-    }
 }
 

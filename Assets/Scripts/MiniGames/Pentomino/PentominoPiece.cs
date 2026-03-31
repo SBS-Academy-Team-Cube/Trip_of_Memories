@@ -9,20 +9,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable, IHighlightable
     public bool IsPicked => _isPicked;
     public Transform Transform => transform;
 
-    // ★★ 실제 전체 크기 계산 (자식 Cube들의 MeshRenderer를 모두 합침)
-    public Bounds GetBounds()
-    {
-        Bounds combinedBounds = new Bounds(transform.position, Vector3.zero);
-
-        // 자식 오브젝트들의 Collider를 모두 찾아서 Bounds 합치기
-        foreach (var collider in GetComponentsInChildren<Collider>())
-        {
-            combinedBounds.Encapsulate(collider.bounds);
-        }
-
-        return combinedBounds;
-    }
-
     private void Awake()
     {
         _highlighter = GetComponent<PieceHighlighter>();
@@ -31,7 +17,7 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable, IHighlightable
     public void PickUp()
     {
         _isPicked = true;
-        transform.position += Vector3.up * 0.5f;
+        transform.position += Vector3.up * 1.5f;
         _highlighter.HighlightOff();
     }
 
