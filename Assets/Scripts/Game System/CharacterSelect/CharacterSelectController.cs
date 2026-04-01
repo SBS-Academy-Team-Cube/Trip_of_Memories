@@ -21,7 +21,7 @@ public class CharacterSelectController : MonoBehaviour
         CancelAction.action.Enable();
         CancelAction.action.performed += OnCancel;
 
-        ConfirmBtn.onClick.AddListener(OnSelected);
+        // ConfirmBtn.onClick.AddListener(OnSelected);
     }
     void OnDisable()
     {
@@ -31,7 +31,7 @@ public class CharacterSelectController : MonoBehaviour
         CancelAction.action.performed -= OnCancel;
         CancelAction.action.Disable();
 
-        ConfirmBtn.onClick.RemoveListener(OnSelected);
+        // ConfirmBtn.onClick.RemoveListener(OnSelected);
 
     }
 
@@ -44,10 +44,17 @@ public class CharacterSelectController : MonoBehaviour
         OnSelectionCanceled?.Invoke();
         ConfirmBtn.interactable = false;
     }
-    void OnSelected()
+    public void OnSelected()
     {
+        UIEventBus.OnAnyButtonClicked?.Invoke();
         if (CurrentSelected == null)
         {
+            Debug.Log("There is No Selected Character");
+            return;
+        }
+        if(SaveManager.Instance == null || GameDirector.Instance == null)
+        {
+            Debug.Log("SaveManager OR GameDirector Instance is NULL");
             return;
         }
         SaveManager.Instance.Data.SelectedCharacterModelIndex = CurrentSelected.MyIndex;

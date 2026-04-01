@@ -32,7 +32,7 @@ public class CameraLook : MonoBehaviour
     {
         if (Spawner != null)
         {
-            Spawner.OnPlayerSpawned += OnPlayerSpawned;
+            //  Spawner.OnPlayerSpawned += OnPlayerSpawned;
         }
     }
     private void OnPlayerSpawned(GameObject Player)

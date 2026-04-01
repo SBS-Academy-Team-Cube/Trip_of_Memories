@@ -47,4 +47,18 @@ public class SaveManager : Singleton<SaveManager>
             SelectedCharacterModelIndex = -1,
         };
     }
+    private void DeleteSave()
+    {
+        if (File.Exists(Path))
+        {
+            File.Delete(Path);
+            Debug.Log("Save file deleted");
+        }
+        Data = CreateNewData();
+    }
+    public void ResetSave()
+    {
+        DeleteSave();
+        Save();
+    }
 }

@@ -2,8 +2,8 @@
 public class SaveData
 {
     public int Version = 1;
-    public bool HasPlayed;
-
+    public bool HasPlayed = false;
+    public bool CanEnterLevelSelect = false;
     // Progress
     public int StageIndex;
 
