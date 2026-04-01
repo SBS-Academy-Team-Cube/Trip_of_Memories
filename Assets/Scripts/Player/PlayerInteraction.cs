@@ -10,11 +10,19 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float InteractRadius = 3.0f;
     
     private SphereCollider PlayerInteractCollider;
-    private IInteractable CurTarget; 
-    private List<IInteractable> InteractableList; 
+    [SerializeField] private IInteractable CurTarget; 
+    [SerializeField] private List<IInteractable> InteractableList; 
+    [SerializeField] private PlayerItemHandler ItemHandler;
+
 
     public void PerformInteraction()
     {
+        if (ItemHandler.bIsHoldingItem)
+        {
+            ItemHandler.DropItem();
+            return;
+        }
+
         if(CurTarget != null)
         {
             var Target = CurTarget;
@@ -29,6 +37,10 @@ public class PlayerInteraction : MonoBehaviour
         if(!TryGetComponent<SphereCollider>(out PlayerInteractCollider))
         {
             PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
+        }
+        if(!TryGetComponent<PlayerItemHandler>(out ItemHandler))
+        {
+            Debug.Log("Can't Find PlayerItemHandler in PlayerInteraction");
         }
         PlayerInteractCollider.radius = InteractRadius;
         PlayerInteractCollider.isTrigger = true;

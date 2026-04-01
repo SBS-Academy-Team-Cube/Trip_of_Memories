@@ -27,7 +27,10 @@ public class PlayerInputController : MonoBehaviour
                 Interaction.PerformInteraction();
                 Debug.Log("press E");
             }
-            
+            else
+            {
+                Debug.Log("Interaction Key is Downed");
+            }
         }
     }
     public void OnMove(InputValue Value)

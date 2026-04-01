@@ -102,18 +102,18 @@ public class PentominoInputHandler : MonoBehaviour
 
     private void HandleRotation()
     {
-        // AÅ° ´©¸£¸é ¿ÞÂÊÀ¸·Î 90µµ È¸Àü
+        // AÅ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ È¸ï¿½ï¿½
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
-            Debug.Log("È¸Àü ¡ç (AÅ°)");
+            Debug.Log("È¸ï¿½ï¿½ ï¿½ï¿½ (AÅ°)");
         }
 
-        // DÅ° ´©¸£¸é ¿À¸¥ÂÊÀ¸·Î 90µµ È¸Àü
+        // DÅ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ È¸ï¿½ï¿½
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);
-            Debug.Log("È¸Àü ¡æ (DÅ°)");
+            Debug.Log("È¸ï¿½ï¿½ ï¿½ï¿½ (DÅ°)");
         }
     }
     private Vector3 SnapToGrid(Vector3 worldPos)
