@@ -19,7 +19,6 @@ public class StoryManager : MonoBehaviour
         SkipAction.action.performed += OnSkip;
         SkipAction.action.Enable();
     }
-
     void OnDisable()
     {
         SkipAction.action.performed -= OnSkip;
@@ -43,25 +42,24 @@ public class StoryManager : MonoBehaviour
 
     void ShowCurrent()
     {
-        if (Index >= Dialogues.Lines.Length)
+        if (Index >= Dialogues.Dialogues.Count)
         {
             return;
         }
 
-        DialoguePlayer.Play(Dialogues.Lines[Index], Effect);
+        DialoguePlayer.Play(Dialogues.GetText(Index), Effect);
     }
 
     private void OnSkip(InputAction.CallbackContext context)
     {
         if (DialoguePlayer.IsTyping)
         {
-            DialoguePlayer.Skip(Dialogues.Lines[Index]);
+            DialoguePlayer.Skip(Dialogues.GetText(Index));
         }
         else
         {
             Index++;
-
-            if (Index < Dialogues.Lines.Length)
+            if (Index < Dialogues.Dialogues.Count)
             {
                 ShowCurrent();
             }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] private TutorialText Texts;
+    [SerializeField] private DialogueData TutorialDialogues;
     [SerializeField] private List<TutorialTriggerZone> Zones;
     [SerializeField] private float Duration = 10.0f;
     [SerializeField] private GameObject TextPanel;
@@ -21,7 +21,7 @@ public class TutorialManager : MonoBehaviour
         PlayerJumpAction.action.Disable();
         SkipAction.action.Enable();
 
-        Text.SetText(Texts.GetText(Index));
+        Text.SetText(TutorialDialogues. GetText(Index));
         TextPanel.SetActive(true);
         CurrentRoutine = StartCoroutine(VisibleDuration());
     }
@@ -48,7 +48,6 @@ public class TutorialManager : MonoBehaviour
     {
         SkipAction.action.performed -= OnSkip;
     }
-
     void OnSkip(InputAction.CallbackContext Context)
     {
         if (CurrentRoutine != null)
@@ -58,20 +57,5 @@ public class TutorialManager : MonoBehaviour
             PlayerJumpAction.action.Enable();
             SkipAction.action.Disable();
         }
-    }
-}
-[CreateAssetMenu(fileName = "TutorialText", menuName = "TutorialText", order = 0)]
-public class TutorialText : ScriptableObject
-{
-    public List<string> Texts;
-    public string GetText(int idx)
-    {
-        if (idx < 0 || idx >= Texts.Count)
-        {
-            Debug.LogWarning("Invalid Index");
-            return string.Empty;
-        }
-
-        return Texts[idx];
     }
 }
