@@ -145,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 271622029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -301.5453, y: -21.49671, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7724527854787674550, guid: 35be4c0aff0723d44a9790b9e8e32191, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.46788
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7724527854787674550, guid: 35be4c0aff0723d44a9790b9e8e32191, type: 3}
       propertyPath: m_LocalPosition.y
@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7724527854787674550, guid: 35be4c0aff0723d44a9790b9e8e32191, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.01082
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7724527854787674550, guid: 35be4c0aff0723d44a9790b9e8e32191, type: 3}
       propertyPath: m_LocalRotation.w
@@ -285,6 +285,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1909513124843928390, guid: d5432ec054136ce4f87d2aa681dbb7fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5758759121606750786, guid: d5432ec054136ce4f87d2aa681dbb7fe, type: 3}
       propertyPath: m_Name
       value: GlobalUIManger
@@ -386,11 +390,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7850293550836950282, guid: 2f6a979d248999b4185bdb5ac2125c89, type: 3}
+      propertyPath: BGMSource
+      value: 
+      objectReference: {fileID: 6786620667605213608}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f6a979d248999b4185bdb5ac2125c89, type: 3}
+--- !u!82 &6786620667605213608 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4625058970824780436, guid: 2f6a979d248999b4185bdb5ac2125c89, type: 3}
+  m_PrefabInstance: {fileID: 6786620667605213606}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
