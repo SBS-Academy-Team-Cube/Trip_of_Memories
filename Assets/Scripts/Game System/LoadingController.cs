@@ -25,10 +25,21 @@ public class LoadingController : MonoBehaviour
         TipText.text = RandomTips[Random.Range(0, RandomTips.Length)];
     }
     IEnumerator LoadSceneAsync()
-    {
-        string TargetScene = GameDirector.Instance.NextScene;
-
-        AsyncOperation Operation = SceneManager.LoadSceneAsync(TargetScene);
+    {      
+        if(GameDirector.Instance == null)
+        {
+            Debug.Log("Can't Find GameDirector Instance");
+            yield break;
+        }
+        AsyncOperation Operation;
+        if(GameDirector.Instance.bUseSceneName)
+        {
+            Operation = SceneManager.LoadSceneAsync(GameDirector.Instance.NextSceneName);
+        }
+        else
+        {
+            Operation = SceneManager.LoadSceneAsync(GameDirector.Instance.NextSceneIndex);
+        }
         Operation.allowSceneActivation = false;
 
         float Timer = 0f;

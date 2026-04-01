@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 // Ensures that only one GameDirector instance exists and provides global access to it
 public class GameDirector : Singleton<GameDirector>
 {
-    public string NextScene { get; private set; }
+    public string NextSceneName { get; private set; }
+    public int NextSceneIndex { get; private set; }
+    public bool bUseSceneName { get; private set; } = true;
     protected override void Awake()
     {
         base.Awake();
@@ -19,12 +21,23 @@ public class GameDirector : Singleton<GameDirector>
     }
     public void LoadScene(string SceneName)
     {
-        NextScene = SceneName;
+        NextSceneName = SceneName;
+        bUseSceneName = true;
+        SceneManager.LoadScene("LoadingScene");
+    }
+    public void LoadScene(int SceneIndex)
+    {
+        NextSceneIndex = SceneIndex;
+        bUseSceneName = false;
         SceneManager.LoadScene("LoadingScene");
     }
     public void LoadSceneWithOutLoading(string SceneName)
     {
         SceneManager.LoadScene(SceneName);
+    }
+    public void LoadSceneWithOutLoading(int SceneIndex)
+    {
+        SceneManager.LoadScene(SceneIndex);
     }
 
     void OnEnable()
@@ -37,6 +50,7 @@ public class GameDirector : Singleton<GameDirector>
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // 테스트용 하드코딩
         if (scene.name.Equals("TestScene_LJW"))
         {
             ShowMouseCursor(false);
