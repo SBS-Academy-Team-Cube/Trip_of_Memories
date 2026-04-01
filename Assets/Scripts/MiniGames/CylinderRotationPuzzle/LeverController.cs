@@ -1,16 +1,33 @@
-using System.Runtime.CompilerServices;
+
 using UnityEngine;
 
 public class LeverController : MonoBehaviour
 {
-    private Rigidbody rb;
-    private HingeJoint joint;
+    [SerializeField] private float moterSpeed = 0.5f;
+    private bool isMoter = false;
 
-
-    private void Awake()
+    private void Update()
     {
-        rb = GetComponent<Rigidbody>();
-        joint = GetComponent<HingeJoint>();
-        rb.constraints = RigidbodyConstraints.FreezePosition;
+        if(isMoter)
+        {
+            transform.Rotate(-Vector3.up * (moterSpeed * Time.deltaTime));
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            Debug.Log("OnTrigger!");
+            isMoter = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            isMoter = false;
+        }    
     }
 }

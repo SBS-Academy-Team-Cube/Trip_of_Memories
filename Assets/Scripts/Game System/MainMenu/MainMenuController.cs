@@ -100,7 +100,7 @@ public class MainMenuController : MonoBehaviour
         }
         if(SaveManager.Instance.Data.StageIndex > 0)
         {
-            GameDirector.Instance.LoadScene(SaveManager.Instance.Data.StageIndex);
+            GameDirector.Instance.LoadScene(3);
         }
     }
 }

@@ -19,7 +19,7 @@ public class CameraProgress : MonoBehaviour
 
     private void OnEnable()
     {
-        Spawner.OnPlayerSpawned += OnPlayerSpawned;
+        //  Spawner.OnPlayerSpawned += OnPlayerSpawned;
     }
     private void OnPlayerSpawned(GameObject Player)
     {
