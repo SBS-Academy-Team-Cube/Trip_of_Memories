@@ -81,4 +81,26 @@ public class MainMenuController : MonoBehaviour
     {
         UIEventBus.OnAnyButtonClicked?.Invoke();
     }
+    public void OnNewGame()
+    {
+        if(SaveManager.Instance)
+        {
+            SaveManager.Instance.ResetSave();
+        }
+        if(GameDirector.Instance)
+        {
+            GameDirector.Instance.LoadScene(1);
+        }
+    }
+    public void OnLoadGame()
+    {
+        if(SaveManager.Instance.Data == null)
+        {
+            SaveManager.Instance.Load();
+        }
+        if(SaveManager.Instance.Data.StageIndex > 0)
+        {
+            GameDirector.Instance.LoadScene(SaveManager.Instance.Data.StageIndex);
+        }
+    }
 }

@@ -19,9 +19,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             var Target = CurTarget;
             CurTarget = null;
-            
             Target.Interact(gameObject);
-
             UpdateCurTarget();
         }
     }
@@ -32,13 +30,10 @@ public class PlayerInteraction : MonoBehaviour
         {
             PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
         }
-        //collider setting
         PlayerInteractCollider.radius = InteractRadius;
         PlayerInteractCollider.isTrigger = true;
-
         InteractableList = new List<IInteractable>();
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
