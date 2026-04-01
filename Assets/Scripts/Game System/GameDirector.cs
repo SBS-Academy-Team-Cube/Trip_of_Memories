@@ -26,7 +26,7 @@ public class GameDirector : Singleton<GameDirector>
     {
         SceneManager.LoadScene(SceneName);
     }
-    
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -41,5 +41,13 @@ public class GameDirector : Singleton<GameDirector>
         {
             ShowMouseCursor(false);
         }
+    }
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

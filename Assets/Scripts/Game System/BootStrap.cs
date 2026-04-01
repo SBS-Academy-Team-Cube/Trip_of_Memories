@@ -7,7 +7,7 @@ public class BootStrap : MonoBehaviour
         SaveManager.Instance.Load();
         var Data = SaveManager.Instance.Data;
 
-        if(!Data.HasPlayed)
+        if (!Data.HasPlayed)
         {
             GameDirector.Instance.LoadScene("CharacterSelectScene");
         }
@@ -16,5 +16,4 @@ public class BootStrap : MonoBehaviour
             GameDirector.Instance.LoadScene("MainMenuScene");
         }
     }
-
 }

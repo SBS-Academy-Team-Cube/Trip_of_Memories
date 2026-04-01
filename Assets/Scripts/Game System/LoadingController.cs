@@ -6,14 +6,10 @@ using TMPro;
 
 public class LoadingController : MonoBehaviour
 {
-    [SerializeField]
-    private Slider ProgressBar;
-    [SerializeField]
-    private TMP_Text TipText;
-    [SerializeField]
-    private string[] RandomTips;
-    [SerializeField]
-    private float MinLoadTime = 2.0f;
+    [SerializeField] private Slider ProgressBar;
+    [SerializeField] private TMP_Text TipText;
+    [SerializeField] private string[] RandomTips;
+    [SerializeField] private float MinLoadTime = 2.0f;
 
     void Start()
     {

@@ -2,21 +2,29 @@ using UnityEngine;
 
 public class TutorialTriggerZone : MonoBehaviour
 {
-    public static System.Action<int> OnTriggered;
-    [SerializeField] private int MyIndex;
+    private int Index;
+    private TutorialManager Manager;
     private bool Triggered = false;
 
-    private void OnTriggerEnter(Collider Other) 
+    public void Init(TutorialManager Manager, int Index)
     {
-        if (Triggered) 
-        { 
+        this.Manager = Manager;
+        this.Index = Index;
+    }
+    private void OnTriggerEnter(Collider Other)
+    {
+        if (Triggered)
+        {
             return;
         }
-        if (!Other.CompareTag("Player")) 
-        { 
+        if (!Other.CompareTag("Player"))
+        {
             return;
         }
         Triggered = true;
-        OnTriggered?.Invoke(MyIndex);  
+        if (Manager != null)
+        {
+            Manager.ShowTutorialText(Index);
+        }
     }
 }
