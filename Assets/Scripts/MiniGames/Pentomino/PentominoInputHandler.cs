@@ -7,7 +7,6 @@ public class PentominoInputHandler : MonoBehaviour
     [SerializeField] private LayerMask _pieceLayer;
     [SerializeField] private LayerMask _boardLayer;
     [SerializeField] private float _tileSize = 1f;
-    [SerializeField] private float _targetBoundsMultiplier = 0.85f;
 
     private PentominoInputAction _inputActions;
     private IPentominoPickable _currentPicked = null;
@@ -106,14 +105,14 @@ public class PentominoInputHandler : MonoBehaviour
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
-            Debug.Log("ȸ�� �� (AŰ)");
+            Debug.Log("");
         }
 
         // DŰ ������ ���������� 90�� ȸ��
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);
-            Debug.Log("ȸ�� �� (DŰ)");
+            Debug.Log("");
         }
     }
     private Vector3 SnapToGrid(Vector3 worldPos)
