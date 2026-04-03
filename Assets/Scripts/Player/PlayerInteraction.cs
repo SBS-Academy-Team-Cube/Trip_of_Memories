@@ -8,13 +8,12 @@ public class PlayerInteraction : MonoBehaviour
 {
     [Header("Setting")]
     [SerializeField] private float InteractRadius = 3.0f;
-    
+
     private SphereCollider PlayerInteractCollider;
-    [SerializeField] private IInteractable CurTarget; 
-    [SerializeField] private List<IInteractable> InteractableList; 
+    [SerializeField] private IInteractable CurTarget;
+    [SerializeField] private List<IInteractable> InteractableList;
     [SerializeField] private PlayerItemHandler ItemHandler;
-
-
+    public System.Action<string, Transform> OnTargetChanged;
     public void PerformInteraction()
     {
         if (ItemHandler.bIsHoldingItem)
@@ -22,8 +21,7 @@ public class PlayerInteraction : MonoBehaviour
             ItemHandler.DropItem();
             return;
         }
-
-        if(CurTarget != null)
+        if (CurTarget != null)
         {
             var Target = CurTarget;
             CurTarget = null;
@@ -34,11 +32,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        if(!TryGetComponent<SphereCollider>(out PlayerInteractCollider))
+        if (!TryGetComponent<SphereCollider>(out PlayerInteractCollider))
         {
             PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
         }
-        if(!TryGetComponent<PlayerItemHandler>(out ItemHandler))
+        if (!TryGetComponent<PlayerItemHandler>(out ItemHandler))
         {
             Debug.Log("Can't Find PlayerItemHandler in PlayerInteraction");
         }
@@ -50,7 +48,7 @@ public class PlayerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Return if interaction is not possible
-        if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
+        if (!other.TryGetComponent(out IInteractable interactable))
             return;
         // Throw error if already present in the list
         if (InteractableList.Contains(interactable))
@@ -63,18 +61,19 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.TryGetComponent<IInteractable>(out IInteractable interactable))
+        if (!other.TryGetComponent(out IInteractable interactable))
+        {
             return;
+        }
         // Throw error if not present in the list
         if (!InteractableList.Contains(interactable))
             return;
-
         InteractableList.Remove(interactable);
         UpdateCurTarget();
     }
     private void UpdateCurTarget()
     {
-        if(InteractableList.Count == 0)
+        if (InteractableList.Count == 0)
         {
             CurTarget = null;
             Debug.Log("curTarget = null");
@@ -92,7 +91,7 @@ public class PlayerInteraction : MonoBehaviour
             // Check if it is MonoBehaviour and actually exists
             if (item is MonoBehaviour mono)
             {
-                if(mono != null && mono.gameObject.activeInHierarchy)
+                if (mono != null && mono.gameObject.activeInHierarchy)
                 {
                     float dist = Vector3.Distance(PlayerPos, mono.transform.position);
                     if (dist < minDistance)
@@ -101,7 +100,7 @@ public class PlayerInteraction : MonoBehaviour
                         closest = item;
                     }
                 }
-                
+
             }
             else
             {
@@ -109,8 +108,8 @@ public class PlayerInteraction : MonoBehaviour
                 InteractableList.RemoveAt(i);
             }
         }
-
         CurTarget = closest;
+        OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.gameObject.tran)
         Debug.Log("Update curTarget");
     }
 }

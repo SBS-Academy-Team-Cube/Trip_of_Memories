@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2306439399861184069}
   - component: {fileID: 208574213792908035}
-  - component: {fileID: 4805185130269128372}
   - component: {fileID: 7739686119722865457}
+  - component: {fileID: 4805185130269128372}
   - component: {fileID: 1720477095896354735}
   - component: {fileID: 4559340257370813838}
   - component: {fileID: 994563482210582322}
@@ -33,7 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5617650553871249110}
   - {fileID: 7259566661099167821}
@@ -67,27 +67,9 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &4805185130269128372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806615216227952962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b27e42f47265a984dae00a9189b27965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  CameraPivot: {fileID: 5617650553871249110}
-  CameraTransform: {fileID: 0}
-  MoveSpeed: 2.5
-  RotateSpeed: 20
-  Gravity: -9.81
-  JumpForce: 4
 --- !u!143 &7739686119722865457
 CharacterController:
   m_ObjectHideFlags: 0
@@ -113,6 +95,24 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.01, z: 0}
+--- !u!114 &4805185130269128372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806615216227952962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27e42f47265a984dae00a9189b27965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  CameraPivot: {fileID: 5617650553871249110}
+  CameraTransform: {fileID: 0}
+  MoveSpeed: 2.5
+  RotateSpeed: 20
+  Gravity: -9.81
+  JumpForce: 4
 --- !u!114 &1720477095896354735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   InteractRadius: 3
+  ItemHandler: {fileID: 0}
 --- !u!114 &994563482210582322
 MonoBehaviour:
   m_ObjectHideFlags: 0
