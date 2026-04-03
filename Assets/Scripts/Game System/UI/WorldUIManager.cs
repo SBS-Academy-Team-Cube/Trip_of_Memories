@@ -4,28 +4,46 @@ using Unity.VisualScripting;
 
 public class WorldUIManager : MonoBehaviour
 {
+    [SerializeField] GameObject TextUIObject;
     [SerializeField] TMP_Text UIText;
     [SerializeField] Transform CameraTransform;
-    void Awake()
-    {
-        FindFirstObjectByType<PlayerInteraction>()?.
-    }
-
+    [SerializeField] Vector3 UIOffset = new Vector3(1f, 1f, 0f);
+    private Transform UITargetTransfrom;
+    private bool bShowing = false;
     void Start()
     {
-
+        var PlayerInteraction = FindFirstObjectByType<PlayerInteraction>();
+        if(PlayerInteraction != null)
+        {
+            PlayerInteraction.OnTargetChanged += ShowWorldUIText;
+        }
     }
-    public void SetText(string Text)
+    public void ShowWorldUIText(string Text, Transform TargetTransform, bool bShowing)
     {
+        this.bShowing = bShowing;
+        if(!bShowing)
+        {
+            TextUIObject.SetActive(false);
+            return; 
+        }
+        TextUIObject.SetActive(true);
         UIText.text = Text;
+        UITargetTransfrom = TargetTransform;
     }
 
     private void LateUpdate()
     {
-        if(transform == null)
+        if (CameraTransform == null || !bShowing)
         {
-            Debug.Log("No Transform");
+            return;
         }
+        Vector3 CamRight = CameraTransform.right;
+        Vector3 CamUp = CameraTransform.up;
+
+        Vector3 Offset = CamRight * UIOffset.x + CamUp * UIOffset.y;
+
+        transform.position = UITargetTransfrom.position + Offset;
+
         transform.forward = CameraTransform.forward;
     }
 }
