@@ -7,6 +7,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject[] CharacterPrefabs;
     [SerializeField] private Transform CameraTransform;
     [SerializeField] private CinemachineCamera CinemachineCamera;
+    
     void Start()
     {
         if(SaveManager.Instance.Data == null)
@@ -25,6 +26,5 @@ public class PlayerSpawner : MonoBehaviour
             Move.CameraTransform = CameraTransform;
             CinemachineCamera.Target.TrackingTarget = Move.CameraPivot;
         }
-        
     }
 }
