@@ -11,13 +11,18 @@ public class PickupItem : MonoBehaviour, IInteractable
         return $"E - {itemName} pickup";
     }
 
-    public void Interact(GameObject Interactor)
+    public bool Interact(GameObject Interactor)
     {
         if(Interactor.TryGetComponent(out PlayerItemHandler Handler))
         {
-            Debug.Log("Interacter has ItemHandler Component!!");
             Handler.HoldItem(gameObject);
             enabled = false;
+            return true;
         }
+        return false;
+    }
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

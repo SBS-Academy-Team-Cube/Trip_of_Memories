@@ -13,7 +13,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private IInteractable CurTarget;
     [SerializeField] private List<IInteractable> InteractableList;
     [SerializeField] private PlayerItemHandler ItemHandler;
-    public System.Action<string, Transform> OnTargetChanged;
+    public System.Action<string, Transform, bool> OnTargetChanged;
     public void PerformInteraction()
     {
         if (ItemHandler.bIsHoldingItem)
@@ -25,7 +25,10 @@ public class PlayerInteraction : MonoBehaviour
         {
             var Target = CurTarget;
             CurTarget = null;
-            Target.Interact(gameObject);
+            if(Target.Interact(gameObject))
+            {
+                InteractableList.Remove(Target);
+            }
             UpdateCurTarget();
         }
     }
@@ -76,6 +79,7 @@ public class PlayerInteraction : MonoBehaviour
         if (InteractableList.Count == 0)
         {
             CurTarget = null;
+            OnTargetChanged?.Invoke(null, null, false);
             Debug.Log("curTarget = null");
             return;
         }
@@ -109,7 +113,10 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
         CurTarget = closest;
-        OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.gameObject.tran)
+        if(CurTarget != null)
+        { 
+            OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.GetTransform(), true);
+        }
         Debug.Log("Update curTarget");
     }
 }

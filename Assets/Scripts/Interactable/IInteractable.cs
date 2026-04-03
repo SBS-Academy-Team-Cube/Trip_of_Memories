@@ -3,5 +3,6 @@ using UnityEngine;
 public interface IInteractable
 {
     string GetInteractionPrompt();
-    void Interact(GameObject Interactor);
+    bool Interact(GameObject Interactor);
+    Transform GetTransform(); 
 }
