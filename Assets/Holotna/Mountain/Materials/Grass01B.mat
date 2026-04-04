@@ -34,14 +34,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass01B
-  m_Shader: {fileID: -6465566751694194690, guid: 68eec80679fc64c4fb36026367e1aa6c,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 68eec80679fc64c4fb36026367e1aa6c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
+  - _MATERIAL_FEATURE_SPECULAR_COLOR
   m_InvalidKeywords:
   - _MODE_SINGLE_COLOR
   - _SPECULAR_SETUP
@@ -160,6 +160,7 @@ Material:
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
+    - _DstBlend2: 0
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _ExcludeFromTUAndAA: 0
@@ -168,11 +169,14 @@ Material:
     - _GlossyReflections: 1
     - _Gradient_Height: 0
     - _MODE: 0
+    - _MaterialID: 4
+    - _MaterialTypeMask: 16
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
     - _Parallax: 0.02
+    - _PerPixelSorting: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RayTracing: 0
@@ -201,6 +205,7 @@ Material:
     - _Surface: 0
     - _SurfaceType: 0
     - _TEST: 0
+    - _TransmissionEnable: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
@@ -240,6 +245,7 @@ Material:
     - _Test_3_MODE_TWO: {r: 0, g: 0, b: 0, a: 0}
     - _Top_Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &6918297619443629969
 MonoBehaviour:
   m_ObjectHideFlags: 11
