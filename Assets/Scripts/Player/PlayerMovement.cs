@@ -26,17 +26,12 @@ public class PlayerMovement : MonoBehaviour
     {
         DoMove();
     }
-    void Start()
-    {
-        // CameraTransform = Camera.main.transform;
-    }
     private void DoMove()
     {
         if (Controller.isGrounded && Velocity.y < 0)
         {
             Velocity.y = -2f;
         }
-
 
         Vector3 CameraForward = CameraTransform.forward;
         Vector3 CameraRight = CameraTransform.right;
@@ -48,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
         move = Vector3.ClampMagnitude(move, 1f);
 
         Controller.Move(MoveSpeed * Time.deltaTime * move);
-
 
         if (move.sqrMagnitude > 0.01f)
         {
@@ -64,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    public void TryMove(InputValue Value)// �̸���ü, PlayerController - OnMove()����ȣ��
+    public void TryMove(InputValue Value)
     {
         MoveInput = Value.Get<Vector2>();
         Animation.SetSpeed(MoveInput.magnitude);
@@ -81,16 +75,5 @@ public class PlayerMovement : MonoBehaviour
     public void TryLook(InputValue Value)
     {
         LookInput = Value.Get<Vector2>();
-    }
-
-    private bool TestPanelbShowing = false;
-
-    public void TryShowPanel(InputValue Value)
-    {
-        if (Value.isPressed)
-        {
-            TestPanelbShowing = !TestPanelbShowing;
-            // GameDirector.Instance.ShowMainMenu(TestPanelbShowing);
-        }
     }
 }
