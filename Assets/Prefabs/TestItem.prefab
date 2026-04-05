@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4401313656538533186}
   - component: {fileID: 8340064771053895133}
   - component: {fileID: 6574245969946942424}
+  - component: {fileID: 4738205019129568162}
   - component: {fileID: 767460801603907295}
   m_Layer: 8
   m_Name: TestItem
@@ -126,7 +127,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f01217aba9f7c418c5ce715997fd5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  itemName: item
+  itemName: Key
+--- !u!114 &4738205019129568162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641961866670658176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656e3e7c4bd3c3b43a7fe2a71aaeda4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverItem
+  Amplitude: 1
+  Frequency: 1.5
+  RotateSpeed: 30
 --- !u!54 &767460801603907295
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,7 +151,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4641961866670658176}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

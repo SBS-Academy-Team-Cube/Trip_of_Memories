@@ -52,19 +52,23 @@ public class PlayerMantling : MonoBehaviour
             transform.position = NextPosition;
             yield return null;
         }
-        transform.position = MantlingTargetPosition;
+        transform.position = MantlingTargetPosition + Vector3.up * 5.0f;
         Controller.enabled = true;
         bCanMantling = false;
     }
     private void LedgeCheck()
     {       
+        bCanMantling = false;
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, ForwardDistance))
         {
+            Debug.DrawLine( WallHit.point,  WallHit.normal * 5.0f, Color.green);
             Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * MantleHeight - WallHit.normal * 1.5f;
             if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgeCheckDistance))
             {
+                Debug.DrawLine(PlanCheckRayStartPosition, Vector3.down * LedgeCheckDistance, Color.blue);
                 bCanMantling = true;
-                MantlingTargetPosition = LedgeHit.point + Vector3.up * 5.0f;
+                MantlingTargetPosition = LedgeHit.point;
+                DebugExtension.DrawSphere(MantlingTargetPosition, 3.0f, Color.red, 0.1f);
             }
         }
     }
@@ -111,5 +115,52 @@ public class PlayerMantling : MonoBehaviour
     public bool IsMantlingNow()
     {
         return IsMantling;
+    }
+}
+
+
+public static class DebugExtension
+{
+    public static void DrawSphere(Vector3 position, float radius, Color color, float duration = 0f)
+    {
+        int segments = 16;
+
+        float angleStep = 360f / segments;
+
+        // XY 평면
+        for (int i = 0; i < segments; i++)
+        {
+            float angle1 = Mathf.Deg2Rad * (i * angleStep);
+            float angle2 = Mathf.Deg2Rad * ((i + 1) * angleStep);
+
+            Vector3 p1 = position + new Vector3(Mathf.Cos(angle1), Mathf.Sin(angle1), 0) * radius;
+            Vector3 p2 = position + new Vector3(Mathf.Cos(angle2), Mathf.Sin(angle2), 0) * radius;
+
+            Debug.DrawLine(p1, p2, color, duration);
+        }
+
+        // XZ 평면
+        for (int i = 0; i < segments; i++)
+        {
+            float angle1 = Mathf.Deg2Rad * (i * angleStep);
+            float angle2 = Mathf.Deg2Rad * ((i + 1) * angleStep);
+
+            Vector3 p1 = position + new Vector3(Mathf.Cos(angle1), 0, Mathf.Sin(angle1)) * radius;
+            Vector3 p2 = position + new Vector3(Mathf.Cos(angle2), 0, Mathf.Sin(angle2)) * radius;
+
+            Debug.DrawLine(p1, p2, color, duration);
+        }
+
+        // YZ 평면
+        for (int i = 0; i < segments; i++)
+        {
+            float angle1 = Mathf.Deg2Rad * (i * angleStep);
+            float angle2 = Mathf.Deg2Rad * ((i + 1) * angleStep);
+
+            Vector3 p1 = position + new Vector3(0, Mathf.Cos(angle1), Mathf.Sin(angle1)) * radius;
+            Vector3 p2 = position + new Vector3(0, Mathf.Cos(angle2), Mathf.Sin(angle2)) * radius;
+
+            Debug.DrawLine(p1, p2, color, duration);
+        }
     }
 }
