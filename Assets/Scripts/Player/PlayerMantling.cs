@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMantling : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerMantling : MonoBehaviour
     private bool IsMantling;
     private Vector3 TargetPosition;
 
+    private bool bCanMantling = false;
+    Vector3 MantlingTargetPosition;
     void Awake()
     {
         Controller = GetComponent<CharacterController>();
@@ -24,58 +27,48 @@ public class PlayerMantling : MonoBehaviour
 
     void Update()
     {
-        // if (IsMantling)
-        // {
-        //     DoMantle();
-        // }
-        // DebugMantleCheck();
         LedgeCheck();
     }
-
-    private void LedgeCheck()
+    public bool CanMantling()
     {
-        
+        if(bCanMantling)
+        {
+            StartCoroutine(DoMantling());
+            return true;    
+        }
+        return false;
+    }
+    private IEnumerator DoMantling()
+    {
+        Controller.enabled = false;
+        Vector3 StartPosition = transform.position;
+        float duration = 1.75f;
+        float time = 0;
+        while(time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            Vector3 NextPosition = Vector3.Lerp(StartPosition ,MantlingTargetPosition, t);
+            transform.position = NextPosition;
+            yield return null;
+        }
+        transform.position = MantlingTargetPosition;
+        Controller.enabled = true;
+        bCanMantling = false;
+    }
+    private void LedgeCheck()
+    {       
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, ForwardDistance))
         {
-            Debug.DrawRay(transform.position, transform.forward * ForwardDistance, Color.red);
-            if (Physics.Raycast(WallHit.point + Vector3.up * MantleHeight, Vector3.down, out RaycastHit LedgeHit, LedgeCheckDistance))
+            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * MantleHeight - WallHit.normal * 1.5f;
+            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgeCheckDistance))
             {
-                Debug.DrawRay(WallHit.point + Vector3.up * MantleHeight, Vector3.down * LedgeCheckDistance, Color.blue);
-                Debug.Log($"Ledge Point : {LedgeHit.point}");
+                bCanMantling = true;
+                MantlingTargetPosition = LedgeHit.point + Vector3.up * 5.0f;
             }
         }
     }
-    void DebugMantleCheck()
-    {
-        Vector3 chestOrigin = transform.position;
-
-        Debug.DrawRay(
-            chestOrigin,
-            transform.forward * ForwardDistance,
-            Color.red
-        );
-        if (Physics.Raycast(chestOrigin, transform.forward, out RaycastHit wallHit, ForwardDistance))
-        {
-            Debug.DrawLine(chestOrigin, wallHit.point, Color.green);
-
-            Vector3 topOrigin = wallHit.point + Vector3.up * MantleHeight;
-
-            Debug.DrawRay(
-                topOrigin,
-                Vector3.down * 10.0f,
-                Color.blue
-            );
-
-            if (Physics.Raycast(topOrigin, Vector3.down, out RaycastHit downHit, 10f))
-            {
-                Debug.DrawLine(topOrigin, downHit.point, Color.yellow);
-            }
-        }
-        else
-        {
-            Debug.Log("Can't Raycast");
-        }
-    }
+    
     public bool CanMantle()
     {
         if (IsMantling) return false;

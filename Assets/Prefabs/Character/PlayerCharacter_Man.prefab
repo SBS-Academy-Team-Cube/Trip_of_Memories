@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27e42f47265a984dae00a9189b27965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  MantlingComponent: {fileID: 7595966841840409301}
   CameraPivot: {fileID: 5617650553871249110}
   CameraTransform: {fileID: 0}
   MoveSpeed: 15
@@ -166,10 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  MantleHeight: 1.5
-  MantleForwardDistance: 1
+  MantleHeight: 10
+  MantleForwardDistance: 2.5
   MantleSpeed: 5
-  ForwardDistance: 5
+  ForwardDistance: 8
+  LedgeCheckDistance: 10
   LedgeCheckPosition: {fileID: 2268729362251822088}
 --- !u!1 &3027268207313410506
 GameObject:

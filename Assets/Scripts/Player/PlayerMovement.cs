@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] PlayerMantling MantlingComponent;
     CharacterController Controller;
     PlayerAnimation Animation;
     public Transform CameraPivot;
-
     private Vector2 MoveInput;
     Vector3 Velocity;
     public Transform CameraTransform;
@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
     public Vector2 LookInput { get; private set; }
-
     void Awake()
     {
         Controller = GetComponent<CharacterController>();
@@ -28,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
+        if(!Controller.enabled)
+        {
+            return;
+        }
+
         if (Controller.isGrounded && Velocity.y < 0)
         {
             Velocity.y = -2f;
@@ -66,10 +70,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void TryJump(InputValue Value)
     {
-        if (Value.isPressed && Controller.isGrounded)
+        if (Value.isPressed) 
         {
-            Velocity.y = JumpForce;
-            Animation.SetJump(true);
+            if(Controller.isGrounded)
+            {
+                Velocity.y = JumpForce;
+                Animation.SetJump();
+            }
+            else
+            {
+                if(MantlingComponent)
+                {
+                    if(MantlingComponent.CanMantling())
+                    {
+                        Animation.SetMantling();
+                    }
+                }
+            }
         }
     }
     public void TryLook(InputValue Value)
