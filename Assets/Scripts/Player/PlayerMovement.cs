@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] PlayerMantling MantlingComponent;
     CharacterController Controller;
     PlayerAnimation Animation;
     public Transform CameraPivot;
-
     private Vector2 MoveInput;
     Vector3 Velocity;
     public Transform CameraTransform;
@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
     public Vector2 LookInput { get; private set; }
-
     void Awake()
     {
         Controller = GetComponent<CharacterController>();
@@ -26,17 +25,17 @@ public class PlayerMovement : MonoBehaviour
     {
         DoMove();
     }
-    void Start()
-    {
-        // CameraTransform = Camera.main.transform;
-    }
     private void DoMove()
     {
+        if(!Controller.enabled)
+        {
+            return;
+        }
+
         if (Controller.isGrounded && Velocity.y < 0)
         {
             Velocity.y = -2f;
         }
-
 
         Vector3 CameraForward = CameraTransform.forward;
         Vector3 CameraRight = CameraTransform.right;
@@ -48,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
         move = Vector3.ClampMagnitude(move, 1f);
 
         Controller.Move(MoveSpeed * Time.deltaTime * move);
-
 
         if (move.sqrMagnitude > 0.01f)
         {
@@ -64,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    public void TryMove(InputValue Value)// �̸���ü, PlayerController - OnMove()����ȣ��
+    public void TryMove(InputValue Value)
     {
         MoveInput = Value.Get<Vector2>();
         Animation.SetSpeed(MoveInput.magnitude);
@@ -72,25 +70,27 @@ public class PlayerMovement : MonoBehaviour
 
     public void TryJump(InputValue Value)
     {
-        if (Value.isPressed && Controller.isGrounded)
+        if (Value.isPressed) 
         {
-            Velocity.y = JumpForce;
-            Animation.SetJump(true);
+            if(Controller.isGrounded)
+            {
+                Velocity.y = JumpForce;
+                Animation.SetJump();
+            }
+            else
+            {
+                if(MantlingComponent)
+                {
+                    if(MantlingComponent.CanMantling())
+                    {
+                        Animation.SetMantling();
+                    }
+                }
+            }
         }
     }
     public void TryLook(InputValue Value)
     {
         LookInput = Value.Get<Vector2>();
-    }
-
-    private bool TestPanelbShowing = false;
-
-    public void TryShowPanel(InputValue Value)
-    {
-        if (Value.isPressed)
-        {
-            TestPanelbShowing = !TestPanelbShowing;
-            // GameDirector.Instance.ShowMainMenu(TestPanelbShowing);
-        }
     }
 }

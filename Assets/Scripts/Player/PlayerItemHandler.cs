@@ -14,9 +14,13 @@ public class PlayerItemHandler : MonoBehaviour
             return;
         }
         HoldingObject = Target;
-        Target.transform.SetParent(HoldTransform);
+        Target.transform.SetParent(HoldTransform, false);
         Target.transform.localPosition = Vector3.zero;
         Target.transform.localRotation = Quaternion.identity;
+        if(Target.TryGetComponent(out HoverItem HoverComponent))
+        {
+            HoverComponent.UpdateLocalPosition();
+        }
 
         if (Target.TryGetComponent<Rigidbody>(out var RB))
         {

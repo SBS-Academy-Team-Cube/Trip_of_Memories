@@ -8,7 +8,6 @@ public class CharacterSelectController : MonoBehaviour
     [SerializeField] private Camera MainCamera;
     [SerializeField] private InputActionReference ClickAction;
     [SerializeField] private InputActionReference CancelAction;
-
     public System.Action<CharacterSelectable> OnCharacterSelected;
     private CharacterSelectable CurrentSelected;
     public System.Action OnSelectionCanceled;
@@ -60,7 +59,7 @@ public class CharacterSelectController : MonoBehaviour
         SaveManager.Instance.Data.SelectedCharacterModelIndex = CurrentSelected.MyIndex;
         SaveManager.Instance.Data.HasPlayed = true;
         SaveManager.Instance.Save();
-        GameDirector.Instance.LoadScene("TestScene_LJW");
+        GameDirector.Instance.LoadScene(3);
     }
     void TrySelect()
     {

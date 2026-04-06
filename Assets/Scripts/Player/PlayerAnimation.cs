@@ -14,8 +14,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("Speed", Speed);
     }
-    public void SetJump(bool Jumping)
+    public void SetJump()
     {
         AnimationController.SetTrigger("Jump");
+    }
+    public void SetMantling()
+    {
+        AnimationController.SetTrigger("Mantling");
     }
 }

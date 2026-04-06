@@ -9,7 +9,7 @@ public class PlayerInputController : MonoBehaviour
     private void Awake()
     {
         if (!TryGetComponent<PlayerInteraction>(out Interaction))
-        { 
+        {
             Debug.Log("PlayerInputController.cs - Awake() - interaction component not found");
         }
         if (!TryGetComponent<PlayerMovement>(out Movement))
@@ -20,9 +20,9 @@ public class PlayerInputController : MonoBehaviour
 
     public void OnInteract(InputValue Value)
     {
-        if(Value.isPressed)
+        if (Value.isPressed)
         {
-            if(Interaction != null)
+            if (Interaction != null)
             {
                 Interaction.PerformInteraction();
                 Debug.Log("press E");
@@ -35,7 +35,7 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnMove(InputValue Value)
     {
-        if(Movement != null)
+        if (Movement != null)
         {
             Movement.TryMove(Value);
         }
@@ -52,13 +52,6 @@ public class PlayerInputController : MonoBehaviour
         if (Movement != null)
         {
             Movement.TryLook(Value);
-        }
-    }
-    public void OnShowPanel(InputValue Value)
-    {
-        if (Movement != null)
-        {
-            Movement.TryShowPanel(Value);
         }
     }
 }
