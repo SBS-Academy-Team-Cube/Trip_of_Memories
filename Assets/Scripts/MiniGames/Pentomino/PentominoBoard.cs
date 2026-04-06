@@ -22,12 +22,12 @@ public class PentominoBoard : MonoBehaviour
     }
     private void InitBoard()
     {
-        board = new bool[height, width];
+        board = new bool[width, height];
         zeroPos.x = 4;
         zeroPos.y = 3;
         DebugBoard();
     }
-    private BoardPos PosToBoardPos(BoardPos pos)
+    private BoardPos PosToBoardPos(BoardPos pos)// Convert world coordinate to array index
     {
         BoardPos newPos;
         newPos.x = pos.x + zeroPos.x;
@@ -37,15 +37,19 @@ public class PentominoBoard : MonoBehaviour
 
     public void SetActiveBoard(BoardPos[] boardPos, bool newActive)
     {
-
         foreach (var pos in boardPos)
         {
             BoardPos newPos = PosToBoardPos(pos);
-            if (newPos.x >= 0 && newPos.x < height &&
-                 newPos.y >= 0 && newPos.y < width)
+            if (newPos.x >= 0 && newPos.x < width &&
+                 newPos.y >= 0 && newPos.y < height)
             {
                 board[newPos.x, newPos.y] = newActive;
             }
+        }
+        if (newActive)
+        {
+            Debug.Log("=== Piece placed successfully - Current board state ===");
+            DebugBoard();
         }
     }
 
@@ -55,18 +59,16 @@ public class PentominoBoard : MonoBehaviour
         {
             BoardPos boardIndex = PosToBoardPos(worldPos[i]);
 
-            Debug.Log($"[IsPlace] World({worldPos[i].x}, {worldPos[i].y}) → BoardIndex({boardIndex.x}, {boardIndex.y})");
-
             // 범위 벗어나면 못 놓게 막기 (IndexOutOfRange 방지!)
-            if (boardIndex.x < 0 || boardIndex.x >= height ||
-                boardIndex.y < 0 || boardIndex.y >= width)
+            if (boardIndex.x < 0 || boardIndex.x >= width ||
+                boardIndex.y < 0 || boardIndex.y >= height)
             {
-                return false;
+                return false;// Out of board bounds
             }
 
             if (board[boardIndex.x, boardIndex.y])
             {
-                return false;
+                return false;// Position already occupied
             }
         }
         return true;
@@ -74,12 +76,18 @@ public class PentominoBoard : MonoBehaviour
 
     public void DebugBoard()
     {
-        for(int i = 0; i < height; ++i)
+        Debug.Log("========== board  ==========");
+
+        for (int y = height - 1; y >= 0; y--)           // 행 (Y축, 위→아래)
         {
-            for(int  j = 0; j < width; ++j)
+            string row = $"Row {y:00} | ";         // 행 번호 표시
+            for (int x = 0; x < width; x++)        // 열 (X축, 왼→오른)
             {
-                Debug.Log($"{i} - {j} : {board[i,j]}");
+                row += board[x, y] ? " O " : " X ";
             }
+            Debug.Log(row);
         }
+
+        Debug.Log("=================================================");
     }
 }

@@ -1,23 +1,23 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PieceHighlighter))]
-public class PentominoPiece : MonoBehaviour, IPentominoPickable, IHighlightable
+public class PentominoPiece : MonoBehaviour, IPentominoPickable
 {
     [SerializeField] private PieceShape pieceShape;
+
+    private Vector3 startPos;
+    private Quaternion startRot;
 
     public BoardPos[] PiecePos => pieceShape.shape;
 
     private bool _isPicked = false;
-    private PieceHighlighter _highlighter;
     public bool IsPicked => _isPicked;
     public Transform Transform => transform;
 
     public BoardPos[] GetBoardPositions(Vector3 currentWorldPos)
     {
         BoardPos[] result = new BoardPos[pieceShape.shape.Length];
-        int baseX = Mathf.RoundToInt(currentWorldPos.x);  // ½º³ÀµÈ X
-        int baseZ = Mathf.RoundToInt(currentWorldPos.z);  // ½º³ÀµÈ Z
+        int baseX = Mathf.RoundToInt(currentWorldPos.x);  // snap Pos X
+        int baseZ = Mathf.RoundToInt(currentWorldPos.z);  // snap Pos Z
 
         for (int i = 0; i < pieceShape.shape.Length; i++)
         {
@@ -57,16 +57,23 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable, IHighlightable
         }
     }
     
-    private void Awake()
+    private void Start()
     {
-        _highlighter = GetComponent<PieceHighlighter>();
+        startPos = transform.position;
+        startRot = transform.rotation;
     }
 
     public void PickUp()
     {
         _isPicked = true;
         transform.position += Vector3.up * 1.5f;
-        _highlighter.HighlightOff();
+    }
+    public void ReturnToStart()
+    {
+        _isPicked = false;
+        transform.rotation = startRot;
+        transform.position = startPos;
+        
     }
 
     public void Place(Vector3 position)
@@ -76,10 +83,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable, IHighlightable
 
         DebugPiecePos();
     }
-
-
-    public void HighlightOn() => _highlighter.HighlightOn();
-    public void HighlightOff() => _highlighter.HighlightOff();
 
     private void DebugPiecePos()
     {

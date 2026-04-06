@@ -7,13 +7,10 @@ public class PentominoInputHandler : MonoBehaviour
     [SerializeField] private LayerMask _pieceLayer;
     [SerializeField] private LayerMask _boardLayer;
     [SerializeField] private float _tileSize = 1f;
-
-    //[SerializeField] private PentominoPiece[] Pieces;
     [SerializeField] private PentominoBoard board;
 
     private PentominoInputAction _inputActions;
     private IPentominoPickable _currentPicked = null;
-    private IHighlightable _currentHover = null;
     private PentominoPiece _currentPiece = null;
 
     private void Awake() { _inputActions = new PentominoInputAction(); }
@@ -30,34 +27,11 @@ public class PentominoInputHandler : MonoBehaviour
 
     private void Update()
     {
-        HandleHover();
         if (_currentPicked != null)
         {
-            FollowMouse();
+            FollowMouse();// Move piece with mouse
 
-            HandleRotation();//sss
-        }
-    }
-
-    private void HandleHover()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = _mainCamera.ScreenPointToRay(mousePos);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, _pieceLayer))
-        {
-            IHighlightable hl = hit.collider.GetComponentInParent<IHighlightable>();
-            if (hl != null && hl != _currentHover)
-            {
-                _currentHover?.HighlightOff();
-                _currentHover = hl;
-                _currentHover.HighlightOn();
-            }
-        }
-        else
-        {
-            _currentHover?.HighlightOff();
-            _currentHover = null;
+            HandleRotation();// Handle A/D key rotation
         }
     }
 
@@ -66,7 +40,7 @@ public class PentominoInputHandler : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = _mainCamera.ScreenPointToRay(mousePos);
 
-        if (_currentPicked == null)
+        if (_currentPicked == null) // pick
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _pieceLayer))
             {
@@ -78,27 +52,37 @@ public class PentominoInputHandler : MonoBehaviour
                     pick.PickUp();
 
                     BoardPos[] currentBoardPos = _currentPiece.GetBoardPositions(_currentPiece.Transform.position);
-                    board.SetActiveBoard(currentBoardPos, false);   // 현재 위치 비우기
+                    board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
                 }
             }
         }
-        else
+        else // place
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
             {
                 Vector3 snappedPos = SnapToGrid(hit.point);
                 BoardPos[] tryPositions = _currentPiece.GetBoardPositions(snappedPos);
-                if (board.IsPlace(tryPositions))// 보드에 놓을수잇는지 쳌
+                if (board.IsPlace(tryPositions))// Check if placement is valid
                 {
                     _currentPicked.Place(snappedPos);//
 
-                    board.SetActiveBoard(tryPositions, true);//보드에 정보전달
+                    board.SetActiveBoard(tryPositions, true);// Mark board positions as occupied
 
-                    _currentPicked = null;//
+                    _currentPicked = null;
                     _currentPiece = null;
                 }
-
-                
+                else // 이미 조각이 놓여져있다면
+                {
+                    _currentPiece.ReturnToStart();// Invalid position → return to start
+                    _currentPicked = null;
+                    _currentPiece = null;
+                }
+            }
+            else // 보드 밖에 놓았다면
+            {
+                _currentPiece.ReturnToStart();
+                _currentPicked = null;
+                _currentPiece = null;
             }
         }
     }
@@ -119,20 +103,17 @@ public class PentominoInputHandler : MonoBehaviour
 
     private void HandleRotation()
     {
-        // AŰ ������ �������� 90�� ȸ��
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
-            _currentPiece.RotatePiecePos(false);
-            Debug.Log("");
+            _currentPiece.RotatePiecePos(false);// false == left
         }
 
-        // DŰ ������ ���������� 90�� ȸ��
+        
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);
-            _currentPiece.RotatePiecePos(true);
-            Debug.Log("");
+            _currentPiece.RotatePiecePos(true); // true == right
         }
     }
     private Vector3 SnapToGrid(Vector3 worldPos)
@@ -141,7 +122,5 @@ public class PentominoInputHandler : MonoBehaviour
         float z = Mathf.Round(worldPos.z / _tileSize) * _tileSize;
         return new Vector3(x, 0.01f, z);
     }
-
-
 }
 
