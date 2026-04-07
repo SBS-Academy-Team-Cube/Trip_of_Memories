@@ -8,12 +8,10 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private TypewriterEffect Effect;
     [SerializeField] private TypewriterPlayer DialoguePlayer;
     [SerializeField] private InputActionReference SkipAction;
-
     [SerializeField] private CharacterSelectController Controller;
     [SerializeField] private GameObject[] StoryObjects;
     [SerializeField] private GameObject[] SelectObjects;
     private int Index = 0;
-
     void OnEnable()
     {
         SkipAction.action.performed += OnSkip;
