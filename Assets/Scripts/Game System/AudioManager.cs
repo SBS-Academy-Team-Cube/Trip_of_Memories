@@ -16,7 +16,6 @@ public class AudioManager : Singleton<AudioManager>
         base.Awake();
         UIEventBus.OnAnyButtonClicked += PlayButtonClick;
     }
-
     private void OnDestroy()
     {
         UIEventBus.OnAnyButtonClicked -= PlayButtonClick;
@@ -44,7 +43,10 @@ public class AudioManager : Singleton<AudioManager>
     // ------------------------
     public void PlaySFX(AudioClip Clip)
     {
-        if (Clip == null) return;
+        if (Clip == null)
+        {
+            return;
+        }
         SfxSource.PlayOneShot(Clip);
     }
     private void PlayButtonClick()

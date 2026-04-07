@@ -17,16 +17,11 @@ public class HoverItem : MonoBehaviour
         StartLocalPos = transform.localPosition;
         TimeOffset = Random.Range(0f, 100f);
     }
-    public void UpdateLocalPosition()
-    {
-        StartLocalPos = transform.localPosition;
-    }
     private void Update()
     {
         Hover();
         Rotate();
     }
-
     private void Hover()
     {
         float OffsetY = Mathf.Sin((Time.time + TimeOffset) * Frequency) * Amplitude;

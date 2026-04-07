@@ -11,20 +11,22 @@ public class TutorialTriggerZone : MonoBehaviour
         this.Manager = Manager;
         this.Index = Index;
     }
+
+    public void ResetTrigger()
+    {
+        Triggered = false;
+    }
+
     private void OnTriggerEnter(Collider Other)
     {
         if (Triggered)
-        {
             return;
-        }
+
         if (!Other.CompareTag("Player"))
-        {
             return;
-        }
+
         Triggered = true;
-        if (Manager != null)
-        {
-            Manager.ShowTutorialText(Index);
-        }
+
+        Manager?.ShowTutorialText(Index);
     }
 }

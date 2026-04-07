@@ -25,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             var Target = CurTarget;
             CurTarget = null;
-            if(Target.Interact(gameObject))
+            if (Target.Interact(gameObject))
             {
                 InteractableList.Remove(Target);
             }
@@ -35,11 +35,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        if (!TryGetComponent<SphereCollider>(out PlayerInteractCollider))
+        if (!TryGetComponent(out PlayerInteractCollider))
         {
             PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
         }
-        if (!TryGetComponent<PlayerItemHandler>(out ItemHandler))
+        if (!TryGetComponent(out ItemHandler))
         {
             Debug.Log("Can't Find PlayerItemHandler in PlayerInteraction");
         }
@@ -113,10 +113,10 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
         CurTarget = closest;
-        if(CurTarget != null)
-        { 
+        if (CurTarget != null)
+        {
+            Debug.Log("Player Interaction Invoke Events!");
             OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.GetTransform(), true);
         }
-        Debug.Log("Update curTarget");
     }
 }

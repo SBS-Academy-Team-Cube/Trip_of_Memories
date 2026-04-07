@@ -17,7 +17,6 @@ public class PlayerInputController : MonoBehaviour
             Debug.Log("PlayerInputController.cs - Awake() - movement component not found");
         }
     }
-
     public void OnInteract(InputValue Value)
     {
         if (Value.isPressed)

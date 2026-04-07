@@ -1,17 +1,21 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class CharacterSelectController : MonoBehaviour
 {
     [SerializeField] private Camera MainCamera;
     [SerializeField] private InputActionReference ClickAction;
     [SerializeField] private InputActionReference CancelAction;
-    public System.Action<CharacterSelectable> OnCharacterSelected;
-    private CharacterSelectable CurrentSelected;
-    public System.Action OnSelectionCanceled;
     [SerializeField] private Button ConfirmBtn;
+
+    public Action<CharacterSelectable> OnCharacterSelected;
+    public Action OnSelectionCanceled;
+    public Action<int> OnCharacterConfirmed;
+
+    private CharacterSelectable CurrentSelected;
+
     void OnEnable()
     {
         ClickAction.action.Enable();
@@ -19,9 +23,8 @@ public class CharacterSelectController : MonoBehaviour
 
         CancelAction.action.Enable();
         CancelAction.action.performed += OnCancel;
-
-        // ConfirmBtn.onClick.AddListener(OnSelected);
     }
+
     void OnDisable()
     {
         ClickAction.action.performed -= OnClick;
@@ -29,47 +32,38 @@ public class CharacterSelectController : MonoBehaviour
 
         CancelAction.action.performed -= OnCancel;
         CancelAction.action.Disable();
-
-        // ConfirmBtn.onClick.RemoveListener(OnSelected);
-
     }
 
-    void OnClick(InputAction.CallbackContext Context)
+    void OnClick(InputAction.CallbackContext context)
     {
         TrySelect();
     }
-    void OnCancel(InputAction.CallbackContext Context)
+
+    void OnCancel(InputAction.CallbackContext context)
     {
-        OnSelectionCanceled?.Invoke();
+        CurrentSelected = null;
         ConfirmBtn.interactable = false;
+
+        OnSelectionCanceled?.Invoke();
     }
-    public void OnSelected()
+
+    public void OnConfirmButtonClicked()
     {
-        UIEventBus.OnAnyButtonClicked?.Invoke();
         if (CurrentSelected == null)
         {
-            Debug.Log("There is No Selected Character");
             return;
         }
-        if(SaveManager.Instance == null || GameDirector.Instance == null)
-        {
-            Debug.Log("SaveManager OR GameDirector Instance is NULL");
-            return;
-        }
-        SaveManager.Instance.Data.SelectedCharacterModelIndex = CurrentSelected.MyIndex;
-        SaveManager.Instance.Data.HasPlayed = true;
-        SaveManager.Instance.Save();
-        GameDirector.Instance.LoadScene(3);
+        OnCharacterConfirmed?.Invoke(CurrentSelected.MyIndex);
     }
     void TrySelect()
     {
-        Ray Ray = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (Physics.Raycast(Ray, out RaycastHit HitResult))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (HitResult.collider.TryGetComponent(out CharacterSelectable NewTarget))
+            if (hit.collider.TryGetComponent(out CharacterSelectable newTarget))
             {
-                CurrentSelected = NewTarget;
+                CurrentSelected = newTarget;
                 OnCharacterSelected?.Invoke(CurrentSelected);
                 ConfirmBtn.interactable = true;
             }

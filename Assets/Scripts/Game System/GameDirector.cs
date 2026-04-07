@@ -1,61 +1,115 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
-// Singleton pattern
-// Ensures that only one GameDirector instance exists and provides global access to it
+public enum GameState
+{
+    None,
+    Loading,
+    CharacterSelect,
+    InGame
+}
 public class GameDirector : Singleton<GameDirector>
 {
     public string NextSceneName { get; private set; }
     public int NextSceneIndex { get; private set; }
     public bool bUseSceneName { get; private set; } = true;
+    public GameState CurrentState { get; private set; } = GameState.None;
+    public Action<GameState> OnGameStateChanged;
+
     protected override void Awake()
     {
         base.Awake();
-
-        // GameManager Initialize
-    }
-    private void ShowMouseCursor(bool bShowing)
-    {
-        Cursor.lockState = bShowing ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = bShowing;
-    }
-    public void LoadScene(string SceneName)
-    {
-        NextSceneName = SceneName;
-        bUseSceneName = true;
-        SceneManager.LoadScene("LoadingScene");
-    }
-    public void LoadScene(int SceneIndex)
-    {
-        NextSceneIndex = SceneIndex;
-        bUseSceneName = false;
-        SceneManager.LoadScene("LoadingScene");
-    }
-    public void LoadSceneWithOutLoading(string SceneName)
-    {
-        SceneManager.LoadScene(SceneName);
-    }
-    public void LoadSceneWithOutLoading(int SceneIndex)
-    {
-        SceneManager.LoadScene(SceneIndex);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+
+    public void LoadScene(string sceneName)
     {
-        // 테스트용 하드코딩
-        if (scene.name.Equals("TestScene_LJW"))
+        NextSceneName = sceneName;
+        bUseSceneName = true;
+
+        SetState(GameState.Loading);
+        SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void LoadScene(int sceneIndex)
+    {
+        NextSceneIndex = sceneIndex;
+        bUseSceneName = false;
+
+        SetState(GameState.Loading);
+        SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void LoadSceneWithoutLoading(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadSceneWithoutLoading(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
         {
-            ShowMouseCursor(false);
+            case "CharacterSelectScene":
+                SetState(GameState.CharacterSelect);
+                ShowMouseCursor(true);
+                break;
+
+            case "GameScene":
+                SetState(GameState.InGame);
+                ShowMouseCursor(false);
+                break;
+
+            case "LoadingScene":
+                SetState(GameState.Loading);
+                break;
+
+            default:
+                if (scene.name.StartsWith("Level"))
+                {
+                    ShowMouseCursor(false);
+                    SetState(GameState.InGame); // 필요에 맞게 상태 지정
+                }
+                else
+                {
+                    ShowMouseCursor(true);
+                    SetState(GameState.None);
+                }
+                break;
         }
     }
+
+    public void SetState(GameState newState)
+    {
+        if (CurrentState == newState)
+        {
+            return;
+        }
+        CurrentState = newState;
+        Debug.Log($"[GameDirector] State Changed → {newState}");
+
+        OnGameStateChanged?.Invoke(newState);
+    }
+    private void ShowMouseCursor(bool show)
+    {
+        Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = show;
+    }
+
     public void QuitGame()
     {
 #if UNITY_EDITOR

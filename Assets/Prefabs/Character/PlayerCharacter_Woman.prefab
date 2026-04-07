@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &149313950859892376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4861530654270201679}
+  m_Layer: 0
+  m_Name: Ledge Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4861530654270201679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149313950859892376}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 7.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2306439399861184069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &806615216227952962
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,6 +46,7 @@ GameObject:
   - component: {fileID: 1720477095896354735}
   - component: {fileID: 4559340257370813838}
   - component: {fileID: 994563482210582322}
+  - component: {fileID: 3426081340337445094}
   m_Layer: 0
   m_Name: PlayerCharacter_Woman
   m_TagString: Player
@@ -38,6 +70,7 @@ Transform:
   - {fileID: 2383033465857860344}
   - {fileID: 5617650553871249110}
   - {fileID: 7259566661099167821}
+  - {fileID: 4861530654270201679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &208574213792908035
@@ -89,8 +122,8 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 10
-  m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_Radius: 1.1
+  m_SlopeLimit: 30
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
@@ -107,9 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27e42f47265a984dae00a9189b27965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  MantlingComponent: {fileID: 3426081340337445094}
   CameraPivot: {fileID: 5617650553871249110}
   CameraTransform: {fileID: 0}
-  MoveSpeed: 20
+  MoveSpeed: 15
   RotateSpeed: 15
   Gravity: -50
   JumpForce: 20
@@ -137,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff94aa3a6310a3742a913b7d1bbd85a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  InteractRadius: 3
-  ItemHandler: {fileID: 0}
+  InteractRadius: 7.5
+  ItemHandler: {fileID: 994563482210582322}
 --- !u!114 &994563482210582322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +186,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItmeHandler
   HoldTransform: {fileID: 7259566661099167821}
+--- !u!114 &3426081340337445094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806615216227952962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
+  MantleHeight: 10
+  MantleForwardDistance: 2.5
+  MantleSpeed: 5
+  ForwardDistance: 8
+  LedgeCheckDistance: 10
+  LedgeCheckPosition: {fileID: 4861530654270201679}
 --- !u!1 &6976470407087733932
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +229,7 @@ Transform:
   m_GameObject: {fileID: 6976470407087733932}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0.55}
+  m_LocalPosition: {x: 0, y: 3.5, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 8999521869935126727}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0.11}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

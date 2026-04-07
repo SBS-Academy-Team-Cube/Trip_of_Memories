@@ -10,7 +10,6 @@ public class PickupItem : MonoBehaviour, IInteractable
     {
         return $"E - {itemName} pickup";
     }
-
     public bool Interact(GameObject Interactor)
     {
         if(Interactor.TryGetComponent(out PlayerItemHandler Handler))

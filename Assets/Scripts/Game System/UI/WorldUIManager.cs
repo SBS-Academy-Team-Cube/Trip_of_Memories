@@ -9,28 +9,36 @@ public class WorldUIManager : MonoBehaviour
     [SerializeField] Transform CameraTransform;
     [SerializeField] Vector3 UIOffset = new Vector3(1f, 1f, 0f);
     private Transform UITargetTransfrom;
+    private PlayerInteraction PlayerInteractionComponent;
     private bool bShowing = false;
-    void Start()
+    public void SetPlayerInteraction(PlayerInteraction PlayerInteractionComponent)
     {
-        var PlayerInteraction = FindFirstObjectByType<PlayerInteraction>();
-        if(PlayerInteraction != null)
+        this.PlayerInteractionComponent = PlayerInteractionComponent;
+        if (this.PlayerInteractionComponent != null)
         {
-            PlayerInteraction.OnTargetChanged += ShowWorldUIText;
+            Debug.Log("Event Subscribe Succeed");
+            PlayerInteractionComponent.OnTargetChanged += ShowWorldUIText;
+        }
+    }
+    private void OnDisable()
+    {
+        if (PlayerInteractionComponent != null)
+        {
+            PlayerInteractionComponent.OnTargetChanged -= ShowWorldUIText;
         }
     }
     public void ShowWorldUIText(string Text, Transform TargetTransform, bool bShowing)
     {
         this.bShowing = bShowing;
-        if(!bShowing)
+        if (!bShowing)
         {
             TextUIObject.SetActive(false);
-            return; 
+            return;
         }
         TextUIObject.SetActive(true);
         UIText.text = Text;
         UITargetTransfrom = TargetTransform;
     }
-
     private void LateUpdate()
     {
         if (CameraTransform == null || !bShowing)

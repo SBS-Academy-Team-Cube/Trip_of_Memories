@@ -1,58 +1,70 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public struct DialogueContext
+{
+    public int Index;
+    public string Text;
+}
 
 public class StoryManager : MonoBehaviour
 {
     [SerializeField] private DialogueData Dialogues;
-    [SerializeField] private TypewriterEffect Effect;
-    [SerializeField] private TypewriterPlayer DialoguePlayer;
     [SerializeField] private InputActionReference SkipAction;
-    [SerializeField] private CharacterSelectController Controller;
-    [SerializeField] private GameObject[] StoryObjects;
-    [SerializeField] private GameObject[] SelectObjects;
+    public Action<DialogueContext> OnDialogueChanged;
+    public Action<string> OnSkipRequested;
+    public Action OnDialogueEnd;
+
     private int Index = 0;
+    private bool IsTyping = false;
+
     void OnEnable()
     {
         SkipAction.action.performed += OnSkip;
         SkipAction.action.Enable();
     }
+
     void OnDisable()
     {
         SkipAction.action.performed -= OnSkip;
         SkipAction.action.Disable();
     }
-
     void Start()
     {
         StartDialogue();
-        if (AudioManager.Instance)
-        {
-            AudioManager.Instance.PlayBGM(0);
-        }
     }
 
-    void StartDialogue()
+    public void StartDialogue()
     {
         Index = 0;
         ShowCurrent();
     }
-
     void ShowCurrent()
     {
         if (Index >= Dialogues.Dialogues.Count)
         {
             return;
         }
+        string text = Dialogues.GetText(Index);
+        IsTyping = true;
+        OnDialogueChanged?.Invoke(new DialogueContext
+        {
+            Index = Index,
+            Text = Dialogues.GetText(Index)
+        });
+    }
 
-        DialoguePlayer.Play(Dialogues.GetText(Index), Effect);
+    public void NotifyTypingFinished()
+    {
+        IsTyping = false;
     }
 
     private void OnSkip(InputAction.CallbackContext context)
     {
-        if (DialoguePlayer.IsTyping)
+        if (IsTyping)
         {
-            DialoguePlayer.Skip(Dialogues.GetText(Index));
+            OnSkipRequested?.Invoke(Dialogues.GetText(Index));
         }
         else
         {
@@ -63,22 +75,8 @@ public class StoryManager : MonoBehaviour
             }
             else
             {
-                EndDialogue();
+                OnDialogueEnd?.Invoke();
             }
         }
-    }
-    void EndDialogue()
-    {
-        foreach (var Obj in StoryObjects)
-        {
-            Obj.SetActive(false);
-        }
-        foreach (var Obj in SelectObjects)
-        {
-            Obj.SetActive(true);
-        }
-        DialoguePlayer.enabled = false;
-        Controller.enabled = true;
-        enabled = false;
     }
 }

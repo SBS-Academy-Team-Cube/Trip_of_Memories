@@ -18,19 +18,27 @@ public class TutorialManager : MonoBehaviour
 
     public void ShowTutorialText(int Index)
     {
+        if (CurrentRoutine != null)
+        {
+            StopCoroutine(CurrentRoutine);
+        }
+
         PlayerJumpAction.action.Disable();
         SkipAction.action.Enable();
 
-        Text.SetText(TutorialDialogues. GetText(Index));
+        Text.SetText(TutorialDialogues.GetText(Index));
         TextPanel.SetActive(true);
+
         CurrentRoutine = StartCoroutine(VisibleDuration());
     }
     private IEnumerator VisibleDuration()
     {
         yield return new WaitForSeconds(Duration);
+
         PlayerJumpAction.action.Enable();
         SkipAction.action.Disable();
         TextPanel.SetActive(false);
+        CurrentRoutine = null;
     }
     private void OnEnable()
     {
@@ -48,11 +56,20 @@ public class TutorialManager : MonoBehaviour
     {
         SkipAction.action.performed -= OnSkip;
     }
+    public void ResetTriggers()
+    {
+        foreach (var TriggerZone in Zones)
+        {
+            TriggerZone.ResetTrigger();
+        }
+    }
     void OnSkip(InputAction.CallbackContext Context)
     {
         if (CurrentRoutine != null)
         {
             StopCoroutine(CurrentRoutine);
+            CurrentRoutine = null;
+
             TextPanel.SetActive(false);
             PlayerJumpAction.action.Enable();
             SkipAction.action.Disable();

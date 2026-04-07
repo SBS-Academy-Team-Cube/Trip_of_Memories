@@ -3,13 +3,13 @@ using UnityEngine;
 public class PlayerItemHandler : MonoBehaviour
 {
     [SerializeField] private Transform HoldTransform;
-    
+
     private GameObject HoldingObject;
-    public bool bIsHoldingItem { get; private set; }= false;
+    public bool bIsHoldingItem { get; private set; } = false;
 
     public void HoldItem(GameObject Target)
     {
-        if(Target == null)
+        if (Target == null)
         {
             return;
         }
@@ -17,9 +17,9 @@ public class PlayerItemHandler : MonoBehaviour
         Target.transform.SetParent(HoldTransform, false);
         Target.transform.localPosition = Vector3.zero;
         Target.transform.localRotation = Quaternion.identity;
-        if(Target.TryGetComponent(out HoverItem HoverComponent))
+        if (Target.TryGetComponent(out HoverItem HoverComponent))
         {
-            HoverComponent.UpdateLocalPosition();
+            Destroy(HoverComponent);
         }
 
         if (Target.TryGetComponent<Rigidbody>(out var RB))
@@ -36,23 +36,22 @@ public class PlayerItemHandler : MonoBehaviour
 
     public void DropItem()
     {
-        if(!bIsHoldingItem || HoldingObject == null)
+        if (!bIsHoldingItem || HoldingObject == null)
         {
             return;
         }
-        HoldingObject.transform.SetParent(null);
+        HoldingObject.transform.SetParent(null, true);
         if (HoldingObject.TryGetComponent<Rigidbody>(out var RB))
         {
             RB.isKinematic = false;
             RB.useGravity = true;
-            RB.AddForce(transform.forward * 2f, ForceMode.Impulse);
+            RB.AddForce(transform.forward * 50f, ForceMode.Impulse);
         }
-
-        // 콜라이더 복구
         if (HoldingObject.TryGetComponent<Collider>(out var Collider))
         {
             Collider.enabled = true;
         }
+
         HoldingObject = null;
         bIsHoldingItem = false;
     }
