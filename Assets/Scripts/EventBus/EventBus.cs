@@ -3,16 +3,10 @@ using UnityEngine;
 
 public static class EventBus
 {
-    public static event Action<GameObject> LeverOn;
+    public static event Action PentominoClear;
 
-    public static event Action<GameObject> LeverOff;
-
-    public static void PublishLeverOn(GameObject lever)
+    public static void PublishPentominoClear()
     {
-        LeverOn?.Invoke(lever);
-    }
-    public static void PublishLeverOff(GameObject lever)
-    {
-        LeverOff?.Invoke(lever);
+        PentominoClear?.Invoke();
     }
 }

@@ -70,6 +70,8 @@ public class PentominoInputHandler : MonoBehaviour
 
                     _currentPicked = null;
                     _currentPiece = null;
+
+                    board.IsGameClearCheck();// Game Clear Check;
                 }
                 else // 이미 조각이 놓여져있다면
                 {
