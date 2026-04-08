@@ -74,6 +74,15 @@ public class PentominoBoard : MonoBehaviour
         return true;
     }
 
+    public void IsGameClearCheck()
+    {
+        foreach(bool InPlace in board)
+        {
+            if (!InPlace)
+                return;
+        }
+        EventBus.PublishPentominoClear();
+    }
     public void DebugBoard()
     {
         Debug.Log("========== board  ==========");
