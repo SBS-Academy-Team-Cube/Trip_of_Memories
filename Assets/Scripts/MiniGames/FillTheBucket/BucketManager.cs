@@ -37,7 +37,10 @@ public class BucketManager : MonoBehaviour
 
     private void SelectBucket(IBucket bucket)// Save the last selected bucket
     {
-        if (bucket == null) return;
+        if (bucket == null) 
+        {
+            return;
+        }
         PrevBucket = CurBucket;
         CurBucket = bucket;
     }
