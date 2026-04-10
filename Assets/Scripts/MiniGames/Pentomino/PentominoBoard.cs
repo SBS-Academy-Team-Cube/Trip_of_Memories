@@ -9,8 +9,11 @@ public struct BoardPos
 
 public class PentominoBoard : MonoBehaviour
 {
-    private int width = 10;
-    private int height = 6;
+    [SerializeField] private int width = 10;
+    [SerializeField] private int height = 6;
+    [SerializeField] private int zeroPosWorldX = -4;
+    [SerializeField] private int zeroPosWorldZ = -3;
+    [SerializeField] private BoardPos[] NotValidPos;
 
     private bool[,] board;
 
@@ -23,9 +26,23 @@ public class PentominoBoard : MonoBehaviour
     private void InitBoard()
     {
         board = new bool[width, height];
-        zeroPos.x = 4;
-        zeroPos.y = 3;
+        zeroPos.x = -zeroPosWorldX;
+        zeroPos.y = -zeroPosWorldZ;
+        SetStartBoard(NotValidPos);
         DebugBoard();
+    }
+    private void SetStartBoard(BoardPos[] notValidPos)
+    {
+        if(notValidPos != null && notValidPos.Length != 0)
+        {
+            foreach (BoardPos pos in notValidPos)
+            {
+                if (width < pos.x && height < pos.y)
+                    return;
+                board[pos.x, pos.y] = true;
+            }
+        }
+
     }
     private BoardPos PosToBoardPos(BoardPos pos)// Convert world coordinate to array index
     {
