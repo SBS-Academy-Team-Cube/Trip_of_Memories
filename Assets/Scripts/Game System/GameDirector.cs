@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.InputSystem;
 
 public enum GameState
 {
@@ -17,6 +18,8 @@ public class GameDirector : Singleton<GameDirector>
     public GameState CurrentState { get; private set; } = GameState.None;
     public Action<GameState> OnGameStateChanged;
 
+    public InputActionReference SlowModeAction;
+    private bool bSlowMode;
     protected override void Awake()
     {
         base.Awake();
@@ -25,11 +28,19 @@ public class GameDirector : Singleton<GameDirector>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SlowModeAction.action.performed += SlowMode;
+        SlowModeAction.action.Enable();
     }
-
+    private void SlowMode(InputAction.CallbackContext Context)
+    {
+        bSlowMode = !bSlowMode;
+        Time.timeScale = bSlowMode ? .25f : 1.0f;
+    }
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        SlowModeAction.action.performed -= SlowMode;
+        SlowModeAction.action.Disable();
     }
 
     public void LoadScene(string sceneName)

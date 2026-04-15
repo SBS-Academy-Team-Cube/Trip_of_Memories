@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 1720477095896354735}
   - component: {fileID: 4559340257370813838}
   - component: {fileID: 994563482210582322}
-  - component: {fileID: 3426081340337445094}
   m_Layer: 0
   m_Name: PlayerCharacter_Woman
   m_TagString: Player
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27e42f47265a984dae00a9189b27965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  MantlingComponent: {fileID: 3426081340337445094}
+  MantlingComponent: {fileID: 4451607833548586068}
   CameraPivot: {fileID: 5617650553871249110}
   CameraTransform: {fileID: 0}
   MoveSpeed: 15
@@ -186,24 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItmeHandler
   HoldTransform: {fileID: 7259566661099167821}
---- !u!114 &3426081340337445094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806615216227952962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  MantleHeight: 10
-  MantleForwardDistance: 2.5
-  MantleSpeed: 5
-  ForwardDistance: 8
-  LedgeCheckDistance: 10
-  LedgeCheckPosition: {fileID: 4861530654270201679}
 --- !u!1 &6976470407087733932
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +321,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 655b9334884d70a40b78460e50c77848, type: 2}
     - target: {fileID: 5866666021909216657, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -349,6 +330,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5096938628360370510}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1615228842604371803}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4451607833548586068}
   m_SourcePrefab: {fileID: 100100000, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
 --- !u!4 &2383033465857860344 stripped
 Transform:
@@ -372,3 +359,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1275952e56f8dcd42a5fa14b7c869db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+--- !u!114 &1615228842604371803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3051730683008596034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333c43336336dd445a535b9c2ac3ab8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  FootStepClips:
+  - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
+  - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
+  - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
+  - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
+  - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
+  - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
+  - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
+  - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
+  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
+  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
+--- !u!114 &4451607833548586068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3051730683008596034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
+  MantleHeight: 15
+  ForwardDistance: 5
+  LedgeCheckDistance: 12
+  Animation: {fileID: 5096938628360370510}
+  animator: {fileID: 8642988893608523906}
+  Controller: {fileID: 7739686119722865457}
+--- !u!95 &8642988893608523906 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+  m_PrefabInstance: {fileID: 2781119223100736787}
+  m_PrefabAsset: {fileID: 0}
