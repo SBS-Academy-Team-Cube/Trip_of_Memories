@@ -1,80 +1,90 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
 public class BucketManager : MonoBehaviour
 {
-    [Header("BucketButton")]
-    [SerializeField] private Button Button_3L;
-    [SerializeField] private Button Button_7L;
-    [SerializeField] private Button Button_5L;
-
     [Header("Bucket")]
     [SerializeField] private Bucket Bucket_3L;
     [SerializeField] private Bucket Bucket_7L;
     [SerializeField] private Bucket Bucket_5L;
+    [SerializeField] private BucketUIManager UI;
 
-    [SerializeField] private WaterGameManager BucketGameManager;
+    [Header("UI Input")]
+    [SerializeField] private InputActionReference CancelAction;
 
-    private IBucket CurBucket = null;
-    private IBucket PrevBucket = null;
-
-    private void Awake()
-    {
-        Button_3L.onClick.AddListener(() => SelectBucket(Bucket_3L));
-        Button_5L.onClick.AddListener(() => SelectBucket(Bucket_5L));
-        Button_7L.onClick.AddListener(() => SelectBucket(Bucket_7L));
-
-        Bucket_5L.ClearEvent.AddListener(() => GameClear());
-        Bucket_5L.FailEvent.AddListener(() => ResetGame());
-    }
-
+    private Bucket SourceBucket = null;
+    private Bucket TargetBucket = null;
     public void Init()
     {
-        Bucket_3L.Init();
-        Bucket_7L.Init();
-        Bucket_5L.Init();
+        Bucket_3L.Reset();
+        Bucket_7L.Reset();
+        Bucket_5L.Reset();
     }
-
-    private void SelectBucket(IBucket bucket)// Save the last selected bucket
+    public void Reset()
     {
-        if (bucket == null) 
+        if (SourceBucket != null)
         {
-            return;
+            SourceBucket.PickDownBucket();
+            SourceBucket = null;
         }
-        PrevBucket = CurBucket;
-        CurBucket = bucket;
+        Init();
     }
-
+    private void OnEnable()
+    {
+        CancelAction.action.performed += OnCancel;
+        CancelAction.action.Enable();
+    }
+    private void OnDisable()
+    {
+        CancelAction.action.performed -= OnCancel;
+        CancelAction.action.Disable();
+    }
+    public void OnBucketSelected(Bucket SelectedBucket)
+    {
+        if (SourceBucket == null)
+        {
+            SourceBucket = SelectedBucket;
+            SourceBucket.PickUpBucket();
+        }
+        else if (TargetBucket == null)
+        {
+            TargetBucket = SelectedBucket;
+            if (SourceBucket.CurrentAmount == 0)
+            {
+                UI.ShowPopup("옮길 양동이가 비어있습니다!");
+                TargetBucket.EnableButton();
+                TargetBucket = null;
+                SourceBucket.PickDownBucket();
+                SourceBucket = null;
+                return;
+            }
+            else if (!TargetBucket.CanFill(SourceBucket.CurrentAmount))
+            {
+                UI.ShowPopup("해당 양동이에는 물을 채울 수 없습니다!");
+                TargetBucket.EnableButton();
+                TargetBucket = null;
+            }
+            else
+            {
+                SourceBucket.DoPouring(TargetBucket);
+                SourceBucket = null;
+                TargetBucket = null;
+            }
+        }
+    }
+    private void OnCancel(InputAction.CallbackContext Context)
+    {
+        if (SourceBucket != null)
+        {
+            SourceBucket.PickDownBucket();
+            SourceBucket = null;
+        }
+    }
     public void FillBucket()
     {
-        if (CurBucket == null || !CurBucket.CanBeFilled) return;// 5L and 7L buckets cannot be filled
-
-        CurBucket.SetWaterAmount(CurBucket.MaxCapacity());
-    }
-
-    public void EmptyBucket()
-    {
-        if (CurBucket == null) return;
-        CurBucket.SetWaterAmount(0f);
-    }
-
-    public void MoveWater()
-    {
-        if (CurBucket == null || PrevBucket == null) return;
-
-        // Fill with water and get the actual amount filled
-        float temp = CurBucket.AddWater(PrevBucket.CurrentWater());
-        // Remove as much as was filled
-        PrevBucket.AddWater(-temp);
-
-    }
-
-    private void GameClear()
-    {
-        BucketGameManager.GameClear();
-    }
-    private void ResetGame()
-    {
-        BucketGameManager.GameReset();
+        if (Bucket_3L != null && Bucket_3L.CurrentAmount != 3)
+        {
+            Bucket_3L.Fill(3);
+        }
     }
 }

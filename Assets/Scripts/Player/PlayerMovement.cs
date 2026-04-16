@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
-        if(!Controller.enabled)
+        if (!Controller.enabled)
         {
             return;
         }
@@ -70,21 +70,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void TryJump(InputValue Value)
     {
-        if (Value.isPressed) 
+        if (Value.isPressed)
         {
-            if(Controller.isGrounded)
+            if (Controller.isGrounded)
             {
                 Velocity.y = JumpForce;
                 Animation.SetJump();
             }
             else
             {
-                if(MantlingComponent)
+                if (MantlingComponent)
                 {
-                    if(MantlingComponent.CanMantling())
-                    {
-                        Animation.SetMantling();
-                    }
+                    MantlingComponent.DoMantling();
+                    // if (MantlingComponent.CanMantling())
+                    // {
+                    //     Animation.SetMantling();
+                    // }
                 }
             }
         }

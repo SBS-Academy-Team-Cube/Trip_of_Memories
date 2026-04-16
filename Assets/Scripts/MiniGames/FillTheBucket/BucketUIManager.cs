@@ -1,66 +1,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
+using System.Collections;
 public class BucketUIManager : MonoBehaviour
 {
-    [Header("Button")]
-    [SerializeField] private Button HowOpenButton;
-    [SerializeField] private Button PrevButton;
-    [SerializeField] private Button NextButton;
-    [SerializeField] private Button HowExitButton;
+    [Header("How to play")]
+    [SerializeField] private GameObject HowToPanel;
+    [SerializeField] private TextMeshProUGUI HowToText;
+    [SerializeField] private DialogueData Dialogue;
+    [Header("PopUp")]
+    [SerializeField] private GameObject PopupPanel;
+    [SerializeField] private TextMeshProUGUI PopupText;
 
-    [Header("UI canvas")]
-    [SerializeField] private GameObject Panel;
-    [SerializeField] private List<Canvas> Canvases;
-
-
-    private int CurPageIndex = 0;
-
-    private void Awake()
+    public int Index = 0;
+    public void ShowPopup(string Text)
     {
-        HowOpenButton.onClick.AddListener(OpenHowToPlay);
-        PrevButton.onClick.AddListener(PrevPage);
-        NextButton.onClick.AddListener(NextPage);
-        HowExitButton.onClick.AddListener(CloseHowToPlay);
-        Panel.SetActive(false);
+        StopAllCoroutines();
+        PopupText.text = Text;
+        StartCoroutine(ShowingPopupRoutine());
     }
-
-    private void OpenHowToPlay()
+    private IEnumerator ShowingPopupRoutine()
     {
-        CloseAllCanvas();
-        CurPageIndex = 0;
-        if(Canvases.Count > 0)
-            Canvases[CurPageIndex].gameObject.SetActive(true);
-        Panel.SetActive(true);
+        PopupPanel.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        PopupPanel.SetActive(false);
     }
-    private void PrevPage()
+    public void OnButtonClicked()
     {
-        if (CurPageIndex <= 0)
-            return;
-        Canvases[CurPageIndex--].gameObject.SetActive(false);
-        Canvases[CurPageIndex].gameObject.SetActive(true);
-
+        UIEventBus.OnAnyButtonClicked?.Invoke();
     }
-    private void NextPage()
+    public void bShowingHowToPanel(bool bShowing)
     {
-        if (CurPageIndex >= Canvases.Count - 1)
-            return;
-        Canvases[CurPageIndex++].gameObject.SetActive(false);
-        Canvases[CurPageIndex].gameObject.SetActive(true);
-    }
-    private void CloseHowToPlay()
-    {
-        Panel.SetActive(false);
-    }
-    private void CloseAllCanvas()
-    {
-        foreach(var canvas in Canvases)
+        if (bShowing)
         {
-            if(canvas != null)
-            {
-                canvas.gameObject.SetActive(false);
-            }
+            HowToText.text = Dialogue.GetText(Index);
+            HowToPanel.SetActive(true);
+        }
+        else
+        {
+            HowToPanel.SetActive(false);
+            Index = 0;
+        }
+    }
+    public void Next(int AddIndex)
+    {
+        Index += AddIndex;
+        if (Index < 0)
+        {
+            Index = 0;
+        }
+        else if (Index > Dialogue.Dialogues.Count)
+        {
+            Index = Dialogue.Dialogues.Count - 1;
+        }
+        else
+        {
+            HowToText.text = Dialogue.GetText(Index);
         }
     }
 }

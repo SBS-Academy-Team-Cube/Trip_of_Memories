@@ -1,9 +1,11 @@
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Bucket : MonoBehaviour, IBucket
+[Serializable]
+public class Bucket : MonoBehaviour
 {
     [Header("Sprite")]
     [SerializeField] private Image TargetImage;
@@ -16,78 +18,153 @@ public class Bucket : MonoBehaviour, IBucket
     [SerializeField] private TextMeshProUGUI Text;
 
     [Header("Setting")]
-    [SerializeField] private int maxCapacity = 3;     
-    [SerializeField] private bool canBeFilled = true;     // 3L is true
+    [SerializeField] private int MaxCapacity = 3;
+    [SerializeField] public bool canBeFilled;
     public bool CanBeFilled => canBeFilled;
-    [SerializeField] private bool isOverflowSensitive = false; // 5L is true
+    [SerializeField] private bool bOverflowSensitive;
 
-    private int currentWater = 0;
-    
-    public UnityEvent FailEvent = new UnityEvent();
-    public UnityEvent ClearEvent = new UnityEvent();
+    [Header("Sound")]
+    [SerializeField] private AudioClip WaterSound;
 
-    public int MaxCapacity() => maxCapacity;
-    public int CurrentWater() => currentWater;
-    
-
-    public void Init()
+    private Button Btn;
+    private RectTransform Rect;
+    private Vector2 InitialPosition;
+    public Vector2 PickupPosition;
+    public float SpriteHalfWidth;
+    private Coroutine CurrentCoroutine = null;
+    public int CurrentAmount = 0;
+    public void EnableButton()
     {
-        currentWater = 0;
-        UpdateFill();
-    }
-
-    public bool CanFill()
-    {
-        return currentWater != maxCapacity; 
-    }
-
-    // public void Fill(out int OutAmount)
-    // {
-    //     int AcceptableAmount = OutAmount - (maxCapacity - currentWater);
-    //     currentWater += AcceptableAmount;
-    //     UpdateFill();
-    //     OutAmount -= AcceptableAmount;
-    // }
-
-    public void SetWaterAmount(float amount)
-    {
-        // currentWater = Math.Clamp(amount, 0, maxCapacity);
-        // UpdateFill();
-    }
-
-    public void OnSelected(int MyIndex)
-    {
-        
-    }
-    
-    public float AddWater(float amount)
-    {
-        // If water overflows in the 5L bucket, trigger failure event
-        if (isOverflowSensitive && (currentWater + amount > maxCapacity))
+        if (Btn != null)
         {
-            FailEvent.Invoke();
-            return 0f;
+            Btn.enabled = true;
         }
-        float oldAmount = currentWater;
-        // currentWater = Mathf.Clamp(currentWater + amount, 0f, maxCapacity);
-        float actuallyAdded = currentWater - oldAmount;
+    }
+    private void Awake()
+    {
+        if (!TryGetComponent(out Rect))
+        {
+            Debug.Log("Can't Find RectTransform in Bucket");
+        }
+        if (!TryGetComponent(out Btn))
+        {
+            Debug.Log("Can't Find Button in Bucket");
+        }
+        InitialPosition = Rect.anchoredPosition;
+        PickupPosition = InitialPosition + Vector2.up * 300f;
+        SpriteHalfWidth = Rect.rect.width / 2f;
+    }
+    public void Reset()
+    {
+        CurrentAmount = 0;
+        Btn.enabled = true;
+        UpdateSprite(EmptySprite);
+        UpdateText();
+    }
+    public bool CanFill(int AddAmount)
+    {
+        return bOverflowSensitive
+            ? CurrentAmount + AddAmount <= MaxCapacity
+            : CurrentAmount < MaxCapacity;
+    }
+    public int Fill(int AddAmount)
+    {
+        int Space = MaxCapacity - CurrentAmount;
+        int AddedAmount = Math.Min(Space, AddAmount);
 
-        UpdateFill();
-        // If the 5L bucket is exactly full with water, trigger clear event
-        if (isOverflowSensitive && currentWater == maxCapacity)
-            ClearEvent.Invoke();
-        return actuallyAdded;   // Return the actual distance moved
+        CurrentAmount += AddedAmount;
+
+        if (AudioManager.Instance != null && WaterSound != null)
+        {
+            AudioManager.Instance.PlaySFX(WaterSound);
+        }
+        UpdateSprite(GetBucketStateSprite());
+        UpdateText();
+        EnableButton();
+        return AddAmount - AddedAmount;
+    }
+    public void PickUpBucket()
+    {
+        StopCurrentCoroutine();
+        CurrentCoroutine = StartCoroutine(
+            MoveTo(PickupPosition, 0.25f)
+        );
+    }
+    public void PickDownBucket()
+    {
+        StopCurrentCoroutine();
+        CurrentCoroutine = StartCoroutine(
+            MoveTo(InitialPosition, 0.25f)
+        );
+        EnableButton();
+    }
+    public void DoPouring(Bucket TargetBucket)
+    {
+        StopCurrentCoroutine();
+        Vector2 TargetPosition = TargetBucket.PickupPosition;
+        TargetPosition.x += Rect.localScale.x * SpriteHalfWidth;
+
+        CurrentCoroutine = StartCoroutine(
+            DoPouringRoutine(TargetPosition, TargetBucket)
+        );
+    }
+    private IEnumerator DoPouringRoutine(Vector2 TargetPosition, Bucket TargetBucket)
+    {
+        yield return MoveTo(TargetPosition, 0.25f);
+        yield return Pouring(TargetBucket);
+        yield return MoveTo(PickupPosition, 0.25f);
+        yield return MoveTo(InitialPosition, 0.25f);
+        EnableButton();
+    }
+    private IEnumerator Pouring(Bucket targetBucket)
+    {
+        UpdateSprite(PouringSprite);
+        CurrentAmount = targetBucket.Fill(CurrentAmount);
+        yield return new WaitForSeconds(0.3f);
+        UpdateSprite(GetBucketStateSprite());
+        UpdateText();
     }
 
-    private void UpdateFill() // Update image, text
+    private IEnumerator MoveTo(Vector2 Target, float Duration)
     {
-        if (TargetImage != null)
+        Vector2 Start = Rect.anchoredPosition;
+        float time = 0f;
+
+        while (time < Duration)
         {
-            TargetImage.fillAmount = currentWater / maxCapacity;
+            time += Time.deltaTime;
+            float t = time / Duration;
+
+            Rect.anchoredPosition = Vector2.Lerp(Start, Target, t);
+            yield return null;
         }
-        if(Text != null)
+        Rect.anchoredPosition = Target;
+    }
+    private void StopCurrentCoroutine()
+    {
+        if (CurrentCoroutine != null)
         {
-            Text.text = currentWater.ToString() + " L";
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
         }
+    }
+    private void UpdateSprite(Sprite targetSprite)
+    {
+        if (TargetImage != null && targetSprite != null)
+        {
+            TargetImage.sprite = targetSprite;
+        }
+    }
+    private Sprite GetBucketStateSprite()
+    {
+        return CurrentAmount == 0
+            ? EmptySprite
+            : CurrentAmount == MaxCapacity
+                ? FullFilledSprite
+                : FilledSprite;
+    }
+    private void UpdateText()
+    {
+        Text.text = $"{CurrentAmount}L / {MaxCapacity}L";
     }
 }

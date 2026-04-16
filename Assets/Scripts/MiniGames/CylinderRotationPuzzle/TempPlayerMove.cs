@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class TempPlayerMove : MonoBehaviour
 {
-    [Header("ÀÌµ¿ ¼³Á¤ (ÀÓ½Ã Å×½ºÆ®¿ë)")]
+    [Header("ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ó½ï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½)")]
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float gravity = -20f;
 
@@ -19,16 +19,16 @@ public class TempPlayerMove : MonoBehaviour
 
         if (controller == null)
         {
-            Debug.LogError("TempPlayerMove: CharacterController°¡ ¾ø½À´Ï´Ù!");
+            Debug.LogError("TempPlayerMove: CharacterControllerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
         }
     }
 
-    // ¡ç PlayerInputController°¡ È£ÃâÇÏ´Â ÇÔ¼ö (ÀÌ¸§À» TryMove·Î ¸ÂÃã)
+    // ï¿½ï¿½ PlayerInputControllerï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½ (ï¿½Ì¸ï¿½ï¿½ï¿½ TryMoveï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     public void TryMove(InputValue value)
     {
         if (value != null)
         {
-            moveInput = value.Get<Vector2>();   // WASD ÀÔ·Â°ª ÀúÀå
+            moveInput = value.Get<Vector2>();   // WASD ï¿½Ô·Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -36,13 +36,13 @@ public class TempPlayerMove : MonoBehaviour
     {
         if (controller == null) return;
 
-        // ¼öÆò ÀÌµ¿ ¹æÇâ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3 moveDirection = transform.right * moveInput.x +
                                 transform.forward * moveInput.y;
 
         moveDirection *= moveSpeed;
 
-        // Áß·Â Ã³¸®
+        // ï¿½ß·ï¿½ Ã³ï¿½ï¿½
         if (controller.isGrounded && verticalVelocity.y < 0)
         {
             verticalVelocity.y = -2f;
@@ -52,11 +52,11 @@ public class TempPlayerMove : MonoBehaviour
             verticalVelocity.y += gravity * Time.deltaTime;
         }
 
-        // ½ÇÁ¦ ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         controller.Move((moveDirection + verticalVelocity) * Time.deltaTime);
     }
 
-    // ³ªÁß¿¡ ÇÊ¿äÇÏ¸é ¼Óµµ º¯°æ¿ë
+    // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ê¿ï¿½ï¿½Ï¸ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public void SetMoveSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;
