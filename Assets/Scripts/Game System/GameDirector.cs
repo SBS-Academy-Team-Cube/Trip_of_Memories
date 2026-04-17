@@ -28,8 +28,11 @@ public class GameDirector : Singleton<GameDirector>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SlowModeAction.action.performed += SlowMode;
-        SlowModeAction.action.Enable();
+        if (SlowModeAction)
+        {
+            SlowModeAction.action.performed += SlowMode;
+            SlowModeAction.action.Enable();
+        }
     }
     private void SlowMode(InputAction.CallbackContext Context)
     {
@@ -39,8 +42,11 @@ public class GameDirector : Singleton<GameDirector>
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SlowModeAction.action.performed -= SlowMode;
-        SlowModeAction.action.Disable();
+        if (SlowModeAction)
+        {
+            SlowModeAction.action.performed -= SlowMode;
+            SlowModeAction.action.Disable();
+        }
     }
 
     public void LoadScene(string sceneName)

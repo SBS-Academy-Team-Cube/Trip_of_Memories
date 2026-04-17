@@ -6,13 +6,9 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [Header("Setting")]
-    [SerializeField] private float InteractRadius = 3.0f;
-
-    private SphereCollider PlayerInteractCollider;
-    [SerializeField] private IInteractable CurTarget;
-    [SerializeField] private List<IInteractable> InteractableList;
     [SerializeField] private PlayerItemHandler ItemHandler;
+    private IInteractable CurTarget;
+    private List<IInteractable> InteractableList;
     public System.Action<string, Transform, bool> OnTargetChanged;
     public void PerformInteraction()
     {
@@ -35,16 +31,6 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        if (!TryGetComponent(out PlayerInteractCollider))
-        {
-            PlayerInteractCollider = gameObject.AddComponent<SphereCollider>();
-        }
-        if (!TryGetComponent(out ItemHandler))
-        {
-            Debug.Log("Can't Find PlayerItemHandler in PlayerInteraction");
-        }
-        PlayerInteractCollider.radius = InteractRadius;
-        PlayerInteractCollider.isTrigger = true;
         InteractableList = new List<IInteractable>();
     }
 
@@ -115,7 +101,6 @@ public class PlayerInteraction : MonoBehaviour
         CurTarget = closest;
         if (CurTarget != null)
         {
-            Debug.Log("Player Interaction Invoke Events!");
             OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.GetTransform(), true);
         }
     }

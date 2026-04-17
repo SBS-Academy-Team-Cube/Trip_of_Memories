@@ -1,21 +1,20 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
-    private PlayerInteraction Interaction;
-    private PlayerMovement Movement;
-
-    private void Awake()
+    [SerializeField] private PlayerInteraction Interaction;
+    [SerializeField] private PlayerMovement Movement;
+    [SerializeField] private PlayerRopeHandler RopeHandler;
+    [SerializeField] private PlayerInput Input;
+    public void OnHangingRope(bool bHanging)
     {
-        if (!TryGetComponent<PlayerInteraction>(out Interaction))
+        if (Movement)
         {
-            Debug.Log("PlayerInputController.cs - Awake() - interaction component not found");
+            Movement.enabled = !bHanging;
         }
-        if (!TryGetComponent<PlayerMovement>(out Movement))
-        {
-            Debug.Log("PlayerInputController.cs - Awake() - movement component not found");
-        }
+        Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
     }
     public void OnInteract(InputValue Value)
     {
@@ -36,7 +35,7 @@ public class PlayerInputController : MonoBehaviour
     {
         if (Movement != null)
         {
-            Movement.TryMove(Value);
+            Movement.TryMove(Value.Get<Vector2>());
         }
     }
     public void OnJump(InputValue Value)
@@ -51,6 +50,13 @@ public class PlayerInputController : MonoBehaviour
         if (Movement != null)
         {
             Movement.TryLook(Value);
+        }
+    }
+    public void OnHangMove(InputValue Value)
+    {
+        if (RopeHandler)
+        {
+            RopeHandler.TryMove(Value.Get<Vector2>());
         }
     }
 }

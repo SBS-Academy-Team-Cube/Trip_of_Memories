@@ -16,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
     public Vector2 LookInput { get; private set; }
+    private bool bAddGravity = true;
+    public void SetGravity(bool bUse)
+    {
+        bAddGravity = bUse;
+    }
     void Awake()
     {
         Controller = GetComponent<CharacterController>();
@@ -45,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
         move = Vector3.ClampMagnitude(move, 1f);
-
+        
         Controller.Move(MoveSpeed * Time.deltaTime * move);
 
         if (move.sqrMagnitude > 0.01f)
@@ -57,14 +62,15 @@ public class PlayerMovement : MonoBehaviour
                 RotateSpeed * Time.deltaTime
             );
         }
-
-        Velocity.y += Gravity * Time.deltaTime;
-        Controller.Move(Velocity * Time.deltaTime);
+        if (bAddGravity)
+        {
+            Velocity.y += Gravity * Time.deltaTime;
+            Controller.Move(Velocity * Time.deltaTime);
+        }
     }
-
-    public void TryMove(InputValue Value)
+    public void TryMove(Vector2 Value)
     {
-        MoveInput = Value.Get<Vector2>();
+        MoveInput = Value;
         Animation.SetSpeed(MoveInput.magnitude);
     }
 

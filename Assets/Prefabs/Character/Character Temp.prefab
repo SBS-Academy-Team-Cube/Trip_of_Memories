@@ -212,7 +212,13 @@ PrefabInstance:
       addedObject: {fileID: 7334396707211543405}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 9024614904516683248}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2318022901703432567}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5360611442987421318}
   m_SourcePrefab: {fileID: 100100000, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
 --- !u!4 &3151114141718562898 stripped
 Transform:
@@ -330,6 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdceb8e4083954ba5d0d472c2d830e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  Interaction: {fileID: 9185866364956423608}
+  Movement: {fileID: 8553743802489497636}
+  RopeHandler: {fileID: 9024614904516683248}
+  Input: {fileID: 2108751898320858363}
 --- !u!114 &9185866364956423608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff94aa3a6310a3742a913b7d1bbd85a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  InteractRadius: 7.5
   ItemHandler: {fileID: 3760809002685592628}
 --- !u!114 &3760809002685592628
 MonoBehaviour:
@@ -375,6 +384,35 @@ MonoBehaviour:
   Animation: {fileID: 174198477460986818}
   animator: {fileID: 3684796208967424526}
   Controller: {fileID: 2318022901703432567}
+--- !u!114 &9024614904516683248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964891751170710222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcdfdabb24f860f4fb2aa35dcbbe4ea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRopeHandler
+  OnEnterHanging:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2487616305228420971}
+        m_TargetAssemblyTypeName: PlayerInputController, Assembly-CSharp
+        m_MethodName: OnHangingRope
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Controller: {fileID: 2318022901703432567}
+  Speed: 10
 --- !u!143 &2318022901703432567
 CharacterController:
   m_ObjectHideFlags: 0
@@ -400,3 +438,24 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!135 &5360611442987421318
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964891751170710222}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0.5, z: 0}
