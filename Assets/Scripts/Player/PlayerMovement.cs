@@ -83,16 +83,13 @@ public class PlayerMovement : MonoBehaviour
                 Velocity.y = JumpForce;
                 Animation.SetJump();
             }
-            else
+            else if (MantlingComponent)
             {
-                if (MantlingComponent)
-                {
-                    MantlingComponent.DoMantling();
-                    // if (MantlingComponent.CanMantling())
-                    // {
-                    //     Animation.SetMantling();
-                    // }
-                }
+                MantlingComponent.DoMantling();
+                // if (MantlingComponent.CanMantling())
+                // {
+                //     Animation.SetMantling();
+                // }
             }
         }
     }

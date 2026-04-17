@@ -14,9 +14,10 @@ public class PlayerItemHandler : MonoBehaviour
             return;
         }
         HoldingObject = Target;
-        Target.transform.SetParent(HoldTransform, false);
-        Target.transform.localPosition = Vector3.zero;
-        Target.transform.localRotation = Quaternion.identity;
+        Target.transform.SetParent(HoldTransform, true); // ← true로 변경
+        Target.transform.position = HoldTransform.position;
+        // Target.transform.localPosition = Vector3.zero;
+        // Target.transform.localRotation = Quaternion.identity;
         if (Target.TryGetComponent(out HoverItem HoverComponent))
         {
             Destroy(HoverComponent);
@@ -51,7 +52,6 @@ public class PlayerItemHandler : MonoBehaviour
         {
             Collider.enabled = true;
         }
-
         HoldingObject = null;
         bIsHoldingItem = false;
     }

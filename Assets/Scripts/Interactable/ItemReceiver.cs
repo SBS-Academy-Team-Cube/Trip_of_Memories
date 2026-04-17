@@ -1,48 +1,47 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
-public class ItemRecevier : MonoBehaviour
+public class ItemReceiver : MonoBehaviour
 {
-    private Collider Collider;
+    [SerializeField] private Collider TriggerZone;
     [SerializeField] GameObject TargetItem;
     [SerializeField] Vector3 ItemFixPosition;
-    [SerializeField] List<Mover> Movers;
     [SerializeField] float Duration = 0.3f;
-    private void Awake()
-    {
-        if(!TryGetComponent(out Collider))
-        {
-            Debug.Log("Can not find Collider in Item Receiver");
-        }
-    }
+    public UnityEvent OnItemRecevied;
     private void OnTriggerEnter(Collider Other)
     {
         if(Other.gameObject == TargetItem)
         {
-            StartCoroutine(FixItem(Other.transform));
-            foreach (var Mover in Movers)
+            TriggerZone.enabled = false;
+            if(TargetItem.TryGetComponent(out Rigidbody Rb))
             {
-                Mover.Open();
+                Rb.isKinematic = true;
+                Rb.useGravity = false;
             }
+            if(TargetItem.TryGetComponent(out Collider Collider))
+            {
+                Collider.enabled = false;
+            }
+            OnItemRecevied?.Invoke();
+            StartCoroutine(FixItem(Other.gameObject.transform));
         }
     }
     private IEnumerator FixItem(Transform Item)
     {
+        Debug.Log("Fix Routine Started");
         float time = 0f;
         Vector3 StartPosition = Item.position;
         Vector3 TargetPosition = transform.TransformPoint(ItemFixPosition);
-
         while (time < Duration)
         {
             float t = time / Duration;
-
-            Item.position = Vector3.Lerp(StartPosition, TargetPosition, t);
             time += Time.deltaTime;
+            Item.position = Vector3.Lerp(StartPosition, TargetPosition, t);
             yield return null;
         }
         Item.position = TargetPosition;
         Item.SetParent(transform);
-
     }
 }

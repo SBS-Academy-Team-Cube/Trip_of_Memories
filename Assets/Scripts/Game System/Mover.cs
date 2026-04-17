@@ -1,15 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Mover : MonoBehaviour
 {
     [SerializeField] Vector3 LocalOffset;
     [SerializeField] float Duration = 1.0f;
 
+    public UnityEvent OnMoverActive;
+
     private Vector3 ClosedPosition;
     private Vector3 OpenPosition;
     private Coroutine CurrentMoveRoutine;
-
+    
     private void Awake()
     {
         ClosedPosition = transform.localPosition;
@@ -28,6 +31,7 @@ public class Mover : MonoBehaviour
         if (CurrentMoveRoutine != null)
         {
             StopCoroutine(CurrentMoveRoutine);
+            OnMoverActive?.Invoke();
         }
         CurrentMoveRoutine = StartCoroutine(MoveRoutine(Target));
     }

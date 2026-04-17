@@ -29,6 +29,6 @@ public class HoverItem : MonoBehaviour
     }
     private void Rotate()
     {
-        transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime, Space.Self);
+        transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime, Space.World);
     }
 }
