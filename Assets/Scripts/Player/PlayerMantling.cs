@@ -11,6 +11,7 @@ public class PlayerMantling : MonoBehaviour
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController Controller;
+    [SerializeField] private Transform LedgePoint;
     public bool IsMantling { get; private set; }
     private bool bCanMantling = false;
     Vector3 MantlingTargetPosition;
@@ -47,9 +48,11 @@ public class PlayerMantling : MonoBehaviour
     public void DoMantling()
     {
         Controller.enabled = false;
+        transform.position = transform.position + (MantlingTargetPosition - LedgePoint.position);
+
         Animation.SetMantling();
 
-        CalculateHandTargets();
+        // CalculateHandTargets();
         IsMantling = true;
     }
     public void OnEndMantling()
@@ -59,12 +62,14 @@ public class PlayerMantling : MonoBehaviour
     }
     public bool CanMantling()
     {
-        if (bCanMantling)
-        {
-            StartCoroutine(MantlingRoutine());
-            return true;
-        }
-        return false;
+        return bCanMantling && !IsMantling;
+
+        // if (bCanMantling)
+        // {
+        //     StartCoroutine(MantlingRoutine());
+        //     return true;
+        // }
+        // return false;
     }
     private IEnumerator MantlingRoutine()
     {
@@ -123,15 +128,20 @@ public class PlayerMantling : MonoBehaviour
                 return;
             }
             WallNormal = WallHit.normal;
-            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * MantleHeight - WallHit.normal * 1.5f;
-            DebugExtension.DrawSphere(PlanCheckRayStartPosition, 1.5f, Color.red, 0.25f);
+
+            DebugExtension.DrawSphere(WallHit.point, 0.15f, Color.green, 0.25f);
+            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * MantleHeight - WallHit.normal * 0.2f;
+
+            Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * LedgeCheckDistance, Color.red);
+
+            DebugExtension.DrawSphere(PlanCheckRayStartPosition, 0.15f, Color.red, 0.25f);
 
             if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgeCheckDistance))
             {
                 Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * LedgeCheckDistance, Color.blue);
                 bCanMantling = true;
                 MantlingTargetPosition = LedgeHit.point;
-                DebugExtension.DrawSphere(MantlingTargetPosition, 1.5f, Color.orange, 0.25f);
+                DebugExtension.DrawSphere(MantlingTargetPosition, 0.05f, Color.orange, 0.25f);
             }
             else
             {

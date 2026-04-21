@@ -45,6 +45,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1404064656257168972}
     m_Modifications:
+    - target: {fileID: 7888249631839423424, guid: 735ed40b38f171644b6225164a8044e3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a92aa242ed3cd2e419820eb362088b81, type: 2}
     - target: {fileID: 8536658095979014677, guid: 735ed40b38f171644b6225164a8044e3, type: 3}
       propertyPath: m_Name
       value: Roadrock_01 (10)
@@ -170,8 +174,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7786307062412057112, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695057706709115104}
   m_SourcePrefab: {fileID: 100100000, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
+--- !u!1 &6943992305124695961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7786307062412057112, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
+  m_PrefabInstance: {fileID: 887351173662590337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1695057706709115104
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6943992305124695961}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -114699674525647331, guid: 01676636165fe42498894b727d014f40, type: 3}
 --- !u!4 &7716307292122023203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7441448146281939106, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
@@ -185,6 +219,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1404064656257168972}
     m_Modifications:
+    - target: {fileID: 470488304668337989, guid: 4fb575946220e084baa3363d4001613e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470488304668337989, guid: 4fb575946220e084baa3363d4001613e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -376,13 +414,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2127808913785276048, guid: 4fb575946220e084baa3363d4001613e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6261377924096588216}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb575946220e084baa3363d4001613e, type: 3}
 --- !u!4 &7401566499711874014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1642879564229418026, guid: 4fb575946220e084baa3363d4001613e, type: 3}
   m_PrefabInstance: {fileID: 8105084900730040308}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7925338261985274212 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2127808913785276048, guid: 4fb575946220e084baa3363d4001613e, type: 3}
+  m_PrefabInstance: {fileID: 8105084900730040308}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6261377924096588216
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925338261985274212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -114699674525647331, guid: 76ddcca0bbc6f3a4888344128e8d4c2f, type: 3}
 --- !u!1001 &8558674025764206091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -440,9 +508,13 @@ PrefabInstance:
       value: Roadrock_03 1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8578927884435995597, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8578927884435995597, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: b2f14b2603544494a94b890afa7207d4, type: 2}
+      objectReference: {fileID: 2100000, guid: a92aa242ed3cd2e419820eb362088b81, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

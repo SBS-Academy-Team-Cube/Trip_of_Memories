@@ -11,6 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     // {
     //     hangingHash = Animator.StringToHash("Base Layer.RopeMove");
     // }
+
     public void IsPlay(bool bPlaying)
     {
         AnimationController.speed = bPlaying ? 1.0f : 0.0f;
@@ -25,7 +26,12 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetMantling()
     {
+        AnimationController.applyRootMotion = true;
         AnimationController.SetTrigger("Mantling");
+    }
+    public void DisableRootMotion()
+    {
+        AnimationController.applyRootMotion = false;
     }
     public void SetIsHanging(bool IsHanging)
     {

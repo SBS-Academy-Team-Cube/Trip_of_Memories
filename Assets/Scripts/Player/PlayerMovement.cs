@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
-        if (MantlingComponent.IsMantling)
+        if (MantlingComponent.IsMantling || !Controller.enabled)
         {
             return;
         }
