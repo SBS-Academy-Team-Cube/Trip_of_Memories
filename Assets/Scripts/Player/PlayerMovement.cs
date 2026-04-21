@@ -3,16 +3,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] PlayerMantling MantlingComponent;
-    CharacterController Controller;
-    PlayerAnimation Animation;
+    [Header("Required Components")]
+    [SerializeField] private PlayerMantling MantlingComponent;
+    [SerializeField] private PlayerRopeHandler RopeHandler;
+    [SerializeField] private CharacterController Controller;
+    [SerializeField] private PlayerAnimation Animation;
+    [SerializeField] private PlayerState State;
     public Transform CameraPivot;
     private Vector2 MoveInput;
     Vector3 Velocity;
     public Transform CameraTransform;
     public float MoveSpeed = 5f;
-    [SerializeField]
-    private float RotateSpeed = 20.0f;
+    [SerializeField] private float HangingMoveSpeed = 3.0f;
+    [SerializeField] private float RotateSpeed = 20.0f;
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
     public Vector2 LookInput { get; private set; }
@@ -32,65 +35,76 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
-        if (!Controller.enabled)
+        if (MantlingComponent.IsMantling)
         {
             return;
         }
 
-        if (Controller.isGrounded && Velocity.y < 0)
+        if (State.Action == PlayerState.EAction.Pushing)
         {
-            Velocity.y = -2f;
+
         }
-
-        Vector3 CameraForward = CameraTransform.forward;
-        Vector3 CameraRight = CameraTransform.right;
-
-        CameraForward.y = 0;
-        CameraRight.y = 0;
-
-        Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
-        move = Vector3.ClampMagnitude(move, 1f);
-        
-        Controller.Move(MoveSpeed * Time.deltaTime * move);
-
-        if (move.sqrMagnitude > 0.01f)
+        else if (State.Action == PlayerState.EAction.Hanging)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                RotateSpeed * Time.deltaTime
-            );
+            DoHangingMove();
         }
-        if (bAddGravity)
+        else
         {
-            Velocity.y += Gravity * Time.deltaTime;
-            Controller.Move(Velocity * Time.deltaTime);
+            if (Controller.isGrounded && Velocity.y < 0)
+            {
+                Velocity.y = -2f;
+            }
+
+            Vector3 CameraForward = CameraTransform.forward;
+            Vector3 CameraRight = CameraTransform.right;
+
+            CameraForward.y = 0;
+            CameraRight.y = 0;
+
+            Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
+            move = Vector3.ClampMagnitude(move, 1f);
+
+            Controller.Move(MoveSpeed * Time.deltaTime * move);
+
+            if (move.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    RotateSpeed * Time.deltaTime
+                );
+            }
+            if (bAddGravity)
+            {
+                Velocity.y += Gravity * Time.deltaTime;
+                Controller.Move(Velocity * Time.deltaTime);
+            }
         }
+    }
+    private void DoHangingMove()
+    {
+        if (RopeHandler.bIsMoving)
+        {
+            Controller.Move(HangingMoveSpeed * Time.deltaTime * Vector3.up * MoveInput.y);
+        }
+        Animation.IsPlay(Mathf.Abs(MoveInput.y) > 0.01f);
     }
     public void TryMove(Vector2 Value)
     {
         MoveInput = Value;
         Animation.SetSpeed(MoveInput.magnitude);
     }
-
-    public void TryJump(InputValue Value)
+    public void TryJump()
     {
-        if (Value.isPressed)
+        if (Controller.isGrounded)
         {
-            if (Controller.isGrounded)
-            {
-                Velocity.y = JumpForce;
-                Animation.SetJump();
-            }
-            else if (MantlingComponent)
-            {
-                MantlingComponent.DoMantling();
-                // if (MantlingComponent.CanMantling())
-                // {
-                //     Animation.SetMantling();
-                // }
-            }
+            Velocity.y = JumpForce;
+            Animation.SetJump();
+        }
+        else if (MantlingComponent && MantlingComponent.CanMantling())
+        {
+            MantlingComponent.DoMantling();
         }
     }
     public void TryLook(InputValue Value)

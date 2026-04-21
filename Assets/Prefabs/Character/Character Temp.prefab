@@ -103,27 +103,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -194.83047
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 153.52226
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 74.04131
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -171,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 655b9334884d70a40b78460e50c77848, type: 2}
     - target: {fileID: 5866666021909216657, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -188,13 +188,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2108751898320858363}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 174198477460986818}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5961468659858488791}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2108751898320858363}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8553743802489497636}
@@ -213,6 +213,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9024614904516683248}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2187246191212651165}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2318022901703432567}
@@ -235,41 +238,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: aa88590b15731134d886b6f04328dd0d, type: 3}
   m_PrefabInstance: {fileID: 7082353555527772063}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &174198477460986818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7964891751170710222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1275952e56f8dcd42a5fa14b7c869db5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
---- !u!114 &5961468659858488791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7964891751170710222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 333c43336336dd445a535b9c2ac3ab8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  FootStepClips:
-  - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
-  - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
-  - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
-  - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
-  - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
-  - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
-  - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
-  - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
-  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
-  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
 --- !u!114 &2108751898320858363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +268,42 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &174198477460986818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964891751170710222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1275952e56f8dcd42a5fa14b7c869db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+  AnimationController: {fileID: 3684796208967424526}
+--- !u!114 &5961468659858488791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964891751170710222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333c43336336dd445a535b9c2ac3ab8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  FootStepClips:
+  - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
+  - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
+  - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
+  - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
+  - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
+  - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
+  - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
+  - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
+  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
+  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
 --- !u!114 &8553743802489497636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,12 +317,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   MantlingComponent: {fileID: 7334396707211543405}
+  RopeHandler: {fileID: 9024614904516683248}
+  Controller: {fileID: 2318022901703432567}
+  Animation: {fileID: 174198477460986818}
+  State: {fileID: 2187246191212651165}
   CameraPivot: {fileID: 658916773145250906}
   CameraTransform: {fileID: 0}
-  MoveSpeed: 15
-  RotateSpeed: 15
-  Gravity: -50
-  JumpForce: 20
+  MoveSpeed: 1.3636364
+  HangingMoveSpeed: 0.6363636
+  RotateSpeed: 1.3636364
+  Gravity: -9
+  JumpForce: 1.8181819
 --- !u!114 &2487616305228420971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +377,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7964891751170710222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
@@ -386,11 +395,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7964891751170710222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcdfdabb24f860f4fb2aa35dcbbe4ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRopeHandler
+  State: {fileID: 2187246191212651165}
+  animator: {fileID: 3684796208967424526}
   OnEnterHanging:
     m_PersistentCalls:
       m_Calls:
@@ -406,8 +417,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Controller: {fileID: 2318022901703432567}
-  Speed: 10
+      - m_Target: {fileID: 174198477460986818}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: SetIsHanging
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Speed: 9.91
+--- !u!114 &2187246191212651165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964891751170710222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9a1e2671dd14741bd9379572ea1a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerState
 --- !u!143 &2318022901703432567
 CharacterController:
   m_ObjectHideFlags: 0
@@ -428,7 +462,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 0.9
   m_Radius: 0.1
-  m_SlopeLimit: 30
+  m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001

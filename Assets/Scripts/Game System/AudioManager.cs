@@ -33,6 +33,12 @@ public class AudioManager : Singleton<AudioManager>
         BgmSource.loop = true;
         BgmSource.Play();
     }
+    public void PlayBGM(AudioClip Clip)
+    {
+        BgmSource.clip = Clip;
+        BgmSource.loop = true;
+        BgmSource.Play();
+    }
     public void StopBGM()
     {
         BgmSource.Stop();

@@ -16,7 +16,6 @@ public class WorldUIManager : MonoBehaviour
         this.PlayerInteractionComponent = PlayerInteractionComponent;
         if (this.PlayerInteractionComponent != null)
         {
-            Debug.Log("Event Subscribe Succeed");
             PlayerInteractionComponent.OnTargetChanged += ShowWorldUIText;
         }
     }

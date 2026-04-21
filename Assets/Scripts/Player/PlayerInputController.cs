@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,10 +11,6 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerInput Input;
     public void OnHangingRope(bool bHanging)
     {
-        if (Movement)
-        {
-            Movement.enabled = !bHanging;
-        }
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
     }
     public void OnInteract(InputValue Value)
@@ -23,11 +20,6 @@ public class PlayerInputController : MonoBehaviour
             if (Interaction != null)
             {
                 Interaction.PerformInteraction();
-                Debug.Log("press E");
-            }
-            else
-            {
-                Debug.Log("Interaction Key is Downed");
             }
         }
     }
@@ -40,9 +32,9 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnJump(InputValue Value)
     {
-        if (Movement != null)
+        if (Movement != null && Value.isPressed)
         {
-            Movement.TryJump(Value);
+            Movement.TryJump();
         }
     }
     public void OnLook(InputValue Value)
@@ -54,9 +46,16 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnHangMove(InputValue Value)
     {
-        if (RopeHandler)
+        if (Movement != null)
         {
-            RopeHandler.TryMove(Value.Get<Vector2>());
+            Movement.TryMove(Value.Get<Vector2>());
+        }
+    }
+    public void OnHangJump(InputValue Value)
+    {
+        if (RopeHandler && Value.isPressed)
+        {
+            Input.SwitchCurrentActionMap("Player");
         }
     }
 }

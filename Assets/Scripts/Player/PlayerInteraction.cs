@@ -42,8 +42,6 @@ public class PlayerInteraction : MonoBehaviour
         // Throw error if already present in the list
         if (InteractableList.Contains(interactable))
             return;
-
-        Debug.Log($"{other.gameObject.name} is Added");
         // Add to list and set curTarget based on distance comparison
         InteractableList.Add(interactable);
         UpdateCurTarget();
@@ -67,7 +65,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             CurTarget = null;
             OnTargetChanged?.Invoke(null, null, false);
-            Debug.Log("curTarget = null");
             return;
         }
 

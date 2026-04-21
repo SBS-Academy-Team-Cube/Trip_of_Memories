@@ -12,7 +12,7 @@ public class Mover : MonoBehaviour
     private Vector3 ClosedPosition;
     private Vector3 OpenPosition;
     private Coroutine CurrentMoveRoutine;
-    
+
     private void Awake()
     {
         ClosedPosition = transform.localPosition;
@@ -31,9 +31,9 @@ public class Mover : MonoBehaviour
         if (CurrentMoveRoutine != null)
         {
             StopCoroutine(CurrentMoveRoutine);
-            OnMoverActive?.Invoke();
         }
         CurrentMoveRoutine = StartCoroutine(MoveRoutine(Target));
+        OnMoverActive?.Invoke();
     }
     private IEnumerator MoveRoutine(Vector3 Target)
     {

@@ -11,10 +11,9 @@ public class PlayerMantling : MonoBehaviour
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController Controller;
-    private bool IsMantling;
+    public bool IsMantling { get; private set; }
     private bool bCanMantling = false;
     Vector3 MantlingTargetPosition;
-
     private float HandIKWeight;
     Vector3 LeftHandTarget;
     Vector3 RightHandTarget;
@@ -90,7 +89,7 @@ public class PlayerMantling : MonoBehaviour
     {
         // 벽 기준 좌우 방향
         Vector3 right = Vector3.Cross(Vector3.up, WallNormal).normalized;
-        
+
         float handOffset = -1.0f;
 
         LeftHandTarget = MantlingTargetPosition - right * handOffset;
