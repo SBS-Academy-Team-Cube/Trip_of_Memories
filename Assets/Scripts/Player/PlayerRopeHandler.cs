@@ -24,7 +24,6 @@ public class PlayerRopeHandler : MonoBehaviour
         {
             Bounds bounds = renderer.bounds;
             clampedY = Mathf.Clamp(transform.position.y, bounds.min.y, bounds.max.y);
-            Debug.Log(clampedY);
         }
         else
         {
