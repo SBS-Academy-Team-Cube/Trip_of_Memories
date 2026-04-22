@@ -7,7 +7,8 @@ public class Mover : MonoBehaviour
     [SerializeField] Vector3 LocalOffset;
     [SerializeField] float Duration = 1.0f;
 
-    public UnityEvent OnMoverActive;
+    public UnityEvent OnMoveStart;
+    public UnityEvent OnMoveEnd;
 
     private Vector3 ClosedPosition;
     private Vector3 OpenPosition;
@@ -33,13 +34,12 @@ public class Mover : MonoBehaviour
             StopCoroutine(CurrentMoveRoutine);
         }
         CurrentMoveRoutine = StartCoroutine(MoveRoutine(Target));
-        OnMoverActive?.Invoke();
+        OnMoveStart?.Invoke();
     }
     private IEnumerator MoveRoutine(Vector3 Target)
     {
         Vector3 Start = transform.localPosition;
         float time = 0f;
-
         while (time < Duration)
         {
             float t = time / Duration;
@@ -50,5 +50,6 @@ public class Mover : MonoBehaviour
             yield return null;
         }
         transform.localPosition = Target;
+        OnMoveEnd?.Invoke();
     }
 }

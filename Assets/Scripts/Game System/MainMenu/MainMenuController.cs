@@ -98,9 +98,9 @@ public class MainMenuController : MonoBehaviour
         {
             SaveManager.Instance.Load();
         }
-        if(SaveManager.Instance.Data.StageIndex > 0)
-        {
+        // if(SaveManager.Instance.Data.StageIndex > 0)
+        // {
             GameDirector.Instance.LoadScene(3);
-        }
+        // }
     }
 }
