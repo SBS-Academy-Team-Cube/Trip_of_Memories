@@ -12,6 +12,7 @@ public class SlidePuzzlePiece : MonoBehaviour
     private void Start()
     {
         curPlaceIndex = StartPlaceIndex;
+        Debug.Log($"{gameObject.name} => index {curPlaceIndex}");
     }
     public void SetPlaceIndex(int index)// 1~9
     {
@@ -21,6 +22,7 @@ public class SlidePuzzlePiece : MonoBehaviour
             return;
         }
         curPlaceIndex = index;
+        Debug.Log($"{gameObject.name} => index {curPlaceIndex}");
     }
     public bool IsClear()//현재 위치가 정답위치가 맞는지 체크
     {
