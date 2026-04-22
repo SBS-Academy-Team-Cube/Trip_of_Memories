@@ -17,7 +17,7 @@ public class PlayerInputController : MonoBehaviour
     {
         if (Value.isPressed)
         {
-            if (Interaction != null)
+            if (Interaction)
             {
                 Interaction.PerformInteraction();
             }
@@ -53,9 +53,10 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnHangJump(InputValue Value)
     {
-        if (RopeHandler && Value.isPressed)
+        if (RopeHandler && Movement && Value.isPressed)
         {
-            Input.SwitchCurrentActionMap("Player");
+            Movement.TryJump();
+            RopeHandler.ReleaseRope();
         }
     }
 }

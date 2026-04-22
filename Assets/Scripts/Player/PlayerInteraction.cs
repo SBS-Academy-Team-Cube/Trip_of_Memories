@@ -8,7 +8,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private PlayerItemHandler ItemHandler;
     private IInteractable CurTarget;
-    private List<IInteractable> InteractableList;
+    private List<IInteractable> InteractableList =new List<IInteractable>();
     public System.Action<string, Transform, bool> OnTargetChanged;
     public void PerformInteraction()
     {
@@ -31,7 +31,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        InteractableList = new List<IInteractable>();
+        // InteractableList = new List<IInteractable>();
     }
 
     private void OnTriggerEnter(Collider other)

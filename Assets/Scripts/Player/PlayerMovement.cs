@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void TryJump()
     {
-        if (Controller.isGrounded)
+        if (Controller.isGrounded || State.Action == PlayerState.EAction.Hanging)
         {
             Velocity.y = JumpForce;
             Animation.SetJump();

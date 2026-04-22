@@ -32,22 +32,24 @@ public class PlayerRopeHandler : MonoBehaviour
         }
         TargetRope = Target.transform;
         OnEnterHanging?.Invoke(true);
-        if (State != null)
+        if (State)
         {
             State.SetAction(PlayerState.EAction.Hanging);
         }
-        // Debug.Log(Target.transform.position);
         if (TryGetComponent(out CharacterController cc))
         {
             cc.enabled = false;
             transform.position = new Vector3(Target.transform.position.x, clampedY, Target.transform.position.z);
             cc.enabled = true;
         }
-        // Debug.Log(transform.position);
     }
     public void ReleaseRope()
     {
-        
+        if (State)
+        {
+            State.SetAction(PlayerState.EAction.None);
+        }
+        OnEnterHanging?.Invoke(false);
     }
     public void CanMove()
     {
@@ -60,30 +62,30 @@ public class PlayerRopeHandler : MonoBehaviour
         bIsMoving = false;
         HandIKWeight = 0.0f;
     }
-    void OnAnimatorIK(int layerIndex)
-    {
-        if (bCaptureHand)
-        {
-            LeftHandTarget = TargetRope.InverseTransformPoint(animator.GetIKPosition(AvatarIKGoal.LeftHand));
-            RightHandTarget = TargetRope.InverseTransformPoint(animator.GetIKPosition(AvatarIKGoal.RightHand));
+    // void OnAnimatorIK(int layerIndex)
+    // {
+    //     if (bCaptureHand)
+    //     {
+    //         LeftHandTarget = TargetRope.InverseTransformPoint(animator.GetIKPosition(AvatarIKGoal.LeftHand));
+    //         RightHandTarget = TargetRope.InverseTransformPoint(animator.GetIKPosition(AvatarIKGoal.RightHand));
 
-            LeftHandRot = animator.GetIKRotation(AvatarIKGoal.LeftHand);
-            RightHandRot = animator.GetIKRotation(AvatarIKGoal.RightHand);
-            bCaptureHand = false;
-        }
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKWeight);
+    //         LeftHandRot = animator.GetIKRotation(AvatarIKGoal.LeftHand);
+    //         RightHandRot = animator.GetIKRotation(AvatarIKGoal.RightHand);
+    //         bCaptureHand = false;
+    //     }
+    //     animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKWeight);
+    //     animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKWeight);
 
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKWeight);
-        
-        if (TargetRope)
-        {
-            Debug.Log(TargetRope.TransformPoint(LeftHandTarget));
-            animator.SetIKPosition(AvatarIKGoal.LeftHand, TargetRope.TransformPoint(LeftHandTarget));
-            animator.SetIKPosition(AvatarIKGoal.RightHand, TargetRope.TransformPoint(RightHandTarget));
-        }
-        animator.SetIKRotation(AvatarIKGoal.LeftHand, LeftHandRot);
-        animator.SetIKRotation(AvatarIKGoal.RightHand, RightHandRot);
-    }
+    //     animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKWeight);
+    //     animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKWeight);
+
+    //     if (TargetRope)
+    //     {
+    //         Debug.Log(TargetRope.TransformPoint(LeftHandTarget));
+    //         animator.SetIKPosition(AvatarIKGoal.LeftHand, TargetRope.TransformPoint(LeftHandTarget));
+    //         animator.SetIKPosition(AvatarIKGoal.RightHand, TargetRope.TransformPoint(RightHandTarget));
+    //     }
+    //     animator.SetIKRotation(AvatarIKGoal.LeftHand, LeftHandRot);
+    //     animator.SetIKRotation(AvatarIKGoal.RightHand, RightHandRot);
+    // }
 }

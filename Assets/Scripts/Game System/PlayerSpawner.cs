@@ -24,7 +24,7 @@ public class PlayerSpawner : MonoBehaviour
         }
         GameObject Player = Instantiate(CharacterPrefabs[index], PlayerStart.position, PlayerStart.rotation);
         OnPlayerSpawned?.Invoke(Player);
-
+        
         if (Player.TryGetComponent(out PlayerMovement Move))
         {
             Move.CameraTransform = CameraTransform;

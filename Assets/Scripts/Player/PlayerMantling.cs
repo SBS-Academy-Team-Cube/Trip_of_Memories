@@ -12,6 +12,7 @@ public class PlayerMantling : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController Controller;
     [SerializeField] private Transform LedgePoint;
+    [SerializeField] private PlayerMovement Move;
     public bool IsMantling { get; private set; }
     private bool bCanMantling = false;
     Vector3 MantlingTargetPosition;
@@ -20,38 +21,36 @@ public class PlayerMantling : MonoBehaviour
     Vector3 RightHandTarget;
     Vector3 WallNormal;
 
-    void OnAnimatorIK(int layerIndex)
-    {
-        if (!IsMantling)
-        {
-            return;
-        }
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKWeight);
+    // void OnAnimatorIK(int layerIndex)
+    // {
+    //     if (!IsMantling)
+    //     {
+    //         return;
+    //     }
+    //     animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKWeight);
+    //     animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKWeight);
 
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKWeight);
+    //     animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKWeight);
+    //     animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKWeight);
 
-        animator.SetIKPosition(AvatarIKGoal.LeftHand, LeftHandTarget);
-        animator.SetIKPosition(AvatarIKGoal.RightHand, RightHandTarget);
+    //     animator.SetIKPosition(AvatarIKGoal.LeftHand, LeftHandTarget);
+    //     animator.SetIKPosition(AvatarIKGoal.RightHand, RightHandTarget);
 
-        Quaternion rot = Quaternion.LookRotation(-WallNormal);
+    //     Quaternion rot = Quaternion.LookRotation(-WallNormal);
 
-        animator.SetIKRotation(AvatarIKGoal.LeftHand, rot);
-        animator.SetIKRotation(AvatarIKGoal.RightHand, rot);
-    }
+    //     animator.SetIKRotation(AvatarIKGoal.LeftHand, rot);
+    //     animator.SetIKRotation(AvatarIKGoal.RightHand, rot);
+    // }
     void Update()
     {
         LedgeCheck();
-        HandIKWeight = animator.GetFloat("HandIKWeight");
+        // HandIKWeight = animator.GetFloat("HandIKWeight");
     }
     public void DoMantling()
     {
         Controller.enabled = false;
         transform.position = transform.position + (MantlingTargetPosition - LedgePoint.position);
-
         Animation.SetMantling();
-
         // CalculateHandTargets();
         IsMantling = true;
     }
@@ -59,6 +58,7 @@ public class PlayerMantling : MonoBehaviour
     {
         IsMantling = false;
         Controller.enabled = true;
+        Animation.DisableRootMotion();
     }
     public bool CanMantling()
     {
@@ -120,8 +120,11 @@ public class PlayerMantling : MonoBehaviour
             return;
         }
         bCanMantling = false;
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, ForwardDistance))
+        Vector3 LedgetCheckDirection = new Vector3(Move.CameraTransform.forward.x, 0f, Move.CameraTransform.forward.z);
+        LedgetCheckDirection.Normalize();
+        if (Physics.Raycast(transform.position, LedgetCheckDirection, out RaycastHit WallHit, ForwardDistance))
         {
+            // Wall Checking Debug Line
             Debug.DrawLine(transform.position, transform.position + transform.forward * ForwardDistance, Color.green);
             if (!WallHit.collider.CompareTag("ClimbableWall"))
             {
@@ -129,19 +132,32 @@ public class PlayerMantling : MonoBehaviour
             }
             WallNormal = WallHit.normal;
 
-            DebugExtension.DrawSphere(WallHit.point, 0.15f, Color.green, 0.25f);
-            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * MantleHeight - WallHit.normal * 0.2f;
+            // Wall Hit Point Debug Sphere
+            DebugExtension.DrawSphere(WallHit.point, 0.05f, Color.green, 0.25f);
 
-            Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * LedgeCheckDistance, Color.red);
+            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * (LedgePoint.localPosition.y + 0.5f) - WallHit.normal * 0.1f;
 
-            DebugExtension.DrawSphere(PlanCheckRayStartPosition, 0.15f, Color.red, 0.25f);
+            // Ledge Plane Check Start Position Debug Sphere
+            DebugExtension.DrawSphere(PlanCheckRayStartPosition, 0.05f, Color.red, 0.25f);
 
-            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgeCheckDistance))
+            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, /*LedgeCheckDistance*/PlanCheckRayStartPosition.y))
             {
-                Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * LedgeCheckDistance, Color.blue);
+                // Ledge Plane Check Debug Line
+                Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * PlanCheckRayStartPosition.y, Color.red);
                 bCanMantling = true;
                 MantlingTargetPosition = LedgeHit.point;
+
+                // Target Mantling Position Debug Sphere
                 DebugExtension.DrawSphere(MantlingTargetPosition, 0.05f, Color.orange, 0.25f);
+
+                Vector3 Temp = transform.position;
+                Temp.y = MantlingTargetPosition.y;
+                Debug.DrawLine(MantlingTargetPosition, Temp, Color.orange);
+
+                if (Physics.Raycast(MantlingTargetPosition, Temp - MantlingTargetPosition, out RaycastHit LedgeEdgeHit, (MantlingTargetPosition - Temp).magnitude))
+                {
+                    DebugExtension.DrawSphere(LedgeEdgeHit.point, 0.05f, Color.violet, 0.25f);
+                }
             }
             else
             {
