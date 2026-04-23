@@ -44,5 +44,11 @@ public class SlidePuzzleInputHandler : MonoBehaviour
         
         UIMng.MovePiece(++pieceNum, EmptyIndex);//ui상 위치 실제이동
         board.DebugBoard();
+
+        if(board.ClearCheck())
+        {
+            //  send Event for GameMng
+            Debug.Log("Game Clear");
+        }
     }
 }
