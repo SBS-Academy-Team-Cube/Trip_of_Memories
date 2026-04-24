@@ -47,7 +47,7 @@ public class CutsceneManager : MonoBehaviour
     {
         EndCutscene();
     }
-
+    
     private void EndCutscene()
     {
         UnlockPlayer();

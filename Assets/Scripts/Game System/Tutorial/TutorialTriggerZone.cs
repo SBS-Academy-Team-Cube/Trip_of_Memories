@@ -26,7 +26,6 @@ public class TutorialTriggerZone : MonoBehaviour
             return;
 
         Triggered = true;
-
         Manager?.ShowTutorialText(Index);
     }
 }
