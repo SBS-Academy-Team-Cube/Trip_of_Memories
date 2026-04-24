@@ -32,6 +32,6 @@ public class SlidePuzzleUIMng : MonoBehaviour
 
         Vector2 targetPos = pos[destIndex];
 
-        curPiece.GetComponent<RectTransform>().DOAnchorPos(targetPos,0.8f).SetEase(Ease.Linear);
+        curPiece.GetComponent<RectTransform>().DOAnchorPos(targetPos,0.3f).SetEase(Ease.Linear);
     }
 }
