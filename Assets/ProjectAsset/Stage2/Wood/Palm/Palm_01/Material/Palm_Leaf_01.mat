@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Palm_Leaf
+  m_Name: Palm_Leaf_01
   m_Shader: {fileID: -6465566751694194690, guid: 68eec80679fc64c4fb36026367e1aa6c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,8 +28,8 @@ Material:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
-  - RayTracingPrepass
   - MOTIONVECTORS
+  - RayTracingPrepass
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -195,9 +195,9 @@ Material:
     - _AlphaRemapMin: 0
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
-    - _Bend_Distortion: 1
-    - _Bend_Speed: 1
-    - _Bend_Strength: 0
+    - _Bend_Distortion: 0.77
+    - _Bend_Speed: 2
+    - _Bend_Strength: 0.5
     - _BlendMode: 0
     - _BumpScale: 1
     - _CoatMask: 0
@@ -323,7 +323,7 @@ Material:
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
     - _Wiggle_Speed: 0
-    - _Wiggle_Strength: 0
+    - _Wiggle_Strength: 0.1
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 3
     - _ZTestTransparent: 4
