@@ -31,12 +31,11 @@ Material:
   - _DISABLE_DECALS
   - _DISABLE_SSR
   - _DISABLE_SSR_TRANSPARENT
-  - _DOUBLESIDED_ON
   - _MATERIAL_FEATURE_TRANSMISSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2450
   stringTagMap:
     MotionVector: User
@@ -46,8 +45,8 @@ Material:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
-  - RayTracingPrepass
   - ForwardEmissiveForDeferred
+  - RayTracingPrepass
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -57,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8713F080:
-        m_Texture: {fileID: 2800000, guid: daa49585c030643489dad5c6e4680dca, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59bc77d64bad3074ba5406b4c76b1463, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_9DCAAA49:
@@ -69,7 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_E1B0D043:
-        m_Texture: {fileID: 2800000, guid: f3661c5aa3d7dc141aebd059ea67047b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59bc77d64bad3074ba5406b4c76b1463, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2DLOD_4ce76fe7821749c5a93282810d6e42f2_Texture_1:
@@ -99,24 +98,24 @@ Material:
     m_Ints: []
     m_Floats:
     - Animation_Cutoff: 30
-    - Distance_Fade_End: 200
-    - Distance_Fade_Start: 20
+    - Distance_Fade_End: 205.04
+    - Distance_Fade_Start: 0
     - Dither_Scale: 2.108
     - Enable_Blend_Terrain_Color: 0
     - Terrain_Blend_A: 0
     - Terrain_Blend_B: 0
     - Terrain_Blend_G: 0
     - Terrain_Blend_R: 0
-    - Vector1_593c5cea6c4a42e993ed03ced4685732: 2.01
-    - Vector1_8651797e3e304e108dbd25f9d5a426ba: 0.575
+    - Vector1_593c5cea6c4a42e993ed03ced4685732: 2.39
+    - Vector1_8651797e3e304e108dbd25f9d5a426ba: 0.711
     - Vector1_a5b8b09028ce49a39f4d090894c89e22: 0.75
-    - Vector1_a6983181c8dc4691ba6a28a34c4223a6: 1
+    - Vector1_a6983181c8dc4691ba6a28a34c4223a6: 0.58
     - Wind_Blast: 0.05
     - Wind_Intensity: 0.1
     - Wind_Ripples: 0.05
     - Wind_Speed: 3
     - Wind_Turbulence: 0
-    - Wind_Wavelength: 10
+    - Wind_Wavelength: 0.62
     - Wind_Yaw: 180
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 1
@@ -126,11 +125,11 @@ Material:
     - _AlphaToMaskInspectorValue: 0
     - _BlendMode: 0
     - _ConservativeDepthOffsetEnable: 0
-    - _CullMode: 0
-    - _CullModeForward: 0
+    - _CullMode: 2
+    - _CullModeForward: 2
     - _DepthOffsetEnable: 0
     - _DiffusionProfileHash: 3.128872
-    - _DoubleSidedEnable: 1
+    - _DoubleSidedEnable: 0
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
@@ -185,6 +184,7 @@ Material:
     - Terrain_Origin: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Scale: {r: 0, g: 0, b: 0, a: 0}
     - _BlendScale: {r: 2, g: 2, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: -5.7855046e-23, g: -2.7243504e-36, b: -1.8891285e+22, a: -12817017}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
