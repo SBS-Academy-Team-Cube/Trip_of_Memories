@@ -1399,8 +1399,8 @@ Transform:
   m_GameObject: {fileID: 37455161}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 34.908, y: 5.078, z: -8.975403}
-  m_LocalScale: {x: 0.43064064, y: 0.43064064, z: 0.21376508}
+  m_LocalPosition: {x: 34.895, y: 5.0816, z: -8.9751}
+  m_LocalScale: {x: 0.5876791, y: 0.5876791, z: 0.29171717}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746725450}
@@ -2176,6 +2176,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1b6bc41f7552edb449a9457ccae86f49, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3646624
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b6bc41f7552edb449a9457ccae86f49, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3646624
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b6bc41f7552edb449a9457ccae86f49, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3646624
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b6bc41f7552edb449a9457ccae86f49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.356552
@@ -7051,55 +7063,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 754f814456dd2b842b8f007d9fd8c243, type: 3}
---- !u!1 &266869104
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 266869106}
-  - component: {fileID: 266869105}
-  m_Layer: 0
-  m_Name: Sky and Fog Global Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &266869105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266869104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: fd474c8dbb26625488959ba988fde32b, type: 2}
---- !u!4 &266869106
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266869104}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.454168, y: -14.791749, z: 30.92563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &268081359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7468,6 +7431,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7553188039893136599, guid: 1d55648702ff95843ace03f5b90ce7cc, type: 3}
   m_PrefabInstance: {fileID: 286713252}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &291515749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 291515751}
+  - component: {fileID: 291515750}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &291515750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291515749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: ec981d40a22e0d947973e73c7605f291, type: 2}
+--- !u!4 &291515751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291515749}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.824764, y: 1.7099452, z: -7.731876}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &293704660
 GameObject:
   m_ObjectHideFlags: 0
@@ -18329,8 +18341,8 @@ Transform:
   m_GameObject: {fileID: 622154091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 34.97, y: 5.675, z: -5.208}
-  m_LocalScale: {x: 0.33834833, y: 1.2625468, z: 0.33834833}
+  m_LocalPosition: {x: 34.97, y: 6.0349, z: -5.208}
+  m_LocalScale: {x: 0.5340624, y: 1.9928536, z: 0.5340624}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 246222982}
@@ -46993,7 +47005,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 6694.73
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 2.3509887e-38}
   m_UseBoundingSphereOverride: 0
@@ -48077,8 +48089,8 @@ Transform:
   m_GameObject: {fileID: 1704280361}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000059604645, z: -0.000000059604645, w: 0.7071068}
-  m_LocalPosition: {x: 34.908, y: 5.0780005, z: -8.975403}
-  m_LocalScale: {x: 0.43064064, y: 0.43064064, z: 0.21376508}
+  m_LocalPosition: {x: 34.895, y: 5.0816, z: -8.9751}
+  m_LocalScale: {x: 0.5876791, y: 0.5876791, z: 0.29171717}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746725450}
@@ -64871,7 +64883,6 @@ SceneRoots:
   - {fileID: 366926119}
   - {fileID: 1145240691}
   - {fileID: 1875567965}
-  - {fileID: 266869106}
   - {fileID: 446507646}
   - {fileID: 478136050}
   - {fileID: 1261426939}
@@ -64977,3 +64988,4 @@ SceneRoots:
   - {fileID: 817123224}
   - {fileID: 746725450}
   - {fileID: 62512578}
+  - {fileID: 291515751}
