@@ -2029,6 +2029,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e160d93ba69b30d47b54776a370662d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathPuzzleMng
+  greenAnswer: 1
+  blueAnswer: 2
+  redAnswer: 3
+  inputHandler: {fileID: 2130866800}
 --- !u!1 &526230293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,7 +3695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.100815535, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7074,7 +7078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.100815535, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7293,9 +7297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathInputHandler
   pathPieces:
-  - pathColor: 0
+  - pathColor: 1
     piece: {fileID: 2110819488}
-  - pathColor: 0
+  - pathColor: 2
     piece: {fileID: 917242507}
   - pathColor: 0
     piece: {fileID: 548622973}
@@ -7318,6 +7322,9 @@ MonoBehaviour:
     colorButton: {fileID: 806919534}
   - pathColor: 2
     colorButton: {fileID: 1509000934}
+  ClearCheckEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2144039148
 GameObject:
   m_ObjectHideFlags: 0
