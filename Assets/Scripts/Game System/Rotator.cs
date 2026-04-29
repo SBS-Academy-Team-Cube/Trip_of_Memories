@@ -1,13 +1,29 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Rotator : MonoBehaviour
 {
-    public bool bClockWise = true;
     public float RotateSpeed = 30f;
-
+    public UnityEvent OnRotateStart;
+    public UnityEvent OnRotateEnd;
+    private bool IsRotating = false;
+    private float Direction;
+    public void StartRotate(float ClockwiseDirection)
+    {
+        IsRotating = true;
+        Direction = ClockwiseDirection;
+        OnRotateStart?.Invoke();
+    }
+    public void EndRotate()
+    {
+        IsRotating = false;
+        OnRotateEnd?.Invoke();
+    }
     void Update()
     {
-        float direction = bClockWise ? 1f : -1f;
-        transform.Rotate(0f, direction * RotateSpeed * Time.deltaTime, 0f);
+        if (IsRotating)
+        {
+            transform.Rotate(0f, Direction * RotateSpeed * Time.deltaTime, 0f);
+        }
     }
 }

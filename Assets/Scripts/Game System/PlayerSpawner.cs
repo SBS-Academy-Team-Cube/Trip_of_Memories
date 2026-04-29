@@ -7,6 +7,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject[] CharacterPrefabs;
     [SerializeField] private Transform CameraTransform;
     [SerializeField] private CinemachineCamera CinemachineCamera;
+    [SerializeField] private SpringArm CameraArm;
     [SerializeField] private CutsceneManager CutScene;
     [SerializeField] private WorldUIManager WorldUI;
     public System.Action<GameObject> OnPlayerSpawned;
@@ -24,11 +25,13 @@ public class PlayerSpawner : MonoBehaviour
         }
         GameObject Player = Instantiate(CharacterPrefabs[index], PlayerStart.position, PlayerStart.rotation);
         OnPlayerSpawned?.Invoke(Player);
-        
+
         if (Player.TryGetComponent(out PlayerMovement Move))
         {
             Move.CameraTransform = CameraTransform;
             CinemachineCamera.Target.TrackingTarget = Move.CameraPivot;
+            CameraArm.SetTarget(Move.CameraPivot);
+
             if (CutScene != null)
             {
                 CutScene.SetPlayerMovement(Move);

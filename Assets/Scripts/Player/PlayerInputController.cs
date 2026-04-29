@@ -13,6 +13,10 @@ public class PlayerInputController : MonoBehaviour
     {
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
     }
+    public void OnHoldLever(bool bHolding)
+    {
+        Input.SwitchCurrentActionMap(bHolding ? "Lever" : "Player");
+    }
     public void OnInteract(InputValue Value)
     {
         if (Value.isPressed)
@@ -57,6 +61,26 @@ public class PlayerInputController : MonoBehaviour
         {
             Movement.TryJump();
             RopeHandler.ReleaseRope();
+        }
+    }
+
+    public void OnPush(InputValue Value)
+    {
+        
+        if (Value.isPressed)
+        {
+            if (TryGetComponent(out PlayerLeverHandler Handler))
+            {
+                Handler.SetRotating(true);
+            }
+        }
+        else
+        {
+            if (TryGetComponent(out PlayerLeverHandler Handler))
+            {
+                Debug.Log("Stop Pushing");
+                Handler.SetRotating(false);
+            }
         }
     }
 }

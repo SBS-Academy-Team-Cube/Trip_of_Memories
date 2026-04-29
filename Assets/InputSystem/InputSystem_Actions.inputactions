@@ -1114,6 +1114,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Lever",
+            "id": "099b8f14-acc1-443d-ba34-e9b5737224b1",
+            "actions": [
+                {
+                    "name": "Push",
+                    "type": "Value",
+                    "id": "8d1346fb-225f-4e29-bbb3-0e79216d427f",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "08dd8cb9-4422-40ba-a013-0c78f8a82c0e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d681c730-b234-46a1-bc17-1a508b49a410",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "113189b9-c52c-422e-8c95-343ac1ef3af6",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

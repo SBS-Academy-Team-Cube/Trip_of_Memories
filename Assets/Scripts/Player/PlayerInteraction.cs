@@ -8,7 +8,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private PlayerItemHandler ItemHandler;
     private IInteractable CurTarget;
-    private List<IInteractable> InteractableList =new List<IInteractable>();
+    private List<IInteractable> InteractableList = new List<IInteractable>();
     public System.Action<string, Transform, bool> OnTargetChanged;
     public void PerformInteraction()
     {
@@ -27,11 +27,6 @@ public class PlayerInteraction : MonoBehaviour
             }
             UpdateCurTarget();
         }
-    }
-
-    private void Awake()
-    {
-        // InteractableList = new List<IInteractable>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +58,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (InteractableList.Count == 0)
         {
+            Debug.Log("Interactable List is Empty");
             CurTarget = null;
             OnTargetChanged?.Invoke(null, null, false);
             return;
@@ -97,6 +93,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
         CurTarget = closest;
+        Debug.Log($"Current Target is {CurTarget.GetInteractionPrompt()}");
         if (CurTarget != null)
         {
             OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.GetTransform(), true);

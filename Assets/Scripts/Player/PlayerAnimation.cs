@@ -37,15 +37,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetTrigger(IsHanging ? "StartHanging" : "EndHanging");
     }
-
     public void PlayRopeAnimation(bool bReverse)
     {
         AnimatorStateInfo info = AnimationController.GetCurrentAnimatorStateInfo(0);
-        Debug.Log(info);
-        // if (info.fullPathHash != hangingHash)
-        // {
-        //     return;
-        // }
         float time = info.normalizedTime;
         time += bReverse ? -1 : 1 * Time.deltaTime;
         if (time > 1f || time < 0f)

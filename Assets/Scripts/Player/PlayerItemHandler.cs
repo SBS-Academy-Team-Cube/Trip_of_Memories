@@ -14,7 +14,7 @@ public class PlayerItemHandler : MonoBehaviour
             return;
         }
         HoldingObject = Target;
-        Target.transform.SetParent(HoldTransform, true); // ← true로 변경
+        Target.transform.SetParent(HoldTransform, true);
         Target.transform.position = HoldTransform.position;
         // Target.transform.localPosition = Vector3.zero;
         // Target.transform.localRotation = Quaternion.identity;
