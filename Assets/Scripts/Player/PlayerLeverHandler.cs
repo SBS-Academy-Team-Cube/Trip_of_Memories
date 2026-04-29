@@ -5,10 +5,10 @@ public class PlayerLeverHandler : MonoBehaviour
     public UnityEvent<bool> OnLeverHolding;
     [SerializeField] private PlayerState State;
     private Lever TargetLever;
-    public void HandleLever(GameObject Target)
+    public void HandleLever(GameObject Target, bool bClockwise)
     {
         transform.SetParent(Target.transform);
-        Debug.Log("Hold Lever!");
+        transform.localRotation = Quaternion.Euler(0f, bClockwise ? 180f : 0f, 0f);
         if (State)
         {
             State.SetAction(PlayerState.EAction.Pushing);

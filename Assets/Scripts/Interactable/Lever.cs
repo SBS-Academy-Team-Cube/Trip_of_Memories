@@ -17,9 +17,9 @@ public class Lever : MonoBehaviour, IInteractable
     {
         if (Interactor.TryGetComponent(out PlayerLeverHandler Handler))
         {
-            Handler.HandleLever(gameObject);
-            bClockwise = GetbClockwise(transform, LeverHandleTransform, Interactor.transform);
-            Debug.Log($"ClockWise : {bClockwise}");
+            bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
+            Debug.Log(bClockwise);
+            Handler.HandleLever(gameObject, !bClockwise);
             return true;
         }
         return true;
@@ -51,10 +51,11 @@ public class Lever : MonoBehaviour, IInteractable
             Rotate();
         }
     }
-    private bool GetbClockwise(Transform Pivot, Transform Handle, Transform Interactor)
+    private bool GetClockwise(Transform Pivot, Transform Handle, Transform Interactor)
     {
-        Vector2 A = Handle.position - Pivot.position;
-        Vector2 B = Interactor.position - Pivot.position;
+        
+        Vector2 A = new Vector2(Handle.position.x - Pivot.position.x, Handle.position.z - Pivot.position.z);
+        Vector2 B = new Vector2(Interactor.position.x - Pivot.position.x, Interactor.position.z - Pivot.position.z);
         float Cross = A.x * B.y - A.y * B.x;
         return Cross < 0f;
     }
