@@ -29,11 +29,11 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_OverrideState: 1
+    m_Value: {fileID: 2800000, guid: 0b5345cf23ab840779a8cbf1b89f355a, type: 3}
   dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 3.79
   anamorphic:
     m_OverrideState: 0
     m_Value: 1
@@ -213,6 +213,7 @@ MonoBehaviour:
   - {fileID: 7946637968779862087}
   - {fileID: -7842477284185386158}
   - {fileID: -2786946401533544501}
+  - {fileID: 7950665344588551029}
 --- !u!114 &7946637968779862087
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -255,7 +256,7 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 170
   maximumHeight:
     m_OverrideState: 1
     m_Value: 250
@@ -267,7 +268,7 @@ MonoBehaviour:
     m_Value: 1
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 0.70692414, g: 0.8031917, b: 0.8867924, a: 1}
+    m_Value: {r: 0.5310609, g: 0.65852356, b: 0.9622642, a: 1}
   globalLightProbeDimmer:
     m_OverrideState: 0
     m_Value: 1
@@ -302,5 +303,33 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0.5
   directionalLightsOnly:
+    m_OverrideState: 0
+    m_Value: 0
+--- !u!114 &7950665344588551029
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bcdf71d7fafa419fca1ed162f5fc9, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.ColorAdjustments
+  active: 1
+  postExposure:
+    m_OverrideState: 0
+    m_Value: 0
+  contrast:
+    m_OverrideState: 0
+    m_Value: 0
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 0.58526164, g: 0.71086335, b: 0.9056604, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
     m_OverrideState: 0
     m_Value: 0

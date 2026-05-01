@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.Fog
   active: 1
   quality:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   enabled:
     m_OverrideState: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   tint:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   maxFogDistance:
     m_OverrideState: 0
@@ -42,27 +42,27 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 163.6
+    m_Value: 140
   maximumHeight:
     m_OverrideState: 1
     m_Value: 400
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 76.5
+    m_Value: 50
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 0.33259168, g: 0.6981132, b: 0.63778436, a: 1}
+    m_Value: {r: 0.06354573, g: 0.16278215, b: 0.26415092, a: 1}
   globalLightProbeDimmer:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.671
   depthExtent:
     m_OverrideState: 1
-    m_Value: 7.47
+    m_Value: 87.5
   denoisingMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 2
   anisotropy:
     m_OverrideState: 1
@@ -74,7 +74,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   m_FogControlMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   screenResolutionPercentage:
     m_OverrideState: 1
@@ -83,10 +83,10 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 64
   m_VolumetricFogBudget:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.5
   m_ResolutionDepthRatio:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.5
   directionalLightsOnly:
     m_OverrideState: 1
@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9e4ed5a6f56fb4ebd693e39684f36f, type: 3}
   m_Name: VolumetricClouds
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.VolumetricClouds
-  active: 0
+  active: 1
   enable:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   cloudTiling:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1}
@@ -115,12 +115,12 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0}
   bottomAltitude:
     m_OverrideState: 1
-    m_Value: 1200
+    m_Value: 3000
   altitudeRange:
     m_OverrideState: 1
-    m_Value: 2000
+    m_Value: 1000
   fadeInMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   fadeInStart:
     m_OverrideState: 1
@@ -129,10 +129,10 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   numPrimarySteps:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 64
   numLightSteps:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 6
   cloudMap:
     m_OverrideState: 1
@@ -146,11 +146,11 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   cloudSimpleMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   m_CloudPreset:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   cumulusMap:
     m_OverrideState: 1
     m_Value: {fileID: 0}
@@ -194,7 +194,16 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.15
+        time: 0.05
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -204,7 +213,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -265,7 +274,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 0.25
-        value: 0.4
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -285,7 +294,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   scatteringTint:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   powderEffectIntensity:
     m_OverrideState: 1
@@ -298,12 +307,12 @@ MonoBehaviour:
     m_Value: 0.4
   shapeFactor:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.95
   shapeScale:
     m_OverrideState: 1
     m_Value: 5
   shapeOffset:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 0, y: 0, z: 0}
   erosionFactor:
     m_OverrideState: 1
@@ -324,26 +333,26 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 200
   ambientLightProbeDimmer:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   sunLightDimmer:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   erosionOcclusion:
     m_OverrideState: 1
     m_Value: 0.1
   globalWindSpeed:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value:
-      mode: 1
-      customValue: 100
+      mode: 0
+      customValue: 10
       additiveValue: 0
       multiplyValue: 1
   orientation:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value:
-      mode: 1
-      customValue: 0
+      mode: 0
+      customValue: 86
       additiveValue: 0
       multiplyValue: 1
   altitudeDistortion:
@@ -365,19 +374,19 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   temporalAccumulationFactor:
-    m_OverrideState: 1
-    m_Value: 0.95
+    m_OverrideState: 0
+    m_Value: 0.572
   ghostingReduction:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   perceptualBlending:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   shadows:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   shadowResolution:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 256
   shadowDistance:
     m_OverrideState: 1
@@ -468,12 +477,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cc4c5fcb677014ebdc0d8be227b40c, type: 3}
   m_Name: ScreenSpaceLensFlare
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.ScreenSpaceLensFlare
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 3.01
+    m_Value: 1.12
   tintColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0.4509804, g: 0.47982153, b: 0.7529412, a: 1}
   bloomMip:
     m_OverrideState: 1
@@ -521,13 +530,13 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 4
   spectralLut:
-    m_OverrideState: 1
-    m_Value: {fileID: 0}
+    m_OverrideState: 0
+    m_Value: {fileID: 2800000, guid: 784b84614d39d7448ab6aeb4938722e3, type: 3}
   chromaticAbberationIntensity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.5
   chromaticAbberationSampleCount:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 3
 --- !u!114 &-7340114568284862569
 MonoBehaviour:
@@ -547,16 +556,16 @@ MonoBehaviour:
     m_Value: 0.26
   contrast:
     m_OverrideState: 1
-    m_Value: -5.4
+    m_Value: -13
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.9573139, g: 1, b: 0.9490196, a: 1}
+    m_Value: {r: 0.9490196, g: 0.9714875, b: 1, a: 1}
   hueShift:
     m_OverrideState: 1
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 13
+    m_Value: 14
 --- !u!114 &-7285498736492684679
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1317,7 +1326,7 @@ MonoBehaviour:
   active: 1
   rotation:
     m_OverrideState: 1
-    m_Value: 314
+    m_Value: 84
   skyIntensityMode:
     m_OverrideState: 1
     m_Value: 1
@@ -1329,10 +1338,10 @@ MonoBehaviour:
     m_Value: 1
   upperHemisphereLuxValue:
     m_OverrideState: 1
-    m_Value: 0.017615702
+    m_Value: 0.9353417
   upperHemisphereLuxColor:
     m_OverrideState: 1
-    m_Value: {x: 0.09756678, y: 0.19947833, z: 0.5}
+    m_Value: {x: 0.18104552, y: 0.27842334, z: 0.5}
   desiredLuxValue:
     m_OverrideState: 1
     m_Value: 20000
@@ -1347,7 +1356,7 @@ MonoBehaviour:
     m_Value: 0
   hdriSky:
     m_OverrideState: 1
-    m_Value: {fileID: 8900000, guid: 97259d0c0ea9f491692be825da27978a, type: 3}
+    m_Value: {fileID: 8900000, guid: e71fc492f440446b99875b8e1df890ba, type: 3}
   distortionMode:
     m_OverrideState: 1
     m_Value: 0
@@ -1375,7 +1384,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: -Infinity
   lockSun:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   enableBackplate:
     m_OverrideState: 1
@@ -1651,22 +1660,22 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.98
   intensity:
     m_OverrideState: 1
-    m_Value: 0.174
+    m_Value: 0.382
   scatter:
     m_OverrideState: 1
-    m_Value: 0.678
+    m_Value: 0.78
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.9358491, g: 1, b: 0.9198113, a: 1}
+    m_Value: {r: 0.84243506, g: 0.9622642, b: 0.81247777, a: 1}
   dirtTexture:
     m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_Value: {fileID: 2800000, guid: 638e15d705e377c449adb5de3a9d557f, type: 3}
   dirtIntensity:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 5.88
   anamorphic:
     m_OverrideState: 1
     m_Value: 1
@@ -1845,13 +1854,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {r: 0.5582503, g: 0.6132076, b: 0.58572894, a: 1}
+    m_Value: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   highlights:
     m_OverrideState: 1
-    m_Value: {r: 0.4811321, g: 0.46889594, b: 0.36992702, a: 1}
+    m_Value: {r: 0.5660378, g: 0.55416095, b: 0.45122823, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 13
 --- !u!114 &3868316341673401547
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2094,10 +2103,10 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 13.182089
+    m_Value: 13.002983
   compensation:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: -2.73
   limitMin:
     m_OverrideState: 1
     m_Value: 12.141572
@@ -2258,30 +2267,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88178bb13f64a54f90d6cd6ef7aa9a1, type: 3}
   m_Name: CloudLayer
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.CloudLayer
-  active: 0
+  active: 1
   opacity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   upperHemisphereOnly:
     m_OverrideState: 1
     m_Value: 1
   layers:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   resolution:
     m_OverrideState: 1
     m_Value: 1024
   shadowMultiplier:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   shadowTint:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   shadowResolution:
     m_OverrideState: 1
     m_Value: 256
   shadowSize:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 500
   layerA:
     cloudMap:
@@ -2300,20 +2309,20 @@ MonoBehaviour:
       m_OverrideState: 1
       m_Value: 0
     altitude:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 2000
     rotation:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 0
     tint:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: {r: 1, g: 1, b: 1, a: 1}
     exposure:
       m_OverrideState: 1
       m_Value: 0
     distortionMode:
       m_OverrideState: 1
-      m_Value: 0
+      m_Value: 1
     scrollOrientation:
       m_OverrideState: 1
       m_Value:
@@ -2332,20 +2341,20 @@ MonoBehaviour:
       m_OverrideState: 1
       m_Value: {fileID: 0}
     lighting:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 1
     steps:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 6
     thickness:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 0.5
     ambientProbeDimmer:
-      m_OverrideState: 1
+      m_OverrideState: 0
       m_Value: 1
     castShadows:
       m_OverrideState: 1
-      m_Value: 0
+      m_Value: 1
   layerB:
     cloudMap:
       m_OverrideState: 1

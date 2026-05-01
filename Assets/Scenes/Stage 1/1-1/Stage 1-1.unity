@@ -1920,9 +1920,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 0
-  priority: 0
+  priority: 1.46
   blendDistance: 1
-  weight: 1
+  weight: 0.485
   sharedProfile: {fileID: 11400000, guid: 17b03e51e7c718a4aa8c79ea255cefb2, type: 2}
 --- !u!65 &69370876
 BoxCollider:
@@ -1954,8 +1954,8 @@ Transform:
   m_GameObject: {fileID: 69370874}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.89, y: -0.8200073, z: -12.650002}
-  m_LocalScale: {x: 10.718743, y: 6.3630686, z: 4.923946}
+  m_LocalPosition: {x: -22.41, y: -0.8200073, z: -11.96}
+  m_LocalScale: {x: 7.266249, y: 6.3630686, z: 5.8846073}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1238711776}
@@ -12700,9 +12700,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 0
-  priority: 0
+  priority: 1.36
   blendDistance: 3.59
-  weight: 0.391
+  weight: 0.378
   sharedProfile: {fileID: 11400000, guid: ca39b2cfe82dfb043ae0c6baaad738c9, type: 2}
 --- !u!65 &517538817
 BoxCollider:
@@ -12734,8 +12734,8 @@ Transform:
   m_GameObject: {fileID: 517538815}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.58, y: -0.8200073, z: -12.650002}
-  m_LocalScale: {x: 9.454206, y: 16.605064, z: 9.578031}
+  m_LocalPosition: {x: 1.19, y: -0.8200073, z: 1.36}
+  m_LocalScale: {x: 9.454206, y: 16.605064, z: 14.495099}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1238711776}
@@ -15878,6 +15878,7 @@ GameObject:
   - component: {fileID: 661853414}
   - component: {fileID: 661853413}
   - component: {fileID: 661853415}
+  - component: {fileID: 661853416}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -16107,6 +16108,136 @@ MonoBehaviour:
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
   m_ObsoleteContactShadows: 0
+--- !u!114 &661853416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661853412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc4d76f733087744991913c9d19d5274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.LensFlareComponentSRP
+  m_LensFlareData: {fileID: 11400000, guid: 3a39ff759ebd46646b9fe5b4b47c82c9, type: 2}
+  version: 0
+  intensity: 7.05
+  maxAttenuationDistance: 100
+  maxAttenuationScale: 100
+  distanceAttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scaleByDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  attenuationByLightShape: 1
+  radialScreenAttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  useOcclusion: 0
+  useBackgroundCloudOcclusion: 0
+  environmentOcclusion: 0
+  useWaterOcclusion: 0
+  occlusionRadius: 0.1
+  sampleCount: 32
+  occlusionOffset: 0.05
+  scale: 6.33
+  allowOffScreen: 0
+  volumetricCloudOcclusion: 0
+  occlusionRemapCurve:
+    <length>k__BackingField: 2
+    m_Loop: 0
+    m_ZeroValue: 1
+    m_Range: 1
+    m_Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  lightOverride: {fileID: 661853413}
 --- !u!1001 &662425713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22886,9 +23017,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 0
-  priority: 0
-  blendDistance: 10
-  weight: 0.79
+  priority: 5.17
+  blendDistance: 8
+  weight: 0.239
   sharedProfile: {fileID: 11400000, guid: 674d8cc6417fc8243bd77b2bb8858099, type: 2}
 --- !u!65 &907735951
 BoxCollider:
@@ -22920,8 +23051,8 @@ Transform:
   m_GameObject: {fileID: 907735949}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.41, y: -0.8200073, z: -12.650002}
-  m_LocalScale: {x: 13.258014, y: 6.3630686, z: 4.923946}
+  m_LocalPosition: {x: -16.4, y: -0.8200073, z: -12.650002}
+  m_LocalScale: {x: 9.4711275, y: 6.3630686, z: 4.923946}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1238711776}
@@ -30040,7 +30171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1528977632270062051, guid: 96129951d915d734da4f469188eb9162, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3656619721630660396, guid: 96129951d915d734da4f469188eb9162, type: 3}
       propertyPath: FocusTracking
@@ -53831,9 +53962,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 0
-  priority: 0
-  blendDistance: 10
-  weight: 0.483
+  priority: 12.3
+  blendDistance: 8
+  weight: 0.09
   sharedProfile: {fileID: 11400000, guid: 1b4b3fecd7abfc346a95c6469f388a2a, type: 2}
 --- !u!65 &2124008641
 BoxCollider:
@@ -53865,7 +53996,7 @@ Transform:
   m_GameObject: {fileID: 2124008639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.011837218, z: -0, w: 0.99992996}
-  m_LocalPosition: {x: 0, y: 0, z: -26.949997}
+  m_LocalPosition: {x: 0, y: 0, z: -28.502}
   m_LocalScale: {x: 8.038022, y: 4.8061943, z: 17.471058}
   m_ConstrainProportionsScale: 0
   m_Children: []
