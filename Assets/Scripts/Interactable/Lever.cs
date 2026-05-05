@@ -1,17 +1,40 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR;
 
+[Serializable]
+public struct FLeverPosition
+{
+    public Transform StandPosition;
+    public Transform LeftHandIKPosition;
+    public Transform RightHandIKPosition;
+    public Vector3 GetPosition()
+    {
+        return StandPosition.position;
+    }
+}
 public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] private string itemName = "item";
     [SerializeField] private float RotateSpeed;
     [SerializeField] private Rotator TargetRotator;
-    [SerializeField] Transform LeverHandleTransform;
+    [SerializeField] private Transform LeverHandleTransform;
+    [SerializeField] private FLeverPosition Clockwise;
+    [SerializeField] private FLeverPosition CounterClockwise;
     public bool IsRotating = false;
-    private bool bClockwise;
+    public bool bClockwise { get; private set; }
     public string GetInteractionPrompt()
     {
         return itemName;
+    }
+    public void GetIKPosition(out Transform Left, out Transform Right)
+    {
+        Left = bClockwise ? CounterClockwise.LeftHandIKPosition : Clockwise.LeftHandIKPosition;
+        Right = bClockwise ? CounterClockwise.RightHandIKPosition : Clockwise.RightHandIKPosition;
+    }
+    public Vector3 GetPosition()
+    {
+        return bClockwise ? CounterClockwise.GetPosition() : Clockwise.GetPosition();
     }
     public bool Interact(GameObject Interactor)
     {
@@ -19,7 +42,7 @@ public class Lever : MonoBehaviour, IInteractable
         {
             bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
             Debug.Log(bClockwise);
-            Handler.HandleLever(gameObject, !bClockwise);
+            Handler.HandleLever(this);
             return true;
         }
         return true;
@@ -53,7 +76,7 @@ public class Lever : MonoBehaviour, IInteractable
     }
     private bool GetClockwise(Transform Pivot, Transform Handle, Transform Interactor)
     {
-        
+
         Vector2 A = new Vector2(Handle.position.x - Pivot.position.x, Handle.position.z - Pivot.position.z);
         Vector2 B = new Vector2(Interactor.position.x - Pivot.position.x, Interactor.position.z - Pivot.position.z);
         float Cross = A.x * B.y - A.y * B.x;

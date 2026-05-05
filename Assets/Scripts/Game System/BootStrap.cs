@@ -6,14 +6,14 @@ public class BootStrap : MonoBehaviour
     {
         SaveManager.Instance.Load();
         var Data = SaveManager.Instance.Data;
-
+        
         if (!Data.HasPlayed)
         {
-            GameDirector.Instance.LoadScene("CharacterSelectScene");
+            GameDirector.Instance.LoadScene(SceneId.CharacterSelect);
         }
         else
         {
-            GameDirector.Instance.LoadScene("MainMenuScene");
+            GameDirector.Instance.LoadScene(SceneId.MainMenu);
         }
     }
 }

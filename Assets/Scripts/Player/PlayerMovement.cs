@@ -102,9 +102,9 @@ public class PlayerMovement : MonoBehaviour
             Velocity.y = JumpForce;
             Animation.SetJump();
         }
-        else if (MantlingComponent && MantlingComponent.CanMantling())
+        else if (MantlingComponent)
         {
-            MantlingComponent.DoMantling();
+            MantlingComponent.TryMantling();
         }
     }
     public void TryLook(InputValue Value)

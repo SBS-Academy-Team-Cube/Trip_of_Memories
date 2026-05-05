@@ -8,15 +8,20 @@ public class HoverItem : MonoBehaviour
 
     [Header("Rotation Setting")]
     [SerializeField] private float RotateSpeed = 45f;   // 초당 회전 속도 (deg)
-
+    [SerializeField] private Vector3 RotationLocalAxis = Vector3.up;
     private Vector3 StartLocalPos;
     private float TimeOffset;
 
     private void Awake()
     {
-        StartLocalPos = transform.localPosition;
         TimeOffset = Random.Range(0f, 100f);
     }
+
+    private void OnEnable()
+    {
+        StartLocalPos = transform.localPosition;
+    }
+
     private void Update()
     {
         Hover();
@@ -29,6 +34,6 @@ public class HoverItem : MonoBehaviour
     }
     private void Rotate()
     {
-        transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime, Space.World);
+        transform.Rotate(RotationLocalAxis * RotateSpeed * Time.deltaTime, Space.Self);
     }
 }

@@ -65,7 +65,6 @@ public class MainMenuController : MonoBehaviour
             Debug.Log("Panel Stack is Empty");
         }
     }
-
     public void OnQuitGame()
     {
         if (GameDirector.Instance != null)
@@ -83,24 +82,21 @@ public class MainMenuController : MonoBehaviour
     }
     public void OnNewGame()
     {
-        if(SaveManager.Instance)
+        if (SaveManager.Instance)
         {
             SaveManager.Instance.ResetSave();
         }
-        if(GameDirector.Instance)
+        if (GameDirector.Instance)
         {
-            GameDirector.Instance.LoadScene(1);
+            GameDirector.Instance.LoadScene(SceneId.CharacterSelect);
         }
     }
     public void OnLoadGame()
     {
-        if(SaveManager.Instance.Data == null)
+        if (SaveManager.Instance.Data == null)
         {
             SaveManager.Instance.Load();
         }
-        // if(SaveManager.Instance.Data.StageIndex > 0)
-        // {
-            GameDirector.Instance.LoadScene(3);
-        // }
+        GameDirector.Instance.LoadScene(SaveManager.Instance.Data.CanEnterLevelSelect ? SceneId.LevelSelect : SceneId.Stage1_1);
     }
 }

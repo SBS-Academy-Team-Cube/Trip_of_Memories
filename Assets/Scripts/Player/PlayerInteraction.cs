@@ -14,7 +14,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (ItemHandler.bIsHoldingItem)
         {
-            ItemHandler.DropItem();
+            ItemHandler.TryDrop();
             return;
         }
         if (CurTarget != null)

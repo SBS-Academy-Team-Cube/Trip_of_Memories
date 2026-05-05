@@ -1,15 +1,16 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform PlayerStart;
     [SerializeField] private GameObject[] CharacterPrefabs;
-    [SerializeField] private Transform CameraTransform;
+    [SerializeField] private Camera MainCamera;
     [SerializeField] private CinemachineCamera CinemachineCamera;
     [SerializeField] private SpringArm CameraArm;
     [SerializeField] private CutsceneManager CutScene;
     [SerializeField] private WorldUIManager WorldUI;
+    [SerializeField] private Transform PlayerCameraPivot;
     public System.Action<GameObject> OnPlayerSpawned;
     void Start()
     {
@@ -23,12 +24,13 @@ public class PlayerSpawner : MonoBehaviour
             Debug.LogError("Wrong Character Index");
             return;
         }
-        GameObject Player = Instantiate(CharacterPrefabs[index], PlayerStart.position, PlayerStart.rotation);
+        GameObject Player = Instantiate(CharacterPrefabs[index], transform.position, transform.rotation);
         OnPlayerSpawned?.Invoke(Player);
 
         if (Player.TryGetComponent(out PlayerMovement Move))
         {
-            Move.CameraTransform = CameraTransform;
+            PlayerCameraPivot = Move.CameraPivot;
+            Move.CameraTransform = MainCamera.transform;
             CinemachineCamera.Target.TrackingTarget = Move.CameraPivot;
             CameraArm.SetTarget(Move.CameraPivot);
 
@@ -40,6 +42,10 @@ public class PlayerSpawner : MonoBehaviour
         if (WorldUI != null && Player.TryGetComponent(out PlayerInteraction Interaction))
         {
             WorldUI.SetPlayerInteraction(Interaction);
+        }
+        if (GameDirector.Instance && GameDirector.Instance.Iris)
+        {
+            GameDirector.Instance.Iris.FadeIn(MainCamera.WorldToViewportPoint(PlayerCameraPivot.position));
         }
     }
 }

@@ -66,7 +66,6 @@ public class PlayerInputController : MonoBehaviour
 
     public void OnPush(InputValue Value)
     {
-        
         if (Value.isPressed)
         {
             if (TryGetComponent(out PlayerLeverHandler Handler))

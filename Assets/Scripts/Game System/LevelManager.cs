@@ -8,13 +8,12 @@ public class LevelManager : MonoBehaviour
     public List<UnityEvent> LevelEvents;
     private int DoorConditionIndex = 0;
     [SerializeField] private int RequiredConditionCounts = 2;
-    [SerializeField] private int NextSceneIndex = 0;
-    
+    [SerializeField] private SceneId NextSceneId;
+
     [SerializeField] private IrisController TransitionController;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
-    
     private void Start()
     {
         if (AudioManager.Instance && LevelBGM)
@@ -30,12 +29,11 @@ public class LevelManager : MonoBehaviour
             LevelEvents[0]?.Invoke();
         }
     }
-    
     public void LoadNextLevel()
     {
-        if(TransitionController)
+        if (GameDirector.Instance)
         {
-            // TransitionController.StartTransition();
+            GameDirector.Instance.LoadSceneWithoutLoading(SceneId.Stage1_2);
         }
     }
 

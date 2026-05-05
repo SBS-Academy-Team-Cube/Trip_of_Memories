@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.InputSystem;
-
 public enum GameState
 {
     None,
@@ -12,12 +11,12 @@ public enum GameState
 }
 public class GameDirector : Singleton<GameDirector>
 {
-    public string NextSceneName { get; private set; }
-    public int NextSceneIndex { get; private set; }
-    public bool bUseSceneName { get; private set; } = true;
+    public SceneId NextSceneID { get; private set; }
+    public SceneId CurrentSceneID { get; private set; }
+    private readonly SceneId LoadingSceneID = SceneId.Loading;
     public GameState CurrentState { get; private set; } = GameState.None;
     public Action<GameState> OnGameStateChanged;
-
+    public IrisController Iris;
     public InputActionReference SlowModeAction;
     private bool bSlowMode;
     protected override void Awake()
@@ -48,78 +47,45 @@ public class GameDirector : Singleton<GameDirector>
             SlowModeAction.action.Disable();
         }
     }
-
-    public void LoadScene(string sceneName)
+    public void LoadScene(SceneId ID)
     {
-        NextSceneName = sceneName;
-        bUseSceneName = true;
-
-        SetState(GameState.Loading);
-        SceneManager.LoadScene("LoadingScene");
+        NextSceneID = ID;
+        SceneManager.LoadScene(SceneTable.GetSceneName(LoadingSceneID));
     }
-
-    public void LoadScene(int sceneIndex)
+    public void LoadSceneWithoutLoading(SceneId ID)
     {
-        NextSceneIndex = sceneIndex;
-        bUseSceneName = false;
-
-        SetState(GameState.Loading);
-        SceneManager.LoadScene("LoadingScene");
+        NextSceneID = ID;
+        SceneManager.LoadScene(SceneTable.GetSceneName(ID));
     }
-
-    public void LoadSceneWithoutLoading(string sceneName)
+    public AsyncOperation AsyncLoading()
     {
-        SceneManager.LoadScene(sceneName);
+        return SceneManager.LoadSceneAsync(SceneTable.GetSceneName(NextSceneID));
     }
-
-    public void LoadSceneWithoutLoading(int sceneIndex)
-    {
-        SceneManager.LoadScene(sceneIndex);
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch (scene.name)
+        if (scene.name == SceneTable.GetSceneName(SceneId.Loading))
         {
-            case "CharacterSelectScene":
-                SetState(GameState.CharacterSelect);
-                ShowMouseCursor(true);
-                break;
-
-            case "GameScene":
-                SetState(GameState.InGame);
-                ShowMouseCursor(false);
-                break;
-
-            case "LoadingScene":
-                SetState(GameState.Loading);
-                break;
-
-            default:
-                if (scene.name.StartsWith("Level"))
-                {
-                    ShowMouseCursor(false);
-                    SetState(GameState.InGame); // 필요에 맞게 상태 지정
-                }
-                else
-                {
-                    ShowMouseCursor(true);
-                    SetState(GameState.None);
-                }
-                break;
+            SetState(GameState.Loading);
+            ShowMouseCursor(true);
+            return;
         }
+
+        CurrentSceneID = NextSceneID;
+        NextSceneID = SceneId.NULL;
+
+        GameState state = SceneTable.GetGameState(CurrentSceneID);
+        SetState(state);
+        ShowMouseCursor(state != GameState.InGame);
     }
 
-    public void SetState(GameState newState)
+    public void SetState(GameState NewState)
     {
-        if (CurrentState == newState)
+        if (CurrentState == NewState)
         {
             return;
         }
-        CurrentState = newState;
-        Debug.Log($"[GameDirector] State Changed → {newState}");
-
-        OnGameStateChanged?.Invoke(newState);
+        CurrentState = NewState;
+        OnGameStateChanged?.Invoke(CurrentState);
     }
     private void ShowMouseCursor(bool show)
     {
