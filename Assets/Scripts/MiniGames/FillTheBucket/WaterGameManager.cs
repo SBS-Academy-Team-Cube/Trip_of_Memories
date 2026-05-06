@@ -6,10 +6,6 @@ public class WaterGameManager : MonoBehaviour
     [SerializeField] private BucketManager BucketManager;
     [SerializeField] private BucketUIManager UI;
     [SerializeField] private GameObject Canvas;
-    private void Start()
-    {
-        Play();
-    }
     public void Play()
     {
         Canvas.SetActive(true);
@@ -17,7 +13,7 @@ public class WaterGameManager : MonoBehaviour
     }
     public void Clear()
     {
-
+        Canvas.SetActive(false);
     }
     public void Fail()
     {

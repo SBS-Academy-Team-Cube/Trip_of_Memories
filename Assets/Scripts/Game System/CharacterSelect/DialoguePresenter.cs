@@ -26,6 +26,7 @@ public class DialoguePresenter : MonoBehaviour
     }
     void HandleDialogueChanged(DialogueContext Context)
     {
+        Debug.Log("HandleDialougeChanged");
         player.Play(Context.Text, effect);
     }
     void HandleTypingFinished()

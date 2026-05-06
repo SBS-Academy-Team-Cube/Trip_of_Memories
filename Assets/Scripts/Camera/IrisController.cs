@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
 
 public class IrisController : MonoBehaviour
 {
@@ -10,8 +9,7 @@ public class IrisController : MonoBehaviour
     private float InitialRadius = 1.5f;
     [SerializeField] private Image Image;
     private Material Mat;
-    public UnityEvent<bool> OnTransitionEnd;
-
+    public Action<bool> OnFadeInTransition;
     private void Awake()
     {
         Mat = Instantiate(Image.material);
@@ -52,6 +50,10 @@ public class IrisController : MonoBehaviour
             yield return null;
         }
         Mat.SetFloat("_Radius", EndRadius);
-        OnTransitionEnd?.Invoke(IsFadeIn);
+        if (!IsFadeIn)
+        {
+            Mat.SetFloat("_Smootheness", 0.0f);
+        }
+        OnFadeInTransition?.Invoke(IsFadeIn);
     }
 }

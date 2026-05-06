@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 [Serializable]
 public class Bucket : MonoBehaviour
 {
@@ -33,6 +33,8 @@ public class Bucket : MonoBehaviour
     public float SpriteHalfWidth;
     private Coroutine CurrentCoroutine = null;
     public int CurrentAmount = 0;
+
+    public UnityEvent OnClear;
     public void EnableButton()
     {
         if (Btn != null)
@@ -81,7 +83,18 @@ public class Bucket : MonoBehaviour
         UpdateSprite(GetBucketStateSprite());
         UpdateText();
         EnableButton();
+
+        if (bOverflowSensitive && CurrentAmount == MaxCapacity)
+        {
+            StartCoroutine(ClearDelay());
+        }
+
         return AddAmount - AddedAmount;
+    }
+    private IEnumerator ClearDelay()
+    {
+        yield return new WaitForSeconds(1.0f);
+        OnClear?.Invoke();
     }
     public void PickUpBucket()
     {

@@ -118,12 +118,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetBool("IsPushing", bPushing);
         AnimationController.SetTrigger("LeverPushTrigger");
-        // SetLayerWeight(LeftArmLayerIndex, 1.0f);
-        // SetLayerWeight(RightArmLayerIndex, 1.0f);
+        SetLeverPlaying(0.0f);
     }
-    public void SetLeverPlaying(bool bPlaying)
+    public void SetLeverPlaying(float Speed)
     {
-        AnimationController.SetFloat("LeverAnimSpeed", bPlaying ? 1.0f : 0.0f);
+        AnimationController.SetFloat("LeverAnimSpeed", Speed);
     }
     public void IsPlay(bool bPlaying)
     {
@@ -146,9 +145,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.applyRootMotion = false;
     }
-    public void SetIsHanging(bool IsHanging)
+    public void SetHangOnRope(bool IsHanging)
     {
-        AnimationController.SetTrigger(IsHanging ? "StartHanging" : "EndHanging");
+        AnimationController.SetTrigger(IsHanging ? "StartHangingTrigger" : "EndHangingTrigger");
+        if (IsHanging)
+        {
+            SetRopePlaying(0.0f);
+        }
+    }
+    public void SetRopePlaying(float Speed)
+    {
+        AnimationController.SetFloat("RopeAnimSpeed", Speed);
     }
     public void PlayRopeAnimation(bool bReverse)
     {

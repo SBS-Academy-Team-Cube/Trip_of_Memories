@@ -33,6 +33,6 @@ public class PlayerLeverHandler : MonoBehaviour
         {
             TargetLever.SetIsRotating(bRotate);
         }
-        Animation.SetLeverPlaying(bRotate);
+        Animation.SetLeverPlaying(bRotate ? 1.0f : 0.0f);
     }
 }

@@ -4816,7 +4816,6 @@ MonoBehaviour:
   CameraPivot: {fileID: 5208764410698934523}
   CameraTransform: {fileID: 0}
   MoveSpeed: 1.45
-  HangingMoveSpeed: 0.8
   RotateSpeed: 18
   Gravity: -9
   JumpForce: 3
@@ -4833,7 +4832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRopeHandler
   State: {fileID: 9071798309953751940}
-  animator: {fileID: 8616520276366385363}
+  Animation: {fileID: 7791356207911647828}
   OnEnterHanging:
     m_PersistentCalls:
       m_Calls:
@@ -4849,7 +4848,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Speed: 0
+  Speed: 1.5
 --- !u!114 &9071798309953751940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4898,7 +4897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   TargetRenderer: {fileID: 9041682185245798459}
-  Duration: 0.5
+  Duration: 0.35
 --- !u!1 &2131440126608449911
 GameObject:
   m_ObjectHideFlags: 0

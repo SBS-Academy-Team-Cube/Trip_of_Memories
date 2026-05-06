@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 Velocity;
     public Transform CameraTransform;
     public float MoveSpeed = 5f;
-    [SerializeField] private float HangingMoveSpeed = 3.0f;
     [SerializeField] private float RotateSpeed = 20.0f;
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
@@ -84,11 +83,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoHangingMove()
     {
-        if (RopeHandler.bIsMoving)
-        {
-            Controller.Move(HangingMoveSpeed * Time.deltaTime * Vector3.up * MoveInput.y);
-        }
-        Animation.IsPlay(Mathf.Abs(MoveInput.y) > 0.01f);
+        Controller.Move(RopeHandler.Speed * Time.deltaTime * Vector3.up * MoveInput.y);
+        Animation.SetRopePlaying(MoveInput.y);
     }
     public void TryMove(Vector2 Value)
     {

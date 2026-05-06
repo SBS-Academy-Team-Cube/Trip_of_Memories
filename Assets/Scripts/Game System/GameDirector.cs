@@ -23,7 +23,6 @@ public class GameDirector : Singleton<GameDirector>
     {
         base.Awake();
     }
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

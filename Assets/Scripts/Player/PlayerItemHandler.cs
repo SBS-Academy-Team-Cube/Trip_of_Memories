@@ -53,7 +53,8 @@ public class PlayerItemHandler : MonoBehaviour
             RB.isKinematic = true;
             RB.useGravity = false;
         }
-        if (HoldingObject.TryGetComponent<Collider>(out var Collider))
+        Collider[] Colliders = HoldingObject.GetComponentsInChildren<Collider>();
+        foreach (Collider Collider in Colliders)
         {
             Collider.enabled = false;
         }
@@ -74,7 +75,8 @@ public class PlayerItemHandler : MonoBehaviour
         Animation.EnableHoldingLayer(false);
         Animation.ClearHandIK();
 
-        if (HoldingObject.TryGetComponent<Collider>(out var Collider))
+        Collider[] Colliders = HoldingObject.GetComponentsInChildren<Collider>();
+        foreach (Collider Collider in Colliders)
         {
             Collider.enabled = true;
         }
@@ -83,7 +85,6 @@ public class PlayerItemHandler : MonoBehaviour
             RB.isKinematic = false;
             RB.useGravity = true;
         }
-
         if (HoldingObject.TryGetComponent(out PickupItem Pickup))
         {
             Pickup.enabled = true;

@@ -44,6 +44,8 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
         selectUIRoot.SetActive(false);
 
         storyManager.enabled = true;
+        storyManager.ShowStory(0);
+        // storyManager.StartDialogue();
         selectController.enabled = false;
     }
     void EnterSelectState()

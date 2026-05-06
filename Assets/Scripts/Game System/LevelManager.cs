@@ -14,11 +14,41 @@ public class LevelManager : MonoBehaviour
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
+    void OnEnable()
+    {
+        if (GameDirector.Instance && GameDirector.Instance.Iris)
+        {
+            GameDirector.Instance.Iris.OnFadeInTransition += OnFadeOutEnd;
+        }
+    }
+    void Osable()
+    {
+        if (GameDirector.Instance && GameDirector.Instance.Iris)
+        {
+            GameDirector.Instance.Iris.OnFadeInTransition -= OnFadeOutEnd;
+        }
+    }
     private void Start()
     {
         if (AudioManager.Instance && LevelBGM)
         {
             AudioManager.Instance.PlayBGM(LevelBGM);
+        }
+    }
+    private void OnFadeOutEnd(bool IsFadeIn)
+    {
+        if (IsFadeIn)
+        {
+            return;
+        }
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+        if (GameDirector.Instance)
+        {
+
+            GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
         }
     }
     public void OnConditionMet()
@@ -29,12 +59,11 @@ public class LevelManager : MonoBehaviour
             LevelEvents[0]?.Invoke();
         }
     }
-    public void LoadNextLevel()
+    public void CallTransition(Vector3 ViewPortPosition)
     {
-        if (GameDirector.Instance)
+        if (GameDirector.Instance && GameDirector.Instance.Iris)
         {
-            GameDirector.Instance.LoadSceneWithoutLoading(SceneId.Stage1_2);
+            GameDirector.Instance.Iris.FadeOut(ViewPortPosition);
         }
     }
-
 }

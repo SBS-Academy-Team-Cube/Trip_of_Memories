@@ -1,7 +1,5 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using UnityEngine.SceneManagement;
-
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] CharacterPrefabs;
@@ -18,15 +16,13 @@ public class PlayerSpawner : MonoBehaviour
         {
             SaveManager.Instance.Load();
         }
-        int index = SaveManager.Instance.Data.SelectedCharacterModelIndex;
-        if (index < 0 || index >= CharacterPrefabs.Length)
+        int Index = SaveManager.Instance.Data.SelectedCharacterModelIndex;
+        if (Index < 0 || Index >= CharacterPrefabs.Length)
         {
-            Debug.LogError("Wrong Character Index");
             return;
         }
-        GameObject Player = Instantiate(CharacterPrefabs[index], transform.position, transform.rotation);
+        GameObject Player = Instantiate(CharacterPrefabs[Index], transform.position, transform.rotation);
         OnPlayerSpawned?.Invoke(Player);
-
         if (Player.TryGetComponent(out PlayerMovement Move))
         {
             PlayerCameraPivot = Move.CameraPivot;
@@ -45,7 +41,7 @@ public class PlayerSpawner : MonoBehaviour
         }
         if (GameDirector.Instance && GameDirector.Instance.Iris)
         {
-            GameDirector.Instance.Iris.FadeIn(MainCamera.WorldToViewportPoint(PlayerCameraPivot.position));
+            GameDirector.Instance.Iris.FadeIn(new Vector3(0.5f, 0.5f, 0.0f));
         }
     }
 }
