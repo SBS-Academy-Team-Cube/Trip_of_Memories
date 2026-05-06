@@ -27,6 +27,16 @@ public class PlayerLeverHandler : MonoBehaviour
 
         OnLeverHolding?.Invoke(true);
     }
+    public void ReleaseLever()
+    {
+        transform.SetParent(null);
+        if (State)
+        {
+            State.SetAction(PlayerState.EAction.None);
+        }
+        Animation.SetLeverPush(false);
+        Animation.ClearHandIK();
+    }
     public void SetRotating(bool bRotate)
     {
         if (TargetLever)

@@ -17,9 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     private Transform rightHandIKTarget;
     private float leftHandIKWeight;
     private float rightHandIKWeight;
-
-
-
+    
     private void Awake()
     {
         if (!AnimationController)
@@ -116,8 +114,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetLeverPush(bool bPushing)
     {
-        AnimationController.SetBool("IsPushing", bPushing);
-        AnimationController.SetTrigger("LeverPushTrigger");
+        AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
         SetLeverPlaying(0.0f);
     }
     public void SetLeverPlaying(float Speed)

@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerInteraction Interaction;
     [SerializeField] private PlayerMovement Movement;
     [SerializeField] private PlayerRopeHandler RopeHandler;
+    [SerializeField] private PlayerLeverHandler LeverHandler;
     [SerializeField] private PlayerInput Input;
     public void OnHangingRope(bool bHanging)
     {
@@ -64,22 +65,23 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
+    // Lever Action Map
     public void OnPush(InputValue Value)
     {
-        if (Value.isPressed)
+        if(!LeverHandler)
         {
-            if (TryGetComponent(out PlayerLeverHandler Handler))
-            {
-                Handler.SetRotating(true);
-            }
+            return;
         }
-        else
+        LeverHandler.SetRotating(Value.isPressed);
+    }
+    public void OnEscape(InputValue Value)
+    {
+        if(!LeverHandler)
         {
-            if (TryGetComponent(out PlayerLeverHandler Handler))
-            {
-                Debug.Log("Stop Pushing");
-                Handler.SetRotating(false);
-            }
+            return;
         }
+
+        LeverHandler.ReleaseLever();
+        OnHoldLever(false);
     }
 }
