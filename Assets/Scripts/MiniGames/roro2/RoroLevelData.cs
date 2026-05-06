@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public enum RoroTileType
@@ -16,6 +17,22 @@ public enum RoroTileType
     Player2
 }
 
+public enum LaserStatueDir
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+[System.Serializable]
+public class LaserStatueData
+{
+    public Vector2Int pos;
+    public LaserStatueDir dir;
+    public bool isActive = true;
+    public int LaserLength = 0;
+}
 
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "roro/LevelData")]
@@ -25,6 +42,9 @@ public class RoroLevelData : ScriptableObject
     public int height = 10;
 
     [HideInInspector] public RoroTileType[] tiles;
+
+    [Header("LaserStatue")]
+    public LaserStatueData[] laserStatues;
 
     public Vector2Int playerStart;
     public Vector2Int exitPos;
