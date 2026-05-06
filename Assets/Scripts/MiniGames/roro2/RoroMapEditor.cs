@@ -36,7 +36,7 @@ public class RoroMapEditor : Editor
                 RoroTileType current = data.tiles[index];
 
                 GUI.contentColor = GetTileColor(current);
-                if (GUILayout.Button(current.ToString(), GUILayout.Width(30), GUILayout.Height(30)))
+                if (GUILayout.Button(current.ToString(), GUILayout.Width(40), GUILayout.Height(40)))
                 {
                     data.tiles[index] = selectedTile;
                     EditorUtility.SetDirty(data);
@@ -60,6 +60,10 @@ public class RoroMapEditor : Editor
             RoroTileType.Ice => Color.lightBlue,
             RoroTileType.Water => Color.blue,
             RoroTileType.Exit => Color.brown,
+            RoroTileType.StartPoint => Color.brown,
+            RoroTileType.LaserStatue => Color.darkRed,
+            RoroTileType.Player => Color.magenta,
+            RoroTileType.Player2 => Color.darkMagenta,
             _ => Color.white
         };
     }
