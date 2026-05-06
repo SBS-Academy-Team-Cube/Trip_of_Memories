@@ -9,7 +9,11 @@ public enum RoroTileType
     Key,
     Ice,
     Water,
-    Exit
+    Exit,
+    StartPoint,
+    LaserStatue,
+    Player,
+    Player2
 }
 
 
