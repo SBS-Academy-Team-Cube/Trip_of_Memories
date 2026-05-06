@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (State.Action == PlayerState.EAction.Pushing)
         {
-
+            
         }
         else if (State.Action == PlayerState.EAction.Hanging)
         {

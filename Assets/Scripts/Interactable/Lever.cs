@@ -41,7 +41,6 @@ public class Lever : MonoBehaviour, IInteractable
         if (Interactor.TryGetComponent(out PlayerLeverHandler Handler))
         {
             bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
-            Debug.Log(bClockwise);
             Handler.HandleLever(this);
             return true;
         }
