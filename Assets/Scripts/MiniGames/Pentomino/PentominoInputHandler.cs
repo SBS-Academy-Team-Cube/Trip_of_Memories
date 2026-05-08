@@ -13,7 +13,11 @@ public class PentominoInputHandler : MonoBehaviour
     private IPentominoPickable _currentPicked = null;
     private PentominoPiece _currentPiece = null;
 
-    private void Awake() { _inputActions = new PentominoInputAction(); }
+    private void Awake() 
+    { 
+        // _tileSize *= transform.lossyScale;
+        _inputActions = new PentominoInputAction();
+    }
     private void OnEnable()
     {
         _inputActions.Enable();
