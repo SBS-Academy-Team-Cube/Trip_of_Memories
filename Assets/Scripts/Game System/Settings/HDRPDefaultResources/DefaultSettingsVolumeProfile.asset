@@ -42,13 +42,13 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 400
+    m_Value: 50
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 80
+    m_Value: 400
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   active: 1
   enable:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   cloudTiling:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1}
@@ -369,10 +369,10 @@ MonoBehaviour:
     m_Value: 0.95
   ghostingReduction:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   perceptualBlending:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   shadows:
     m_OverrideState: 1
     m_Value: 0
@@ -576,7 +576,7 @@ MonoBehaviour:
     m_Value: 3
   enable:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   tracing:
     m_OverrideState: 1
     m_Value: 1
@@ -590,7 +590,7 @@ MonoBehaviour:
       m_Bits: 1
   depthBufferThickness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.1
   fullResolutionSS:
     m_OverrideState: 1
     m_Value: 1
@@ -605,7 +605,7 @@ MonoBehaviour:
     m_Value: 0
   m_DenoiserRadiusSS:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5
   m_SecondDenoiserPassSS:
     m_OverrideState: 1
     m_Value: 1
@@ -1151,10 +1151,10 @@ MonoBehaviour:
   active: 1
   quality:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 3
   enable:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   length:
     m_OverrideState: 1
     m_Value: 0.15
@@ -1178,7 +1178,7 @@ MonoBehaviour:
     m_Value: 0
   rayBias:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 1
   thicknessScale:
     m_OverrideState: 1
     m_Value: 0.15
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   active: 1
   quality:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   threshold:
     m_OverrideState: 1
     m_Value: 0
@@ -1676,7 +1676,7 @@ MonoBehaviour:
     m_Value: 2
   m_HighQualityPrefiltering:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   m_HighQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -1695,7 +1695,7 @@ MonoBehaviour:
   active: 1
   skyType:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 4
   cloudType:
     m_OverrideState: 1
     m_Value: 0
@@ -1707,7 +1707,7 @@ MonoBehaviour:
     m_Value: 6378.1
   renderingSpace:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   centerMode:
     m_OverrideState: 1
     m_Value: 0
@@ -1800,10 +1800,10 @@ MonoBehaviour:
   active: 1
   normalBias:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0.33
   viewBias:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0
   scaleBiasWithMinProbeDistance:
     m_OverrideState: 1
     m_Value: 0
@@ -1815,7 +1815,7 @@ MonoBehaviour:
     m_Value: 1
   leakReductionMode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   minValidDotProductValue:
     m_OverrideState: 1
     m_Value: 0.1
@@ -2086,10 +2086,10 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 4
   meteringMode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 4
   luminanceSource:
     m_OverrideState: 1
     m_Value: 1
@@ -2101,10 +2101,10 @@ MonoBehaviour:
     m_Value: 0
   limitMin:
     m_OverrideState: 1
-    m_Value: -1
+    m_Value: 5
   limitMax:
     m_OverrideState: 1
-    m_Value: 15
+    m_Value: 13
   curveMap:
     m_OverrideState: 1
     m_Value:
@@ -2188,16 +2188,16 @@ MonoBehaviour:
     m_Value: 1
   adaptationSpeedDarkToLight:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 4
   adaptationSpeedLightToDark:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 4
   weightTextureMask:
     m_OverrideState: 1
     m_Value: {fileID: 0}
   histogramPercentages:
     m_OverrideState: 1
-    m_Value: {x: 40, y: 90}
+    m_Value: {x: 10, y: 90}
   histogramUseCurveRemapping:
     m_OverrideState: 1
     m_Value: 0
@@ -2483,16 +2483,16 @@ MonoBehaviour:
     m_Value: 1
   rayTracing:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.1
+    m_Value: 0.6
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 0.47
+    m_Value: 0.1
   radius:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 0.5
   spatialBilateralAggressiveness:
     m_OverrideState: 1
     m_Value: 0.15

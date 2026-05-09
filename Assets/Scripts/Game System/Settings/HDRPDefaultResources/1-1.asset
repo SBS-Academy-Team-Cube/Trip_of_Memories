@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Value: 0.25
   multiScattering:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.1
   densityMultiplier:
     m_OverrideState: 1
     m_Value: 0.4
@@ -383,19 +383,19 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   shadows:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   shadowResolution:
     m_OverrideState: 0
     m_Value: 256
   shadowDistance:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 8000
   shadowOpacity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   shadowOpacityFallback:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   m_Version: 3
   localClouds:
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cc4c5fcb677014ebdc0d8be227b40c, type: 3}
   m_Name: ScreenSpaceLensFlare
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.ScreenSpaceLensFlare
-  active: 0
+  active: 1
   intensity:
     m_OverrideState: 1
     m_Value: 1.12
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b6af8f7ad32324cb6941c3290e5895, type: 3}
   m_Name: MicroShadowing
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.MicroShadowing
-  active: 1
+  active: 0
   enable:
     m_OverrideState: 1
     m_Value: 1
@@ -1088,7 +1088,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.241
   smoothness:
     m_OverrideState: 1
     m_Value: 0.794
@@ -1156,7 +1156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
   m_Name: ContactShadows
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   quality:
     m_OverrideState: 1
     m_Value: 1
@@ -1165,19 +1165,19 @@ MonoBehaviour:
     m_Value: 1
   length:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.1
   opacity:
     m_OverrideState: 1
     m_Value: 1
   distanceScaleFactor:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.2
   maxDistance:
     m_OverrideState: 1
     m_Value: 50
   minDistance:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 30
   fadeDistance:
     m_OverrideState: 1
     m_Value: 5
@@ -2105,8 +2105,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 13
   compensation:
-    m_OverrideState: 1
-    m_Value: 1.07
+    m_OverrideState: 0
+    m_Value: 50
   limitMin:
     m_OverrideState: 1
     m_Value: 12.141572
@@ -2494,7 +2494,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.29
   directLightingStrength:
     m_OverrideState: 1
     m_Value: 0.053
@@ -2640,7 +2640,7 @@ MonoBehaviour:
   interCascadeBorders: 1
   maxShadowDistance:
     m_OverrideState: 1
-    m_Value: 150
+    m_Value: 80
   directionalTransmissionMultiplier:
     m_OverrideState: 1
     m_Value: 1

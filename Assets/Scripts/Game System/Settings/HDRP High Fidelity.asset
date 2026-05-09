@@ -121,7 +121,7 @@ MonoBehaviour:
     hdShadowInitParams:
       maxShadowRequests: 2
       directionalShadowsDepthBits: 16
-      punctualShadowFilteringQuality: 2
+      punctualShadowFilteringQuality: 1
       directionalShadowFilteringQuality: 2
       areaShadowFilteringQuality: 0
       punctualLightShadowAtlas:
@@ -134,7 +134,7 @@ MonoBehaviour:
         useDynamicViewportRescale: 0
       cachedPunctualLightShadowAtlas: 4096
       cachedAreaLightShadowAtlas: 4096
-      allowDirectionalMixedCachedShadows: 0
+      allowDirectionalMixedCachedShadows: 1
       shadowResolutionDirectional:
         m_Values: 00020000000400000008000000100000
         m_SchemaId:
@@ -256,7 +256,7 @@ MonoBehaviour:
       AOMaximumRadiusPixels: 200000002800000050000000
       AOBilateralUpsample: 000101
       AODirectionCount: 010000000200000004000000
-      ContactShadowSampleCount: 060000000a00000010000000
+      ContactShadowSampleCount: 060000000a0000000c000000
       SSRMaxRaySteps: 100000002000000040000000
       SSGIRaySteps: 200000004000000080000000
       SSGIDenoise: 010101
@@ -324,7 +324,7 @@ MonoBehaviour:
     gpuResidentDrawerSettings:
       mode: 1
       smallMeshScreenPercentage: 0
-      enableOcclusionCullingInCameras: 1
+      enableOcclusionCullingInCameras: 0
       useDepthPrepassForOccluders: 1
     m_ObsoleteLightLayerName0: Light LayerDefault
     m_ObsoleteLightLayerName1: InteriorOnly
