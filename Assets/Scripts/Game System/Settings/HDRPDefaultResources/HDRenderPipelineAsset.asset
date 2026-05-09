@@ -100,7 +100,7 @@ MonoBehaviour:
       maxEnvLightsOnScreen: 64
       reflectionCacheCompressed: 0
       reflectionProbeFormat: 74
-      reflectionProbeTexCacheSize: 1073750016
+      reflectionProbeTexCacheSize: 536875008
       reflectionProbeTexLastValidCubeMip: 3
       reflectionProbeTexLastValidPlanarMip: 0
       reflectionProbeDecreaseResToFit: 1
@@ -110,19 +110,19 @@ MonoBehaviour:
         m_Bits: 0
       supportFabricConvolution: 0
       maxDirectionalLightsOnScreen: 16
-      maxPunctualLightsOnScreen: 512
+      maxPunctualLightsOnScreen: 128
       maxAreaLightsOnScreen: 64
       maxCubeReflectionOnScreen: 48
       maxPlanarReflectionOnScreen: 16
       maxDecalsOnScreen: 512
-      maxLightsPerClusterCell: 8
+      maxLightsPerClusterCell: 4
       maxLocalVolumetricFogSize: 32
-      maxLocalVolumetricFogOnScreen: 128
+      maxLocalVolumetricFogOnScreen: 64
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 32
       directionalShadowsDepthBits: 32
       punctualShadowFilteringQuality: 1
-      directionalShadowFilteringQuality: 1
+      directionalShadowFilteringQuality: 2
       areaShadowFilteringQuality: 0
       punctualLightShadowAtlas:
         shadowAtlasResolution: 4096
@@ -148,15 +148,15 @@ MonoBehaviour:
         m_SchemaId:
           m_Id: With4Levels
       maxDirectionalShadowMapResolution: 2048
-      maxPunctualShadowMapResolution: 2048
+      maxPunctualShadowMapResolution: 1024
       maxAreaShadowMapResolution: 2048
       supportScreenSpaceShadows: 1
       maxScreenSpaceShadowSlots: 4
       screenSpaceShadowBufferFormat: 48
     decalSettings:
-      drawDistance: 1000
-      atlasWidth: 4096
-      atlasHeight: 4096
+      drawDistance: 50
+      atlasWidth: 2048
+      atlasHeight: 2048
       transparentTextureResolution:
         m_Values: 000100000002000000040000
         m_SchemaId:
@@ -245,9 +245,9 @@ MonoBehaviour:
         m_Id: With3Levels
     lodBias:
       m_Values:
-      - 1
-      - 1
-      - 1
+      - 0.7
+      - 0.7
+      - 0.7
       m_SchemaId:
         m_Id: With3Levels
     lightingQualitySettings:
