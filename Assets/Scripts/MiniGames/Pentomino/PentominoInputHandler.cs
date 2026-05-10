@@ -6,7 +6,7 @@ public class PentominoInputHandler : MonoBehaviour
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private LayerMask _pieceLayer;
     [SerializeField] private LayerMask _boardLayer;
-    [SerializeField] private float _tileSize = 1f;
+
     [SerializeField] private PentominoBoard board;
 
     private PentominoInputAction _inputActions;
@@ -39,6 +39,11 @@ public class PentominoInputHandler : MonoBehaviour
         }
     }
 
+    public void Init()
+    {
+
+    }
+
     private void OnClickPerformed(InputAction.CallbackContext context)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -55,7 +60,7 @@ public class PentominoInputHandler : MonoBehaviour
                     _currentPicked = pick;
                     pick.PickUp();
 
-                    BoardPos[] currentBoardPos = _currentPiece.GetBoardPositions(_currentPiece.Transform.position);
+                    BoardPos[] currentBoardPos = GetBoardPos(_currentPiece.PieceShape, _currentPiece.Transform.position);
                     board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
                 }
             }
@@ -65,7 +70,7 @@ public class PentominoInputHandler : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
             {
                 Vector3 snappedPos = SnapToGrid(hit.point);
-                BoardPos[] tryPositions = _currentPiece.GetBoardPositions(snappedPos);
+                BoardPos[] tryPositions = GetBoardPos(_currentPiece.PieceShape, snappedPos);
                 if (board.IsPlace(tryPositions))// Check if placement is valid
                 {
                     _currentPicked.Place(snappedPos);//
@@ -124,9 +129,24 @@ public class PentominoInputHandler : MonoBehaviour
     }
     private Vector3 SnapToGrid(Vector3 worldPos)
     {
-        float x = Mathf.Round(worldPos.x / _tileSize) * _tileSize;
-        float z = Mathf.Round(worldPos.z / _tileSize) * _tileSize;
-        return new Vector3(x, 0.01f, z);
+        Vector3 local = worldPos - board.ZeroPos;
+        float x = Mathf.Round(local.x / board.GridSize) * board.GridSize;
+        float z = Mathf.Round(local.z / board.GridSize) * board.GridSize;
+        return board.ZeroPos + new Vector3(x, 0.01f, z);
+    }
+
+    private BoardPos[] GetBoardPos(BoardPos[] pieceShape, Vector3 worldPos)
+    {
+        BoardPos[] result = new BoardPos[pieceShape.Length];
+        int baseX = board.WorldPosToBoardPos(worldPos).x;  // snap Pos X
+        int baseZ = board.WorldPosToBoardPos(worldPos).y;  // snap Pos Z
+
+        for (int i = 0; i < pieceShape.Length; i++)
+        {
+            result[i].x = baseX + pieceShape[i].x;
+            result[i].y = baseZ + pieceShape[i].y;
+        }
+        return result;
     }
 }
 

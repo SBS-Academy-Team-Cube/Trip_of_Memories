@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: c3abfcac275c2e9449a4982511886d2b, type: 2}
+  StartTransform: {fileID: 8595635}
 --- !u!1 &18211849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,6 +1664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 69974f94d62821249825e31e0f132765, type: 2}
+  StartTransform: {fileID: 336147198}
 --- !u!1 &336304450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,6 +2101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 322924c422f799e49a65abc5bfe352e1, type: 2}
+  StartTransform: {fileID: 372591943}
 --- !u!1 &400894066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2367,6 +2370,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d015b7b410613e3419075e747802962d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoGameManager
+  inputHandler: {fileID: 751868112}
+  board: {fileID: 1211428009}
+  pieces:
+  - {fileID: 1406785211}
+  - {fileID: 598719969}
+  - {fileID: 565783757}
+  - {fileID: 841502970}
+  - {fileID: 689315799}
+  - {fileID: 1960478047}
+  - {fileID: 336147199}
+  - {fileID: 8595639}
+  - {fileID: 372591947}
+  - {fileID: 1586820449}
+  - {fileID: 999716737}
+  - {fileID: 1953769751}
 --- !u!1 &496493196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,6 +2933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 6d24d674781647e419f2a49fb7e4bebf, type: 2}
+  StartTransform: {fileID: 565783753}
 --- !u!1 &589514921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,6 +3146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: a24a762c1461d594f9fa1a095d8632b5, type: 2}
+  StartTransform: {fileID: 598719965}
 --- !u!1 &653964986
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,6 +3807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 58f10972d7a09114f9189f28ed73ca63, type: 2}
+  StartTransform: {fileID: 689315795}
 --- !u!1 &691081061
 GameObject:
   m_ObjectHideFlags: 0
@@ -4271,7 +4292,6 @@ MonoBehaviour:
   _boardLayer:
     serializedVersion: 2
     m_Bits: 2048
-  _tileSize: 1
   board: {fileID: 1211428009}
 --- !u!4 &751868113
 Transform:
@@ -4612,6 +4632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 1bec8bf08df572840b8750d2a6458102, type: 2}
+  StartTransform: {fileID: 841502966}
 --- !u!1 &901223558
 GameObject:
   m_ObjectHideFlags: 0
@@ -4948,6 +4969,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986873595}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &997575362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 997575363}
+  m_Layer: 0
+  m_Name: ZeroPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &997575363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997575362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1568607978}
+  m_Father: {fileID: 1211428008}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &999716732
 GameObject:
   m_ObjectHideFlags: 0
@@ -5048,6 +5101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 9def3a649c319814e98bfce4a33d2a10, type: 2}
+  StartTransform: {fileID: 999716733}
 --- !u!1 &1049960976
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,6 +5692,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 997575363}
   - {fileID: 513449084}
   - {fileID: 1906579261}
   - {fileID: 192749833}
@@ -5658,8 +5713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PentominoBoard
   width: 10
   height: 6
-  zeroPosWorldX: -4
-  zeroPosWorldZ: -3
+  gridSize: 1
   NotValidPos: []
 --- !u!1 &1255102667
 GameObject:
@@ -6553,6 +6607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 178c69330b559ec45b451a6cd7f5ee59, type: 2}
+  StartTransform: {fileID: 1406785207}
 --- !u!1 &1413892110
 GameObject:
   m_ObjectHideFlags: 0
@@ -7248,6 +7303,118 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1568607977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1568607978}
+  - component: {fileID: 1568607981}
+  - component: {fileID: 1568607980}
+  - component: {fileID: 1568607979}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1568607978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568607977}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 997575363}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1568607979
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568607977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1568607980
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568607977}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1568607981
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568607977}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1586820444
 GameObject:
   m_ObjectHideFlags: 0
@@ -7348,6 +7515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 2b473af5e79769f4291710346b349c46, type: 2}
+  StartTransform: {fileID: 1586820445}
 --- !u!1 &1598263953
 GameObject:
   m_ObjectHideFlags: 0
@@ -7601,13 +7769,13 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 100000
+  m_Intensity: 100000.01
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -8584,6 +8752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: c00dc1f9a728db143ba695e9ac7e5b77, type: 2}
+  StartTransform: {fileID: 1953769747}
 --- !u!1 &1960478042
 GameObject:
   m_ObjectHideFlags: 0
@@ -8684,6 +8853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoPiece
   pieceShape: {fileID: 11400000, guid: 8f97201f4fc8c0d4196786e7a65adb2e, type: 2}
+  StartTransform: {fileID: 1960478043}
 --- !u!1 &1981972086
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,25 +12,49 @@ public class PentominoBoard : MonoBehaviour
 {
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 6;
-    [SerializeField] private int zeroPosWorldX = -4;
-    [SerializeField] private int zeroPosWorldZ = -3;
+    [SerializeField] private float gridSize = 1f;
+
     [SerializeField] private BoardPos[] NotValidPos;
 
-    private bool[,] board;
+    private bool[,] boardData;
+    private Vector3[,] boardWorldPos;
+    private Dictionary<BoardPos, Vector3> board = new(); // 보드상좌표와 월드포지션을 묶음
+    private Dictionary<Vector3, BoardPos> reverseDict = new();
 
-    private BoardPos zeroPos = new BoardPos();
+    private Vector3 zeroPos = Vector3.zero;
 
-    private void Awake()
+    public float GridSize => gridSize;
+    public Vector3 ZeroPos => zeroPos;
+
+    private void Start()
     {
-        InitBoard();
+        gridSize *= transform.lossyScale.x;
+        zeroPos = transform.GetChild(0).position;// 첫번째 자식은 무조건 기준포지션
     }
-    private void InitBoard()
+    public void Init()
     {
-        board = new bool[width, height];
-        zeroPos.x = -zeroPosWorldX;
-        zeroPos.y = -zeroPosWorldZ;
+        
+        boardData = new bool[width, height];
+        boardWorldPos = new Vector3[width, height];
+
+        MakeBoard();
         SetStartBoard(NotValidPos);
         DebugBoard();
+    }
+    private void MakeBoard()
+    {
+        for(int y = 0; y < height; y++)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                boardWorldPos[x, y] = new Vector3(zeroPos.x + x * gridSize, zeroPos.y, zeroPos.z + gridSize * y);
+                board.Add(new BoardPos() { x = x, y = y }, boardWorldPos[x, y]);
+            }
+        }
+        foreach(var value in board)
+        {
+            reverseDict.Add(value.Value,value.Key);
+        }
     }
     private void SetStartBoard(BoardPos[] notValidPos)
     {
@@ -39,28 +64,35 @@ public class PentominoBoard : MonoBehaviour
             {
                 if (width < pos.x && height < pos.y)
                     return;
-                board[pos.x, pos.y] = true;
+                boardData[pos.x, pos.y] = true;
             }
         }
 
     }
-    private BoardPos PosToBoardPos(BoardPos pos)// Convert world coordinate to array index
+    public Vector3 BoardPosToWorldPos(BoardPos pos)// 보드좌표 입력하면 월드좌표 반환
     {
-        BoardPos newPos;
-        newPos.x = pos.x + zeroPos.x;
-        newPos.y = pos.y + zeroPos.y;
-        return newPos;
+        return board[pos];
+    }
+    public BoardPos WorldPosToBoardPos(Vector3 pos)
+    {
+        Vector3 local = pos - zeroPos;
+        int x = Mathf.RoundToInt(local.x / gridSize);
+        int y = Mathf.RoundToInt(local.z / gridSize);
+
+        if (x >= 0 && x < width && y >= 0 && y < height)
+            return new BoardPos { x = x, y = y };
+
+        return new BoardPos { x = -999, y = -999 }; // invalid 표시
     }
 
     public void SetActiveBoard(BoardPos[] boardPos, bool newActive)
     {
         foreach (var pos in boardPos)
         {
-            BoardPos newPos = PosToBoardPos(pos);
-            if (newPos.x >= 0 && newPos.x < width &&
-                 newPos.y >= 0 && newPos.y < height)
+            if (pos.x >= 0 && pos.x < width &&
+                 pos.y >= 0 && pos.y < height)
             {
-                board[newPos.x, newPos.y] = newActive;
+                boardData[pos.x, pos.y] = newActive;
             }
         }
         if (newActive)
@@ -72,18 +104,18 @@ public class PentominoBoard : MonoBehaviour
 
     public bool IsPlace(BoardPos[] worldPos)
     {
-        for (int i = 0; i < worldPos.Length; ++i)
+        foreach(var pos in worldPos)
         {
-            BoardPos boardIndex = PosToBoardPos(worldPos[i]);
+            //BoardPos boardIndex = WorldPosToBoardPos(worldPos[i]); //Todo
 
             // 범위 벗어나면 못 놓게 막기 (IndexOutOfRange 방지!)
-            if (boardIndex.x < 0 || boardIndex.x >= width ||
-                boardIndex.y < 0 || boardIndex.y >= height)
+            if (pos.x < 0 || pos.x >= width ||
+                pos.y < 0 || pos.y >= height)
             {
                 return false;// Out of board bounds
             }
 
-            if (board[boardIndex.x, boardIndex.y])
+            if (boardData[pos.x, pos.y])
             {
                 return false;// Position already occupied
             }
@@ -93,7 +125,7 @@ public class PentominoBoard : MonoBehaviour
 
     public void IsGameClearCheck()
     {
-        foreach(bool InPlace in board)
+        foreach(bool InPlace in boardData)
         {
             if (!InPlace)
                 return;
@@ -109,7 +141,7 @@ public class PentominoBoard : MonoBehaviour
             string row = $"Row {y:00} | ";         // 행 번호 표시
             for (int x = 0; x < width; x++)        // 열 (X축, 왼→오른)
             {
-                row += board[x, y] ? " O " : " X ";
+                row += boardData[x, y] ? " O " : " X ";
             }
             Debug.Log(row);
         }

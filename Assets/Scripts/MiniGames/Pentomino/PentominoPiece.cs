@@ -3,29 +3,26 @@ using UnityEngine;
 public class PentominoPiece : MonoBehaviour, IPentominoPickable
 {
     [SerializeField] private PieceShape pieceShape;
+    [SerializeField] private Transform StartTransform;
 
     private Vector3 startPos;
     private Quaternion startRot;
 
-    public BoardPos[] PiecePos => pieceShape.shape;
+    public BoardPos[] PieceShape => pieceShape.shape;
 
     private bool _isPicked = false;
     public bool IsPicked => _isPicked;
     public Transform Transform => transform;
 
-    public BoardPos[] GetBoardPositions(Vector3 currentWorldPos)
+    public void Init()
     {
-        BoardPos[] result = new BoardPos[pieceShape.shape.Length];
-        int baseX = Mathf.RoundToInt(currentWorldPos.x);  // snap Pos X
-        int baseZ = Mathf.RoundToInt(currentWorldPos.z);  // snap Pos Z
+        startPos = StartTransform.position;
+        startRot = StartTransform.rotation;
 
-        for (int i = 0; i < pieceShape.shape.Length; i++)
-        {
-            result[i].x = baseX + pieceShape.shape[i].x;
-            result[i].y = baseZ + pieceShape.shape[i].y;
-        }
-        return result;
+        transform.position = startPos;
+        transform.rotation = startRot;
     }
+
 
     public void RotatePiecePos(bool isRight)
     {
@@ -57,11 +54,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
         }
     }
     
-    private void Start()
-    {
-        startPos = transform.position;
-        startRot = transform.rotation;
-    }
 
     public void PickUp()
     {
