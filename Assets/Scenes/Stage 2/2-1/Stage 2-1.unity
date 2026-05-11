@@ -56529,7 +56529,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1382519249}
-  - {fileID: 1666380141}
   - {fileID: 669479545}
   - {fileID: 446507646}
   - {fileID: 1261426939}
@@ -72288,7 +72287,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 35833.34
+  m_Intensity: 120000
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -72327,7 +72326,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -72351,11 +72350,11 @@ Transform:
   m_GameObject: {fileID: 1666380139}
   serializedVersion: 2
   m_LocalRotation: {x: -0.40261212, y: -0.27554762, z: 0.12848996, w: -0.8634045}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.15, y: 1.5, z: -0.5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1271280367}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -324.6, z: 0}
 --- !u!114 &1666380142
 MonoBehaviour:
@@ -98506,6 +98505,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1666380141}
   - {fileID: 1271280367}
   - {fileID: 130064634}
   - {fileID: 554961494}
