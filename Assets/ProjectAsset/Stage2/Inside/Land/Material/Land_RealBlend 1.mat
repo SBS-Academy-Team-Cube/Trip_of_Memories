@@ -12,13 +12,15 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _DISABLE_DECALS
+  - _DISABLE_SSR
   - _DISABLE_SSR_TRANSPARENT
   m_InvalidKeywords:
   - _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2225
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -40,15 +42,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Albedo:
-        m_Texture: {fileID: 2800000, guid: 3350dc0745a192245bd9fd0295fca730, type: 3}
+        m_Texture: {fileID: 2800000, guid: d38c0835daaeea3489f3164a8a47ea5c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_MaskMap:
-        m_Texture: {fileID: 2800000, guid: 8a2304308f9d59f43bce7ea3bc2e6f53, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Normal:
-        m_Texture: {fileID: 2800000, guid: fb9d2f58bfb42fd4aaea1ac6b2a75468, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6958c89ef4078ff4694b9fa2ab6b2463, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -92,19 +94,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Layer1_Normal:
-        m_Texture: {fileID: 2800000, guid: 3fd43fdb395e1a640bd9fbfccb9adce8, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb747d8bc82cb2244b86c1406ddfe9e3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Layer2_Albedo:
-        m_Texture: {fileID: 2800000, guid: 5561912af984f5a4e8a7bd2be0af5f41, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Layer2_MaskMap:
-        m_Texture: {fileID: 2800000, guid: acb0b67ed4d3b4f4d964b4dbd7ee8c8f, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Layer2_Normal:
-        m_Texture: {fileID: 2800000, guid: ffa62e1f8db62c54ea10148e360db20b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -296,7 +298,7 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _PerPixelSorting: 0
     - _RayTracing: 0
-    - _ReceivesSSR: 1
+    - _ReceivesSSR: 0
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
@@ -309,17 +311,17 @@ Material:
     - _SpecularOcclusionMode: 1
     - _SrcBlend: 1
     - _StencilRef: 0
-    - _StencilRefDepth: 8
+    - _StencilRefDepth: 0
     - _StencilRefDistortionVec: 4
-    - _StencilRefGBuffer: 10
-    - _StencilRefMV: 40
+    - _StencilRefGBuffer: 2
+    - _StencilRefMV: 32
     - _StencilWriteMask: 6
     - _StencilWriteMaskDepth: 9
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskGBuffer: 15
     - _StencilWriteMaskMV: 41
     - _SubsurfaceMask: 1
-    - _SupportDecals: 1
+    - _SupportDecals: 0
     - _SurfaceType: 0
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
