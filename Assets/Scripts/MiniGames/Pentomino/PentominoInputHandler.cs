@@ -133,7 +133,7 @@ public class PentominoInputHandler : MonoBehaviour
         Vector3 local = worldPos - board.ZeroPos;
         float x = Mathf.Round(local.x / board.GridSize) * board.GridSize;
         float z = Mathf.Round(local.z / board.GridSize) * board.GridSize;
-        return board.ZeroPos + new Vector3(x, 0.1f * board.GridSize, z);
+        return board.ZeroPos + new Vector3(x, 0f, z);
     }
 
     private BoardPos[] GetBoardPos(BoardPos[] pieceShape, Vector3 worldPos)

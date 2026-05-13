@@ -7,8 +7,9 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
 
     private Vector3 startPos;
     private Quaternion startRot;
+    private PieceShape curShape;
 
-    public BoardPos[] PieceShape => pieceShape.shape;
+    public BoardPos[] PieceShape => curShape.shape;
 
     private bool _isPicked = false;
     public bool IsPicked => _isPicked;
@@ -18,6 +19,7 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     {
         startPos = StartTransform.position;
         startRot = StartTransform.rotation;
+        curShape = Instantiate(pieceShape);
 
         transform.position = startPos;
         transform.rotation = startRot;
@@ -41,26 +43,26 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
         //if isright == false -> -90
         if(isRight)
         {
-            for (int i = 0; i < pieceShape.shape.Length; ++i)
+            for (int i = 0; i < curShape.shape.Length; ++i)
             {
-                int x = pieceShape.shape[i].x;
-                int y = pieceShape.shape[i].y;
+                int x = curShape.shape[i].x;
+                int y = curShape.shape[i].y;
                 BoardPos newPiece = new BoardPos();
                 newPiece.x = y;
                 newPiece.y = -x;
-                pieceShape.shape[i] = newPiece;
+                curShape.shape[i] = newPiece;
             }
         }
         else
         {
-            for (int i = 0; i < pieceShape.shape.Length; ++i)
+            for (int i = 0; i < curShape.shape.Length; ++i)
             {
-                int x = pieceShape.shape[i].x;
-                int y = pieceShape.shape[i].y;
+                int x = curShape.shape[i].x;
+                int y = curShape.shape[i].y;
                 BoardPos newPiece = new BoardPos();
                 newPiece.x = -y;
                 newPiece.y = x;
-                pieceShape.shape[i] = newPiece;
+                curShape.shape[i] = newPiece;
             }
         }
     }
@@ -90,6 +92,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     private void DebugPiecePos()
     {
         Debug.Log($"{gameObject.name} worldPos = {transform.position}," +
-            $"PiecePos = {pieceShape.shape}");
+            $"PiecePos = {curShape.shape}");
     }
 }
