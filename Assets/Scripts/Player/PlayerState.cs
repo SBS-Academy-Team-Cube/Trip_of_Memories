@@ -16,6 +16,11 @@ public class PlayerState : MonoBehaviour
     public event System.Action<EStance> OnStanceChanged;
     public event System.Action<EAction> OnActionChanged;
 
+    public void OnInteractionEnd()
+    {
+        IsInteracting = false;
+    }
+
     public void TryMove(bool bWantToMove)
     {
         if(IntendToMove != bWantToMove)

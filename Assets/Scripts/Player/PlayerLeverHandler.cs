@@ -11,7 +11,7 @@ public class PlayerLeverHandler : MonoBehaviour
         transform.SetParent(Target.transform);
 
         Vector3 TargetPosition = Target.GetPosition();
-        transform.position = new Vector3(TargetPosition.x, transform.position.y, TargetPosition.z);
+        transform.position = Target.GetPosition(); /*new Vector3(TargetPosition.x, transform.position.y, TargetPosition.z);*/
         transform.localRotation = Quaternion.Euler(0f, Target.bClockwise ? 0f : 180.0f, 0f);
         if (State)
         {
@@ -24,7 +24,7 @@ public class PlayerLeverHandler : MonoBehaviour
         Target.GetIKPosition(out Transform Left, out Transform Right);
         Animation.SetHandIKTargets(Left, Right);
         Animation.SetHandIKWeight(1.0f, 1.0f);
-
+        
         OnLeverHolding?.Invoke(true);
     }
     public void ReleaseLever()

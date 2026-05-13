@@ -4,13 +4,15 @@ public class PlayerItemHandler : MonoBehaviour
 {
     [SerializeField] private Transform HoldTransform;
     [SerializeField] private PlayerAnimation Animation;
+    [SerializeField] private PlayerState State;
     private GameObject HoldingObject;
     public bool bIsHoldingItem { get; private set; } = false;
 
     public void TryHold(GameObject Target)
     {
         HoldingObject = Target;
-        Animation.SetPickup();
+        Animation.SetIsHolding(true);
+        State.IsInteracting = true;
     }
     public void TryDrop()
     {
@@ -18,7 +20,8 @@ public class PlayerItemHandler : MonoBehaviour
         {
             return;
         }
-        Animation.SetPickDown();
+        State.IsInteracting = true;
+        Animation.SetIsHolding(false);
     }
     public void HoldItem()
     {
@@ -42,8 +45,6 @@ public class PlayerItemHandler : MonoBehaviour
         HoldingObject.transform.SetParent(HoldTransform, true);
         Animation.EnableHoldingLayer(true);
 
-        // Target.transform.localPosition = Vector3.zero;
-        // Target.transform.localRotation = Quaternion.identity;
         if (HoldingObject.TryGetComponent(out HoverItem HoverComponent))
         {
             HoverComponent.enabled = false;

@@ -102,20 +102,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetInteger("Gait", Gait);
     }
-    
-    public void SetPickup()
+
+    public void SetIsHolding(bool IsHolding)
     {
-        AnimationController.SetBool("IsHolding", true);
+        AnimationController.SetBool("IsHolding", IsHolding);
         AnimationController.SetTrigger("PickingTrigger");
     }
-    public void SetPickDown()
-    {
-        AnimationController.SetBool("IsHolding", false);
-        AnimationController.SetTrigger("PickingTrigger");
-    }
+
     public void SetLeverPush(bool bPushing)
     {
-        AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
+        // AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
+        AnimationController.SetTrigger("LeverPushTrigger");
         SetLeverPlaying(0.0f);
     }
     public void SetLeverPlaying(float Speed)

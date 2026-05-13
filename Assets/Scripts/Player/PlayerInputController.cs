@@ -86,7 +86,7 @@ public class PlayerInputController : MonoBehaviour
             SprayComponent.TryUse();
         }
     }
-
+    
     // Lever Action Map
     public void OnPush(InputValue Value)
     {

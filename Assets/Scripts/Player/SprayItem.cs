@@ -24,7 +24,7 @@ public class SprayItem : MonoBehaviour
         Particle.Play();
         Audio.Play();
     }
-    void OnTriggerEnter(Collider Other)
+    void OnTriggerStay(Collider Other)
     {
         if(!CanAttack)
         {
@@ -32,11 +32,18 @@ public class SprayItem : MonoBehaviour
         }
         if(Other.CompareTag("Enemy"))
         {
-            if(Other.TryGetComponent(out Health HP))
-            {
-                HP.TakeDamage();
+            Health EnemyHP = Other.GetComponentInParent<Health>();
+            if(EnemyHP != null)
+            {   
+                EnemyHP.TakeDamage();
                 CanAttack = false;
+                Debug.Log("Hit Enemy!!");
             }
+            // if(Other.TryGetComponent(out Health HP))
+            // {
+            //     HP.TakeDamage();
+            //     CanAttack = false;
+            // }
         }
     }
     private IEnumerator DisableTrigger()

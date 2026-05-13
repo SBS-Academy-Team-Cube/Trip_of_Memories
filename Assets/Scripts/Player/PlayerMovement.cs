@@ -87,28 +87,6 @@ public class PlayerMovement : MonoBehaviour
                 Animation.SetIsMoving(false);
             }
 
-            // if (MoveInput.magnitude > 0)
-            // {
-            //     Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
-            //     move = Vector3.ClampMagnitude(move, 1f);
-
-            //     Controller.Move((State.Gait == PlayerState.EGait.Walking ? MoveSpeed : SprintSpeed) * Time.deltaTime * move);
-            //     Animation.SetGait((int)State.Gait);
-            //     if (move.sqrMagnitude > 0.01f)
-            //     {
-            //         Quaternion targetRotation = Quaternion.LookRotation(move);
-            //         transform.rotation = Quaternion.Slerp(
-            //             transform.rotation,
-            //             targetRotation,
-            //             RotateSpeed * Time.deltaTime
-            //         );
-            //     }
-            // }
-            // else
-            // {
-            //     Animation.SetGait(0);
-            // }
-
 
 
 

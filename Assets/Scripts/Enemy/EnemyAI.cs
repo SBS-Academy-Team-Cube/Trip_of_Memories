@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public enum EState { Idle, Patrolling, Chasing, Attacking, Stunned };
 
@@ -7,12 +8,12 @@ public class EnemyAI : MonoBehaviour
 {
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     public EState CurrentState;
-    
+    private EState PreviousState;
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Animator AnimController;
     [SerializeField] private EnemyDetecter Detecter;
     [SerializeField] private EnemyAttacker Attacker;
-
+    [SerializeField] private Health HP;
 
     
 
@@ -31,17 +32,45 @@ public class EnemyAI : MonoBehaviour
     {
         PatrolRadius *= transform.lossyScale.x;
     }
+    
     private void OnEnable() 
     {
         if(Detecter != null)
         {
             Detecter.OnPlayerDetected += OnPlayerFound;
         }
+        if(HP != null)
+        {
+            HP.OnHPChanged += OnTakeDamage;
+            HP.OnDead += OnDead;
+        }
+    }
+    private void OnDead()
+    {
+        AnimController.SetBool("IsDead", true);
+        // StartCoroutine(DeathRoutine());
+    }
+    // private IEnumerator DeathRoutine()
+    // {
+    //     yield return new WaitForSeconds(AnimationController.GetCurrentAnimatorStateInfo()[0].length);
+    //     Destroy(gameObject);
+    // }
+    private void OnTakeDamage(int HP)
+    {
+        Debug.Log("OnTake Damage Started!!");
+        AnimController.SetTrigger("TakeDamage");
+        PreviousState = CurrentState;
+        CurrentState = EState.Stunned;
     }
     private void OnDisable() {
         if(Detecter != null)
         {
             Detecter.OnPlayerDetected -= OnPlayerFound;
+        }
+        if(HP != null)
+        {
+            HP.OnHPChanged -= OnTakeDamage;
+            HP.OnDead -= OnDead;
         }
     }
 
@@ -109,7 +138,7 @@ public class EnemyAI : MonoBehaviour
             case EState.Chasing:
                 if(HasArrived())
                 {
-                    Debug.Log("Enemy Arrived to Player");
+                    // Debug.Log("Enemy Arrived to Player");
 
                     if(Attacker.CanAttack())
                     {
@@ -126,6 +155,8 @@ public class EnemyAI : MonoBehaviour
                     ChaseToPlayer();
                 }
                 return;
+            case EState.Stunned:
+
             default:
                 break;
         }
