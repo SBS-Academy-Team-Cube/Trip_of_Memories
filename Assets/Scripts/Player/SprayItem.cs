@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class SprayItem : MonoBehaviour
@@ -6,6 +6,7 @@ public class SprayItem : MonoBehaviour
     [SerializeField] private ParticleSystem Particle;
     [SerializeField] private AudioSource Audio;
     [SerializeField] private Collider AttackRange;
+    private bool CanAttack = false;
     public float GetDuration()
     {
         if (Particle)
@@ -14,14 +15,34 @@ public class SprayItem : MonoBehaviour
         }
         return 0.0f;
     }
-    public void Shoot()
+    public void Shoot(Quaternion Direction)
     {
-        // AttackRange.enabled = true;
+        transform.rotation = Direction;
+
+        AttackRange.enabled = true;
+        CanAttack = true;
         Particle.Play();
         Audio.Play();
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider Other)
     {
-
+        if(!CanAttack)
+        {
+            return;
+        }
+        if(Other.CompareTag("Enemy"))
+        {
+            if(Other.TryGetComponent(out Health HP))
+            {
+                HP.TakeDamage();
+                CanAttack = false;
+            }
+        }
+    }
+    private IEnumerator DisableTrigger()
+    {
+        yield return new WaitForSeconds(GetDuration());
+        AttackRange.enabled = false;
+        CanAttack = false;
     }
 }
