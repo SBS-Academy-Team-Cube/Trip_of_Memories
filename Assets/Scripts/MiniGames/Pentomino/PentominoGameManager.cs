@@ -9,17 +9,17 @@ public class PentominoGameManager : MonoBehaviour
     private void OnEnable()
     {
         EventBus.PentominoClear += GameClear;
-        GameStart();
+        GameStart();// trigger
     }
     private void OnDisable()
     {
         EventBus.PentominoClear -= GameClear;
     }
-    private void GameStart()
+    public void GameStart()//
     {
         Init();
     }
-    private void GameReset()
+    public void GameReset()//
     {
         Init();
     }
@@ -32,7 +32,7 @@ public class PentominoGameManager : MonoBehaviour
             piece.Init();
         }
     }
-    private void GameClear()
+    public void GameClear()//
     {
         Debug.Log("Game Clear");
     }
