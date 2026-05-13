@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class FootStepNotify : MonoBehaviour
 {
-    [SerializeField] private List<AudioClip> FootStepClips;
+    [SerializeField] private RandomSoundQueue Queue;
     public void Play()
     {
-        if (AudioManager.Instance != null && FootStepClips.Count != 0)
+        if (AudioManager.Instance != null && Queue != null && !Queue.Empty())
         {
-            AudioManager.Instance.PlaySFX(FootStepClips[Random.Range(0, FootStepClips.Count)]);
+            AudioManager.Instance.PlaySFX(Queue.GetSound());
         }
     }
 }

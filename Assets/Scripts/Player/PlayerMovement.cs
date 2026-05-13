@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 Velocity;
     public Transform CameraTransform;
     public float MoveSpeed = 5f;
+    public float SprintSpeed;
+
     [SerializeField] private float RotateSpeed = 20.0f;
     public float Gravity = -9.81f;
     public float JumpForce = 5f;
@@ -41,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (State.Action == PlayerState.EAction.Pushing)
         {
-            
+
         }
         else if (State.Action == PlayerState.EAction.Hanging)
         {
@@ -60,20 +62,31 @@ public class PlayerMovement : MonoBehaviour
             CameraForward.y = 0;
             CameraRight.y = 0;
 
-            Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
-            move = Vector3.ClampMagnitude(move, 1f);
-
-            Controller.Move(MoveSpeed * Time.deltaTime * move);
-
-            if (move.sqrMagnitude > 0.01f)
+            if (MoveInput.magnitude > 0)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(move);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    RotateSpeed * Time.deltaTime
-                );
+                Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
+                move = Vector3.ClampMagnitude(move, 1f);
+
+                Controller.Move((State.Gait == PlayerState.EGait.Walking ? MoveSpeed : SprintSpeed) * Time.deltaTime * move);
+                Animation.SetGait((int)State.Gait + 1);
+                if (move.sqrMagnitude > 0.01f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(move);
+                    transform.rotation = Quaternion.Slerp(
+                        transform.rotation,
+                        targetRotation,
+                        RotateSpeed * Time.deltaTime
+                    );
+                }
             }
+            else
+            {
+                Animation.SetGait(0);
+            }
+
+
+
+
             if (bAddGravity)
             {
                 Velocity.y += Gravity * Time.deltaTime;
@@ -89,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     public void TryMove(Vector2 Value)
     {
         MoveInput = Value;
-        Animation.SetSpeed(MoveInput.magnitude);
+        // Animation.SetSpeed(MoveInput.magnitude);
     }
     public void TryJump()
     {

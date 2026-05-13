@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    public enum EGait { Walking, Running };
+    public enum EGait { Idle, Walking, Running };
     public enum EStance { Standing, Crouching };
     public enum EAction { None, Holding, Hanging, Pushing };
-    private EGait Gait = EGait.Walking;
+    public EGait Gait = EGait.Walking;
     private EStance Stance = EStance.Standing;
     public EAction Action { get; private set; } = EAction.None;
     public event System.Action<EGait> OnGaitChanged;

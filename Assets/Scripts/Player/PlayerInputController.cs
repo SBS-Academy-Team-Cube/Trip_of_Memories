@@ -9,6 +9,8 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerMovement Movement;
     [SerializeField] private PlayerRopeHandler RopeHandler;
     [SerializeField] private PlayerLeverHandler LeverHandler;
+    [SerializeField] private PlayerSprayAbility SprayComponent;
+    [SerializeField] private PlayerState State;
     [SerializeField] private PlayerInput Input;
     public void OnHangingRope(bool bHanging)
     {
@@ -42,6 +44,14 @@ public class PlayerInputController : MonoBehaviour
             Movement.TryJump();
         }
     }
+    public void OnSprint(InputValue Value)
+    {
+        if(!Value.isPressed)
+        {
+            Debug.Log("OnSprint Not Doing");
+        }
+        State.SetGait(Value.isPressed ? PlayerState.EGait.Running : PlayerState.EGait.Walking);
+    }
     public void OnLook(InputValue Value)
     {
         if (Movement != null)
@@ -65,10 +75,26 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
+    // Spray
+    public void OnPickUpSpray(InputValue Value)
+    {
+        if (SprayComponent)
+        {
+            SprayComponent.TryTakeSpray();
+        }
+    }
+    public void OnAbility(InputValue Value)
+    {
+        if (SprayComponent)
+        {
+            SprayComponent.TryUse();
+        }
+    }
+
     // Lever Action Map
     public void OnPush(InputValue Value)
     {
-        if(!LeverHandler)
+        if (!LeverHandler)
         {
             return;
         }
@@ -76,7 +102,7 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnEscape(InputValue Value)
     {
-        if(!LeverHandler)
+        if (!LeverHandler)
         {
             return;
         }

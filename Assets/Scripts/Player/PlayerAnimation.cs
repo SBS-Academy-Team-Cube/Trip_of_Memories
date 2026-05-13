@@ -1,48 +1,39 @@
+using System.Collections;
+using System.IO.Compression;
+using System.Transactions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
+
+public enum ETargetLayer { LeftArm, RightArm, Head, Body };
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : MonoBehaviour
 {
-    private const string LeftArmLayerName = "Left Arm Layer";
-    private const string RightArmLayerName = "Right Arm Layer";
-    private const string HeadLayerName = "Head Layer";
-    private const string BodyLayerName = "Body Layer";
+    private static readonly string[] LayerNames =
+    { "Left Arm Layer", "Right Arm Layer", "Head Layer", "Body Layer" };
+    private int[] LayerIndexs = { -1, -1, -1, -1 };
+    private Coroutine[] InterpolatedLayers = { null, null, null, null };
     [SerializeField] private Animator AnimationController;
-    private int hangingHash;
-    private int LeftArmLayerIndex = -1;
-    private int RightArmLayerIndex = -1;
-    private int HeadLayerIndex = -1;
-    private int BodyLayerIndex = -1;
     private Transform leftHandIKTarget;
     private Transform rightHandIKTarget;
     private float leftHandIKWeight;
     private float rightHandIKWeight;
-    
+
     private void Awake()
     {
         if (!AnimationController)
         {
             AnimationController = GetComponent<Animator>();
         }
-
-        LeftArmLayerIndex = GetLayerIndex(LeftArmLayerName, "Left Arm");
-        RightArmLayerIndex = GetLayerIndex(RightArmLayerName, "Right Arm");
-        HeadLayerIndex = AnimationController.GetLayerIndex(HeadLayerName);
-        BodyLayerIndex = AnimationController.GetLayerIndex(BodyLayerName);
-
-    }
-    private int GetLayerIndex(params string[] layerNames)
-    {
-        foreach (string layerName in layerNames)
+        for (int i = 0; i < LayerNames.Length; i++)
         {
-            int layerIndex = AnimationController.GetLayerIndex(layerName);
-            if (layerIndex >= 0)
-            {
-                return layerIndex;
-            }
+            LayerIndexs[i] = AnimationController.GetLayerIndex(LayerNames[i]);
         }
+        // LeftArmLayerIndex = AnimationControllerGetLayerIndex(LeftArmLayerName, "Left Arm");
+        // RightArmLayerIndex = GetLayerIndex(RightArmLayerName, "Right Arm");
+        // HeadLayerIndex = AnimationController.GetLayerIndex(HeadLayerName);
+        // BodyLayerIndex = AnimationController.GetLayerIndex(BodyLayerName);
 
-        return -1;
     }
     private void OnAnimatorIK(int layerIndex)
     {
@@ -89,18 +80,18 @@ public class PlayerAnimation : MonoBehaviour
     public void EnableHoldingLayer(bool bEnable)
     {
         float Weight = bEnable ? 1.0f : 0.0f;
-        SetLayerWeight(LeftArmLayerIndex, Weight);
-        SetLayerWeight(RightArmLayerIndex, Weight);
-        SetLayerWeight(BodyLayerIndex, Weight);
-        SetLayerWeight(HeadLayerIndex, Weight);
+        SetLayerWeight(ETargetLayer.LeftArm, Weight);
+        SetLayerWeight(ETargetLayer.RightArm, Weight);
+        SetLayerWeight(ETargetLayer.Head, Weight);
+        SetLayerWeight(ETargetLayer.Body, Weight);
     }
-    private void SetLayerWeight(int layerIndex, float weight)
+    public void SetLayerWeight(ETargetLayer Layer, float Weight)
     {
-        if (layerIndex < 0)
+        if ((int)Layer < 0)
         {
             return;
         }
-        AnimationController.SetLayerWeight(layerIndex, Mathf.Clamp01(weight));
+        AnimationController.SetLayerWeight(LayerIndexs[(int)Layer], Mathf.Clamp01(Weight));
     }
     public void SetPickup()
     {
@@ -121,9 +112,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("LeverAnimSpeed", Speed);
     }
-    public void IsPlay(bool bPlaying)
+    public void SetGait(int Gait)
     {
-        AnimationController.speed = bPlaying ? 1.0f : 0.0f;
+        AnimationController.SetInteger("Gait", Gait);
     }
     public void SetSpeed(float Speed)
     {
@@ -144,7 +135,8 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetHangOnRope(bool IsHanging)
     {
-        AnimationController.SetTrigger(IsHanging ? "StartHangingTrigger" : "EndHangingTrigger");
+        AnimationController.SetBool("IsHanging", IsHanging);
+        // AnimationController.SetTrigger(IsHanging ? "StartHangingTrigger" : "EndHangingTrigger");
         if (IsHanging)
         {
             SetRopePlaying(0.0f);
@@ -154,32 +146,42 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("RopeAnimSpeed", Speed);
     }
-    public void PlayRopeAnimation(bool bReverse)
+
+    public void SetTakeSpray(bool bHolding)
     {
-        AnimatorStateInfo info = AnimationController.GetCurrentAnimatorStateInfo(0);
-        float time = info.normalizedTime;
-        time += bReverse ? -1 : 1 * Time.deltaTime;
-        if (time > 1f || time < 0f)
-        {
-            time += bReverse ? 1f : -1f;
-        }
-        AnimationController.Play(info.fullPathHash, 0, time);
-        AnimationController.speed = 0f;
+        AnimationController.SetTrigger("TakeSprayTrigger");
+        SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, 0.15f);
+
     }
-    public void PlayForward()
+    public void SetInterpolatedLayerWeight(ETargetLayer Layer, float TargetWeight, float Duration)
     {
-        AnimatorStateInfo info = AnimationController.GetCurrentAnimatorStateInfo(0);
-        if (info.fullPathHash != hangingHash)
+        if (InterpolatedLayers[(int)Layer] != null)
         {
-            return;
+            StopCoroutine(InterpolatedLayers[(int)Layer]);
         }
-        float time = info.normalizedTime;
-        time += Time.deltaTime;
-
-        if (time > 1f)
-            time -= 1f;
-
-        AnimationController.Play(info.fullPathHash, 0, time);
-        AnimationController.speed = 0f;
+        InterpolatedLayers[(int)Layer] = StartCoroutine(InterpolateLayerWeightRoutine(Layer, TargetWeight, Duration));
+    }
+    private IEnumerator InterpolateLayerWeightRoutine(ETargetLayer Layer, float TargetWeight, float Duration)
+    {
+        float StartWeight = AnimationController.GetLayerWeight(LayerIndexs[(int)Layer]);
+        float Timer = 0.0f;
+        while (Timer < Duration)
+        {
+            Timer += Time.deltaTime;
+            SetLayerWeight(Layer, Mathf.SmoothStep(StartWeight, TargetWeight, Timer / Duration));
+            yield return null;
+        }
+        SetLayerWeight(Layer, TargetWeight);
+        InterpolatedLayers[(int)Layer] = null;
+    }
+    public void OnTakeOutSpray()
+    {
+        Debug.Log("Animation Event Called");
+        SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.15f, 0.25f);
+    }
+    public void OnTakeInSpray()
+    {
+        Debug.Log("On Take In Animation Event Called");
+        SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.0f, 0.5f);
     }
 }
