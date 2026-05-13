@@ -12,6 +12,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerSprayAbility SprayComponent;
     [SerializeField] private PlayerState State;
     [SerializeField] private PlayerInput Input;
+    
     public void OnHangingRope(bool bHanging)
     {
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
@@ -20,6 +21,7 @@ public class PlayerInputController : MonoBehaviour
     {
         Input.SwitchCurrentActionMap(bHolding ? "Lever" : "Player");
     }
+
     public void OnInteract(InputValue Value)
     {
         if (Value.isPressed)
@@ -32,6 +34,10 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnMove(InputValue Value)
     {
+        if(State != null)
+        {
+            State.TryMove(Value.Get<Vector2>().sqrMagnitude >= 0.01f);
+        }
         if (Movement != null)
         {
             Movement.TryMove(Value.Get<Vector2>());
@@ -46,19 +52,9 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnSprint(InputValue Value)
     {
-        if(!Value.isPressed)
-        {
-            Debug.Log("OnSprint Not Doing");
-        }
-        State.SetGait(Value.isPressed ? PlayerState.EGait.Running : PlayerState.EGait.Walking);
+        State.TrySprint(Value.isPressed);
     }
-    public void OnLook(InputValue Value)
-    {
-        if (Movement != null)
-        {
-            Movement.TryLook(Value);
-        }
-    }
+
     public void OnHangMove(InputValue Value)
     {
         if (Movement != null)

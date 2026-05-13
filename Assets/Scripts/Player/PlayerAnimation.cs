@@ -93,6 +93,16 @@ public class PlayerAnimation : MonoBehaviour
         }
         AnimationController.SetLayerWeight(LayerIndexs[(int)Layer], Mathf.Clamp01(Weight));
     }
+    public void SetIsMoving(bool IsMoving)
+    {
+        AnimationController.SetBool("IsMoving", IsMoving);
+    }
+    
+    public void SetGait(int Gait)
+    {
+        AnimationController.SetInteger("Gait", Gait);
+    }
+    
     public void SetPickup()
     {
         AnimationController.SetBool("IsHolding", true);
@@ -112,10 +122,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("LeverAnimSpeed", Speed);
     }
-    public void SetGait(int Gait)
-    {
-        AnimationController.SetInteger("Gait", Gait);
-    }
+    
     public void SetSpeed(float Speed)
     {
         AnimationController.SetFloat("Speed", Speed);

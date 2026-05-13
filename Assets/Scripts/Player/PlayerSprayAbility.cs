@@ -7,13 +7,15 @@ public class PlayerSprayAbility : MonoBehaviour
 {
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private SprayItem Spray;
+    [SerializeField] private PlayerState State;
     [SerializeField] private float CoolDownDelay = 2.0f;
-    bool IsHolding = false;
-    bool CanUse = false;
-    bool IsUsing = false;
+    [SerializeField] private float ArmUpDelay, ArmDownDelay, WaitOffset;
+    private bool IsHolding = false;
+    private bool CanUse = false;
+    public bool IsUsing = false;
     public void TryTakeSpray()
     {
-        if (IsUsing)
+        if (State.IsInteracting || IsUsing)
         {
             return;
         }
@@ -31,17 +33,19 @@ public class PlayerSprayAbility : MonoBehaviour
     private IEnumerator UseRoutine()
     {
         IsUsing = true;
-
-        Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, 0.35f);
-        yield return new WaitForSeconds(0.35f);
+        State.IsInteracting = true;
         
-        Spray.Shoot();
-        yield return new WaitForSeconds(Spray.GetDuration() + 0.15f);
+        Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, ArmUpDelay);
+        yield return new WaitForSeconds(ArmUpDelay);
+        
+        Spray.Shoot(transform.rotation);
+        yield return new WaitForSeconds(Spray.GetDuration() + WaitOffset);
         StartCoroutine(CoolDown());
 
-        Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.15f, 0.35f);
-        yield return new WaitForSeconds(0.35f);
-
+        Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.15f, ArmDownDelay);
+        yield return new WaitForSeconds(ArmDownDelay);
+        
+        State.IsInteracting = false;
         IsUsing = false;
     }
     private IEnumerator CoolDown()

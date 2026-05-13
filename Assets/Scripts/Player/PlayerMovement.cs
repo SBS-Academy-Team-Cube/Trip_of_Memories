@@ -21,14 +21,10 @@ public class PlayerMovement : MonoBehaviour
     public float JumpForce = 5f;
     public Vector2 LookInput { get; private set; }
     private bool bAddGravity = true;
+    
     public void SetGravity(bool bUse)
     {
         bAddGravity = bUse;
-    }
-    void Awake()
-    {
-        Controller = GetComponent<CharacterController>();
-        Animation = GetComponentInChildren<PlayerAnimation>();
     }
     void Update()
     {
@@ -36,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
+        if(!State.CanMove())
+        {
+            return;
+        }
+
         if (MantlingComponent.IsMantling || !Controller.enabled)
         {
             return;
@@ -56,22 +57,24 @@ public class PlayerMovement : MonoBehaviour
                 Velocity.y = -2f;
             }
 
-            Vector3 CameraForward = CameraTransform.forward;
-            Vector3 CameraRight = CameraTransform.right;
-
-            CameraForward.y = 0;
-            CameraRight.y = 0;
-
-            if (MoveInput.magnitude > 0)
+            if(State.IntendToMove)
             {
-                Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
-                move = Vector3.ClampMagnitude(move, 1f);
+                Animation.SetIsMoving(true);
 
-                Controller.Move((State.Gait == PlayerState.EGait.Walking ? MoveSpeed : SprintSpeed) * Time.deltaTime * move);
-                Animation.SetGait((int)State.Gait + 1);
-                if (move.sqrMagnitude > 0.01f)
+                Vector3 CameraForward = CameraTransform.forward;
+                Vector3 CameraRight = CameraTransform.right;
+
+                CameraForward.y = 0;
+                CameraRight.y = 0;
+
+                Vector3 Move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
+                Move = Vector3.ClampMagnitude(Move, 1f);
+
+                Controller.Move((State.IntendToSprint ? SprintSpeed : MoveSpeed) * Time.deltaTime * Move);
+                Animation.SetGait(State.IntendToSprint ? 1 : 0);
+                if (Move.sqrMagnitude > 0.01f)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(move);
+                    Quaternion targetRotation = Quaternion.LookRotation(Move);
                     transform.rotation = Quaternion.Slerp(
                         transform.rotation,
                         targetRotation,
@@ -81,8 +84,30 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Animation.SetGait(0);
+                Animation.SetIsMoving(false);
             }
+
+            // if (MoveInput.magnitude > 0)
+            // {
+            //     Vector3 move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
+            //     move = Vector3.ClampMagnitude(move, 1f);
+
+            //     Controller.Move((State.Gait == PlayerState.EGait.Walking ? MoveSpeed : SprintSpeed) * Time.deltaTime * move);
+            //     Animation.SetGait((int)State.Gait);
+            //     if (move.sqrMagnitude > 0.01f)
+            //     {
+            //         Quaternion targetRotation = Quaternion.LookRotation(move);
+            //         transform.rotation = Quaternion.Slerp(
+            //             transform.rotation,
+            //             targetRotation,
+            //             RotateSpeed * Time.deltaTime
+            //         );
+            //     }
+            // }
+            // else
+            // {
+            //     Animation.SetGait(0);
+            // }
 
 
 

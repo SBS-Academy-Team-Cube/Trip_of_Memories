@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    public enum EGait { Idle, Walking, Running };
+    public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
     public enum EAction { None, Holding, Hanging, Pushing };
+    
+    public bool IntendToMove = false;
+    public bool IntendToSprint = false;
+    public bool IsInteracting = false;
     public EGait Gait = EGait.Walking;
     private EStance Stance = EStance.Standing;
     public EAction Action { get; private set; } = EAction.None;
@@ -12,8 +16,31 @@ public class PlayerState : MonoBehaviour
     public event System.Action<EStance> OnStanceChanged;
     public event System.Action<EAction> OnActionChanged;
 
+    public void TryMove(bool bWantToMove)
+    {
+        if(IntendToMove != bWantToMove)
+        {
+            IntendToMove = bWantToMove;
+        }
+    }
+
+    public void TrySprint(bool bWantToSprint)
+    {
+        if(IntendToSprint != bWantToSprint)
+        {
+            IntendToSprint = bWantToSprint;
+        }
+    }
     public void SetGait(EGait NewGait)
     {
+        if(NewGait == EGait.Running && !CanRun())
+        {
+            return;
+        }
+        // if(NewGait != EGait.Idle && !CanMove())
+        // {
+        //     return;
+        // }
         if (NewGait != Gait)
         {
             Gait = NewGait;
@@ -35,5 +62,13 @@ public class PlayerState : MonoBehaviour
             Action = NewAction;
             OnActionChanged?.Invoke(Action);
         }
+    }
+    private bool CanRun()
+    {
+        return Action == EAction.None && !IsInteracting;
+    }
+    public bool CanMove()
+    {
+        return !IsInteracting;
     }
 };
