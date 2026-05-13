@@ -62,9 +62,9 @@ public class PentominoBoard : MonoBehaviour
         {
             foreach (BoardPos pos in notValidPos)
             {
-                if (width < pos.x && height < pos.y)
-                    return;
-                boardData[pos.x, pos.y] = true;
+                if (width < pos.x || height < pos.y)
+                    continue;
+                boardData[pos.x - 1, pos.y - 1] = true;
             }
         }
 

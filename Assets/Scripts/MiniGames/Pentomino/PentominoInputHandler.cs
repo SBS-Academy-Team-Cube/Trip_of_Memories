@@ -58,7 +58,7 @@ public class PentominoInputHandler : MonoBehaviour
                 if (pick != null && _currentPiece != null)
                 {
                     _currentPicked = pick;
-                    pick.PickUp();
+                    pick.PickUp(board.GridSize);
 
                     BoardPos[] currentBoardPos = GetBoardPos(_currentPiece.PieceShape, _currentPiece.Transform.position);
                     board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
@@ -103,12 +103,13 @@ public class PentominoInputHandler : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = _mainCamera.ScreenPointToRay(mousePos);
 
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 0.1f);
+
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
         {
             Vector3 snappedPos = SnapToGrid(hit.point);
-            Vector3 previewPos = new Vector3(snappedPos.x, 0.6f, snappedPos.z);
+            Vector3 previewPos = new Vector3(snappedPos.x, snappedPos.y, snappedPos.z);
             _currentPicked.Transform.position = previewPos;
-
         }
     }
 
@@ -132,7 +133,7 @@ public class PentominoInputHandler : MonoBehaviour
         Vector3 local = worldPos - board.ZeroPos;
         float x = Mathf.Round(local.x / board.GridSize) * board.GridSize;
         float z = Mathf.Round(local.z / board.GridSize) * board.GridSize;
-        return board.ZeroPos + new Vector3(x, 0.01f, z);
+        return board.ZeroPos + new Vector3(x, 0.1f * board.GridSize, z);
     }
 
     private BoardPos[] GetBoardPos(BoardPos[] pieceShape, Vector3 worldPos)

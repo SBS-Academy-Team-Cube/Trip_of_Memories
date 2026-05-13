@@ -21,7 +21,7 @@ public class PentominoGameManager : MonoBehaviour
     }
     private void GameReset()
     {
-
+        Init();
     }
     private void Init()
     {

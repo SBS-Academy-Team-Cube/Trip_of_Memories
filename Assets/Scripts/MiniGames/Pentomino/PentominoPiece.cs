@@ -21,8 +21,19 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
 
         transform.position = startPos;
         transform.rotation = startRot;
+        InitRotateSet();
     }
+    private void InitRotateSet()
+    {
+        float rotationY = transform.eulerAngles.y;
 
+        int rotate = Mathf.RoundToInt(rotationY / 90f) % 4;
+        if (rotate < 0)
+            rotate += 4;
+
+        for (int i = 0; i < rotate; i++)
+            RotatePiecePos(true);
+    }
 
     public void RotatePiecePos(bool isRight)
     {
@@ -55,10 +66,10 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     }
     
 
-    public void PickUp()
+    public void PickUp(float gridSize)
     {
         _isPicked = true;
-        transform.position += Vector3.up * 1.5f;
+        transform.position += Vector3.up * 1.5f * gridSize;
     }
     public void ReturnToStart()
     {
@@ -71,7 +82,7 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     public void Place(Vector3 position)
     {
         _isPicked = false;
-        transform.position = new Vector3(position.x, 0.01f, position.z);
+        transform.position = new Vector3(position.x, position.y, position.z);
 
         DebugPiecePos();
     }
