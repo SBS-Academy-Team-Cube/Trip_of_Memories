@@ -6703,6 +6703,204 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7441448146281939106, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
   m_PrefabInstance: {fileID: 803538695}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &135146020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135146022}
+  - component: {fileID: 135146021}
+  m_Layer: 0
+  m_Name: River
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &135146021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135146020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f6fd535518f5540b4bcc3099582f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.WaterSurface
+  m_Version: 3
+  decalLayerMask: 1
+  lightLayerMask: 1
+  largeBand0FadeToggle: 1
+  largeBand1FadeToggle: 1
+  ripplesFadeToggle: 1
+  surfaceType: 1
+  geometryType: 2
+  meshRenderers: []
+  timeMultiplier: 1
+  scriptInteractions: 0
+  cpuEvaluateRipples: 0
+  customMaterial: {fileID: 2100000, guid: 0b2daa84645e59440835e14b75bc22bd, type: 2}
+  startSmoothness: 0.95
+  endSmoothness: 0.85
+  smoothnessFadeStart: 100
+  smoothnessFadeDistance: 500
+  tessellation: 1
+  maxTessellationFactor: 3
+  tessellationFactorFadeStart: 150
+  tessellationFactorFadeRange: 1850
+  refractionColor: {r: 0, g: 0.77582234, b: 0.87962234, a: 1}
+  maxRefractionDistance: 2
+  absorptionDistance: 3
+  scatteringColor: {r: 0, g: 0.13286833, b: 0.17064494, a: 1}
+  ambientScattering: 0.7
+  heightScattering: 0.2
+  displacementScattering: 0.1
+  directLightTipScattering: 0.6
+  directLightBodyScattering: 0.6
+  maximumHeightOverride: 0
+  caustics: 1
+  causticsIntensity: 0.5
+  causticsPlaneBlendDistance: 1
+  causticsResolution: 256
+  causticsBand: 2
+  virtualPlaneDistance: 4
+  causticsTilingFactor: 1
+  causticsDirectionalShadow: 0
+  causticsDirectionalShadowDimmer: 0.25
+  renderingLayerMask: 1
+  debugMode: 0
+  waterMaskDebugMode: 0
+  waterCurrentDebugMode: 0
+  currentDebugMultiplier: 1
+  waterFoamDebugMode: 0
+  underWater: 0
+  volumeBounds: {fileID: 0}
+  volumeDepth: 50
+  volumeHeight: 0
+  volumePrority: 0
+  absorptionDistanceMultiplier: 1
+  underWaterAmbientProbeContribution: 1
+  underWaterScatteringColorMode: 0
+  underWaterScatteringColor: {r: 0, g: 0.27, b: 0.23, a: 1}
+  underWaterRefraction: 0
+  decalRegionSize: {x: 200, y: 200}
+  decalRegionAnchor: {fileID: 0}
+  supportLargeCurrent: 0
+  largeCurrentRes: 512
+  largeCurrentSpeedValue: 1.5
+  largeCurrentMap: {fileID: 0}
+  largeCurrentRegionExtent: {x: 100, y: 100}
+  largeCurrentRegionOffset: {x: 0, y: 0}
+  largeCurrentMapInfluence: 1
+  supportRipplesCurrent: 0
+  ripplesCurrentRes: 512
+  ripplesCurrentSpeedValue: 0
+  ripplesCurrentMap: {fileID: 0}
+  ripplesCurrentRegionExtent: {x: 100, y: 100}
+  ripplesCurrentRegionOffset: {x: 0, y: 0}
+  ripplesCurrentMapInfluence: 1
+  deformation: 0
+  deformationRes: 512
+  foam: 0
+  foamResolution: 512
+  foamPersistenceMultiplier: 0.5
+  foamCurrentInfluence: 0.6
+  foamColor: {r: 1, g: 1, b: 1, a: 1}
+  foamTextureTiling: 0.2
+  foamSmoothness: 0.3
+  simulationFoamAmount: 0.3
+  supportSimulationFoamMask: 0
+  simulationFoamMask: {fileID: 0}
+  simulationFoamMaskExtent: {x: 100, y: 100}
+  simulationFoamMaskOffset: {x: 0, y: 0}
+  simulationFoamWindCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  repetitionSize: 75
+  largeOrientationValue: 0
+  largeWindSpeed: 17.5
+  largeChaos: 0.9
+  largeBand0Multiplier: 1
+  largeBand0FadeMode: 1
+  largeBand0FadeStart: 150
+  largeBand0FadeDistance: 300
+  largeBand1Multiplier: 1
+  largeBand1FadeMode: 1
+  largeBand1FadeStart: 300
+  largeBand1FadeDistance: 800
+  ripples: 1
+  ripplesMotionMode: 0
+  ripplesOrientationValue: 0
+  ripplesWindSpeed: 8
+  ripplesChaos: 0.2
+  ripplesFadeMode: 1
+  ripplesFadeStart: 50
+  ripplesFadeDistance: 200
+  simulationMask: 0
+  maskRes: 512
+  waterMask: {fileID: 0}
+  waterMaskRemap: {x: 0, y: 1}
+  waterMaskExtent: {x: 100, y: 100}
+  waterMaskOffset: {x: 0, y: 0}
+--- !u!4 &135146022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135146020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010921631, y: -0.87842417, z: 0.015142654, w: -0.47751692}
+  m_LocalPosition: {x: -19.48, y: 0.78, z: 3.75}
+  m_LocalScale: {x: 62.2515, y: 1, z: 58.32117}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0.927, y: -237.073, z: -1.929}
 --- !u!1001 &137984027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11921,7 +12119,6 @@ Transform:
   - {fileID: 1794781086}
   - {fileID: 399310806}
   - {fileID: 304228134}
-  - {fileID: 1130526202}
   - {fileID: 1762368821}
   - {fileID: 1820983988}
   - {fileID: 767799495}
@@ -51834,6 +52031,7 @@ Transform:
   - {fileID: 1647878037}
   - {fileID: 164420165}
   - {fileID: 1594248536}
+  - {fileID: 1130526202}
   m_Father: {fileID: 1271280367}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1001824521
@@ -54071,7 +54269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037794175}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0002587363, y: 0.70710677, z: 0.70710677, w: 0.0002587363}
+  m_LocalRotation: {x: 0.00025881082, y: 0.70710677, z: 0.70710677, w: 0.00025881082}
   m_LocalPosition: {x: -11.08, y: -1.31, z: 2.409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -58362,7 +58560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1130526202
 Transform:
   m_ObjectHideFlags: 0
@@ -58616,7 +58814,7 @@ Transform:
   - {fileID: 891774894}
   - {fileID: 667209966}
   - {fileID: 1141077768}
-  m_Father: {fileID: 246222982}
+  m_Father: {fileID: 1000719611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1130620971
 PrefabInstance:
@@ -65246,7 +65444,6 @@ Transform:
   - {fileID: 669479545}
   - {fileID: 1261426939}
   - {fileID: 246222982}
-  - {fileID: 363163454}
   - {fileID: 884287907}
   - {fileID: 1913009752}
   - {fileID: 936343795}
@@ -65255,7 +65452,7 @@ Transform:
   - {fileID: 2133497990}
   - {fileID: 453535755}
   - {fileID: 1493022}
-  - {fileID: 1301760011}
+  - {fileID: 363163454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1272140860
@@ -67049,31 +67246,31 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1271280367}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 88.949135
+      value: 44.47457
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 185.79646
+      value: 92.89823
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 116.53524
+      value: 58.267628
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.26
+      value: -28.779999
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.34
+      value: 5.17
       objectReference: {fileID: 0}
     - target: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67107,9 +67304,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: River
       objectReference: {fileID: 0}
+    - target: {fileID: 6657935222912760466, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: foam
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: largeChaos
       value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: deformation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: surfaceType
@@ -67122,6 +67331,10 @@ PrefabInstance:
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: ripplesChaos
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: tessellation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: endSmoothness
@@ -67144,12 +67357,24 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: simulationMask
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: startSmoothness
       value: 0.57989347
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: ripplesWindSpeed
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: decalRegionSize.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: decalRegionSize.y
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: refractionColor.b
@@ -67168,6 +67393,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: scriptInteractions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: supportLargeCurrent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: largeBand0Multiplier
       value: 1
       objectReference: {fileID: 0}
@@ -67176,30 +67409,62 @@ PrefabInstance:
       value: 0.721
       objectReference: {fileID: 0}
     - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: underWaterRefraction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      propertyPath: supportRipplesCurrent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
       propertyPath: foamPersistenceMultiplier
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6657935222912760466, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1301760012}
   m_SourcePrefab: {fileID: 100100000, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
 --- !u!114 &1301760010 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8600311514737858450, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
   m_PrefabInstance: {fileID: 1301760009}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1301760011}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8f6fd535518f5540b4bcc3099582f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1301760011 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2741718770373899791, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
+--- !u!1 &1301760011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6657935222912760466, guid: 18cd4df8a01681349bf7841650cd421c, type: 3}
   m_PrefabInstance: {fileID: 1301760009}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1301760012
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301760011}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1305738564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83366,13 +83631,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666380139}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40665781, y: 0.2467686, z: -0.11507226, w: 0.87206256}
+  m_LocalRotation: {x: 0.38711902, y: 0.39776537, z: -0.19015053, w: 0.8097928}
   m_LocalPosition: {x: -0.15, y: 11.45, z: -0.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -324.6, z: 0}
+  m_LocalEulerAnglesHint: {x: 411.1, y: -307.68, z: 0}
 --- !u!114 &1666380142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111791,3 +112056,5 @@ SceneRoots:
   - {fileID: 830652885}
   - {fileID: 559105560}
   - {fileID: 1037794178}
+  - {fileID: 135146022}
+  - {fileID: 1301760009}
