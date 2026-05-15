@@ -47,8 +47,9 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDead()
     {
+        Debug.Log("I'm Dead!");
         AnimController.SetBool("IsDead", true);
-        // StartCoroutine(DeathRoutine());
+        // Destroy(gameObject);
     }
     // private IEnumerator DeathRoutine()
     // {
@@ -73,7 +74,6 @@ public class EnemyAI : MonoBehaviour
             HP.OnDead -= OnDead;
         }
     }
-
     private void StartAttack()
     {
         if(Attacker != null)
