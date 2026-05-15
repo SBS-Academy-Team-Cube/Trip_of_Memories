@@ -20807,6 +20807,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
+--- !u!1 &416757326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 458269749309194472, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
+  m_PrefabInstance: {fileID: 951121571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &417038600 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7786307062412057112, guid: 99f2b6983a977f44b9ea532779e53c69, type: 3}
@@ -55467,11 +55472,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2144811480704993049, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
+      propertyPath: m_Name
+      value: Handle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5941122377996124437, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 458269749309194472, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2008599667}
   m_SourcePrefab: {fileID: 100100000, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
 --- !u!1001 &951170921
 PrefabInstance:
@@ -111612,6 +111624,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 943443941528803922, guid: bfb29932d8ce7f74bac1d2af2d88c34b, type: 3}
   m_PrefabInstance: {fileID: 951121571}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2008599667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416757326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1a0b266e33ba24fb2aceac824e0b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lever
+  itemName: 1
+  RotateSpeed: 0
+  TargetRotators: []
+  LeverHandleTransform: {fileID: 0}
+  Clockwise:
+    StandPosition: {fileID: 0}
+    LeftHandIKPosition: {fileID: 0}
+    RightHandIKPosition: {fileID: 0}
+  CounterClockwise:
+    StandPosition: {fileID: 0}
+    LeftHandIKPosition: {fileID: 0}
+    RightHandIKPosition: {fileID: 0}
+  IsRotating: 0
 --- !u!1 &2012052241
 GameObject:
   m_ObjectHideFlags: 0
