@@ -17,7 +17,7 @@ public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] private string itemName = "item";
     [SerializeField] private float RotateSpeed;
-    [SerializeField] private Rotator TargetRotator;
+    [SerializeField] private Rotator[] TargetRotators;
     [SerializeField] private Transform LeverHandleTransform;
     [SerializeField] private FLeverPosition Clockwise;
     [SerializeField] private FLeverPosition CounterClockwise;
@@ -53,20 +53,22 @@ public class Lever : MonoBehaviour, IInteractable
     public void SetIsRotating(bool bRotating)
     {
         IsRotating = bRotating;
-        if (TargetRotator)
+        if (TargetRotators.Length > 0)
         {
-            if (bRotating)
+            foreach(Rotator Rotator in TargetRotators)
             {
-                TargetRotator.StartRotate(bClockwise ? -1f : 1f);
+                if(bRotating)
+                {
+                    Rotator.StartRotate(bClockwise ? -1f : 1f);
+                }
+                else
+                {
+                    Rotator.EndRotate();
+                }
             }
-            else
-            {
-                TargetRotator.EndRotate();
-            }
-        }
+       }
     }
     private void Update()
-
     {
         if (IsRotating)
         {

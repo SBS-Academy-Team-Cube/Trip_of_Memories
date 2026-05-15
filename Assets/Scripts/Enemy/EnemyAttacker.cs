@@ -10,7 +10,6 @@ public class EnemyAttacker : MonoBehaviour
     {
         return IsPlayerInAttackRange;
     }
-
     private void OnTriggerStay(Collider Other) 
     {   
         if(IsPlayerInAttackRange)
@@ -36,11 +35,12 @@ public class EnemyAttacker : MonoBehaviour
     {
         if(IsAttacking && IsPlayerInAttackRange && Player != null)
         {
-            // if(Player.TryGetComponent(out Health Hp))
-            // {
-            //     Hp.TakeDamage();
-            // }
-            Debug.Log("Attack Player!!");
+            if(Player.TryGetComponent(out Health Hp))
+            {
+                Hp.TakeDamage();
+                Debug.Log("Attack Player!!");
+            }
+            
         }
     }
 }

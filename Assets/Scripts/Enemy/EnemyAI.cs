@@ -2,20 +2,21 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-public enum EState { Idle, Patrolling, Chasing, Attacking, Stunned };
+public enum EState { Idle, Patrolling, Chasing, Attacking, Stunned, Death, None };
 
 public class EnemyAI : MonoBehaviour
 {
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     public EState CurrentState;
     private EState PreviousState;
+
+    public float PatrolSpeed, ChaseSpeed;
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Animator AnimController;
     [SerializeField] private EnemyDetecter Detecter;
     [SerializeField] private EnemyAttacker Attacker;
     [SerializeField] private Health HP;
 
-    
 
     [SerializeField] private float PatrolRadius = 5f;
     [SerializeField] private float PatrolTimeMin = 1.5f;
@@ -24,8 +25,8 @@ public class EnemyAI : MonoBehaviour
     
     private Transform PlayerTransform = null;
 
-    private float PatrolInterval;
-    private float PatrolTimer = 0.0f;
+    private float IdleInterval;
+    private float IdleTimer = 0.0f;
 
     private bool IsPatrolling = false;
     void Awake()
@@ -47,22 +48,14 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDead()
     {
-        Debug.Log("I'm Dead!");
-        AnimController.SetBool("IsDead", true);
-        // Destroy(gameObject);
+        SetState(EState.Death);
     }
-    // private IEnumerator DeathRoutine()
-    // {
-    //     yield return new WaitForSeconds(AnimationController.GetCurrentAnimatorStateInfo()[0].length);
-    //     Destroy(gameObject);
-    // }
     private void OnTakeDamage(int HP)
     {
-        Debug.Log("OnTake Damage Started!!");
-        AnimController.SetTrigger("TakeDamage");
         PreviousState = CurrentState;
-        CurrentState = EState.Stunned;
+        SetState(EState.Stunned);
     }
+    
     private void OnDisable() {
         if(Detecter != null)
         {
@@ -88,22 +81,19 @@ public class EnemyAI : MonoBehaviour
             Attacker.IsAttacking = false;
         }
     }
-
     private void OnPlayerFound(bool bFound, Transform TargetPlayer)
     {
         if(bFound)
         {
-            CurrentState = EState.Chasing;
             PlayerTransform = TargetPlayer;
-
-            ChaseToPlayer();
+            TryChaseToPlayer();
         }
         else
         {
-
+            PlayerTransform = TargetPlayer;
+            SetState(EState.Idle);
         }
     }
-
     void Start()
     {
         SetRandomDestination();
@@ -115,100 +105,163 @@ public class EnemyAI : MonoBehaviour
     }
     void Update()
     {
+        if(Detecter.IsDetected && CurrentState != EState.Chasing && CurrentState != EState.Attacking)
+        {
+            TryChaseToPlayer();
+        }
+        if(CurrentState == EState.Death)
+        {
+            return;
+        }
         switch (CurrentState)
         {
             case EState.Idle:
-                PatrolTimer += Time.deltaTime;
-                if (PatrolTimer >= PatrolInterval)
+                IdleTimer += Time.deltaTime;
+                if (IdleTimer >= IdleInterval)
                 {
-                    PatrolTimer = 0.0f;
-                    SetRandomDestination();
+                    SetState(EState.Patrolling);
                 }
                 return;
-
             case EState.Patrolling:
                 if (HasArrived())
                 {
-                    PatrolInterval = Random.Range(PatrolTimeMin, PatrolTimeMax);
-                    AnimController.SetBool(IsMovingHash, false);
-                    CurrentState = EState.Idle;
+                    SetState(EState.Idle);
                 }
                 return;
-
             case EState.Chasing:
-                if(HasArrived())
+                if(Attacker.CanAttack())
                 {
-                    // Debug.Log("Enemy Arrived to Player");
-
-                    if(Attacker.CanAttack())
-                    {
-                        AnimController.SetBool("IsMoving", false);
-                        AnimController.SetTrigger("DoAttack");
-                    }
-                    else
-                    {
-                        ChaseToPlayer();
-                    }
+                    SetState(EState.Attacking);
                 }
                 else
                 {
-                    ChaseToPlayer();
+                    if(HasArrived())
+                    {
+                        LookAtPlayer();
+                    }
+                    else
+                    {
+                        TryChaseToPlayer();
+                    }
                 }
                 return;
-            case EState.Stunned:
-
             default:
                 break;
         }
-
-
-        
-        // if (CurrentState == EState.Idle)
-        // {
-        //     PatrolTimer += Time.deltaTime;
-        //     if (PatrolTimer >= PatrolInterval)
-        //     {
-        //         PatrolTimer = 0.0f;
-        //         SetRandomDestination();
-        //     }
-        //     return;
-        // }
-        // if (CurrentState == EState.Patrolling)
-        // {
-        //     if (HasArrived())
-        //     {
-        //         PatrolInterval = Random.Range(PatrolTimeMin, PatrolTimeMax);
-        //         AnimController.SetBool(IsMovingHash, false);
-        //         CurrentState = EState.Idle;
-        //     }
-        //     return;
-        // }
     }
 
+    private void LookAtPlayer()
+    {
+        if(PlayerTransform == null)
+        {
+            return;
+        }
+
+        Vector3 Direction = PlayerTransform.position - transform.position;
+        Direction.y = 0f;
+
+        if(Direction.sqrMagnitude <= 0.001f)
+        {
+            return;
+        }
+
+        Quaternion TargetRotation = Quaternion.LookRotation(Direction);
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            TargetRotation,
+            Agent.angularSpeed * Time.deltaTime
+        );
+    }
+    private void SetState(EState State)
+    {
+        CurrentState = State;
+        switch(CurrentState)
+        {
+            case EState.Idle:
+                AnimController.SetBool(IsMovingHash, false);
+                IdleTimer = 0.0f;
+                IdleInterval = Random.Range(PatrolTimeMin, PatrolTimeMax);
+                return;
+            case EState.Patrolling:
+                Agent.isStopped = false;
+                Agent.speed = PatrolSpeed;
+                AnimController.SetBool("IsMoving", true);
+                AnimController.SetFloat("WalkSpeedMultiplier", 1.0f);
+                SetRandomDestination();
+                return;
+            case EState.Chasing:
+                Agent.isStopped = false;
+                Agent.speed = ChaseSpeed;
+                AnimController.SetBool("IsMoving", true);
+                AnimController.SetFloat("WalkSpeedMultiplier", ChaseSpeed / PatrolSpeed);
+                return;
+            case EState.Attacking:
+                Agent.velocity = Vector3.zero;
+                Agent.isStopped = true;
+                AnimController.SetBool("IsMoving", false);
+                AnimController.SetTrigger("DoAttack");
+                StartCoroutine(AttackRoutine());
+                return;
+            case EState.Stunned:
+                Agent.velocity = Vector3.zero;
+                Agent.isStopped = true;
+                AnimController.SetTrigger("TakeDamage");
+                StartCoroutine(StunnedRoutine());
+                return;
+            case EState.Death:
+                Agent.velocity = Vector3.zero;
+                Agent.isStopped = true;
+                AnimController.SetTrigger("DeathTrigger");
+                StartCoroutine(DeathRoutine());
+                return;
+            default:
+                return;
+        }
+    }
+    private IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(AnimController.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        Destroy(gameObject);
+    }
+    private IEnumerator StunnedRoutine()
+    {
+        yield return new WaitForSeconds(AnimController.GetCurrentAnimatorClipInfo(0)[0].clip.length + 0.1f);
+        SetState(PreviousState);
+        PreviousState = EState.None;
+    }
+    private IEnumerator AttackRoutine()
+    {
+        yield return new WaitForSeconds(AnimController.GetCurrentAnimatorClipInfo(0)[0].clip.length + 0.1f);
+        SetState(EState.Chasing);
+    }
     private bool HasArrived()
     {
         return Agent.remainingDistance <= Agent.stoppingDistance && Agent.velocity.sqrMagnitude <= 0.01f;
     }
-
-    private void ChaseToPlayer()
+    private void TryChaseToPlayer()
     {
-        if(NavMesh.SamplePosition(PlayerTransform.position, out NavMeshHit Hit, 2.5f, NavMesh.AllAreas))
+        if(PlayerTransform == null)
         {
-            AnimController.SetBool("IsMoving", true);
-            AnimController.SetFloat("WalkSpeedMultiplier", 1.5f);
+            return;
+        }
+        if(NavMesh.SamplePosition(PlayerTransform.position, out NavMeshHit Hit, 0.85f, NavMesh.AllAreas))
+        {
+            Debug.Log("Can Chase Player");
+            SetState(EState.Chasing);
             Agent.SetDestination(Hit.position);
         }
     }
-
     private void SetRandomDestination()
     {
         Vector3 RandomPos = transform.position + Random.insideUnitSphere * PatrolRadius;
         if (NavMesh.SamplePosition(RandomPos, out NavMeshHit Hit, PatrolRadius, NavMesh.AllAreas))
         {
-            CurrentState = EState.Patrolling;
-            AnimController.SetBool("IsMoving", true);
-            AnimController.SetFloat("WalkSpeedMultiplier", 1.0f);
             Agent.SetDestination(Hit.position);
+        }
+        else
+        {
+            Debug.Log("Can't Find Random Destination");
         }
     }
 }

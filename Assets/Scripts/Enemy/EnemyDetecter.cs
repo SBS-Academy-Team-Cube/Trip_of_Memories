@@ -9,8 +9,8 @@ public class EnemyDetecter : MonoBehaviour
     [SerializeField] private float DetectingRadius = 5.0f;
     [SerializeField] private float DetectedRadius = 6.0f;
     [SerializeField] private SphereCollider DetectingTrigger;
-    private bool IsDetected = false;
-    void OnTriggerEnter(Collider Other)
+    public bool IsDetected = false;
+    void OnTriggerStay(Collider Other)
     {
         if (IsDetected)
         {
@@ -18,6 +18,7 @@ public class EnemyDetecter : MonoBehaviour
         }
         if (Other.CompareTag(PlayerTag))
         {
+            Debug.Log("Detected!");
             IsDetected = true;
             OnPlayerDetected?.Invoke(true, Other.transform);
             DetectingTrigger.radius = DetectedRadius;
@@ -31,7 +32,8 @@ public class EnemyDetecter : MonoBehaviour
         }
         if (Other.CompareTag(PlayerTag))
         {
-            IsDetected = true;
+            Debug.Log("Player Out Detected!");
+            IsDetected = false;
             OnPlayerDetected?.Invoke(false, null);
             DetectingTrigger.radius = DetectingRadius;
         }
