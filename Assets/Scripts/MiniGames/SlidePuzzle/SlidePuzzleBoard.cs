@@ -27,7 +27,7 @@ public class SlidePuzzleBoard : MonoBehaviour
     private SlidePuzzlePieceType[] board;
     private int indexCount = 9;
 
-    private void Awake()
+    public void GameInit()
     {
         board = new SlidePuzzlePieceType[indexCount];
         InitBoard();
@@ -82,8 +82,8 @@ public class SlidePuzzleBoard : MonoBehaviour
     {
         for(int i = 1; i <= indexCount; ++i)
         {
-            if (board[i - 1] == (SlidePuzzlePieceType)i )
-                continue;
+            if (board[i - 1] != (SlidePuzzlePieceType)i)
+                break;
             if (i == indexCount && board[i - 1] == SlidePuzzlePieceType.Empty)
                 return true;
         }
@@ -98,6 +98,13 @@ public class SlidePuzzleBoard : MonoBehaviour
         }
         board[index - 1] = pieceType;
     }
+
+    public SlidePuzzlePieceType GetPieceTypeAt(int index) // index 1~9
+    {
+        if (index < 1 || index > 9) return SlidePuzzlePieceType.Empty;
+        return board[index - 1];
+    }
+
     public void DebugBoard()
     {
         Debug.Log("===============================");
