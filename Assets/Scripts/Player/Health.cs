@@ -7,18 +7,16 @@ public class Health : MonoBehaviour
     public int HP;
     public event Action<int> OnHPChanged;
     public event Action OnDead;
-
     private void Awake()
     {
         HP = MaxHP;
     }
-    
     public void TakeDamage()
     {
-        Debug.Log($"{name} : be Hit!!");
         HP--;
         if (HP <= 0)
         {
+            OnHPChanged?.Invoke(HP);
             OnDead?.Invoke();
         }
         else

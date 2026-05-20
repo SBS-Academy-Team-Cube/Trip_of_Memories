@@ -4,7 +4,7 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private StoryManager storyManager;
-    [SerializeField] private BackgroundPresenter Presenter;
+    [SerializeField] private StoryImagePresenter Presenter;
     [SerializeField] private CharacterSelectController selectController;
 
     [Header("UI")]

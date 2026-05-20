@@ -25,26 +25,28 @@ public class PlayerSprayAbility : MonoBehaviour
     }
     public void TryUse()
     {
-        if (IsHolding && CanUse)
+        if (IsUsing || !CanUse || !State.IsGrounded)
         {
-            StartCoroutine(UseRoutine());
+            return;
         }
+        StartCoroutine(UseRoutine());
     }
     private IEnumerator UseRoutine()
     {
         IsUsing = true;
         State.IsInteracting = true;
-        
+        Animation.SetIsMoving(false);
+
         Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, ArmUpDelay);
         yield return new WaitForSeconds(ArmUpDelay);
-        
+
         Spray.Shoot(transform.rotation);
         yield return new WaitForSeconds(Spray.GetDuration() + WaitOffset);
         StartCoroutine(CoolDown());
 
         Animation.SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.15f, ArmDownDelay);
         yield return new WaitForSeconds(ArmDownDelay);
-        
+
         State.IsInteracting = false;
         IsUsing = false;
     }

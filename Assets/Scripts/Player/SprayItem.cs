@@ -21,29 +21,24 @@ public class SprayItem : MonoBehaviour
 
         AttackRange.enabled = true;
         CanAttack = true;
+        StartCoroutine(DisableTrigger());
         Particle.Play();
         Audio.Play();
     }
     void OnTriggerStay(Collider Other)
     {
-        if(!CanAttack)
+        if (!CanAttack)
         {
             return;
         }
-        if(Other.CompareTag("Enemy"))
+        if (Other.CompareTag("Enemy"))
         {
             Health EnemyHP = Other.GetComponentInParent<Health>();
-            if(EnemyHP != null)
-            {   
+            if (EnemyHP != null)
+            {
                 EnemyHP.TakeDamage();
                 CanAttack = false;
-                Debug.Log("Hit Enemy!!");
             }
-            // if(Other.TryGetComponent(out Health HP))
-            // {
-            //     HP.TakeDamage();
-            //     CanAttack = false;
-            // }
         }
     }
     private IEnumerator DisableTrigger()

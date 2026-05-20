@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using System;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] CharacterPrefabs;
@@ -9,7 +10,10 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private CutsceneManager CutScene;
     [SerializeField] private WorldUIManager WorldUI;
     [SerializeField] private Transform PlayerCameraPivot;
-    public System.Action<GameObject> OnPlayerSpawned;
+    public Action<GameObject> OnPlayerSpawned;
+
+
+    [SerializeField] private UIHPController HPUI;
     void Start()
     {
         if (SaveManager.Instance.Data == null)
@@ -35,6 +39,14 @@ public class PlayerSpawner : MonoBehaviour
                 CutScene.SetPlayerMovement(Move);
             }
         }
+
+
+        if(HPUI != null && Player.TryGetComponent(out Health PlayerHP))
+        {
+            HPUI.Init(PlayerHP);
+        }
+
+        
         if (WorldUI != null && Player.TryGetComponent(out PlayerInteraction Interaction))
         {
             WorldUI.SetPlayerInteraction(Interaction);

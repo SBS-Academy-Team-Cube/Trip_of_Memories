@@ -9,6 +9,7 @@ public class UnderlineEffect : MonoBehaviour
     [SerializeField] private Image PencilImage;
     [SerializeField] private RectTransform UnderlineRect;
     [SerializeField] private RectTransform PencilRect;
+    [SerializeField] private AudioSource Audio;
 
     private Coroutine PlayingEffect = null;
     public float EndPosX = 170.0f;
@@ -20,6 +21,10 @@ public class UnderlineEffect : MonoBehaviour
         UnderlineImage.enabled = true;
         PencilImage.enabled = true;
         PlayingEffect = StartCoroutine(Effect());
+        if(Audio != null && Audio.clip != null)
+        {
+            Audio.Play();
+        }
     }
     public void Stop()
     {

@@ -2,30 +2,28 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackgroundPresenter : MonoBehaviour
+public class StoryImagePresenter : MonoBehaviour
 {
     [Header("Reference")]
     [SerializeField] private StoryManager storyManager;
     [SerializeField] private DialoguePresentationData presentationData;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image FadeInOutImage;
-
     public System.Action OnFadeToBlackComplete;
     [Header("Fade Setting")]
     [SerializeField] private float fadeDuration = 0.5f;
-
     private Coroutine fadeCoroutine;
 
     private void OnEnable()
     {
         storyManager.OnDialogueChanged += HandleDialogueChanged;
-        storyManager.OnDialogueEnd += HandleDialougeEnd;
+        storyManager.OnStoryEnd += HandleDialougeEnd;
     }
 
     private void OnDisable()
     {
         storyManager.OnDialogueChanged -= HandleDialogueChanged;
-        storyManager.OnDialogueEnd -= HandleDialougeEnd;
+        storyManager.OnStoryEnd -= HandleDialougeEnd;
     }
     void HandleDialogueChanged(DialogueContext Context)
     {

@@ -97,12 +97,10 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetBool("IsMoving", IsMoving);
     }
-    
     public void SetGait(int Gait)
     {
         AnimationController.SetInteger("Gait", Gait);
     }
-
     public void SetIsHolding(bool IsHolding)
     {
         AnimationController.SetBool("IsHolding", IsHolding);
@@ -119,7 +117,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("LeverAnimSpeed", Speed);
     }
-    
+
     public void SetSpeed(float Speed)
     {
         AnimationController.SetFloat("Speed", Speed);
@@ -155,7 +153,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetTrigger("TakeSprayTrigger");
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, 0.15f);
-
     }
     public void SetInterpolatedLayerWeight(ETargetLayer Layer, float TargetWeight, float Duration)
     {
@@ -180,12 +177,10 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void OnTakeOutSpray()
     {
-        Debug.Log("Animation Event Called");
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.15f, 0.25f);
     }
     public void OnTakeInSpray()
     {
-        Debug.Log("On Take In Animation Event Called");
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.0f, 0.5f);
     }
 }

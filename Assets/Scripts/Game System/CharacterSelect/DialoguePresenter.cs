@@ -1,9 +1,10 @@
 using UnityEngine;
-
+using TMPro;
 public class DialoguePresenter : MonoBehaviour
 {
     [SerializeField] private StoryManager storyManager;
     [SerializeField] private TypewriterPlayer player;
+    [SerializeField] private TMP_Text SpeakerName;
     [SerializeField] private TypewriterEffect effect;
     private void OnEnable()
     {
@@ -12,7 +13,6 @@ public class DialoguePresenter : MonoBehaviour
 
         player.OnTypingFinished += HandleTypingFinished;
     }
-
     private void OnDisable()
     {
         storyManager.OnDialogueChanged -= HandleDialogueChanged;
@@ -26,7 +26,6 @@ public class DialoguePresenter : MonoBehaviour
     }
     void HandleDialogueChanged(DialogueContext Context)
     {
-        Debug.Log("HandleDialougeChanged");
         player.Play(Context.Text, effect);
     }
     void HandleTypingFinished()

@@ -87,9 +87,7 @@ public class PlayerMovement : MonoBehaviour
                 Animation.SetIsMoving(false);
             }
 
-
-
-
+            
             if (bAddGravity)
             {
                 Velocity.y += Gravity * Time.deltaTime;

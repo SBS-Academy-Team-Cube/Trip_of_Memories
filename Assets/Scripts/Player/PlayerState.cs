@@ -5,7 +5,8 @@ public class PlayerState : MonoBehaviour
     public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
     public enum EAction { None, Holding, Hanging, Pushing };
-    
+
+    public bool IsGrounded = true;
     public bool IntendToMove = false;
     public bool IntendToSprint = false;
     public bool IsInteracting = false;
@@ -15,7 +16,19 @@ public class PlayerState : MonoBehaviour
     public event System.Action<EGait> OnGaitChanged;
     public event System.Action<EStance> OnStanceChanged;
     public event System.Action<EAction> OnActionChanged;
+    [SerializeField] private CharacterController Controller;
 
+    void Awake()
+    {
+        if (Controller == null)
+        {
+            Controller = GetComponent<CharacterController>();
+        }
+    }
+    void Update()
+    {
+        IsGrounded = Controller.isGrounded;
+    }
     public void OnInteractionEnd()
     {
         IsInteracting = false;
@@ -23,22 +36,21 @@ public class PlayerState : MonoBehaviour
 
     public void TryMove(bool bWantToMove)
     {
-        if(IntendToMove != bWantToMove)
+        if (IntendToMove != bWantToMove)
         {
             IntendToMove = bWantToMove;
         }
     }
-
     public void TrySprint(bool bWantToSprint)
     {
-        if(IntendToSprint != bWantToSprint)
+        if (IntendToSprint != bWantToSprint)
         {
             IntendToSprint = bWantToSprint;
         }
     }
     public void SetGait(EGait NewGait)
     {
-        if(NewGait == EGait.Running && !CanRun())
+        if (NewGait == EGait.Running && !CanRun())
         {
             return;
         }

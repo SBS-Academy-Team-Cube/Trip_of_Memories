@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+
 public struct DialogueContext
 {
     public int Index;
     public string Text;
+    public string Speaker;
 }
-
 public class StoryManager : MonoBehaviour
 {
-    [SerializeField] private List<DialogueData> Dialogues;
+    [Header("Story Data")]
+    [SerializeField] private List<DialogueData> StoryDialogues;
     private DialogueData CurrentDialogue = null;
+
+    [Header("Skip Input Action Reference")]
     [SerializeField] private InputActionReference SkipAction;
     [SerializeField] private InputActionReference PlayerJumpAction;
+    [Header("UI Object Reference")]
+    [SerializeField] private GameObject StoryPanel;
     public Action<DialogueContext> OnDialogueChanged;
     public Action<string> OnSkipRequested;
-    public Action OnDialogueEnd;
+    public Action OnStoryEnd;
     public UnityEvent OnMiniGameStart;
-    [SerializeField] private GameObject StoryPanel;
-
     private int Index = 0;
     private bool IsTyping = false;
-    private bool IsPlayed = false;
     void OnEnable()
     {
         SkipAction.action.performed += OnSkip;
@@ -34,23 +37,27 @@ public class StoryManager : MonoBehaviour
     }
     public void ShowStory(int Index)
     {
-        CurrentDialogue = Dialogues[Index];
+        CurrentDialogue = StoryDialogues[Index];
         StoryPanel?.SetActive(true);
-        StartDialogue();
-    }
-    public void StartDialogue()
-    {
-        Index = 0;
-        ShowCurrent();
+        this.Index = 0;
+        SkipAction?.action.Enable();
         PlayerJumpAction?.action.Disable();
+        ShowCurrent();
+    }
+    private void EndStory()
+    {
+        SkipAction?.action.Disable();
+        PlayerJumpAction?.action.Enable();
+        OnStoryEnd?.Invoke();
+        StoryPanel?.SetActive(false);
     }
     void ShowCurrent()
     {
         if (Index >= CurrentDialogue.Dialogues.Count)
         {
+            EndStory();
             return;
         }
-        string text = CurrentDialogue.GetText(Index);
         IsTyping = true;
         OnDialogueChanged?.Invoke(new DialogueContext
         {
@@ -64,7 +71,6 @@ public class StoryManager : MonoBehaviour
     }
     private void OnSkip(InputAction.CallbackContext context)
     {
-        Debug.Log("OnSkip!");
         if (!CurrentDialogue)
         {
             return;
@@ -72,25 +78,9 @@ public class StoryManager : MonoBehaviour
         if (IsTyping)
         {
             OnSkipRequested?.Invoke(CurrentDialogue.GetText(Index));
+            return;
         }
-        else
-        {
-            Index++;
-            if (Index < CurrentDialogue.Dialogues.Count)
-            {
-                ShowCurrent();
-            }
-            else
-            {
-                OnDialogueEnd?.Invoke();
-                PlayerJumpAction?.action.Enable();
-                StoryPanel?.SetActive(false);
-                if (!IsPlayed)
-                {
-                    OnMiniGameStart?.Invoke();
-                    IsPlayed = true;
-                }
-            }
-        }
+        Index++;
+        ShowCurrent();
     }
 }
