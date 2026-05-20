@@ -9,10 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController Controller;
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private PlayerState State;
-    public Transform CameraPivot;
     private Vector2 MoveInput;
     Vector3 Velocity;
-    public Transform CameraTransform;
+    public Transform CameraTransform { get; private set; }
     public float MoveSpeed = 5f;
     public float SprintSpeed;
 
@@ -26,6 +25,11 @@ public class PlayerMovement : MonoBehaviour
     {
         bAddGravity = bUse;
     }
+    public void SetCameraTransform(Transform CameraTransform)
+    {
+        this.CameraTransform = CameraTransform;
+    }
+
     void Update()
     {
         DoMove();

@@ -3,6 +3,11 @@ using UnityEngine;
 public class UIHPController : MonoBehaviour
 {
     [SerializeField] private UIHPShakingEffect[] HPUIs;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip HPSFX;
+    [SerializeField] private float Volume = 0.8f;
+    
     private Health PlayerHP;
     public void Init(Health PlayerHP)
     {
@@ -33,6 +38,10 @@ public class UIHPController : MonoBehaviour
         else
         {
             HPUIs[CurrentRemain].Play();
+            if(AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(HPSFX, Volume);
+            }
         }
     }
 }

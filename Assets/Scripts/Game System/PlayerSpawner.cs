@@ -1,18 +1,14 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using System;
+
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] CharacterPrefabs;
-    [SerializeField] private Camera MainCamera;
-    [SerializeField] private CinemachineCamera CinemachineCamera;
-    [SerializeField] private SpringArm CameraArm;
-    [SerializeField] private CutsceneManager CutScene;
-    [SerializeField] private WorldUIManager WorldUI;
-    [SerializeField] private Transform PlayerCameraPivot;
+    [SerializeField] private CameraManager CameraManager;
+    [SerializeField] private CutsceneManager CutSceneManager;
+    // [SerializeField] private WorldUIManager WorldUI;
     public Action<GameObject> OnPlayerSpawned;
-
-
     [SerializeField] private UIHPController HPUI;
     void Start()
     {
@@ -25,35 +21,31 @@ public class PlayerSpawner : MonoBehaviour
         {
             return;
         }
-        GameObject Player = Instantiate(CharacterPrefabs[Index], transform.position, transform.rotation);
-        OnPlayerSpawned?.Invoke(Player);
-        if (Player.TryGetComponent(out PlayerMovement Move))
-        {
-            PlayerCameraPivot = Move.CameraPivot;
-            Move.CameraTransform = MainCamera.transform;
-            CinemachineCamera.Target.TrackingTarget = Move.CameraPivot;
-            CameraArm.SetTarget(Move.CameraPivot);
+        GameObject PlayerInstance = Instantiate(CharacterPrefabs[Index], transform.position, transform.rotation);
+        OnPlayerSpawned?.Invoke(PlayerInstance);
+        Initialize(PlayerInstance);
 
-            if (CutScene != null)
-            {
-                CutScene.SetPlayerMovement(Move);
-            }
+        if (GameDirector.Instance && GameDirector.Instance.Iris)
+        {
+            GameDirector.Instance.Iris.FadeIn(new Vector3(0.5f, 0.5f, 0.0f));
+        }
+    }
+    public void Initialize(GameObject Player)
+    {
+        if(Player.TryGetComponent(out PlayerMovement Movement))
+        {
+            Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
+            CutSceneManager?.SetPlayerMovement(Movement);
         }
 
+        if(CameraManager != null)
+        {
+            CameraManager.Init(Player);
+        }
 
         if(HPUI != null && Player.TryGetComponent(out Health PlayerHP))
         {
             HPUI.Init(PlayerHP);
-        }
-
-        
-        if (WorldUI != null && Player.TryGetComponent(out PlayerInteraction Interaction))
-        {
-            WorldUI.SetPlayerInteraction(Interaction);
-        }
-        if (GameDirector.Instance && GameDirector.Instance.Iris)
-        {
-            GameDirector.Instance.Iris.FadeIn(new Vector3(0.5f, 0.5f, 0.0f));
         }
     }
 }

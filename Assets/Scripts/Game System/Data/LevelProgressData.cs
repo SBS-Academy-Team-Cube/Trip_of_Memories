@@ -16,6 +16,7 @@ public class LevelProgressData
 
     public LevelProgressData()
     {
+        
     }
 
     public LevelProgressData(string levelId)
