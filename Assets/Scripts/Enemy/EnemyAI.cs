@@ -293,7 +293,7 @@ public class EnemyAI : MonoBehaviour
         ExitState(CurrentState);
         CurrentState = State;
 
-        PlaySound();
+        // PlaySound();
         switch (CurrentState)
         {
             case EState.Idle:

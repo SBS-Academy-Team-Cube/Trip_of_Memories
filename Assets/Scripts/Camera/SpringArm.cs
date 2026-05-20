@@ -12,6 +12,7 @@ public class SpringArm : MonoBehaviour
     private float CurrentRadius;
     public float OriginRadius = 2.0f;
     public float MinRadius = 0.75f;
+    
     public void SetTarget(Transform TargetTransform)
     {
         Target = TargetTransform;

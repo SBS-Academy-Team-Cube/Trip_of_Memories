@@ -9896,8 +9896,6 @@ MonoBehaviour:
   Controller: {fileID: 1428993993155376806}
   Animation: {fileID: 7791356207911647828}
   State: {fileID: 9071798309953751940}
-  CameraPivot: {fileID: 5208764410698934523}
-  CameraTransform: {fileID: 0}
   MoveSpeed: 1.45
   SprintSpeed: 3.5
   RotateSpeed: 18
@@ -9945,10 +9943,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9a1e2671dd14741bd9379572ea1a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerState
+  IsGrounded: 1
   IntendToMove: 0
   IntendToSprint: 0
   IsInteracting: 0
   Gait: 0
+  Controller: {fileID: 1428993993155376806}
+  CameraPivot: {fileID: 5208764410698934523}
 --- !u!114 &1641158200447614933
 MonoBehaviour:
   m_ObjectHideFlags: 0

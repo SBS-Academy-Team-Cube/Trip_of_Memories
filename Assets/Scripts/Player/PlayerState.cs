@@ -17,7 +17,11 @@ public class PlayerState : MonoBehaviour
     public event System.Action<EStance> OnStanceChanged;
     public event System.Action<EAction> OnActionChanged;
     [SerializeField] private CharacterController Controller;
-
+    [SerializeField] private Transform CameraPivot;
+    public Transform GetCameraPivot() 
+    { 
+        return CameraPivot;
+    }
     void Awake()
     {
         if (Controller == null)

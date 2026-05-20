@@ -9,8 +9,11 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private List<AudioClip> BgmList;
 
     [Header("SFX")]
-    [SerializeField] private AudioSource SfxSource;
+    [SerializeField] private AudioSource SFXSource;
     [SerializeField] private AudioClip ButtonClickSFX;
+
+    private float SFXVolumeMultiplier = 1.0f;
+    private float BGMVolumeMultiplier = 1.0f;
 
     protected override void Awake()
     {
@@ -67,7 +70,17 @@ public class AudioManager : Singleton<AudioManager>
         {
             return;
         }
-        SfxSource.PlayOneShot(Clip);
+        SFXSource.volume = SFXVolumeMultiplier;
+        SFXSource.PlayOneShot(Clip);
+    }
+    public void PlaySFX(AudioClip Clip, float VolumeBase)
+    {
+        if (Clip == null || SFXSource == null)
+        {
+            return;
+        }
+        SFXSource.volume = Mathf.Clamp01(VolumeBase * SFXVolumeMultiplier);
+        SFXSource.PlayOneShot(Clip);
     }
     private void PlayButtonClick()
     {

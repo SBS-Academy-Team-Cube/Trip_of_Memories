@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterSelectable : MonoBehaviour
 {
     public int MyIndex;
-    private Animator Animation;
+    private PlayerAnimation Animation;
     private Vector3 OriginalPosition;
     private Vector3 TargetPosition;
     private CharacterSelectController Controller;
@@ -52,9 +52,9 @@ public class CharacterSelectable : MonoBehaviour
     }
     public IEnumerator PlaySelect(Vector3 Position)
     {
-        Animation.SetFloat("Speed", 10.0f);
+        Animation.SetIsMoving(true);
         yield return MoveTo(Position);
-        Animation.SetFloat("Speed", 0.0f);
+        Animation.SetIsMoving(false);
     }
     IEnumerator MoveTo(Vector3 target)
     {

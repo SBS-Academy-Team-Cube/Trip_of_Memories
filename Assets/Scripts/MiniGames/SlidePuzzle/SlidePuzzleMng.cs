@@ -16,13 +16,13 @@ public class SlidePuzzleMng : MonoBehaviour
     {
         board.GameInit();
         PiecesInit();
-        UIMng.GameInit(board);
+        UIMng.GameInit();
     }
     public void GameReset() // game reset trigger
     {
         board.GameInit();
         PiecesInit();
-        UIMng.GameInit(board);
+        UIMng.GameInit();
     }
     public void GameClear() // game end trigger
     {

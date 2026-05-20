@@ -3,10 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 public class UIHPShakingEffect : MonoBehaviour
 {
-     [Header("References")]
+    [Header("References")]
     [SerializeField] private RectTransform Target;
     [SerializeField] private Image TargetImage;
-    [SerializeField] private AudioSource Audio;
     
     [Header("Shake")]
     [SerializeField] private float ShakeDuration = 1.0f;
@@ -33,10 +32,6 @@ public class UIHPShakingEffect : MonoBehaviour
             StopCoroutine(CurrentRoutine);
         }
         CurrentRoutine = StartCoroutine(PlayRoutine());
-        if(Audio != null && Audio.clip != null)
-        {
-            Audio.Play();
-        }
     }
     private IEnumerator PlayRoutine()
     {
