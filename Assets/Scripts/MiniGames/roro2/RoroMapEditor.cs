@@ -1,3 +1,5 @@
+#if UNITY_EDITOR // ºôµå Á¦¿Ü
+
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
@@ -192,3 +194,4 @@ public class RoroMapEditor : Editor
         return false;
     }
 }
+#endif // ºôµå Á¦¿Ü

@@ -9,7 +9,7 @@ public class SlidePuzzlePiece : MonoBehaviour
     public int CurPlaceIndex => curPlaceIndex;
     public SlidePuzzlePieceType PieceType => pieceType;
 
-    private void Start()
+    public void GameInit()
     {
         curPlaceIndex = StartPlaceIndex;
         Debug.Log($"{gameObject.name} => index {curPlaceIndex}");
