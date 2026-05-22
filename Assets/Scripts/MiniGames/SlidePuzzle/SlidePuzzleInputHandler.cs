@@ -49,8 +49,10 @@ public class SlidePuzzleInputHandler : MonoBehaviour
 
         if(board.ClearCheck())
         {
-            //  send Event for GameMng
             Debug.Log("Game Clear");
+            //  send Event for GameMng
+            UIMng.GameClear();
+            
         }
     }
 }
