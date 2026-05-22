@@ -33,6 +33,7 @@ public class SlidePuzzleInputHandler : MonoBehaviour
         //return; // 테스트용
         curPiece = piece[pieceNum - 1];
 
+        int curIndex = curPiece.CurPlaceIndex;
         int EmptyIndex = board.IsMove(curPiece.CurPlaceIndex); // curPiece가 이동해야하는 인덱스
 
         Debug.Log($"empty Index => {EmptyIndex}");
@@ -43,8 +44,10 @@ public class SlidePuzzleInputHandler : MonoBehaviour
         board.SetBoardIndex(EmptyIndex, curPiece.PieceType);// 이동할 위치에 조각 넣고
 
         curPiece.SetPlaceIndex(EmptyIndex);// 조각의 현재 위치 업데이트
-        
+
+        Debug.Log($"piecenum => {pieceNum}     ,     EmptyIndex => {EmptyIndex}");
         UIMng.MovePiece(pieceNum, EmptyIndex);//ui상 위치 실제이동
+        UIMng.MovePiece(9, curIndex);
         board.DebugBoard();
 
         if(board.ClearCheck())

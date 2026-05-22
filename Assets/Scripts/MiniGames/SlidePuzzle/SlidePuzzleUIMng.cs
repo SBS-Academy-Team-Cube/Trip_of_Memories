@@ -51,7 +51,7 @@ public class SlidePuzzleUIMng : MonoBehaviour
 
     private IEnumerator ClearCoroutine()
     {
-        piece_9.SetActive(true);
+        CanvasSetActive(true);
 
         Image image = piece_9.GetComponent<Image>();
         Color color = Color.white;
@@ -67,6 +67,11 @@ public class SlidePuzzleUIMng : MonoBehaviour
             image.color = color;
         }
 
-        canvas.SetActive(false);
+        CanvasSetActive(false);
+    }
+
+    public void CanvasSetActive(bool active)
+    {
+        canvas.SetActive(active);
     }
 }

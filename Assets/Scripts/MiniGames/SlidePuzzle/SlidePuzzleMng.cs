@@ -24,9 +24,9 @@ public class SlidePuzzleMng : MonoBehaviour
         PiecesInit();
         UIMng.GameInit();
     }
-    public void GameClear() // game end trigger
+    public void GameExit() // game exit trigger
     {
-        UIMng.GameClear();
+        UIMng.CanvasSetActive(false);
     }
 
 
