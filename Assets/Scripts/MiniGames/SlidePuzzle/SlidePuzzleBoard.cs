@@ -82,10 +82,16 @@ public class SlidePuzzleBoard : MonoBehaviour
     {
         for(int i = 1; i <= indexCount; ++i)
         {
-            if (board[i - 1] != (SlidePuzzlePieceType)i)
-                break;
+
             if (i == indexCount && board[i - 1] == SlidePuzzlePieceType.Empty)
                 return true;
+
+            if (board[i - 1] != (SlidePuzzlePieceType)i)
+            {
+                Debug.Log($"{i} clear fail");
+                break;
+            }
+
         }
         return false;
     }
