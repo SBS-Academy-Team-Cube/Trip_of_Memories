@@ -31,9 +31,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4532080896514449230}
   - {fileID: 2767663449302911124}
   - {fileID: 8363399883967345684}
+  - {fileID: 4532080896514449230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -214,6 +214,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3981963920924463298}
     m_Modifications:
+    - target: {fileID: 993945921080254333, guid: 2a6605db4240c8a4ab320efac6222560, type: 3}
+      propertyPath: Audio
+      value: 
+      objectReference: {fileID: 6020614775168635737}
     - target: {fileID: 6971118037595571490, guid: 2a6605db4240c8a4ab320efac6222560, type: 3}
       propertyPath: m_Name
       value: Pause Menu Panel
@@ -310,6 +314,11 @@ PrefabInstance:
 --- !u!224 &4532080896514449230 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9000433809549026191, guid: 2a6605db4240c8a4ab320efac6222560, type: 3}
+  m_PrefabInstance: {fileID: 4756603082006478017}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &6020614775168635737 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1265331658498977688, guid: 2a6605db4240c8a4ab320efac6222560, type: 3}
   m_PrefabInstance: {fileID: 4756603082006478017}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8128633592615889968

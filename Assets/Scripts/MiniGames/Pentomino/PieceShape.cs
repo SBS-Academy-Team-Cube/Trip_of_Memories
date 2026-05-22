@@ -3,5 +3,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Pentomino/Shape")]
 public class PieceShape : ScriptableObject
 {
-    public BoardPos[] shape;  // ¡ç ¿©±â´Ù ÁÂÇ¥ ³ÖÀ½
+    public BoardPos[] shape;  // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
 }

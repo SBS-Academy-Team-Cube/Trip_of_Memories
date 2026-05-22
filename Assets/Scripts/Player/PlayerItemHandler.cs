@@ -69,10 +69,15 @@ public class PlayerItemHandler : MonoBehaviour
         Vector3 positionDelta = HoldTransform.position - grip.position;
         itemRoot.position += positionDelta;
     }
-
     public void DropItem()
     {
+        if (HoldingObject == null)
+        {
+            return;
+        }
         HoldingObject.transform.SetParent(null, true);
+        float YRotation = HoldingObject.transform.eulerAngles.y;
+        HoldingObject.transform.rotation = Quaternion.Euler(0f, YRotation, 0f);
         Animation.EnableHoldingLayer(false);
         Animation.ClearHandIK();
 
@@ -81,14 +86,14 @@ public class PlayerItemHandler : MonoBehaviour
         {
             Collider.enabled = true;
         }
-        if (HoldingObject.TryGetComponent<Rigidbody>(out var RB))
-        {
-            RB.isKinematic = false;
-            RB.useGravity = true;
-        }
         if (HoldingObject.TryGetComponent(out PickupItem Pickup))
         {
             Pickup.enabled = true;
+        }
+        if (HoldingObject.TryGetComponent<Rigidbody>(out var RB))
+        {
+            RB.useGravity = true;
+            RB.isKinematic = false;
         }
         HoldingObject = null;
         bIsHoldingItem = false;

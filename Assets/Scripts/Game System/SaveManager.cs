@@ -6,7 +6,7 @@ public class SaveManager : Singleton<SaveManager>
     private string Path;
     public SaveData Data { get; private set; }
     public LevelProgressData CurrentLevelProgress { get; private set; }
-
+    public event System.Action<int> OnDisplayedMemoryRecoveryChanged;
     protected override void Awake()
     {
         base.Awake();
@@ -55,17 +55,19 @@ public class SaveManager : Singleton<SaveManager>
     {
         CurrentLevelProgress = new LevelProgressData(levelId);
     }
-
     public void ClearCurrentLevelProgress()
     {
         CurrentLevelProgress = null;
     }
-
     public bool HasActiveLevelProgress()
     {
         return CurrentLevelProgress != null;
     }
 
+    private void NotifyDisplayedMemoryRecoveryChanged()
+    {
+        OnDisplayedMemoryRecoveryChanged?.Invoke(GetDisplayedMemoryRecoveryPercent());
+    }
     public int GetDisplayedMemoryRecoveryPercent()
     {
         EnsureData();
@@ -87,9 +89,9 @@ public class SaveManager : Singleton<SaveManager>
 
         CurrentLevelProgress.AddCollectedMemoryItem(memoryItemId);
         CurrentLevelProgress.AddMemoryRecovery(memoryRecoveryAmount);
+        NotifyDisplayedMemoryRecoveryChanged();
         return true;
     }
-
     public bool TryClearMiniGame(string miniGameId, int memoryRecoveryAmount)
     {
         EnsureLevelProgress();
@@ -98,9 +100,9 @@ public class SaveManager : Singleton<SaveManager>
         {
             return false;
         }
-
         CurrentLevelProgress.AddClearedMiniGame(miniGameId);
         CurrentLevelProgress.AddMemoryRecovery(memoryRecoveryAmount);
+        NotifyDisplayedMemoryRecoveryChanged();
         return true;
     }
 
@@ -115,13 +117,13 @@ public class SaveManager : Singleton<SaveManager>
 
         CurrentLevelProgress.AddCompletedInteraction(interactionId);
         CurrentLevelProgress.AddMemoryRecovery(memoryRecoveryAmount);
+        NotifyDisplayedMemoryRecoveryChanged();
         return true;
     }
-
-    public void SetCheckpoint(string sceneName, string checkpointId)
+    public void SetCheckpoint(SceneId SceneID, string checkpointId)
     {
         EnsureLevelProgress();
-        CurrentLevelProgress.SetCheckpoint(sceneName, checkpointId);
+        CurrentLevelProgress.SetCheckpoint(SceneID, checkpointId);
     }
 
     public void CompleteCurrentLevel()
@@ -194,7 +196,6 @@ public class SaveManager : Singleton<SaveManager>
     private void EnsureLevelProgress()
     {
         EnsureData();
-
         if (CurrentLevelProgress == null)
         {
             Debug.LogWarning("No active level progress. Creating an unnamed level progress session.");

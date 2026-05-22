@@ -6,35 +6,25 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] Vector3 LocalOffset;
     [SerializeField] float Duration = 1.0f;
-
-    public UnityEvent OnMoveStart;
-    public UnityEvent OnMoveEnd;
-
-    private Vector3 ClosedPosition;
-    private Vector3 OpenPosition;
+    private Vector3 StartPosition;
+    private Vector3 EndPosition;
+    private Vector3 TargetPosition;
     private Coroutine CurrentMoveRoutine;
 
     private void Awake()
     {
-        ClosedPosition = transform.localPosition;
-        OpenPosition = ClosedPosition + LocalOffset;
+        StartPosition = transform.localPosition;
+        EndPosition = StartPosition + LocalOffset;
+        TargetPosition = EndPosition;
     }
-    public void Open()
-    {
-        StartMove(OpenPosition);
-    }
-    public void Close()
-    {
-        StartMove(ClosedPosition);
-    }
-    private void StartMove(Vector3 Target)
+    public void Move()
     {
         if (CurrentMoveRoutine != null)
         {
             StopCoroutine(CurrentMoveRoutine);
         }
-        CurrentMoveRoutine = StartCoroutine(MoveRoutine(Target));
-        OnMoveStart?.Invoke();
+        CurrentMoveRoutine = StartCoroutine(MoveRoutine(TargetPosition));
+        TargetPosition = TargetPosition == EndPosition ? StartPosition : EndPosition;
     }
     private IEnumerator MoveRoutine(Vector3 Target)
     {
@@ -50,6 +40,5 @@ public class Mover : MonoBehaviour
             yield return null;
         }
         transform.localPosition = Target;
-        OnMoveEnd?.Invoke();
     }
 }

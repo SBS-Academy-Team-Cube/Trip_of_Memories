@@ -7,12 +7,33 @@ using UnityEngine.UI;
 public class MemoryLiquidFill : MonoBehaviour
 {
     private static readonly int FillAmountId = Shader.PropertyToID("_FillAmount");
-
     [SerializeField] private Image TargetImage;
     [SerializeField] private float Duration = 1.0f;
-    public void UpdateFillAmount(float Amount)
+
+    private void OnEnable()
     {
-        StartCoroutine(UpdateRoutine(Amount));
+        if (SaveManager.Instance)
+        {
+            SaveManager.Instance.OnDisplayedMemoryRecoveryChanged += UpdateFillAmount;
+        }
+    }
+    private void OnDisable()
+    {
+        if (SaveManager.Instance)
+        {
+            SaveManager.Instance.OnDisplayedMemoryRecoveryChanged -= UpdateFillAmount;
+        }
+    }
+    private void Start()
+    {
+        if (SaveManager.Instance)
+        {
+            UpdateFillAmount(SaveManager.Instance.GetDisplayedMemoryRecoveryPercent());
+        }
+    }
+    public void UpdateFillAmount(int Amount)
+    {
+        StartCoroutine(UpdateRoutine(Amount / 100.0f));
     }
     private IEnumerator UpdateRoutine(float Target)
     {

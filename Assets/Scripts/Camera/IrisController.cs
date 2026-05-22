@@ -14,26 +14,26 @@ public class IrisController : MonoBehaviour
     {
         Mat = Instantiate(Image.material);
         Image.material = Mat;
+        Mat.SetVector("_Center", new Vector2(0.5f, 0.5f));
     }
-    public void FadeIn(Vector3 ViewPortPosition)
+    public void FadeIn()
     {
         if (Mat)
         {
             Mat.SetFloat("_Radius", 0.0f);
-            StartTransition(ViewPortPosition, true);
+            StartTransition(true);
         }
     }
-    public void FadeOut(Vector3 ViewPortPosition)
+    public void FadeOut()
     {
         if (Mat)
         {
             Mat.SetFloat("_Radius", 1.2f);
-            StartTransition(ViewPortPosition, false);
+            StartTransition(false);
         }
     }
-    public void StartTransition(Vector3 ViewPortPosition, bool IsFadeIn)
+    public void StartTransition(bool IsFadeIn)
     {
-        Mat.SetVector("_Center", new Vector2(ViewPortPosition.x, ViewPortPosition.y));
         StartCoroutine(TransitionRoutine(IsFadeIn));
     }
     private IEnumerator TransitionRoutine(bool IsFadeIn)
@@ -52,7 +52,7 @@ public class IrisController : MonoBehaviour
         Mat.SetFloat("_Radius", EndRadius);
         if (!IsFadeIn)
         {
-            Mat.SetFloat("_Smootheness", 0.0f);
+            Mat.SetFloat("_Smoothness", 0.0f);
         }
         OnFadeInTransition?.Invoke(IsFadeIn);
     }

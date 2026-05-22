@@ -1,17 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
-using System.Collections.Generic;
-
 
 public class LevelManager : MonoBehaviour
 {
-    public List<UnityEvent> LevelEvents;
-    private int DoorConditionIndex = 0;
-    [SerializeField] private int RequiredConditionCounts = 2;
+    public string LevelId;
     [SerializeField] private SceneId NextSceneId;
-
-    [SerializeField] private IrisController TransitionController;
-
+    [SerializeField] private Portal NextPortal;
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
     void OnEnable()
@@ -20,12 +13,24 @@ public class LevelManager : MonoBehaviour
         {
             GameDirector.Instance.Iris.OnFadeInTransition += OnFadeOutEnd;
         }
+        if (NextPortal != null)
+        {
+            NextPortal.OnTriggered += CallTransition;
+        }
+        if (SaveManager.Instance && SaveManager.Instance.CurrentLevelProgress == null)
+        {
+            SaveManager.Instance.BeginLevel(LevelId);
+        }
     }
-    void Osable()
+    void OnDisable()
     {
         if (GameDirector.Instance && GameDirector.Instance.Iris)
         {
             GameDirector.Instance.Iris.OnFadeInTransition -= OnFadeOutEnd;
+        }
+        if (NextPortal != null)
+        {
+            NextPortal.OnTriggered -= CallTransition;
         }
     }
     private void Start()
@@ -51,19 +56,11 @@ public class LevelManager : MonoBehaviour
             GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
         }
     }
-    public void OnConditionMet()
-    {
-        DoorConditionIndex++;
-        if (DoorConditionIndex == RequiredConditionCounts)
-        {
-            LevelEvents[0]?.Invoke();
-        }
-    }
-    public void CallTransition(Vector3 ViewPortPosition)
+    public void CallTransition()
     {
         if (GameDirector.Instance && GameDirector.Instance.Iris)
         {
-            GameDirector.Instance.Iris.FadeOut(ViewPortPosition);
+            GameDirector.Instance.Iris.FadeOut();
         }
     }
 }

@@ -7,7 +7,6 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject[] CharacterPrefabs;
     [SerializeField] private CameraManager CameraManager;
     [SerializeField] private CutsceneManager CutSceneManager;
-    // [SerializeField] private WorldUIManager WorldUI;
     public Action<GameObject> OnPlayerSpawned;
     [SerializeField] private UIHPController HPUI;
     void Start()
@@ -27,23 +26,23 @@ public class PlayerSpawner : MonoBehaviour
 
         if (GameDirector.Instance && GameDirector.Instance.Iris)
         {
-            GameDirector.Instance.Iris.FadeIn(new Vector3(0.5f, 0.5f, 0.0f));
+            GameDirector.Instance.Iris.FadeIn();
         }
     }
     public void Initialize(GameObject Player)
     {
-        if(Player.TryGetComponent(out PlayerMovement Movement))
+        if (Player.TryGetComponent(out PlayerMovement Movement))
         {
             Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
             CutSceneManager?.SetPlayerMovement(Movement);
         }
 
-        if(CameraManager != null)
+        if (CameraManager != null)
         {
             CameraManager.Init(Player);
         }
 
-        if(HPUI != null && Player.TryGetComponent(out Health PlayerHP))
+        if (HPUI != null && Player.TryGetComponent(out Health PlayerHP))
         {
             HPUI.Init(PlayerHP);
         }

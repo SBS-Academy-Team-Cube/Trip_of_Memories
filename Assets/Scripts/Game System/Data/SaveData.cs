@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-[System.Serializable]
+[Serializable]
 public class SaveData
 {
     public int Version = 1;
@@ -57,22 +57,18 @@ public class SaveData
     {
         return ContainsId(CollectedMemoryItemIds, memoryItemId);
     }
-
     public bool HasClearedMiniGame(string miniGameId)
     {
         return ContainsId(ClearedMiniGameIds, miniGameId);
     }
-
     public bool HasCompletedInteraction(string interactionId)
     {
         return ContainsId(CompletedInteractionIds, interactionId);
     }
-
     public bool AddClearedLevel(string levelId)
     {
         return AddUniqueId(ClearedLevelIds, levelId);
     }
-
     public bool AddCollectedMemoryItem(string memoryItemId)
     {
         return AddUniqueId(CollectedMemoryItemIds, memoryItemId);
@@ -87,7 +83,6 @@ public class SaveData
     {
         return AddUniqueId(CompletedInteractionIds, interactionId);
     }
-
     public void AddMemoryRecovery(int amount)
     {
         MemoryRecoveryPercent = ClampPercent(MemoryRecoveryPercent + Math.Max(0, amount));

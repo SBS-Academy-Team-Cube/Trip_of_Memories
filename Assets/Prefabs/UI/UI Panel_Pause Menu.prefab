@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &904271569279419217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -960,6 +960,7 @@ MonoBehaviour:
   PencilImage: {fileID: 7929330095873215372}
   UnderlineRect: {fileID: 2500882277858191826}
   PencilRect: {fileID: 6278802820838191176}
+  Audio: {fileID: 0}
   EndPosX: 170
   Duration: 0.25
 --- !u!82 &1265331658498977688
@@ -1070,6 +1071,7 @@ GameObject:
   - component: {fileID: 9000433809549026191}
   - component: {fileID: 1814793471895387614}
   - component: {fileID: 7680879532206454907}
+  - component: {fileID: 8468934356110930467}
   m_Layer: 5
   m_Name: UI Panel_Pause Menu
   m_TagString: Untagged
@@ -1135,3 +1137,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8468934356110930467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6971118037595571490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7dd86abc9b9c284394470d896bd21e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+  BackgroundImg: {fileID: 7680879532206454907}
+  PauseMenuUI: {fileID: 3278136267565556909}
+  ContinueBtn: {fileID: 6332896908837663759}

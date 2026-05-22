@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Events;
 
 public struct DialogueContext
 {
@@ -24,7 +23,6 @@ public class StoryManager : MonoBehaviour
     public Action<DialogueContext> OnDialogueChanged;
     public Action<string> OnSkipRequested;
     public Action OnStoryEnd;
-    public UnityEvent OnMiniGameStart;
     private int Index = 0;
     private bool IsTyping = false;
     void OnEnable()

@@ -10,18 +10,21 @@ public class UnderlineEffect : MonoBehaviour
     [SerializeField] private RectTransform UnderlineRect;
     [SerializeField] private RectTransform PencilRect;
     [SerializeField] private AudioSource Audio;
-
     private Coroutine PlayingEffect = null;
     public float EndPosX = 170.0f;
     public float Duration = 1.0f;
 
+    private void Awake()
+    {
+        Audio.ignoreListenerPause = true;
+    }
     public void Play(float TargetPosY)
     {
         UnderlineRect.anchoredPosition = new Vector2(UnderlineRect.anchoredPosition.x, TargetPosY);
         UnderlineImage.enabled = true;
         PencilImage.enabled = true;
         PlayingEffect = StartCoroutine(Effect());
-        if(Audio != null && Audio.clip != null)
+        if (Audio != null && Audio.clip != null)
         {
             Audio.Play();
         }
@@ -42,7 +45,7 @@ public class UnderlineEffect : MonoBehaviour
         float Elapsed = 0.0f;
         while (Elapsed <= Duration)
         {
-            Elapsed += Time.deltaTime;
+            Elapsed += Time.unscaledDeltaTime;
             float t = Elapsed / Duration;
             float eased = t * t * (3f - 2f * t);
             SetProgress(eased);

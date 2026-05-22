@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-[System.Serializable]
+[Serializable]
 public class LevelProgressData
 {
     public string LevelId;
@@ -16,7 +16,7 @@ public class LevelProgressData
 
     public LevelProgressData()
     {
-        
+
     }
 
     public LevelProgressData(string levelId)
@@ -41,13 +41,12 @@ public class LevelProgressData
         {
             CompletedInteractionIds = new List<string>();
         }
-
         SessionMemoryRecoveryPercent = Math.Max(0, SessionMemoryRecoveryPercent);
     }
 
     public bool HasCheckpoint()
     {
-        return LastCheckpoint != null && LastCheckpoint.IsValid();
+        return LastCheckpoint != null;
     }
 
     public bool HasCollectedMemoryItem(string memoryItemId)
@@ -59,12 +58,10 @@ public class LevelProgressData
     {
         return ContainsId(ClearedMiniGameIds, miniGameId);
     }
-
     public bool HasCompletedInteraction(string interactionId)
     {
         return ContainsId(CompletedInteractionIds, interactionId);
     }
-
     public bool AddCollectedMemoryItem(string memoryItemId)
     {
         return AddUniqueId(CollectedMemoryItemIds, memoryItemId);
@@ -85,9 +82,9 @@ public class LevelProgressData
         SessionMemoryRecoveryPercent += Math.Max(0, amount);
     }
 
-    public void SetCheckpoint(string sceneName, string checkpointId)
+    public void SetCheckpoint(SceneId SceneID, string checkpointId)
     {
-        LastCheckpoint = new CheckpointData(sceneName, checkpointId);
+        LastCheckpoint = new CheckpointData(SceneID, checkpointId);
     }
 
     private static bool ContainsId(List<string> ids, string id)
@@ -107,24 +104,17 @@ public class LevelProgressData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class CheckpointData
 {
-    public string SceneName;
-    public string CheckpointId;
-
+    public SceneId SceneID;
+    public string CheckpointID;
     public CheckpointData()
     {
     }
-
-    public CheckpointData(string sceneName, string checkpointId)
+    public CheckpointData(SceneId SceneID, string CheckpointID)
     {
-        SceneName = sceneName;
-        CheckpointId = checkpointId;
-    }
-
-    public bool IsValid()
-    {
-        return !string.IsNullOrWhiteSpace(SceneName) && !string.IsNullOrWhiteSpace(CheckpointId);
+        this.SceneID = SceneID;
+        this.CheckpointID = CheckpointID;
     }
 }

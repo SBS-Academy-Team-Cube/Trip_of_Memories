@@ -17,7 +17,10 @@ public class GameDirector : Singleton<GameDirector>
     public GameState CurrentState { get; private set; } = GameState.None;
     public Action<GameState> OnGameStateChanged;
     public IrisController Iris;
-    public InputActionReference SlowModeAction;
+    [SerializeField] private InputActionReference SlowModeAction;
+    [SerializeField] private InputActionReference PauseAction;
+    private bool bPaused = false;
+    public event Action<bool> OnPaused;
     private bool bSlowMode;
     protected override void Awake()
     {
@@ -31,7 +34,29 @@ public class GameDirector : Singleton<GameDirector>
             SlowModeAction.action.performed += SlowMode;
             SlowModeAction.action.Enable();
         }
+        if (PauseAction)
+        {
+            PauseAction.action.performed += PauseGame;
+            PauseAction.action.Enable();
+        }
     }
+    private void PauseGame(InputAction.CallbackContext Context)
+    {
+        bPaused = !bPaused;
+        Time.timeScale = bPaused ? 0.0f : 1.0f;
+        OnPaused?.Invoke(bPaused);
+    }
+    public void ContinueGame()
+    {
+        if (!bPaused)
+        {
+            return;
+        }
+        bPaused = false;
+        Time.timeScale = 1.0f;
+        OnPaused?.Invoke(bPaused);
+    }
+
     private void SlowMode(InputAction.CallbackContext Context)
     {
         bSlowMode = !bSlowMode;
@@ -44,6 +69,11 @@ public class GameDirector : Singleton<GameDirector>
         {
             SlowModeAction.action.performed -= SlowMode;
             SlowModeAction.action.Disable();
+        }
+        if (PauseAction)
+        {
+            PauseAction.action.performed -= PauseGame;
+            PauseAction.action.Disable();
         }
     }
     public void LoadScene(SceneId ID)
@@ -68,7 +98,6 @@ public class GameDirector : Singleton<GameDirector>
             ShowMouseCursor(true);
             return;
         }
-
         CurrentSceneID = NextSceneID;
         NextSceneID = SceneId.NULL;
 
@@ -86,7 +115,7 @@ public class GameDirector : Singleton<GameDirector>
         CurrentState = NewState;
         OnGameStateChanged?.Invoke(CurrentState);
     }
-    private void ShowMouseCursor(bool show)
+    public void ShowMouseCursor(bool show)
     {
         Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = show;

@@ -6,10 +6,11 @@ public class PentominoGameManager : MonoBehaviour
     [SerializeField] private PentominoBoard board;
     [SerializeField] private PentominoPiece[] pieces;
 
+    private bool IsTriggered = false;
     private void OnEnable()
     {
         EventBus.PentominoClear += GameClear;
-        GameStart();// trigger
+        // GameStart();// trigger
     }
     private void OnDisable()
     {
@@ -27,13 +28,25 @@ public class PentominoGameManager : MonoBehaviour
     {
         board.Init();
         inputHandler.Init();
-        foreach(var piece in pieces)
+        foreach (var piece in pieces)
         {
             piece.Init();
         }
     }
-    public void GameClear()//
+    void OnTriggerEnter(Collider Other)
     {
-        Debug.Log("Game Clear");
+        if (IsTriggered)
+        {
+            return;
+        }
+        if (Other.CompareTag("Player"))
+        {
+            IsTriggered = true;
+            GameStart();
+        }
+    }
+    public void GameClear()
+    {
+
     }
 }
