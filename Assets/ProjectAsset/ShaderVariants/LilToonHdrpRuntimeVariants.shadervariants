@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LilToonHdrpRuntimeVariants
+  m_Shaders:
+  - first: {fileID: 4800000, guid: efa77a80ca0344749b4f19fdd5891cbe, type: 3}
+    second:
+      variants:
+      - keywords: PROBE_VOLUMES_L2 SCREEN_SPACE_SHADOWS_ON USE_FPTL_LIGHTLIST
+        passType: 13
+      - keywords: PROBE_VOLUMES_L2 USE_FPTL_LIGHTLIST
+        passType: 13
+  - first: {fileID: 4800000, guid: 3c79b10c7e0b2784aaa4c2f8dd17d55e, type: 3}
+    second:
+      variants:
+      - keywords: PROBE_VOLUMES_L2 SCREEN_SPACE_SHADOWS_ON USE_CLUSTERED_LIGHTLIST
+        passType: 13
+      - keywords: PROBE_VOLUMES_L2 USE_CLUSTERED_LIGHTLIST
+        passType: 13
+  - first: {fileID: 4800000, guid: df12117ecd77c31469c224178886498e, type: 3}
+    second:
+      variants:
+      - keywords: PROBE_VOLUMES_L2 SCREEN_SPACE_SHADOWS_ON USE_FPTL_LIGHTLIST
+        passType: 13

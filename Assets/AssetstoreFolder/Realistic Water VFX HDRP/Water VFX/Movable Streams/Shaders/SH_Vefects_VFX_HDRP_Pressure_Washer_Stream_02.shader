@@ -6762,6 +6762,7 @@ Shader "Vefects/SH_Vefects_VFX_HDRP_Pressure_Washer_Stream_02"
             #pragma shader_feature_local_fragment _ _ENABLE_FOG_ON_TRANSPARENT
 
 			#define SHADERPASS SHADERPASS_FULL_SCREEN_DEBUG
+			float _BlendMode;
 
 			#define ATTRIBUTES_NEED_NORMAL
 			#define ATTRIBUTES_NEED_TANGENT

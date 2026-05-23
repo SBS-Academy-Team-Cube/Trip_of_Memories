@@ -398,7 +398,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				builtinData.opacity = surfaceDescription.Alpha;
 
 				#if defined(DEBUG_DISPLAY)
-					builtinData.renderingLayers = GetMeshRenderingLightLayer();
+					builtinData.renderingLayers = GetMeshRenderingLayerMask();
 				#endif
 
                 #ifdef _ALPHATEST_ON
@@ -820,7 +820,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				builtinData.opacity = surfaceDescription.Alpha;
 
 				#if defined(DEBUG_DISPLAY)
-					builtinData.renderingLayers = GetMeshRenderingLightLayer();
+					builtinData.renderingLayers = GetMeshRenderingLayerMask();
 				#endif
 
 				#ifdef _ALPHATEST_ON
@@ -1181,7 +1181,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				ZERO_INITIALIZE( BuiltinData, builtinData );
 				builtinData.opacity = surfaceDescription.Alpha;
 				#if defined(DEBUG_DISPLAY)
-					builtinData.renderingLayers = GetMeshRenderingLightLayer();
+					builtinData.renderingLayers = GetMeshRenderingLayerMask();
 				#endif
 
 				#ifdef _ALPHATEST_ON
@@ -1875,7 +1875,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				builtinData.opacity =  surfaceDescription.Alpha;
 
 				#if defined(DEBUG_DISPLAY)
-					builtinData.renderingLayers = GetMeshRenderingLightLayer();
+					builtinData.renderingLayers = GetMeshRenderingLayerMask();
 				#endif
 
                 #ifdef _ALPHATEST_ON
@@ -2232,7 +2232,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				builtinData.opacity =  surfaceDescription.Alpha;
 
 				#if defined(DEBUG_DISPLAY)
-                    builtinData.renderingLayers = GetMeshRenderingLightLayer();
+                    builtinData.renderingLayers = GetMeshRenderingLayerMask();
                 #endif
 
 
@@ -2525,7 +2525,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 					EncodeIntoDecalPrepassBuffer(decalPrepassData, outDecalBuffer);
 
 					#if ASE_SRP_VERSION >= 120107
-					outDecalBuffer.w = (GetMeshRenderingLightLayer() & 0x000000FF) / 255.0;
+					outDecalBuffer.w = (GetMeshRenderingLayerMask() & 0x000000FF) / 255.0;
 					#endif
 				#endif
 
@@ -2705,7 +2705,7 @@ Shader "/Vefects/SH_Vefects_Extra_Billboard_01"
 				builtinData.opacity = surfaceDescription.Alpha;
 
 				#if defined(DEBUG_DISPLAY)
-					builtinData.renderingLayers = GetMeshRenderingLightLayer();
+					builtinData.renderingLayers = GetMeshRenderingLayerMask();
 				#endif
 
                 #ifdef _ALPHATEST_ON

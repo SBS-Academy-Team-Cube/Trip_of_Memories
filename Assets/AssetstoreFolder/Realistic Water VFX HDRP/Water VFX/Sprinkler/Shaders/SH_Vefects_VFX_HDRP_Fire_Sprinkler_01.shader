@@ -7097,6 +7097,7 @@ Shader "Vefects/SH_Vefects_VFX_HDRP_Fire_Sprinkler_01"
             #pragma shader_feature_local_fragment _ _ENABLE_FOG_ON_TRANSPARENT
 
 			#define SHADERPASS SHADERPASS_FULL_SCREEN_DEBUG
+			float _BlendMode;
 
 			#define ATTRIBUTES_NEED_NORMAL
 			#define ATTRIBUTES_NEED_TANGENT
