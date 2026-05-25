@@ -1,9 +1,6 @@
 #define LIL_HDRP
 
 #define LIGHTLOOP_DISABLE_TILE_AND_CLUSTER
-#if !defined(SHADOW_LOW) && !defined(SHADOW_MEDIUM) && !defined(SHADOW_HIGH)
-    #define SHADOW_LOW
-#endif
 #if defined(SHADOW_LOW)
     #define PUNCTUAL_SHADOW_LOW
     #define DIRECTIONAL_SHADOW_LOW
@@ -13,9 +10,13 @@
 #elif defined(SHADOW_HIGH)
     #define PUNCTUAL_SHADOW_HIGH
     #define DIRECTIONAL_SHADOW_HIGH
+#elif !defined(PUNCTUAL_SHADOW_LOW) && !defined(PUNCTUAL_SHADOW_MEDIUM) && !defined(PUNCTUAL_SHADOW_HIGH) && !defined(DIRECTIONAL_SHADOW_LOW) && !defined(DIRECTIONAL_SHADOW_MEDIUM) && !defined(DIRECTIONAL_SHADOW_HIGH)
+    #define PUNCTUAL_SHADOW_LOW
+    #define DIRECTIONAL_SHADOW_LOW
 #endif
-//#pragma multi_compile_fragment AREA_SHADOW_MEDIUM AREA_SHADOW_HIGH
-#define AREA_SHADOW_MEDIUM
+#if !defined(AREA_SHADOW_MEDIUM) && !defined(AREA_SHADOW_HIGH)
+    #define AREA_SHADOW_MEDIUM
+#endif
 
 #if defined(LIL_PASS_SHADOWCASTER) && ((LIL_SRP_VERSION_MAJOR < 5) || (LIL_SRP_VERSION_MAJOR <= 5) && (LIL_SRP_VERSION_MINOR <= 10))
     #define USE_LEGACY_UNITY_MATRIX_VARIABLES

@@ -162,7 +162,7 @@
 #endif
 
 // Conbine
-#if defined(SHADOWS_SCREEN) || defined(_MAIN_LIGHT_SHADOWS) || defined(_MAIN_LIGHT_SHADOWS_CASCADE) || defined(_MAIN_LIGHT_SHADOWS_SCREEN) || defined(SHADOW_LOW) || defined(SHADOW_MEDIUM) || defined(SHADOW_HIGH)
+#if defined(SHADOWS_SCREEN) || defined(_MAIN_LIGHT_SHADOWS) || defined(_MAIN_LIGHT_SHADOWS_CASCADE) || defined(_MAIN_LIGHT_SHADOWS_SCREEN) || defined(SHADOW_LOW) || defined(SHADOW_MEDIUM) || defined(SHADOW_HIGH) || defined(PUNCTUAL_SHADOW_LOW) || defined(PUNCTUAL_SHADOW_MEDIUM) || defined(PUNCTUAL_SHADOW_HIGH) || defined(DIRECTIONAL_SHADOW_LOW) || defined(DIRECTIONAL_SHADOW_MEDIUM) || defined(DIRECTIONAL_SHADOW_HIGH) || defined(AREA_SHADOW_MEDIUM) || defined(AREA_SHADOW_HIGH)
     #define LIL_USE_SHADOW
 #endif
 #if defined(LIL_USE_LIGHTMAP) || defined(LIL_USE_DYNAMICLIGHTMAP) || defined(LIL_USE_DIRLIGHTMAP) || defined(LIL_LIGHTMODE_SHADOWMASK)

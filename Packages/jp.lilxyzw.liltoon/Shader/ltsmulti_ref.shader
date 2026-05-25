@@ -688,11 +688,13 @@ Shader "Hidden/lilToonMultiRefraction"
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
             #pragma multi_compile _ DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fragment _ SHADOWS_SHADOWMASK
-            #pragma multi_compile_fragment PROBE_VOLUMES_OFF PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-            #pragma multi_compile_fragment SCREEN_SPACE_SHADOWS_OFF SCREEN_SPACE_SHADOWS_ON
-            #pragma multi_compile_fragment DECALS_OFF DECALS_3RT DECALS_4RT
+            #pragma multi_compile_fragment _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
+            #pragma multi_compile_fragment _ SCREEN_SPACE_SHADOWS_OFF SCREEN_SPACE_SHADOWS_ON
+            #pragma multi_compile_fragment _ DECALS_OFF DECALS_3RT DECALS_4RT
             #pragma multi_compile_fragment _ DECAL_SURFACE_GRADIENT
-            #pragma multi_compile_fragment SHADOW_LOW SHADOW_MEDIUM SHADOW_HIGH SHADOW_VERY_HIGH
+            #pragma multi_compile_fragment PUNCTUAL_SHADOW_LOW PUNCTUAL_SHADOW_MEDIUM PUNCTUAL_SHADOW_HIGH
+            #pragma multi_compile_fragment DIRECTIONAL_SHADOW_LOW DIRECTIONAL_SHADOW_MEDIUM DIRECTIONAL_SHADOW_HIGH
+            #pragma multi_compile_fragment AREA_SHADOW_MEDIUM AREA_SHADOW_HIGH
             #pragma multi_compile_fragment USE_FPTL_LIGHTLIST USE_CLUSTERED_LIGHTLIST
             #pragma multi_compile_instancing
             #pragma instancing_options renderinglayer
@@ -869,9 +871,12 @@ Shader "Hidden/lilToonMultiRefraction"
             #pragma fragment frag
             #pragma multi_compile _ WRITE_NORMAL_BUFFER
             #pragma multi_compile_fragment _ WRITE_MSAA_DEPTH
-            #pragma multi_compile _ WRITE_DECAL_BUFFER
+            #pragma multi_compile _ WRITE_DECAL_BUFFER_AND_RENDERING_LAYER
             #pragma multi_compile_instancing
             #pragma instancing_options renderinglayer
+            #ifdef WRITE_DECAL_BUFFER_AND_RENDERING_LAYER
+                #define WRITE_DECAL_BUFFER
+            #endif
             #define SHADERPASS SHADERPASS_MOTION_VECTORS
             #define LIL_PASS_MOTIONVECTORS
 
