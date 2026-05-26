@@ -8,34 +8,49 @@ public class PathPuzzleMng : MonoBehaviour
     [SerializeField] private int redAnswer = 0;
 
     [SerializeField] private PathInputHandler inputHandler;
+    [SerializeField] private PathPuzzleUIMng PathPuzzleUIMng;
 
-    private void Awake()
+
+    public void GameStart()
     {
         if (inputHandler == null)
-            Debug.LogError("inputhandler is null");
+            Debug.LogError("inputMng is null");
+        if (PathPuzzleUIMng == null)
+            Debug.LogError("UIMng is null");
+
+        inputHandler.GameStart();
+        PathPuzzleUIMng.GameStart();
     }
+    public void GameReset()
+    {
+        PathPuzzleUIMng.GameReset();
+    }
+
+    private void Clear()
+    {
+        PathPuzzleUIMng.GameStop();
+        Debug.Log("Clear");
+    }
+
+
     private void OnEnable()
     {
-        inputHandler.ClearCheckEvent.AddListener(ClearCheck);
+        PathPuzzleUIMng.ClearEvent.AddListener(ClearCheck);
     }
     private void OnDisable()
     {
-        inputHandler.ClearCheckEvent.RemoveListener(ClearCheck);
+        PathPuzzleUIMng.ClearEvent.RemoveListener(ClearCheck);
     }
 
     private void ClearCheck()
     {
-        if(greenAnswer == (inputHandler.GreenRollCount % 4) &&
-            blueAnswer == (inputHandler.BlueRollCount % 4) &&
-            redAnswer == (inputHandler.RedRollCount % 4))
+        if(greenAnswer == (PathPuzzleUIMng.GreenRollCount % 4) &&
+            blueAnswer == (PathPuzzleUIMng.BlueRollCount % 4) &&
+            redAnswer == (PathPuzzleUIMng.RedRollCount % 4))
         {
             Clear();
         }
     }
 
-    private void Clear()
-    {
-        Debug.Log("Clear");
-    }
 
 }

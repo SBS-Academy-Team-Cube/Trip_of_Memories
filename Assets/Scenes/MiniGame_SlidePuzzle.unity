@@ -436,6 +436,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fea7cdc22beab4abba654ec83abb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathPiece
+--- !u!1 &152124355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 152124356}
+  - component: {fileID: 152124357}
+  m_Layer: 0
+  m_Name: PathPuzzleUIMng
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &152124356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152124355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 179676903}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &152124357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152124355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ca08d08ed18394eb7393b66dcca72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathPuzzleUIMng
+  GameCanvas: {fileID: 595776921}
+  pathPieces:
+  - pathColor: 1
+    piece: {fileID: 2110819488}
+  - pathColor: 2
+    piece: {fileID: 917242507}
+  - pathColor: 0
+    piece: {fileID: 548622973}
+  - pathColor: 0
+    piece: {fileID: 1359841320}
+  - pathColor: 0
+    piece: {fileID: 1746650191}
+  - pathColor: 0
+    piece: {fileID: 528090060}
+  - pathColor: 0
+    piece: {fileID: 1632674511}
+  - pathColor: 0
+    piece: {fileID: 50463372}
+  - pathColor: 0
+    piece: {fileID: 280225393}
+  pieceObj: []
+  ClearEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &158755794
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,10 +538,10 @@ RectTransform:
   - {fileID: 1558517766}
   m_Father: {fileID: 1827684758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 400, y: 160}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &158755796
 MonoBehaviour:
@@ -709,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &179676903
 Transform:
   m_ObjectHideFlags: 0
@@ -725,6 +793,7 @@ Transform:
   m_Children:
   - {fileID: 2130866799}
   - {fileID: 516561155}
+  - {fileID: 152124356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &190707552
@@ -1877,6 +1946,7 @@ MonoBehaviour:
   blueAnswer: 2
   redAnswer: 3
   inputHandler: {fileID: 2130866800}
+  PathPuzzleUIMng: {fileID: 152124357}
 --- !u!1 &526230293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,7 +2931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &790251678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,10 +3126,10 @@ RectTransform:
   - {fileID: 2119469484}
   m_Father: {fileID: 1827684758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: 400, y: 160}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &806919532
 MonoBehaviour:
@@ -4550,6 +4620,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a630a1fe92c13047a1ed29f3d556061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryLandMapEditor
+  mapData: []
+  gridTrans: {fileID: 0}
+  EmptyPrefab: {fileID: 0}
+  WallPrefab: {fileID: 0}
+  PlayerPrefab: {fileID: 0}
+  EnemyPrefab: {fileID: 0}
+  KeyPrefab: {fileID: 0}
+  SwitchPrefab: {fileID: 0}
+  ExitPrefab: {fileID: 0}
 --- !u!1 &1359841316
 GameObject:
   m_ObjectHideFlags: 0
@@ -5441,10 +5520,10 @@ RectTransform:
   - {fileID: 1396028039}
   m_Father: {fileID: 1827684758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -520}
-  m_SizeDelta: {x: 400, y: 160}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1558517765
 GameObject:
@@ -7302,25 +7381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc848b78d6c32024b90e6af4a53f6ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathInputHandler
-  pathPieces:
-  - pathColor: 1
-    piece: {fileID: 2110819488}
-  - pathColor: 2
-    piece: {fileID: 917242507}
-  - pathColor: 0
-    piece: {fileID: 548622973}
-  - pathColor: 0
-    piece: {fileID: 1359841320}
-  - pathColor: 0
-    piece: {fileID: 1746650191}
-  - pathColor: 0
-    piece: {fileID: 528090060}
-  - pathColor: 0
-    piece: {fileID: 1632674511}
-  - pathColor: 0
-    piece: {fileID: 50463372}
-  - pathColor: 0
-    piece: {fileID: 280225393}
+  UIMng: {fileID: 152124357}
   button:
   - pathColor: 0
     colorButton: {fileID: 158755798}
@@ -7328,9 +7389,6 @@ MonoBehaviour:
     colorButton: {fileID: 806919534}
   - pathColor: 2
     colorButton: {fileID: 1509000934}
-  ClearCheckEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2144039148
 GameObject:
   m_ObjectHideFlags: 0
