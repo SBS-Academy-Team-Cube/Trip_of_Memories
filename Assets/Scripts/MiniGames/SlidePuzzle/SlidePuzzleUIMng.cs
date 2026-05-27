@@ -15,7 +15,10 @@ public class SlidePuzzleUIMng : MonoBehaviour
     [SerializeField] private GameObject canvas;
 
     [Header("last Piece")]
-    [SerializeField] private GameObject piece_9;
+    [SerializeField] private Image piece_9;
+
+    [Header("Clear coroutine time")]
+    [SerializeField] private float clearTime = 0f;
 
     // 실제 UI상에서 조각 이동하는 역할..
     private Vector2[] pos;
@@ -32,6 +35,7 @@ public class SlidePuzzleUIMng : MonoBehaviour
             pos[i] = new Vector2(GridPos[i].anchoredPosition.x, GridPos[i].anchoredPosition.y);
         }
 
+        PieceInit();
         canvas.SetActive(true);
     }
     public void GameClear()
@@ -53,21 +57,26 @@ public class SlidePuzzleUIMng : MonoBehaviour
     {
         CanvasSetActive(true);
 
-        Image image = piece_9.GetComponent<Image>();
+        Image image = piece_9;
         Color color = Color.white;
 
 
         float curTime = 0f;
-        float time = 1f;
-        while(time > curTime)
+        while(clearTime > curTime)
         {
             yield return null;
             curTime += Time.deltaTime;
-            color.a = curTime;
+            color.a = curTime / clearTime;
             image.color = color;
         }
 
         CanvasSetActive(false);
+    }
+    private void PieceInit()
+    {
+        Color temp = piece_9.color;
+        temp.a = 0f;
+        piece_9.color = temp;
     }
 
     public void CanvasSetActive(bool active)
