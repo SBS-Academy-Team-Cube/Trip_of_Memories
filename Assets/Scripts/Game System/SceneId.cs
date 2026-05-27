@@ -9,6 +9,7 @@ public enum SceneId
     Stage1_2,
     Stage1_3,
     Stage1_4,
+    Stage2_3,
     NULL,
 }
 public static class SceneTable
@@ -25,6 +26,7 @@ public static class SceneTable
             SceneId.Stage1_2 => "Stage 1-2",
             SceneId.Stage1_3 => "Stage 1-3",
             SceneId.Stage1_4 => "Stage 1-4",
+            SceneId.Stage2_3 => "Stage 2-3",
             // _ => "MainMenuScene",
         };
     }
