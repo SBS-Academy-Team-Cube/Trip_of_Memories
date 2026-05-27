@@ -6,27 +6,30 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Image BackgroundImg;
     [SerializeField] private GameObject PauseMenuUI;
     [SerializeField] private Button ContinueBtn;
+    private GameDirector Director;
 
-    private void Start()
-    {
-        if (GameDirector.Instance)
-        {
-            GameDirector.Instance.OnPaused += HandlePause;
-            ContinueBtn.onClick.AddListener(GameDirector.Instance.ContinueGame);
-        }
-        HandlePause(false);
-    }
     private void OnEnable()
     {
+        Director = GameDirector.Instance;
+        if (Director)
+        {
+            Director.OnPaused += HandlePause;
+            ContinueBtn.onClick.AddListener(Director.ContinueGame);
+            HandlePause(Director.IsPaused);
+            return;
+        }
 
+        HandlePause(false);
     }
     private void OnDisable()
     {
-        if (GameDirector.Instance)
+        if (Director)
         {
-            GameDirector.Instance.OnPaused -= HandlePause;
-            ContinueBtn.onClick.RemoveListener(GameDirector.Instance.ContinueGame);
+            Director.OnPaused -= HandlePause;
+            ContinueBtn.onClick.RemoveListener(Director.ContinueGame);
         }
+
+        Director = null;
     }
     private void HandlePause(bool bPaused)
     {

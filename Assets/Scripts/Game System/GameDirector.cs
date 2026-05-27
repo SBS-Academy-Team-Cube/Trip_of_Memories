@@ -20,6 +20,7 @@ public class GameDirector : Singleton<GameDirector>
     [SerializeField] private InputActionReference SlowModeAction;
     [SerializeField] private InputActionReference PauseAction;
     private bool bPaused = false;
+    public bool IsPaused => bPaused;
     public event Action<bool> OnPaused;
     private bool bSlowMode;
     protected override void Awake()
@@ -42,25 +43,55 @@ public class GameDirector : Singleton<GameDirector>
     }
     private void PauseGame(InputAction.CallbackContext Context)
     {
-        bPaused = !bPaused;
-        Time.timeScale = bPaused ? 0.0f : 1.0f;
+        if (CurrentState != GameState.InGame)
+        {
+            return;
+        }
+
+        SetPaused(!bPaused);
+    }
+    public void SetPaused(bool Paused)
+    {
+        if (bPaused == Paused)
+        {
+            return;
+        }
+
+        bPaused = Paused;
+        ApplyTimeScale();
+        ShowMouseCursor(bPaused || CurrentState != GameState.InGame);
         OnPaused?.Invoke(bPaused);
     }
     public void ContinueGame()
     {
-        if (!bPaused)
-        {
-            return;
-        }
-        bPaused = false;
-        Time.timeScale = 1.0f;
-        OnPaused?.Invoke(bPaused);
+        SetPaused(false);
     }
 
     private void SlowMode(InputAction.CallbackContext Context)
     {
+        if (CurrentState != GameState.InGame || bPaused)
+        {
+            return;
+        }
+
         bSlowMode = !bSlowMode;
-        Time.timeScale = bSlowMode ? .25f : 1.0f;
+        ApplyTimeScale();
+    }
+    private void ApplyTimeScale()
+    {
+        Time.timeScale = bPaused ? 0.0f : bSlowMode ? .25f : 1.0f;
+    }
+    private void ResetTimeControl()
+    {
+        bool WasPaused = bPaused;
+        bPaused = false;
+        bSlowMode = false;
+        Time.timeScale = 1.0f;
+
+        if (WasPaused)
+        {
+            OnPaused?.Invoke(false);
+        }
     }
     private void OnDisable()
     {
@@ -78,11 +109,13 @@ public class GameDirector : Singleton<GameDirector>
     }
     public void LoadScene(SceneId ID)
     {
+        ResetTimeControl();
         NextSceneID = ID;
         SceneManager.LoadScene(SceneTable.GetSceneName(LoadingSceneID));
     }
     public void LoadSceneWithoutLoading(SceneId ID)
     {
+        ResetTimeControl();
         NextSceneID = ID;
         SceneManager.LoadScene(SceneTable.GetSceneName(ID));
     }
@@ -92,6 +125,8 @@ public class GameDirector : Singleton<GameDirector>
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        ResetTimeControl();
+
         if (scene.name == SceneTable.GetSceneName(SceneId.Loading))
         {
             SetState(GameState.Loading);
