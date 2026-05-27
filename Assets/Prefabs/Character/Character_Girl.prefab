@@ -9873,7 +9873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  LedgeCheckForwardDistance: 0.35
+  LedgeCheckForwardDistance: 0.5
+  ClimbableWallLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   Animation: {fileID: 7791356207911647828}
   animator: {fileID: 8616520276366385363}
   Controller: {fileID: 1428993993155376806}
@@ -9992,9 +9995,9 @@ MonoBehaviour:
   Animation: {fileID: 7791356207911647828}
   Spray: {fileID: 5856310494710027164}
   State: {fileID: 9071798309953751940}
-  CoolDownDelay: 2
-  ArmUpDelay: 0.15
-  ArmDownDelay: 0.15
+  CoolDownDelay: 2.5
+  ArmUpDelay: 0.1
+  ArmDownDelay: 0.1
   WaitOffset: 0.1
   IsUsing: 0
 --- !u!114 &6965592432517781443

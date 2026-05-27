@@ -6,6 +6,7 @@ public class PlayerMantling : MonoBehaviour
 {
     [Header("Mantle Settings")]
     public float LedgeCheckForwardDistance = 1.0f;
+    [SerializeField] private LayerMask ClimbableWallLayer = ~0;
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController Controller;
@@ -82,7 +83,7 @@ public class PlayerMantling : MonoBehaviour
 
         Vector3 LedgetCheckDirection = new Vector3(Move.CameraTransform.forward.x, 0f, Move.CameraTransform.forward.z);
         LedgetCheckDirection.Normalize();
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, LedgeCheckForwardDistance))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, LedgeCheckForwardDistance, ClimbableWallLayer))
         {
             // Wall Checking Debug Line
             Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.green);

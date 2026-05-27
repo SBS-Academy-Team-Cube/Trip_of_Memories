@@ -138,7 +138,6 @@ public class PlayerAnimation : MonoBehaviour
     public void SetHangOnRope(bool IsHanging)
     {
         AnimationController.SetBool("IsHanging", IsHanging);
-        // AnimationController.SetTrigger(IsHanging ? "StartHangingTrigger" : "EndHangingTrigger");
         if (IsHanging)
         {
             SetRopePlaying(0.0f);
