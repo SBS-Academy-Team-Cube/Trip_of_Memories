@@ -277,20 +277,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ddcec8a8eb2d684d833ac8f5d26aebd, type: 3}
   m_Name: HDShadowSettings
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.HDShadowSettings
-  active: 1
+  active: 0
   interCascadeBorders: 1
   maxShadowDistance:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 100
   directionalTransmissionMultiplier:
     m_OverrideState: 1
     m_Value: 1
   cascadeShadowSplitCount:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 1
   cascadeShadowSplit0:
-    m_OverrideState: 0
-    m_Value: 0.05
+    m_OverrideState: 1
+    m_Value: 0
   cascadeShadowSplit1:
     m_OverrideState: 0
     m_Value: 0.15
@@ -298,7 +298,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0.3
   cascadeShadowBorder0:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   cascadeShadowBorder1:
     m_OverrideState: 0
