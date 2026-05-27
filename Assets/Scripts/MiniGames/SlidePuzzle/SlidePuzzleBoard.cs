@@ -116,7 +116,7 @@ public class SlidePuzzleBoard : MonoBehaviour
         Debug.Log("===============================");
         for(int i = 0; i < indexCount; ++i)
         {
-            Debug.Log($"{board[i]} => index {i + 1}");
+            Debug.Log($"index {i + 1} => {board[i]}");
         }
     }
 }

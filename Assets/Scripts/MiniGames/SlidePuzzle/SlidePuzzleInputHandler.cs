@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class SlidePuzzleInputHandler : MonoBehaviour
     //조각이 클릭되었을때 보드를 참조해서 상하좌우 중 빈 칸 있는지 체크..
     private SlidePuzzlePiece curPiece;
 
+
+    private bool canInput = true;
 
     private void Awake()
     {
@@ -27,8 +30,17 @@ public class SlidePuzzleInputHandler : MonoBehaviour
         // for inspector add listener button
     }
 
+    public void GameInit()
+    {
+        canInput = true;
+    }
     public void OnPieceButtonClicked(int pieceNum)//1~8
     {
+        if (!canInput)
+            return;
+
+        Debug.Log("input false");
+
         //Debug.Log($"{pieceNum}");//8?
         //return; // 테스트용
         curPiece = piece[pieceNum - 1];
@@ -55,7 +67,17 @@ public class SlidePuzzleInputHandler : MonoBehaviour
             Debug.Log("Game Clear");
             //  send Event for GameMng
             UIMng.GameClear();
-            
         }
+
+        StartCoroutine(InputDelay(0.35f));
     }
+
+    private IEnumerator InputDelay(float delayTime)
+    {
+        canInput = false;
+        yield return new WaitForSeconds(delayTime);
+        canInput = true;
+        Debug.Log("input true");
+    }
+
 }

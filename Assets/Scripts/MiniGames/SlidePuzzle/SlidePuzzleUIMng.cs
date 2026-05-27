@@ -8,8 +8,10 @@ public class SlidePuzzleUIMng : MonoBehaviour
     [Header("piecePosition")]
     [SerializeField] private RectTransform[] GridPos;
 
+
     [Header("pieces")]
     [SerializeField] private Image[] pieces;
+    [SerializeField] private RectTransform[] InitPos; // 무조건 조각 순서대로
 
     [Header("minigameCanvas")]
     [SerializeField] private GameObject canvas;
@@ -21,6 +23,7 @@ public class SlidePuzzleUIMng : MonoBehaviour
     [SerializeField] private float clearTime = 0f;
 
     // 실제 UI상에서 조각 이동하는 역할..
+    private Vector2[] PieceInitPos;
     private Vector2[] pos;
 
     private Image curPiece;
@@ -29,11 +32,25 @@ public class SlidePuzzleUIMng : MonoBehaviour
     {
         if (GridPos == null)
             return;
-        pos = new Vector2[GridPos.Length];
-        for(int i = 0; i < GridPos.Length; i++)
+
+        if(PieceInitPos == null)
         {
-            pos[i] = new Vector2(GridPos[i].anchoredPosition.x, GridPos[i].anchoredPosition.y);
+            PieceInitPos = new Vector2[InitPos.Length];
+            for (int i = 0; i < InitPos.Length; i++)
+            {
+                PieceInitPos[i] = new Vector2(InitPos[i].anchoredPosition.x, InitPos[i].anchoredPosition.y);
+            }
         }
+
+        if(pos == null)
+        {
+            pos = new Vector2[GridPos.Length];
+            for (int i = 0; i < GridPos.Length; i++)
+            {
+                pos[i] = new Vector2(GridPos[i].anchoredPosition.x, GridPos[i].anchoredPosition.y);
+            }
+        }
+
 
         PieceInit();
         canvas.SetActive(true);
@@ -77,6 +94,12 @@ public class SlidePuzzleUIMng : MonoBehaviour
         Color temp = piece_9.color;
         temp.a = 0f;
         piece_9.color = temp;
+
+        for(int i = 0; i < pieces.Length; i++)
+        {
+            curPiece = pieces[i];
+            curPiece.GetComponent<RectTransform>().anchoredPosition = PieceInitPos[i];
+        }
     }
 
     public void CanvasSetActive(bool active)
