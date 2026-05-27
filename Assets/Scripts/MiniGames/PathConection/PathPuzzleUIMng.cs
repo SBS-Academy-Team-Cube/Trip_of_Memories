@@ -29,16 +29,20 @@ public class PathPuzzleUIMng : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i < pieceObj.Length; i++)
-        {
-            startRot[i] = pieceObj[i].localRotation;
-        }
+
     }
 
 
 
     public void GameStart()
     {
+        if(startRot == null)
+        {
+            for (int i = 0; i < pieceObj.Length; i++)
+            {
+                startRot[i] = pieceObj[i].localRotation;
+            }
+        }
         GameCanvas.SetActive(true);
         GameReset();
     }

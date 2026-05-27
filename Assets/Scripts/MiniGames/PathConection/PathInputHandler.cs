@@ -31,6 +31,13 @@ public class PathInputHandler : MonoBehaviour
             btn.colorButton.onClick.AddListener(() => OnClickColorButton(btn.pathColor));
         }
     }
+    private void OnDisable()
+    {
+        foreach(var btn in button)
+        {
+            btn.colorButton.onClick.RemoveListener(() =>  OnClickColorButton(btn.pathColor));
+        }
+    }
 
 
 

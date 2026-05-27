@@ -21,9 +21,9 @@ public class PathPuzzleMng : MonoBehaviour
         inputHandler.GameStart();
         PathPuzzleUIMng.GameStart();
     }
-    public void GameReset()
+    public void GameExit()
     {
-        PathPuzzleUIMng.GameReset();
+        PathPuzzleUIMng.GameStop();
     }
 
     private void Clear()
