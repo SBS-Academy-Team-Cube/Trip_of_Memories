@@ -6,6 +6,7 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
     [SerializeField] private StoryManager storyManager;
     [SerializeField] private StoryImagePresenter Presenter;
     [SerializeField] private CharacterSelectController selectController;
+    [SerializeField] private SceneId NextSceneID;
 
     [Header("UI")]
     [SerializeField] private GameObject storyUIRoot;
@@ -70,7 +71,7 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
         }
         if (GameDirector.Instance != null)
         {
-            GameDirector.Instance.LoadScene(SceneId.Stage1_1);
+            GameDirector.Instance.LoadScene(NextSceneID);
         }
         else
         {
