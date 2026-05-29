@@ -33,6 +33,10 @@ public class StoryManager : MonoBehaviour
     {
         SkipAction.action.performed -= OnSkip;
     }
+    private void Start() 
+    {
+        StoryPanel?.SetActive(false);
+    }
     public void ShowStory(int Index)
     {
         CurrentDialogue = StoryDialogues[Index];
