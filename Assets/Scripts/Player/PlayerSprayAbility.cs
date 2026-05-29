@@ -15,7 +15,7 @@ public class PlayerSprayAbility : MonoBehaviour
     public bool IsUsing = false;
     public void TryTakeSpray()
     {
-        if (State.IsInteracting || IsUsing)
+        if (State.IsInteracting || IsUsing || !State.IsGrounded)
         {
             return;
         }

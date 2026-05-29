@@ -13,12 +13,13 @@ public class PauseMenu : MonoBehaviour
         Director = GameDirector.Instance;
         if (Director)
         {
+            Debug.Log($"Event Binded!");
             Director.OnPaused += HandlePause;
             ContinueBtn.onClick.AddListener(Director.ContinueGame);
             HandlePause(Director.IsPaused);
             return;
         }
-
+        
         HandlePause(false);
     }
     private void OnDisable()
