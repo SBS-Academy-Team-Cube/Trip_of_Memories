@@ -4,7 +4,7 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     [SerializeField] private CheckpointData Data;
-
+    
 
     private void Awake()
     {

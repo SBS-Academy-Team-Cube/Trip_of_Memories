@@ -18,4 +18,13 @@ public class CameraBlendZone : MonoBehaviour
             Camera.Priority = 0;
         }
     }
+
+    public void BlendIn()
+    {
+        Camera.Priority = 5;
+    }
+    public void BlendOut()
+    {
+        Camera.Priority = 0;
+    }
 }
