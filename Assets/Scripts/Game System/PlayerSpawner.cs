@@ -46,5 +46,16 @@ public class PlayerSpawner : MonoBehaviour
         {
             HPUI.Init(PlayerHP);
         }
+
+        //=================================
+        if(Player.TryGetComponent<PlayerFallRespawner>(out var respawner))
+        {
+            if(Player.TryGetComponent<PlayerState>(out var state))
+            {
+                respawner.Init();
+            }
+        }
+
+
     }
 }
