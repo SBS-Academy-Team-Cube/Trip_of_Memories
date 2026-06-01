@@ -14,7 +14,9 @@ public enum RoroTileType
     StartPoint,
     LaserStatue,
     Player,
-    Player2
+    Player2,
+    Switch,
+    SwitchWall
 }
 
 public enum LaserStatueDir

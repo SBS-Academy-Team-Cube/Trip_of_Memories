@@ -125,6 +125,8 @@ public class RoroMapEditor : Editor
             RoroTileType.LaserStatue => Color.darkRed,
             RoroTileType.Player => Color.magenta,
             RoroTileType.Player2 => Color.darkMagenta,
+            RoroTileType.Switch => Color.yellow,
+            RoroTileType.SwitchWall => Color.yellow,
             _ => Color.white
         };
     }
