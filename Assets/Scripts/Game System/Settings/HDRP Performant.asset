@@ -86,7 +86,7 @@ MonoBehaviour:
     supportProbeVolumeScenarios: 0
     supportProbeVolumeScenarioBlending: 1
     probeVolumeBlendingMemoryBudget: 128
-    supportRayTracing: 1
+    supportRayTracing: 0
     supportVFXRayTracing: 0
     supportedRayTracingMode: 3
     lightLoopSettings:
@@ -131,9 +131,9 @@ MonoBehaviour:
       areaLightShadowAtlas:
         shadowAtlasResolution: 2048
         shadowAtlasDepthBits: 16
-        useDynamicViewportRescale: 0
-      cachedPunctualLightShadowAtlas: 2048
-      cachedAreaLightShadowAtlas: 2048
+        useDynamicViewportRescale: 1
+      cachedPunctualLightShadowAtlas: 4096
+      cachedAreaLightShadowAtlas: 4096
       allowDirectionalMixedCachedShadows: 1
       shadowResolutionDirectional:
         m_Values: 80000000000100000002000000040000
