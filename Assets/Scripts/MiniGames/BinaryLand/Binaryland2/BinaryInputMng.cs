@@ -8,13 +8,13 @@ public class BinaryInputMng : MonoBehaviour
 
     private BinaryInput inputAction;
 
-    private void OnEnable()
+    public void GameStart()
     {
         inputAction = new BinaryInput();
         inputAction.binary.Enable();
         inputAction.binary.Move.performed += OnMovePerformd;
     }
-    private void OnDisable()
+    public void GameExit()
     {
         inputAction.binary.Disable();
         inputAction.binary.Move.performed -= OnMovePerformd;

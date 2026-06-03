@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class BinaryLandMapEditor : MonoBehaviour
 {
+    [SerializeField] private BinaryUIMng uimng;
+
     [SerializeField] private RoroLevelData[] mapData;
 
     [SerializeField] private Transform gridTrans; // panel trans
@@ -73,6 +75,7 @@ public class BinaryLandMapEditor : MonoBehaviour
         curData = mapData[index];
         //curData.ReSize();
         DrawMap();
+        uimng.SaveMap(curData);
     }
 
     private void DrawMap()
@@ -82,7 +85,7 @@ public class BinaryLandMapEditor : MonoBehaviour
 
         int index = 0;
 
-        for(int y = 0;y < height; y++)
+        for(int y = height - 1; y >= 0; y--)
         {
             for (int x = 0;x < width; x++)
             {
