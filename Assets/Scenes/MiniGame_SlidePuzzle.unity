@@ -1706,6 +1706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4c8db66a3840045b32233b7c0c7e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryPlayer
+  UiMng: {fileID: 767889336}
   WidthGridSize: 91.2
   HeightGridSize: 90
   isReverse: 1
@@ -2497,8 +2498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1cd6f4fcec45343a119368a6b9f516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryLandGameMng
-  inputMng: {fileID: 0}
-  UImng: {fileID: 0}
+  inputMng: {fileID: 811544408}
+  UImng: {fileID: 767889336}
   players:
   - {fileID: 908434778}
   - {fileID: 375831778}
@@ -3083,7 +3084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7036e5d0d1d56041a955a5fd9602e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryUIMng
-  GridMap: {fileID: 0}
+  PushBoxs: []
+  Enemys: []
+  SwitchPos: {x: 0, y: 0}
+  SwitchWall: {fileID: 0}
 --- !u!1 &786021031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,6 +3968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4c8db66a3840045b32233b7c0c7e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryPlayer
+  UiMng: {fileID: 767889336}
   WidthGridSize: 91.2
   HeightGridSize: 90
   isReverse: 0
@@ -4954,6 +4959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a630a1fe92c13047a1ed29f3d556061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BinaryLandMapEditor
+  uimng: {fileID: 767889336}
   mapData:
   - {fileID: 11400000, guid: 6706ae0fb74dbd844a2bbb6cc7b7d3a0, type: 2}
   gridTrans: {fileID: 1104054864}

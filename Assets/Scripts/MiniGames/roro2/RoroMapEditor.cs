@@ -71,7 +71,7 @@ public class RoroMapEditor : Editor
 
 
         EditorGUILayout.LabelField("Map Grid");
-        for (int y = 0; y < data.height; ++y)
+        for (int y = data.height - 1; y >= 0; y--)
         {
             GUILayout.BeginHorizontal();
             for (int x = 0; x < data.width; ++x)
