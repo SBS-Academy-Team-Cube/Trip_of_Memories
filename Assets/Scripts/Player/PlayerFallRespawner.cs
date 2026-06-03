@@ -3,32 +3,33 @@ using UnityEngine;
 
 public class PlayerFallRespawner : MonoBehaviour
 {
-    private CharacterController controller;
-
+    [SerializeField] private CharacterController Controller;
     private Vector3 lastSafeTrans;
     private Quaternion lastRotate;
 
     private void Update()
     {
-        if(controller != null && controller.isGrounded)
+        if(Controller != null && Controller.isGrounded)
         {
             SaveTrans();
         }
     }
-
-
-    public void Init()
+    private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        if(Controller == null)
+        {
+            TryGetComponent(out Controller);
+        }
     }
-
     public void Fall()
     {
-        StartCoroutine(ControllerLock());
+        Controller.enabled = false;
 
-        transform.position = lastSafeTrans;
+        transform.position = lastSafeTrans; 
         transform.rotation = lastRotate;
 
+        Controller.enabled = true;
+        
         StartCoroutine(RespawnEffect());
     }
     private void SaveTrans()
@@ -36,15 +37,6 @@ public class PlayerFallRespawner : MonoBehaviour
         lastSafeTrans = transform.position;
         lastRotate = transform.rotation;
     }
-
-    private IEnumerator ControllerLock()
-    {
-        controller.enabled = false;
-        yield return new WaitForSeconds(0.1f);
-
-        controller.enabled = true;
-    }
-
     private IEnumerator RespawnEffect()
     {
         // effect

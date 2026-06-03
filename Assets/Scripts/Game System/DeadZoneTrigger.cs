@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class DeadZoneTrigger : MonoBehaviour
 {
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider Other)
     {
-        if (!other.gameObject.CompareTag("Player"))
+        if (!Other.CompareTag("Player"))
             return;
-
-        if(other.gameObject.TryGetComponent<Health>(out var health))
+    
+        if(Other.TryGetComponent<Health>(out var Health))
         {
-            health.TakeDamage();
+            Health.TakeDamage();
         }
-        if(other.gameObject.TryGetComponent<PlayerFallRespawner>(out var respawner))
+        if(Other.TryGetComponent<PlayerFallRespawner>(out var Respawner))
         {
-            respawner.Fall();
+            Respawner.Fall();
         }
     }
 }

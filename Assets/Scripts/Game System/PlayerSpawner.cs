@@ -62,16 +62,6 @@ public class PlayerSpawner : MonoBehaviour
             HPUI.Init(PlayerHP);
             PlayerHP.OnDead += ReSpawn;
         }
-
-        //=================================
-        if(Player.TryGetComponent<PlayerFallRespawner>(out var respawner))
-        {
-            if(Player.TryGetComponent<PlayerState>(out var state))
-            {
-                respawner.Init();
-            }
-        }
-
     }
     private CheckPoint FindCheckpoint(string checkpointId)
     {
@@ -86,7 +76,7 @@ public class PlayerSpawner : MonoBehaviour
         }
         return null;
     }
-    
+
     public void ReSpawn()
     {
         if(GameDirector.Instance != null && GameDirector.Instance.Iris != null)
