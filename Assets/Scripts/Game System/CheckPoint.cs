@@ -4,14 +4,24 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     [SerializeField] private CheckpointData Data;
-    
 
-    private void Awake()
+    public Transform SpawnPosition;
+
+    public string CheckpointID => Data.CheckpointID;
+    public SceneId SceneID => Data.SceneID;
+
+    private bool bEnabled = false;
+
+    private void OnEnable()
     {
 
     }
-    void OnTriggerEnter(Collider Other)
+    private void OnTriggerEnter(Collider Other)
     {
-
+        if (!Other.CompareTag("Player")) 
+        { 
+            return;
+        }
+        SaveManager.Instance.SetCheckpoint(Data.SceneID, Data.CheckpointID);
     }
 }

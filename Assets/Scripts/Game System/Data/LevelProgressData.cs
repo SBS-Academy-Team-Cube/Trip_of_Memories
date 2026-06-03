@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class LevelProgressData
 {
     public string LevelId;
+
     public int SessionMemoryRecoveryPercent;
 
     // Temporary records for the current level run.
@@ -13,15 +14,17 @@ public class LevelProgressData
     public List<string> CompletedInteractionIds = new List<string>();
 
     public CheckpointData LastCheckpoint;
+    public SceneId FirstSceneId;
 
     public LevelProgressData()
     {
 
     }
 
-    public LevelProgressData(string levelId)
+    public LevelProgressData(string levelId, SceneId FirstScene)
     {
         LevelId = levelId;
+        FirstSceneId = FirstScene;
         Normalize();
     }
 

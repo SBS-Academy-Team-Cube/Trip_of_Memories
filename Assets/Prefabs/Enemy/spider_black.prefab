@@ -990,6 +990,7 @@ GameObject:
   - component: {fileID: 1492682155563325141}
   - component: {fileID: 2468469884166083331}
   - component: {fileID: 3629233282209404084}
+  - component: {fileID: 6141810606184199010}
   m_Layer: 0
   m_Name: spider_black
   m_TagString: Untagged
@@ -1059,6 +1060,7 @@ MonoBehaviour:
   Attacker: {fileID: 8925338703501205391}
   HP: {fileID: 2468469884166083331}
   Audio: {fileID: 3629233282209404084}
+  GatedAudio: {fileID: 6141810606184199010}
   Sounds: {fileID: 11400000, guid: 50cbf78d591c4d24c9faae029eb2579e, type: 2}
   PatrolRadius: 3
   PatrolTimeMin: 2
@@ -1197,6 +1199,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6141810606184199010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4536276901986341415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4b1c2d3e5f4768a9b0c1d2e3f4a5b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DistanceGatedAudioSource
+  Source: {fileID: 3629233282209404084}
+  Listener: {fileID: 0}
+  AutoFindListener: 1
+  UseAudioSourceMaxDistance: 1
+  AudibleDistance: 25
+  CheckInterval: 0.2
+  OutOfRangeMode: 0
+  ResumeLoopWhenInRange: 1
 --- !u!1 &4741645127220409325
 GameObject:
   m_ObjectHideFlags: 0

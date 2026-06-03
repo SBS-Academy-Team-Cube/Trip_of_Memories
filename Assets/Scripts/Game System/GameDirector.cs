@@ -43,7 +43,6 @@ public class GameDirector : Singleton<GameDirector>
     }
     private void PauseGame(InputAction.CallbackContext Context)
     {
-        Debug.Log("PauseGame Called");
         if (CurrentState != GameState.InGame)
         {
             return;

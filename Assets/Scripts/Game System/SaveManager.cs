@@ -51,9 +51,9 @@ public class SaveManager : Singleton<SaveManager>
         Debug.Log("Save Complete");
     }
 
-    public void BeginLevel(string levelId)
+    public void BeginLevel(string levelId, SceneId FirstSceneId)
     {
-        CurrentLevelProgress = new LevelProgressData(levelId);
+        CurrentLevelProgress = new LevelProgressData(levelId, FirstSceneId);
     }
     public void ClearCurrentLevelProgress()
     {
@@ -189,7 +189,6 @@ public class SaveManager : Singleton<SaveManager>
         {
             Load();
         }
-
         Data.Normalize();
     }
 
@@ -199,7 +198,7 @@ public class SaveManager : Singleton<SaveManager>
         if (CurrentLevelProgress == null)
         {
             Debug.LogWarning("No active level progress. Creating an unnamed level progress session.");
-            CurrentLevelProgress = new LevelProgressData("unknown_level");
+            CurrentLevelProgress = new LevelProgressData("unknown_level", SceneId.NULL);
         }
 
         CurrentLevelProgress.Normalize();

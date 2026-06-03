@@ -29,6 +29,11 @@ public class PlayerLeverHandler : MonoBehaviour
     }
     public void ReleaseLever()
     {
+        if(TargetLever != null)
+        {
+            TargetLever.Release();
+            TargetLever = null;
+        }
         transform.SetParent(null);
         if (State)
         {

@@ -36,6 +36,7 @@ public class WaterGameManager : MonoBehaviour
         {
             GameDirector.Instance.ShowMouseCursor(false);
         }
+        Canvas.SetActive(false);
         OnFail?.Invoke();
     }
 }
