@@ -21,6 +21,9 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private Transform LeverHandleTransform;
     [SerializeField] private FLeverPosition Clockwise;
     [SerializeField] private FLeverPosition CounterClockwise;
+
+    public event Action<bool> OnLeverInteracted;
+
     public bool IsRotating = false;
     public bool bClockwise { get; private set; }
     public string GetInteractionPrompt()
@@ -42,7 +45,9 @@ public class Lever : MonoBehaviour, IInteractable
         {
             bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
             Handler.HandleLever(this);
-            return true;
+
+            OnLeverInteracted?.Invoke(true);
+
         }
         return true;
     }
@@ -86,5 +91,9 @@ public class Lever : MonoBehaviour, IInteractable
     public void Rotate()
     {
         transform.Rotate(Vector3.up, RotateSpeed * (bClockwise ? -1f : 1f) * Time.deltaTime);
+    }
+    public void Release()
+    {
+        OnLeverInteracted?.Invoke(false);
     }
 }

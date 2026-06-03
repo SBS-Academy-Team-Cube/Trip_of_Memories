@@ -106,7 +106,6 @@ public class PlayerAnimation : MonoBehaviour
         AnimationController.SetBool("IsHolding", IsHolding);
         AnimationController.SetTrigger("PickingTrigger");
     }
-
     public void SetLeverPush(bool bPushing)
     {
         // AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
@@ -117,7 +116,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat("LeverAnimSpeed", Speed);
     }
-
     public void SetSpeed(float Speed)
     {
         AnimationController.SetFloat("Speed", Speed);

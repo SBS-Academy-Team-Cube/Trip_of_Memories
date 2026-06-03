@@ -11,6 +11,21 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private UIHPController HPUI;
     void Start()
     {
+        Vector3 spawnPosition = transform.position;
+        Quaternion spawnRotation = transform.rotation;
+
+        var progress = SaveManager.Instance.CurrentLevelProgress;
+        if (progress != null && progress.HasCheckpoint() && GameDirector.Instance.CurrentSceneID == progress.LastCheckpoint.SceneID)
+        {
+            CheckPoint checkpoint = FindCheckpoint(progress.LastCheckpoint.CheckpointID);
+            if (checkpoint != null)
+            {
+                spawnPosition = checkpoint.SpawnPosition.position;
+                spawnRotation = checkpoint.SpawnPosition.rotation;
+            }
+        }
+        
+
         if (SaveManager.Instance.Data == null)
         {
             SaveManager.Instance.Load();
@@ -20,7 +35,7 @@ public class PlayerSpawner : MonoBehaviour
         {
             return;
         }
-        GameObject PlayerInstance = Instantiate(CharacterPrefabs[Index], transform.position, transform.rotation);
+        GameObject PlayerInstance = Instantiate(CharacterPrefabs[Index], spawnPosition, spawnRotation);
         OnPlayerSpawned?.Invoke(PlayerInstance);
         Initialize(PlayerInstance);
 
@@ -34,9 +49,9 @@ public class PlayerSpawner : MonoBehaviour
         if (Player.TryGetComponent(out PlayerMovement Movement))
         {
             Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
-            CutSceneManager?.SetPlayerMovement(Movement);
+            
         }
-
+        CutSceneManager?.SetPlayerMovement(Player);
         if (CameraManager != null)
         {
             CameraManager.Init(Player);
@@ -45,6 +60,7 @@ public class PlayerSpawner : MonoBehaviour
         if (HPUI != null && Player.TryGetComponent(out Health PlayerHP))
         {
             HPUI.Init(PlayerHP);
+            PlayerHP.OnDead += ReSpawn;
         }
 
         //=================================
@@ -56,6 +72,38 @@ public class PlayerSpawner : MonoBehaviour
             }
         }
 
+    }
+    private CheckPoint FindCheckpoint(string checkpointId)
+    {
+        CheckPoint[] checkpoints = FindObjectsByType<CheckPoint>(FindObjectsSortMode.None);
 
+        foreach (CheckPoint checkpoint in checkpoints)
+        {
+            if (checkpoint.CheckpointID == checkpointId)
+            {
+                return checkpoint;
+            }
+        }
+        return null;
+    }
+    
+    public void ReSpawn()
+    {
+        if(GameDirector.Instance != null && GameDirector.Instance.Iris != null)
+        {
+            GameDirector.Instance.Iris.FadeOut();
+        }
+        
+        if(SaveManager.Instance == null || GameDirector.Instance == null)
+        {
+            return;
+        }
+
+        var ProgressData = SaveManager.Instance.CurrentLevelProgress;
+        if(ProgressData != null)
+        {            
+            GameDirector.Instance.LoadScene(ProgressData.HasCheckpoint() ? ProgressData.LastCheckpoint.SceneID : ProgressData.FirstSceneId);
+        }
+    
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public string LevelId;
+    [SerializeField] private SceneId FirstSceneId;
     [SerializeField] private SceneId NextSceneId;
     [SerializeField] private Portal NextPortal;
     [Header("Audio Settings")]
@@ -19,7 +20,7 @@ public class LevelManager : MonoBehaviour
         }
         if (SaveManager.Instance && SaveManager.Instance.CurrentLevelProgress == null)
         {
-            SaveManager.Instance.BeginLevel(LevelId);
+            SaveManager.Instance.BeginLevel(LevelId, FirstSceneId);
         }
     }
     void OnDisable()
