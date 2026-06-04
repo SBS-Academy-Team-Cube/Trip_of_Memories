@@ -6221,7 +6221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalScale.x
@@ -6303,7 +6303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalScale.x
@@ -8911,7 +8911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalScale.x
@@ -30546,7 +30546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -32112,7 +32112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &725647134
 Transform:
   m_ObjectHideFlags: 0
@@ -32328,7 +32328,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
   m_ShadowRadius: 0.25
   m_ShadowAngle: 0
@@ -40583,7 +40583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalScale.x
@@ -41817,11 +41817,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1268768595}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1550646853 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4636644093263566485, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-  m_PrefabInstance: {fileID: 1850374558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1558524540
 GameObject:
   m_ObjectHideFlags: 0
@@ -51506,7 +51501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994162414445127542, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
-      value: 0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5974501632100598460, guid: 34a50e4230600b64092ab55ec17b2fcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51917,6 +51912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraBlendZone
   Camera: {fileID: 160479516}
+  TargetLever: {fileID: 0}
 --- !u!135 &1650898856
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -56730,7 +56726,7 @@ MonoBehaviour:
   m_PenumbraTint: 0
   m_NormalBias: 0.75
   m_SlopeBias: 0.5
-  m_ShadowUpdateMode: 1
+  m_ShadowUpdateMode: 0
   m_AlwaysDrawDynamicShadows: 0
   m_UpdateShadowOnLightMovement: 0
   m_CachedShadowTranslationThreshold: 0.01
@@ -56820,7 +56816,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 141.42}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
   m_ShadowRadius: 0.025
   m_ShadowAngle: 0
@@ -57313,7 +57309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05dfe9ef204b5e140854944e4ce719ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PentominoInputHandler
-  _mainCamera: {fileID: 1550646853}
+  _mainCamera: {fileID: 0}
   _pieceLayer:
     serializedVersion: 2
     m_Bits: 1024
