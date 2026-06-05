@@ -3,7 +3,10 @@ using UnityEngine;
 public class PentominoPiece : MonoBehaviour, IPentominoPickable
 {
     [SerializeField] private PieceShape pieceShape;
-    [SerializeField] private Transform StartTransform;
+    [SerializeField] private Transform PivotTransform;
+
+
+    private Vector2 TransformPivotOffset;
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -17,9 +20,12 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
 
     public void Init()
     {
-        startPos = StartTransform.position;
-        startRot = StartTransform.rotation;
+        startPos = PivotTransform.position;
+        startRot = PivotTransform.rotation;
         curShape = Instantiate(pieceShape);
+
+        Vector3 Delta = transform.position - PivotTransform.position;
+        TransformPivotOffset = new Vector2(Delta.x, Delta.z);
 
         transform.position = startPos;
         transform.rotation = startRot;
@@ -66,8 +72,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
             }
         }
     }
-    
-
     public void PickUp(float gridSize)
     {
         _isPicked = true;
@@ -79,6 +83,12 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
         transform.rotation = startRot;
         transform.position = startPos;
         
+    }
+    public void SetPreviewPosition(Vector3 Target)
+    {
+        // transform.position
+        transform.position = new Vector3(Target.x + TransformPivotOffset.x, Target.y, Target.z + TransformPivotOffset.y);
+
     }
 
     public void Place(Vector3 position)

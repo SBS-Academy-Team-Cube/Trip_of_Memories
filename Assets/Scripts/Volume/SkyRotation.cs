@@ -36,7 +36,7 @@ public class SkyRotation : MonoBehaviour
         {
             return;
         }
-
+        
         hdriSky.rotation.overrideState = true;
 
         float newRotation = hdriSky.rotation.value + Time.deltaTime * RotateSpeed;
