@@ -5,6 +5,7 @@ using UnityEngine.Windows;
 public class BinaryInputMng : MonoBehaviour
 {
     [SerializeField] private BinaryPlayer[] players;
+    [SerializeField] private BinaryUIMng uiMng;
 
     private BinaryInput inputAction;
 
@@ -29,6 +30,9 @@ public class BinaryInputMng : MonoBehaviour
         {
             player.TryMove(dir);
         }
+
+        uiMng.ClearCheck();
     }
+
 
 }
