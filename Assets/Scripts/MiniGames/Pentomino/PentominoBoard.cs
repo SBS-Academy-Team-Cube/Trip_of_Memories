@@ -18,7 +18,7 @@ public class PentominoBoard : MonoBehaviour
 
     private bool[,] boardData;
     private Vector3[,] boardWorldPos;
-    private Dictionary<BoardPos, Vector3> board = new(); // º¸µå»óÁÂÇ¥¿Í ¿ùµåÆ÷Áö¼ÇÀ» ¹­À½
+    private Dictionary<BoardPos, Vector3> board = new(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private Dictionary<Vector3, BoardPos> reverseDict = new();
 
     private Vector3 zeroPos = Vector3.zero;
@@ -29,7 +29,7 @@ public class PentominoBoard : MonoBehaviour
     private void Start()
     {
         gridSize *= transform.lossyScale.x;
-        zeroPos = transform.GetChild(0).position;// Ã¹¹øÂ° ÀÚ½ÄÀº ¹«Á¶°Ç ±âÁØÆ÷Áö¼Ç
+        zeroPos = transform.GetChild(0).position;// Ã¹ï¿½ï¿½Â° ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
     public void Init()
     {
@@ -69,7 +69,7 @@ public class PentominoBoard : MonoBehaviour
         }
 
     }
-    public Vector3 BoardPosToWorldPos(BoardPos pos)// º¸µåÁÂÇ¥ ÀÔ·ÂÇÏ¸é ¿ùµåÁÂÇ¥ ¹ÝÈ¯
+    public Vector3 BoardPosToWorldPos(BoardPos pos)// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ ï¿½Ô·ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½È¯
     {
         return board[pos];
     }
@@ -82,7 +82,7 @@ public class PentominoBoard : MonoBehaviour
         if (x >= 0 && x < width && y >= 0 && y < height)
             return new BoardPos { x = x, y = y };
 
-        return new BoardPos { x = -999, y = -999 }; // invalid Ç¥½Ã
+        return new BoardPos { x = -999, y = -999 }; // invalid Ç¥ï¿½ï¿½
     }
 
     public void SetActiveBoard(BoardPos[] boardPos, bool newActive)
@@ -108,7 +108,7 @@ public class PentominoBoard : MonoBehaviour
         {
             //BoardPos boardIndex = WorldPosToBoardPos(worldPos[i]); //Todo
 
-            // ¹üÀ§ ¹þ¾î³ª¸é ¸ø ³õ°Ô ¸·±â (IndexOutOfRange ¹æÁö!)
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (IndexOutOfRange ï¿½ï¿½ï¿½ï¿½!)
             if (pos.x < 0 || pos.x >= width ||
                 pos.y < 0 || pos.y >= height)
             {
@@ -136,10 +136,10 @@ public class PentominoBoard : MonoBehaviour
     {
         Debug.Log("========== board  ==========");
 
-        for (int y = height - 1; y >= 0; y--)           // Çà (YÃà, À§¡æ¾Æ·¡)
+        for (int y = height - 1; y >= 0; y--)           // ï¿½ï¿½ (Yï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Æ·ï¿½)
         {
-            string row = $"Row {y:00} | ";         // Çà ¹øÈ£ Ç¥½Ã
-            for (int x = 0; x < width; x++)        // ¿­ (XÃà, ¿Þ¡æ¿À¸¥)
+            string row = $"Row {y:00} | ";         // ï¿½ï¿½ ï¿½ï¿½È£ Ç¥ï¿½ï¿½
+            for (int x = 0; x < width; x++)        // ï¿½ï¿½ (Xï¿½ï¿½, ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½)
             {
                 row += boardData[x, y] ? " O " : " X ";
             }

@@ -13,6 +13,7 @@ public class BinaryUIMng : MonoBehaviour // 플레이어 이동을 제외한 맵의 오브젝트
     [SerializeField] private BinaryLandGameMng gameMng;
 
     [SerializeField] private GameObject MainCanvas;
+    [SerializeField] private BinaryLandMapEditor editor;
 
 
     private RoroTileType[] MapGrid;
@@ -64,12 +65,20 @@ public class BinaryUIMng : MonoBehaviour // 플레이어 이동을 제외한 맵의 오브젝트
         for(int i = 0; i< MapGrid.Length; i++)
         {
             if (MapGrid[i] == RoroTileType.SwitchWall)
+            {
                 MapGrid[i] = RoroTileType.Empty;
+                //editor.ClearTile
+            }
+
         }
-        SwitchWall.SetActive(false);
+     
     }
 
+    public void TurnCheck()
+    {
+        ClearCheck();
 
+    }
     public void ClearCheck()
     {
         if (player1.CurGrid == clearPos1 && player2.CurGrid == clearPos2)

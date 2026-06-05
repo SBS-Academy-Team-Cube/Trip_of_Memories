@@ -31,7 +31,7 @@ public class BinaryInputMng : MonoBehaviour
             player.TryMove(dir);
         }
 
-        uiMng.ClearCheck();
+        uiMng.TurnCheck();
     }
 
 
