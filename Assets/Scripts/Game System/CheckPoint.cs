@@ -11,7 +11,7 @@ public class CheckPoint : MonoBehaviour
     public SceneId SceneID => Data.SceneID;
 
     private bool bEnabled = false;
-
+    
     private void OnEnable()
     {
 

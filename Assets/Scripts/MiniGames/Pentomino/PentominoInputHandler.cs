@@ -34,14 +34,13 @@ public class PentominoInputHandler : MonoBehaviour
         if (_currentPicked != null)
         {
             FollowMouse();// Move piece with mouse
-
             HandleRotation();// Handle A/D key rotation
         }
     }
 
     public void Init()
     {
-
+        
     }
 
     private void OnClickPerformed(InputAction.CallbackContext context)

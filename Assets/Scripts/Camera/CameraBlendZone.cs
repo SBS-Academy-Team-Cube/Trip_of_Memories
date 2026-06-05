@@ -4,26 +4,29 @@ using UnityEngine;
 public class CameraBlendZone : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera Camera;
-    [SerializeField] private Lever TargetLever = null;
+    [SerializeField] private Trigger Trigger;
     
+    private bool bBlending = false;
+
     private void OnEnable()
     {
-        if(TargetLever != null)
+        if(Trigger != null)
         {
-            TargetLever.OnLeverInteracted += HandleCameraBlending;
+            Trigger.OnTriggered += HandleCameraBlending;
         }
     }
-
+    
     private void Disable()
     {
-         if(TargetLever != null)
+         if(Trigger != null)
         {
-            TargetLever.OnLeverInteracted -= HandleCameraBlending;
+            Trigger.OnTriggered -= HandleCameraBlending;
         }
     }
 
-    public void HandleCameraBlending(bool bBlend)
+    public void HandleCameraBlending()
     {
-        Camera.Priority = bBlend ? 5 : 0;
+        bBlending = !bBlending;
+        Camera.Priority = bBlending ? 5 : 0;
     }
 }

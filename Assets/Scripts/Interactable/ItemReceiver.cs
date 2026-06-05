@@ -4,7 +4,10 @@ public class ItemReceiver : MonoBehaviour
 {
     [SerializeField] private Collider TriggerZone;
     [SerializeField] GameObject TargetItem;
-    public event System.Action OnItemReceived;
+
+    [SerializeField] private Trigger Trigger;
+    
+    // public event System.Action OnItemReceived;
     private bool IsTriggered = false;
     private void Awake()
     {
@@ -28,7 +31,9 @@ public class ItemReceiver : MonoBehaviour
             {
                 Destroy(Component);
             }
-            OnItemReceived?.Invoke();
+
+            Trigger.OnTrigger();
+            // OnItemReceived?.Invoke();
         }
     }
 }

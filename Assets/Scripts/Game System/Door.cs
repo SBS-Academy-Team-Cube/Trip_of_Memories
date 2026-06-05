@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private ItemReceiver[] Triggers;
+    [SerializeField] private Trigger[] Triggers;
     [SerializeField] private Mover DoorMover;
     [SerializeField] private AudioSource Audio;
     private int RequiredCondition = 0;
@@ -16,14 +16,14 @@ public class Door : MonoBehaviour
     {
         foreach (var Trigger in Triggers)
         {
-            Trigger.OnItemReceived += HandleCondition;
+            Trigger.OnTriggered += HandleCondition;
         }
     }
     private void OnDisable()
     {
         foreach (var Trigger in Triggers)
         {
-            Trigger.OnItemReceived -= HandleCondition;
+            Trigger.OnTriggered -= HandleCondition;
         }
     }
     private void HandleCondition()

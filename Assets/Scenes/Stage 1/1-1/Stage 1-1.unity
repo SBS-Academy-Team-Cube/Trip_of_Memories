@@ -10111,67 +10111,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7710782251202633274, guid: 6a4b524830b1a6141ae2e166124cb0f8, type: 3}
   m_PrefabInstance: {fileID: 322458548}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &322704585
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -181.61026
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 154.61635
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 72.79951
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5023539202953805466, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8745898947597909548, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_Name
-      value: Object For Test Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 8745898947597909548, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b2a2eea8edea81744a0762788ed00ec9, type: 3}
 --- !u!1 &323413080
 GameObject:
   m_ObjectHideFlags: 0
@@ -14455,6 +14394,7 @@ GameObject:
   - component: {fileID: 470456956}
   - component: {fileID: 470456960}
   - component: {fileID: 470456961}
+  - component: {fileID: 470456962}
   m_Layer: 0
   m_Name: Key Receiver_1
   m_TagString: Untagged
@@ -14569,6 +14509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemRecevier
   TriggerZone: {fileID: 470456956}
   TargetItem: {fileID: 1826178545}
+  Trigger: {fileID: 470456962}
 --- !u!65 &470456961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14590,6 +14531,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: -0.0000076293945}
+--- !u!114 &470456962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470456955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36414910f45316340bd53c57df7cc11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Trigger
 --- !u!4 &477815971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6975551850636965817, guid: 1e10a3d1828dbce489a5e0069e648113, type: 3}
@@ -31522,6 +31475,7 @@ GameObject:
   - component: {fileID: 1093120524}
   - component: {fileID: 1093120528}
   - component: {fileID: 1093120529}
+  - component: {fileID: 1093120530}
   m_Layer: 0
   m_Name: Key Receiver_2
   m_TagString: Untagged
@@ -31636,6 +31590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemRecevier
   TriggerZone: {fileID: 1093120524}
   TargetItem: {fileID: 1402221789}
+  Trigger: {fileID: 1093120530}
 --- !u!65 &1093120529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31657,6 +31612,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1093120530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093120523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36414910f45316340bd53c57df7cc11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Trigger
 --- !u!1001 &1094279141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33392,8 +33359,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   Triggers:
-  - {fileID: 470456960}
-  - {fileID: 1093120528}
+  - {fileID: 470456962}
+  - {fileID: 1093120530}
   DoorMover: {fileID: 1142479961}
   Audio: {fileID: 1142479963}
 --- !u!1001 &1145126519
@@ -70705,4 +70672,3 @@ SceneRoots:
   - {fileID: 70242797}
   - {fileID: 1095741685}
   - {fileID: 452088502}
-  - {fileID: 322704585}

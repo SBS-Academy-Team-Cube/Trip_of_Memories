@@ -6,11 +6,13 @@ public class PentominoGameManager : MonoBehaviour
     [SerializeField] private PentominoBoard board;
     [SerializeField] private PentominoPiece[] pieces;
 
+    [SerializeField] private Trigger GameStartTrigger;
+    [SerializeField] private Trigger GameClearTrigger;
+
     private bool IsTriggered = false;
     private void OnEnable()
     {
         EventBus.PentominoClear += GameClear;
-        // GameStart();// trigger
     }
     private void OnDisable()
     {
@@ -42,11 +44,18 @@ public class PentominoGameManager : MonoBehaviour
         if (Other.CompareTag("Player"))
         {
             IsTriggered = true;
+            if(GameStartTrigger != null)
+            {
+                GameStartTrigger.OnTrigger();
+            }
             GameStart();
         }
     }
     public void GameClear()
     {
-
+        if(GameClearTrigger != null)
+        {
+            GameClearTrigger.OnTrigger();
+        }
     }
 }
