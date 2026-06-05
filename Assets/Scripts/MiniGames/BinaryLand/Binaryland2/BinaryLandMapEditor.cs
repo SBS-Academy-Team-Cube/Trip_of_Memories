@@ -32,16 +32,18 @@ public class BinaryLandMapEditor : MonoBehaviour
     private RoroLevelData curData;
     private Image[,] tileMap;
 
-    private void Start()
-    {
-        GameStart();
-    }
-    public void GameStart()
+
+    public void GameStart(int MapIndex)
     {
         if (tileMap == null)
             CreateGrid();
 
-        CreateMap(0);
+        if(MapIndex < 0 ||  MapIndex >= mapData.Length)
+        {
+            Debug.Log("index error");
+            return;
+        }
+        CreateMap(MapIndex);
     }
 
     private void CreateGrid()
@@ -67,7 +69,7 @@ public class BinaryLandMapEditor : MonoBehaviour
         Debug.Log("grid create");
     }
 
-    public void CreateMap(int index)
+    private void CreateMap(int index)
     {
         if (index < 0 || index >= mapData.Length)
             return;
@@ -75,7 +77,7 @@ public class BinaryLandMapEditor : MonoBehaviour
         curData = mapData[index];
         //curData.ReSize();
         DrawMap();
-        uimng.SaveMap(curData);
+        uimng.SaveMap(curData,index);
     }
 
     private void DrawMap()
@@ -104,7 +106,10 @@ public class BinaryLandMapEditor : MonoBehaviour
         }
         Debug.Log("Map load");
     }
-
+    public void ClearTile(Vector2Int Pos)
+    {
+        tileMap[Pos.y, Pos.x].sprite = EmptyImage;
+    }
     private Sprite GetSprite(RoroTileType type)
     {
         switch(type)
@@ -121,10 +126,7 @@ public class BinaryLandMapEditor : MonoBehaviour
 
             default: return EmptyImage;
         }
-
-
-
-
     }
+
 
 }
