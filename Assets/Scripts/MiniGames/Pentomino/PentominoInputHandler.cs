@@ -40,7 +40,7 @@ public class PentominoInputHandler : MonoBehaviour
 
     public void Init()
     {
-        
+
     }
 
     private void OnClickPerformed(InputAction.CallbackContext context)
@@ -62,6 +62,10 @@ public class PentominoInputHandler : MonoBehaviour
                     BoardPos[] currentBoardPos = GetBoardPos(_currentPiece.PieceShape, _currentPiece.Transform.position);
                     board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
                 }
+            }
+            else
+            {
+                Debug.Log("Not hit");
             }
         }
         else // place
@@ -108,7 +112,8 @@ public class PentominoInputHandler : MonoBehaviour
         {
             Vector3 snappedPos = SnapToGrid(hit.point);
             Vector3 previewPos = new Vector3(snappedPos.x, snappedPos.y, snappedPos.z);
-            _currentPicked.Transform.position = previewPos;
+            _currentPicked.SetPreviewPosition(previewPos);
+            // _currentPicked.Transform.position = previewPos;
         }
     }
 
@@ -119,7 +124,7 @@ public class PentominoInputHandler : MonoBehaviour
             _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
             _currentPiece.RotatePiecePos(false);// false == left
         }
-
+        
         
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {

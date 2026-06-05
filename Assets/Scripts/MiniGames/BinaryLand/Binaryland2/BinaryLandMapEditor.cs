@@ -106,9 +106,9 @@ public class BinaryLandMapEditor : MonoBehaviour
         }
         Debug.Log("Map load");
     }
-    public void ClearTile(Vector2Int Pos)
+    public void ClearTile(int index)
     {
-        tileMap[Pos.y, Pos.x].sprite = EmptyImage;
+        
     }
     private Sprite GetSprite(RoroTileType type)
     {
