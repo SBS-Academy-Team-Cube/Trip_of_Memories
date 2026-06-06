@@ -1,6 +1,6 @@
 using UnityEngine;
-using Unity.Cinemachine;
 using System;
+using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private CutsceneManager CutSceneManager;
     public Action<GameObject> OnPlayerSpawned;
     [SerializeField] private UIHPController HPUI;
+    private bool IsRespawning = false;
+    private Health PlayerHP;
     void Start()
     {
         Vector3 spawnPosition = transform.position;
@@ -20,12 +22,11 @@ public class PlayerSpawner : MonoBehaviour
             CheckPoint checkpoint = FindCheckpoint(progress.LastCheckpoint.CheckpointID);
             if (checkpoint != null)
             {
+                IsRespawning = true;
                 spawnPosition = checkpoint.SpawnPosition.position;
                 spawnRotation = checkpoint.SpawnPosition.rotation;
             }
         }
-        
-
         if (SaveManager.Instance.Data == null)
         {
             SaveManager.Instance.Load();
@@ -49,18 +50,54 @@ public class PlayerSpawner : MonoBehaviour
         if (Player.TryGetComponent(out PlayerMovement Movement))
         {
             Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
-            
         }
-        CutSceneManager?.SetPlayerMovement(Player);
+        CutSceneManager?.Init(Player);
         if (CameraManager != null)
         {
             CameraManager.Init(Player);
         }
 
-        if (HPUI != null && Player.TryGetComponent(out Health PlayerHP))
+        if (Player.TryGetComponent(out Health PlayerHealth))
         {
-            HPUI.Init(PlayerHP);
-            PlayerHP.OnDead += ReSpawn;
+            InitPlayerHealth(PlayerHealth);
+            HPUI?.Init(PlayerHealth);
+        }
+    }
+
+    private void InitPlayerHealth(Health PlayerHealth)
+    {
+        if (PlayerHP != null)
+        {
+            PlayerHP.OnHPChanged -= OnPlayerHPChanged;
+            PlayerHP.OnDead -= ReSpawn;
+        }
+
+        PlayerHP = PlayerHealth;
+
+        int InitialHealth = IsRespawning
+            ? PlayerHP.MaxHealth
+            : SaveManager.Instance.GetCurrentPlayerHealthOrDefault(PlayerHP.MaxHealth);
+
+        PlayerHP.Init(InitialHealth);
+        SaveManager.Instance.SetCurrentPlayerHealth(PlayerHP.HP);
+        PlayerHP.OnHPChanged += OnPlayerHPChanged;
+        PlayerHP.OnDead += ReSpawn;
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerHP != null)
+        {
+            PlayerHP.OnHPChanged -= OnPlayerHPChanged;
+            PlayerHP.OnDead -= ReSpawn;
+        }
+    }
+
+    private void OnPlayerHPChanged(int CurrentHP)
+    {
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.SetCurrentPlayerHealth(CurrentHP);
         }
     }
     private CheckPoint FindCheckpoint(string checkpointId)
@@ -76,24 +113,20 @@ public class PlayerSpawner : MonoBehaviour
         }
         return null;
     }
-
     public void ReSpawn()
     {
-        if(GameDirector.Instance != null && GameDirector.Instance.Iris != null)
+        if (GameDirector.Instance == null || GameDirector.Instance.Iris == null || SaveManager.Instance == null || SaveManager.Instance.CurrentLevelProgress == null)
         {
-            GameDirector.Instance.Iris.FadeOut();
-        }
-        
-        if(SaveManager.Instance == null || GameDirector.Instance == null)
-        {
+            Debug.Log("Error in Respawn...");
             return;
         }
+        StartCoroutine(RespawnRoutine());
+    }
 
+    private IEnumerator RespawnRoutine()
+    {
+        yield return new WaitForSeconds(GameDirector.Instance.Iris.FadeOut() + 0.1f);
         var ProgressData = SaveManager.Instance.CurrentLevelProgress;
-        if(ProgressData != null)
-        {            
-            GameDirector.Instance.LoadScene(ProgressData.HasCheckpoint() ? ProgressData.LastCheckpoint.SceneID : ProgressData.FirstSceneId);
-        }
-    
+        GameDirector.Instance.LoadScene(ProgressData.HasCheckpoint() ? ProgressData.LastCheckpoint.SceneID : ProgressData.FirstSceneId);
     }
 }

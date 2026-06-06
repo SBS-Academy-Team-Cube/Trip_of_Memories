@@ -10,7 +10,7 @@ public class CutsceneManager : MonoBehaviour
     private PlayerMovement PlayerMovement = null;
     private PlayerAnimation PlayerAnimation = null;
 
-    public void SetPlayerMovement(GameObject Player)
+    public void Init(GameObject Player)
     {
         Player.TryGetComponent(out PlayerMovement);
         Player.TryGetComponent(out PlayerAnimation);

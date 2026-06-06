@@ -13,8 +13,10 @@ public class CharacterSelectController : MonoBehaviour
     public Action<CharacterSelectable> OnCharacterSelected;
     public Action OnSelectionCanceled;
     public Action<int> OnCharacterConfirmed;
+    public Action<CharacterSelectable> OnSelectableHoverChanged;
 
     private CharacterSelectable CurrentSelected;
+    private CharacterSelectable CurrentHovered;
 
     void OnEnable()
     {
@@ -32,6 +34,13 @@ public class CharacterSelectController : MonoBehaviour
 
         CancelAction.action.performed -= OnCancel;
         CancelAction.action.Disable();
+
+        SetHovered(null);
+    }
+
+    private void Update()
+    {
+        SetHovered(GetSelectableUnderMouse());
     }
 
     void OnClick(InputAction.CallbackContext context)
@@ -57,16 +66,41 @@ public class CharacterSelectController : MonoBehaviour
     }
     void TrySelect()
     {
+        CharacterSelectable newTarget = GetSelectableUnderMouse();
+        if (newTarget != null)
+        {
+            CurrentSelected = newTarget;
+            OnCharacterSelected?.Invoke(CurrentSelected);
+            ConfirmBtn.interactable = true;
+            SetHovered(null);
+        }
+    }
+
+    private CharacterSelectable GetSelectableUnderMouse()
+    {
+        if (MainCamera == null || Mouse.current == null)
+        {
+            return null;
+        }
+
         Ray ray = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.TryGetComponent(out CharacterSelectable newTarget))
         {
-            if (hit.collider.TryGetComponent(out CharacterSelectable newTarget))
-            {
-                CurrentSelected = newTarget;
-                OnCharacterSelected?.Invoke(CurrentSelected);
-                ConfirmBtn.interactable = true;
-            }
+            return newTarget;
         }
+
+        return null;
+    }
+
+    private void SetHovered(CharacterSelectable Selectable)
+    {
+        if (CurrentHovered == Selectable)
+        {
+            return;
+        }
+
+        CurrentHovered = Selectable;
+        OnSelectableHoverChanged?.Invoke(CurrentHovered);
     }
 }

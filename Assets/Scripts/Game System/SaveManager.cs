@@ -126,6 +126,24 @@ public class SaveManager : Singleton<SaveManager>
         CurrentLevelProgress.SetCheckpoint(SceneID, checkpointId);
     }
 
+    public void SetCurrentPlayerHealth(int playerHealth)
+    {
+        EnsureLevelProgress();
+        CurrentLevelProgress.PlayerHealth = Mathf.Max(0, playerHealth);
+    }
+
+    public int GetCurrentPlayerHealthOrDefault(int defaultHealth)
+    {
+        EnsureLevelProgress();
+
+        if (CurrentLevelProgress.PlayerHealth <= 0)
+        {
+            return defaultHealth;
+        }
+
+        return Mathf.Clamp(CurrentLevelProgress.PlayerHealth, 1, defaultHealth);
+    }
+
     public void CompleteCurrentLevel()
     {
         EnsureLevelProgress();

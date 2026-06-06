@@ -7,13 +7,18 @@ public class AudioManager : Singleton<AudioManager>
     [Header("BGM")]
     [SerializeField] private AudioSource BgmSource;
     [SerializeField] private List<AudioClip> BgmList;
+    [SerializeField] private float BGMFadeOutDuration = 1.0f;
+    [SerializeField] private float BGMFadeInDuration = 1.0f;
 
     [Header("SFX")]
     [SerializeField] private AudioSource SFXSource;
     [SerializeField] private AudioClip ButtonClickSFX;
 
     private float SFXVolumeMultiplier = 1.0f;
+    public float SFX_VOLUME => SFXVolumeMultiplier;
     private float BGMVolumeMultiplier = 1.0f;
+    public float BGM_VOLUME => BGMVolumeMultiplier;
+    private Coroutine BGMFadeCoroutine;
 
     protected override void Awake()
     {
@@ -24,7 +29,18 @@ public class AudioManager : Singleton<AudioManager>
     {
         UIEventBus.OnAnyButtonClicked -= PlayButtonClick;
     }
-
+    public void SetBGMVolume(float Volume)
+    {
+        BGMVolumeMultiplier = Mathf.Clamp01(Volume);
+        if (BgmSource != null && BGMFadeCoroutine == null)
+        {
+            BgmSource.volume = BGMVolumeMultiplier;
+        }
+    }
+    public void SetSFXVolume(float Volume)
+    {
+        SFXVolumeMultiplier = Volume;
+    }
     // ------------------------
     // BGM
     // ------------------------
@@ -33,33 +49,86 @@ public class AudioManager : Singleton<AudioManager>
         if (Index < 0 || Index >= BgmList.Count)
             return;
 
-        BgmSource.volume = 1.0f;
-        BgmSource.clip = BgmList[Index];
-        BgmSource.loop = true;
-        BgmSource.Play();
+        PlayBGM(BgmList[Index]);
     }
     public void PlayBGM(AudioClip Clip)
     {
-        BgmSource.volume = 1.0f;
+        if (Clip == null || BgmSource == null)
+        {
+            return;
+        }
+
+        if (BgmSource.clip == Clip)
+        {
+            BgmSource.loop = true;
+            if (!BgmSource.isPlaying)
+            {
+                BgmSource.Play();
+            }
+            StartBGMFade(BgmSource.volume, BGMVolumeMultiplier, BGMFadeInDuration, false);
+            return;
+        }
+
+        StopBGMFade();
+        BgmSource.volume = 0.0f;
         BgmSource.clip = Clip;
         BgmSource.loop = true;
         BgmSource.Play();
+        StartBGMFade(0.0f, BGMVolumeMultiplier, BGMFadeInDuration, false);
     }
-    public void StopBGM()
+    public float StopBGM(bool bKeepPlayback = false)
     {
-        StartCoroutine(FadeOut());
-    }
-    private IEnumerator FadeOut()
-    {
-        float Timer = 0.0f;
-        while (Timer < 1.5f)
+        if (BgmSource == null || BgmSource.clip == null)
         {
-            Timer += Time.deltaTime;
-            BgmSource.volume = Mathf.Lerp(0.0f, 1.5f, Timer / 1.5f);
+            return 0.0f;
+        }
+
+        StartBGMFade(BgmSource.volume, 0.0f, BGMFadeOutDuration, !bKeepPlayback);
+        return BGMFadeOutDuration;
+    }
+
+    private void StartBGMFade(float StartVolume, float EndVolume, float Duration, bool bStopAfterFade)
+    {
+        StopBGMFade();
+        BGMFadeCoroutine = StartCoroutine(BGMFade(StartVolume, EndVolume, Duration, bStopAfterFade));
+    }
+
+    private void StopBGMFade()
+    {
+        if (BGMFadeCoroutine != null)
+        {
+            StopCoroutine(BGMFadeCoroutine);
+            BGMFadeCoroutine = null;
+        }
+    }
+
+    private IEnumerator BGMFade(float StartVolume, float EndVolume, float Duration, bool bStopAfterFade)
+    {
+        if (Duration <= 0.0f)
+        {
+            BgmSource.volume = EndVolume;
+            if (bStopAfterFade)
+            {
+                BgmSource.Stop();
+            }
+            BGMFadeCoroutine = null;
+            yield break;
+        }
+
+        float Timer = 0.0f;
+        while (Timer < Duration)
+        {
+            Timer += Time.unscaledDeltaTime;
+            BgmSource.volume = Mathf.SmoothStep(StartVolume, EndVolume, Timer / Duration);
             yield return null;
         }
-        BgmSource.volume = 0.0f;
-        BgmSource.Stop();
+
+        BgmSource.volume = EndVolume;
+        if (bStopAfterFade)
+        {
+            BgmSource.Stop();
+        }
+        BGMFadeCoroutine = null;
     }
     // ------------------------
     // SFX

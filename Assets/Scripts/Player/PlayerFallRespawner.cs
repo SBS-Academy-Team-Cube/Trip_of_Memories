@@ -4,38 +4,66 @@ using UnityEngine;
 public class PlayerFallRespawner : MonoBehaviour
 {
     [SerializeField] private CharacterController Controller;
-    private Vector3 lastSafeTrans;
-    private Quaternion lastRotate;
-
+    public struct PlayerTransformSnapshot
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public PlayerTransformSnapshot(Vector3 position, Quaternion rotation)
+        {
+            Position = position;
+            Rotation = rotation;
+        }
+    }
+    private CircularQueue<PlayerTransformSnapshot> safeTransforms;
+    [SerializeField] private int SafeFrameCount = 30;
+    private bool bWasGrounded;
     private void Update()
     {
-        if(Controller != null && Controller.isGrounded)
+        if (Controller == null)
         {
+            return;
+        }
+
+        bool bIsGrounded = Controller.isGrounded;
+        if (bIsGrounded)
+        {
+            if (!bWasGrounded)
+            {
+                safeTransforms.Clear();
+            }
+
             SaveTrans();
         }
+        bWasGrounded = bIsGrounded;
     }
     private void Awake()
     {
-        if(Controller == null)
+        if (Controller == null)
         {
             TryGetComponent(out Controller);
         }
+        safeTransforms = new CircularQueue<PlayerTransformSnapshot>(Mathf.Max(1, SafeFrameCount));
+        bWasGrounded = Controller != null && Controller.isGrounded;
     }
     public void Fall()
     {
+        if (Controller == null || safeTransforms.Count == 0)
+        {
+            return;
+        }
+
         Controller.enabled = false;
 
-        transform.position = lastSafeTrans; 
-        transform.rotation = lastRotate;
+        var SafeTransform = safeTransforms.Peek();
+        transform.SetPositionAndRotation(SafeTransform.Position, SafeTransform.Rotation);
 
         Controller.enabled = true;
-        
+
         StartCoroutine(RespawnEffect());
     }
     private void SaveTrans()
     {
-        lastSafeTrans = transform.position;
-        lastRotate = transform.rotation;
+        safeTransforms.Add(new PlayerTransformSnapshot(transform.position, transform.rotation));
     }
     private IEnumerator RespawnEffect()
     {

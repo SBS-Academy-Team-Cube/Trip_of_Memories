@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,15 +9,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Portal NextPortal;
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
+    [SerializeField] private bool bKeepBGMPlaybackForNextScene;
     void OnEnable()
     {
-        if (GameDirector.Instance && GameDirector.Instance.Iris)
-        {
-            GameDirector.Instance.Iris.OnFadeInTransition += OnFadeOutEnd;
-        }
         if (NextPortal != null)
         {
-            NextPortal.OnTriggered += CallTransition;
+            NextPortal.OnTriggered += LoadNextScene;
         }
         if (SaveManager.Instance && SaveManager.Instance.CurrentLevelProgress == null)
         {
@@ -25,13 +23,9 @@ public class LevelManager : MonoBehaviour
     }
     void OnDisable()
     {
-        if (GameDirector.Instance && GameDirector.Instance.Iris)
-        {
-            GameDirector.Instance.Iris.OnFadeInTransition -= OnFadeOutEnd;
-        }
         if (NextPortal != null)
         {
-            NextPortal.OnTriggered -= CallTransition;
+            NextPortal.OnTriggered -= LoadNextScene;
         }
     }
     private void Start()
@@ -41,27 +35,25 @@ public class LevelManager : MonoBehaviour
             AudioManager.Instance.PlayBGM(LevelBGM);
         }
     }
-    private void OnFadeOutEnd(bool IsFadeIn)
+    private void LoadNextScene()
     {
-        if (IsFadeIn)
+        if (GameDirector.Instance == null || GameDirector.Instance.Iris == null)
         {
+            Debug.Log("Error with Load Next Scene in Level Manager...");
             return;
         }
+        StartCoroutine(NextSceneLoadRoutine());
+    }
+    private IEnumerator NextSceneLoadRoutine()
+    {
+        float IrisFadeDuration = GameDirector.Instance.Iris.FadeOut();
+        float BGMFadeDuration = 0.0f;
         if (AudioManager.Instance)
         {
-            AudioManager.Instance.StopBGM();
+            BGMFadeDuration = AudioManager.Instance.StopBGM(bKeepBGMPlaybackForNextScene);
         }
-        if (GameDirector.Instance)
-        {
 
-            GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
-        }
-    }
-    public void CallTransition()
-    {
-        if (GameDirector.Instance && GameDirector.Instance.Iris)
-        {
-            GameDirector.Instance.Iris.FadeOut();
-        }
+        yield return new WaitForSeconds(Mathf.Max(IrisFadeDuration, BGMFadeDuration) + 0.1f);
+        GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
     }
 }

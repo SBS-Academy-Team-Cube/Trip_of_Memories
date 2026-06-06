@@ -7,6 +7,7 @@ public class LevelProgressData
     public string LevelId;
 
     public int SessionMemoryRecoveryPercent;
+    public int PlayerHealth;
 
     // Temporary records for the current level run.
     public List<string> CollectedMemoryItemIds = new List<string>();
@@ -45,6 +46,7 @@ public class LevelProgressData
             CompletedInteractionIds = new List<string>();
         }
         SessionMemoryRecoveryPercent = Math.Max(0, SessionMemoryRecoveryPercent);
+        PlayerHealth = Math.Max(0, PlayerHealth);
     }
 
     public bool HasCheckpoint()

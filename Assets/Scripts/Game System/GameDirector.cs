@@ -11,6 +11,8 @@ public enum GameState
 }
 public class GameDirector : Singleton<GameDirector>
 {
+    [Header("Test Option")]
+    public bool bTesting = false;
     public SceneId NextSceneID { get; private set; }
     public SceneId CurrentSceneID { get; private set; }
     private readonly SceneId LoadingSceneID = SceneId.Loading;
@@ -23,6 +25,14 @@ public class GameDirector : Singleton<GameDirector>
     public bool IsPaused => bPaused;
     public event Action<bool> OnPaused;
     private bool bSlowMode;
+
+    void Start()
+    {
+        if (bTesting)
+        {
+            ShowMouseCursor(false);
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -151,6 +161,12 @@ public class GameDirector : Singleton<GameDirector>
     }
     public void ShowMouseCursor(bool show)
     {
+        if (MouseCursorManager.Instance != null)
+        {
+            MouseCursorManager.Instance.SetVisible(show);
+            return;
+        }
+
         Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = show;
     }

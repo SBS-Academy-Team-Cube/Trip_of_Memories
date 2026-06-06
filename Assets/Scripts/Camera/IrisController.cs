@@ -16,21 +16,25 @@ public class IrisController : MonoBehaviour
         Image.material = Mat;
         Mat.SetVector("_Center", new Vector2(0.5f, 0.5f));
     }
-    public void FadeIn()
+    public float FadeIn()
     {
         if (Mat)
         {
             Mat.SetFloat("_Radius", 0.0f);
             StartTransition(true);
+            return FadeDuration;
         }
+        return 0.0f;
     }
-    public void FadeOut()
+    public float FadeOut()
     {
         if (Mat)
         {
             Mat.SetFloat("_Radius", 1.2f);
             StartTransition(false);
+            return FadeDuration;
         }
+        return 0.0f;
     }
     public void StartTransition(bool IsFadeIn)
     {

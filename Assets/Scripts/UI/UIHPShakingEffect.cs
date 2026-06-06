@@ -6,7 +6,7 @@ public class UIHPShakingEffect : MonoBehaviour
     [Header("References")]
     [SerializeField] private RectTransform Target;
     [SerializeField] private Image TargetImage;
-    
+
     [Header("Shake")]
     [SerializeField] private float ShakeDuration = 1.0f;
     [SerializeField] private float MaxAngle = 15.0f;
@@ -14,12 +14,16 @@ public class UIHPShakingEffect : MonoBehaviour
 
     [Header("Color Fade")]
     [SerializeField] private float ColorFadeDuration = 0.35f;
-    private Color TargetColor = new Color32(0x60, 0x60, 0x60, 180);
+    private Color DisabledColor = new Color32(0x60, 0x60, 0x60, 180);
     private Color OriginalColor;
-    private Coroutine CurrentRoutine;    
+    private Coroutine CurrentRoutine;
     private void Awake()
     {
         OriginalColor = TargetImage.color;
+    }
+    public void Init(bool bEnable)
+    {
+        TargetImage.color = bEnable ? OriginalColor : DisabledColor;
     }
     public void Reset()
     {
@@ -63,9 +67,9 @@ public class UIHPShakingEffect : MonoBehaviour
         {
             Timer += Time.deltaTime;
             float Normalized = Timer / ColorFadeDuration;
-            TargetImage.color = Color.Lerp(StartColor, TargetColor, Mathf.SmoothStep(0.0f, 1.0f, Normalized));
+            TargetImage.color = Color.Lerp(StartColor, DisabledColor, Mathf.SmoothStep(0.0f, 1.0f, Normalized));
             yield return null;
         }
-        TargetImage.color = TargetColor;
+        TargetImage.color = DisabledColor;
     }
 }

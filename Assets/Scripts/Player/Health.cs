@@ -4,12 +4,17 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int MaxHP;
-    public int HP;
+    public int MaxHealth => MaxHP;
+    public int HP { get; private set; }
     public event Action<int> OnHPChanged;
     public event Action OnDead;
     private void Awake()
     {
         HP = MaxHP;
+    }
+    public void Init(int Health)
+    {
+        HP = Mathf.Clamp(Health, 0, MaxHP);
     }
     public void TakeDamage()
     {

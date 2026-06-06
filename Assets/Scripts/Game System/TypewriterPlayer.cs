@@ -36,21 +36,30 @@ public class TypewriterPlayer : MonoBehaviour
     {
         IsTyping = true;
         TextUI.text = "";
-        if (SoundCoroutine != null)
-        {
-            StopCoroutine(SoundCoroutine);
-        }
-        if (AudioSource != null && !Effect.TypingSounds.Empty())
-        {
-            SoundCoroutine = StartCoroutine(PlayRandomSound(Effect));
-        }
+        // if (SoundCoroutine != null)
+        // {
+        //     StopCoroutine(SoundCoroutine);
+        // }
+        // if (AudioSource != null && !Effect.TypingSounds.Empty())
+        // {
+        //     SoundCoroutine = StartCoroutine(PlayRandomSound(Effect));
+        // }
+        int SoundChar = 2;
+        int SoundIdx = 0;
         foreach (char Character in FullText)
         {
             TextUI.text += Character;
+            SoundIdx++;
+            if (SoundIdx == SoundChar && AudioSource != null && !Effect.TypingSounds.Empty() && AudioManager.Instance != null)
+            {
+                SoundIdx = 0;
+                AudioManager.Instance.PlaySFX(Effect.TypingSounds.GetSound());
+                // AudioSource.PlayOneShot(Effect.TypingSounds.GetSound());
+            }
             yield return new WaitForSeconds(Effect.Delay);
         }
         IsTyping = false;
-        TypingCoroutine = null;
+        // TypingCoroutine = null;
         OnTypingFinished?.Invoke();
     }
 

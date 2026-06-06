@@ -7,7 +7,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject PauseMenuUI;
     [SerializeField] private Button ContinueBtn;
     private GameDirector Director;
-
     private void OnEnable()
     {
         Director = GameDirector.Instance;
@@ -16,9 +15,13 @@ public class PauseMenu : MonoBehaviour
             Director.OnPaused += HandlePause;
             ContinueBtn.onClick.AddListener(Director.ContinueGame);
             HandlePause(Director.IsPaused);
+            Debug.Log("GameDirector in Scene");
             return;
         }
-        
+        else
+        {
+            Debug.Log("No GameDirector in Scene");
+        }
         HandlePause(false);
     }
     private void OnDisable()
@@ -28,7 +31,6 @@ public class PauseMenu : MonoBehaviour
             Director.OnPaused -= HandlePause;
             ContinueBtn.onClick.RemoveListener(Director.ContinueGame);
         }
-
         Director = null;
     }
     private void HandlePause(bool bPaused)

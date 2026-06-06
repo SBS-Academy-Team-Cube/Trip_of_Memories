@@ -7,16 +7,19 @@ public class UIHPController : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioClip HPSFX;
     [SerializeField] private float Volume = 0.8f;
-    
     private Health PlayerHP;
     public void Init(Health PlayerHP)
     {
         this.PlayerHP = PlayerHP;
         this.PlayerHP.OnHPChanged += OnHealthChanged;
+        for (int i = 0; i < HPUIs.Length; i++)
+        {
+            HPUIs[i].Init(i < this.PlayerHP.HP);
+        }
     }
     void OnDisable()
     {
-        if(PlayerHP != null)
+        if (PlayerHP != null)
         {
             PlayerHP.OnHPChanged -= OnHealthChanged;
         }
@@ -28,9 +31,9 @@ public class UIHPController : MonoBehaviour
         {
             return;
         }
-        if(CurrentRemain == 3)
+        if (CurrentRemain == 3)
         {
-            foreach(UIHPShakingEffect HP in HPUIs)
+            foreach (UIHPShakingEffect HP in HPUIs)
             {
                 HP.Reset();
             }
@@ -38,7 +41,7 @@ public class UIHPController : MonoBehaviour
         else
         {
             HPUIs[CurrentRemain].Play();
-            if(AudioManager.Instance != null)
+            if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(HPSFX, Volume);
             }
