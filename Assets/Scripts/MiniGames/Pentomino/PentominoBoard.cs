@@ -69,7 +69,7 @@ public class PentominoBoard : MonoBehaviour
         }
 
     }
-    public Vector3 BoardPosToWorldPos(BoardPos pos)// ������ǥ �Է��ϸ� ������ǥ ��ȯ
+    public Vector3 BoardPosToWorldPos(BoardPos pos)
     {
         return board[pos];
     }

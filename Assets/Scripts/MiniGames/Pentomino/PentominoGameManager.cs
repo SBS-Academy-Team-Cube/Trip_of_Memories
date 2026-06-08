@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PentominoGameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PentominoGameManager : MonoBehaviour
     [SerializeField] private Trigger GameStartTrigger;
     [SerializeField] private Trigger GameClearTrigger;
 
+    private PlayerInput PlayerInputSystem = null;
     private bool IsTriggered = false;
     private void OnEnable()
     {
@@ -43,8 +45,18 @@ public class PentominoGameManager : MonoBehaviour
         }
         if (Other.CompareTag("Player"))
         {
+            if (Other.TryGetComponent(out PlayerInputSystem))
+            {
+                PlayerInputSystem.enabled = false;
+            }
+
+            if (GameDirector.Instance != null)
+            {
+                GameDirector.Instance.ShowMouseCursor(true);
+            }
+
             IsTriggered = true;
-            if(GameStartTrigger != null)
+            if (GameStartTrigger != null)
             {
                 GameStartTrigger.OnTrigger();
             }
@@ -53,7 +65,7 @@ public class PentominoGameManager : MonoBehaviour
     }
     public void GameClear()
     {
-        if(GameClearTrigger != null)
+        if (GameClearTrigger != null)
         {
             GameClearTrigger.OnTrigger();
         }

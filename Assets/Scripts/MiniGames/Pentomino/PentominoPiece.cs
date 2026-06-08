@@ -5,7 +5,6 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     [SerializeField] private PieceShape pieceShape;
     [SerializeField] private Transform PivotTransform;
 
-
     private Vector2 TransformPivotOffset;
 
     private Vector3 startPos;
@@ -47,7 +46,7 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
     {
         //if isright == true -> 90
         //if isright == false -> -90
-        if(isRight)
+        if (isRight)
         {
             for (int i = 0; i < curShape.shape.Length; ++i)
             {
@@ -82,7 +81,7 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
         _isPicked = false;
         transform.rotation = startRot;
         transform.position = startPos;
-        
+
     }
     public void SetPreviewPosition(Vector3 Target)
     {

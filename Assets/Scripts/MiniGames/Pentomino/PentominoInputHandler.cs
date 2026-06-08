@@ -13,8 +13,8 @@ public class PentominoInputHandler : MonoBehaviour
     private IPentominoPickable _currentPicked = null;
     private PentominoPiece _currentPiece = null;
 
-    private void Awake() 
-    { 
+    private void Awake()
+    {
         // _tileSize *= transform.lossyScale;
         _inputActions = new PentominoInputAction();
     }
@@ -33,8 +33,8 @@ public class PentominoInputHandler : MonoBehaviour
     {
         if (_currentPicked != null)
         {
-            FollowMouse();// Move piece with mouse
-            HandleRotation();// Handle A/D key rotation
+            FollowMouse();      // Move piece with mouse
+            HandleRotation();   // Handle A/D key rotation
         }
     }
 
@@ -63,10 +63,6 @@ public class PentominoInputHandler : MonoBehaviour
                     board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
                 }
             }
-            else
-            {
-                Debug.Log("Not hit");
-            }
         }
         else // place
         {
@@ -87,6 +83,8 @@ public class PentominoInputHandler : MonoBehaviour
                 }
                 else // 이미 조각이 놓여져있다면
                 {
+                    Debug.Log("Other Piece already taken");
+
                     _currentPiece.ReturnToStart();// Invalid position → return to start
                     _currentPicked = null;
                     _currentPiece = null;
@@ -94,6 +92,7 @@ public class PentominoInputHandler : MonoBehaviour
             }
             else // 보드 밖에 놓았다면
             {
+                Debug.Log("There's invalid place");
                 _currentPiece.ReturnToStart();
                 _currentPicked = null;
                 _currentPiece = null;
@@ -105,8 +104,6 @@ public class PentominoInputHandler : MonoBehaviour
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = _mainCamera.ScreenPointToRay(mousePos);
-
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 0.1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
         {
@@ -124,8 +121,8 @@ public class PentominoInputHandler : MonoBehaviour
             _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
             _currentPiece.RotatePiecePos(false);// false == left
         }
-        
-        
+
+
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);

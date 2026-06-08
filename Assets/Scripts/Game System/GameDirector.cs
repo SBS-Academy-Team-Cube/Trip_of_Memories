@@ -31,6 +31,7 @@ public class GameDirector : Singleton<GameDirector>
         if (bTesting)
         {
             ShowMouseCursor(false);
+            CurrentState = GameState.InGame;
         }
     }
     protected override void Awake()
