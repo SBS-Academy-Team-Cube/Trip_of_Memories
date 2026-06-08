@@ -9,6 +9,20 @@ public enum ETargetLayer { LeftArm, RightArm, Head, Body };
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : MonoBehaviour
 {
+    [SerializeField] private PlayerState State;
+    private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+    private static readonly int GaitHash = Animator.StringToHash("Gait");
+    private static readonly int IsHoldingHash = Animator.StringToHash("IsHolding");
+    private static readonly int PickingTriggerHash = Animator.StringToHash("PickingTrigger");
+    private static readonly int LeverPushTriggerHash = Animator.StringToHash("LeverPushTrigger");
+    private static readonly int LeverAnimSpeedHash = Animator.StringToHash("LeverAnimSpeed");
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int JumpHash = Animator.StringToHash("Jump");
+    private static readonly int MantlingHash = Animator.StringToHash("Mantling");
+    private static readonly int IsHangingHash = Animator.StringToHash("IsHanging");
+    private static readonly int RopeAnimSpeedHash = Animator.StringToHash("RopeAnimSpeed");
+    private static readonly int TakeSprayTriggerHash = Animator.StringToHash("TakeSprayTrigger");
     private static readonly string[] LayerNames =
     { "Left Arm Layer", "Right Arm Layer", "Head Layer", "Body Layer" };
     private int[] LayerIndexs = { -1, -1, -1, -1 };
@@ -29,11 +43,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             LayerIndexs[i] = AnimationController.GetLayerIndex(LayerNames[i]);
         }
-        // LeftArmLayerIndex = AnimationControllerGetLayerIndex(LeftArmLayerName, "Left Arm");
-        // RightArmLayerIndex = GetLayerIndex(RightArmLayerName, "Right Arm");
-        // HeadLayerIndex = AnimationController.GetLayerIndex(HeadLayerName);
-        // BodyLayerIndex = AnimationController.GetLayerIndex(BodyLayerName);
-
+    }
+    void Update()
+    {
+        AnimationController.SetBool(IsGroundedHash, State.IsGrounded);
     }
     private void OnAnimatorIK(int layerIndex)
     {
@@ -95,39 +108,39 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetIsMoving(bool IsMoving)
     {
-        AnimationController.SetBool("IsMoving", IsMoving);
+        AnimationController.SetBool(IsMovingHash, IsMoving);
     }
     public void SetGait(int Gait)
     {
-        AnimationController.SetInteger("Gait", Gait);
+        AnimationController.SetInteger(GaitHash, Gait);
     }
     public void SetIsHolding(bool IsHolding)
     {
-        AnimationController.SetBool("IsHolding", IsHolding);
-        AnimationController.SetTrigger("PickingTrigger");
+        AnimationController.SetBool(IsHoldingHash, IsHolding);
+        AnimationController.SetTrigger(PickingTriggerHash);
     }
     public void SetLeverPush(bool bPushing)
     {
         // AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
-        AnimationController.SetTrigger("LeverPushTrigger");
+        AnimationController.SetTrigger(LeverPushTriggerHash);
         SetLeverPlaying(0.0f);
     }
     public void SetLeverPlaying(float Speed)
     {
-        AnimationController.SetFloat("LeverAnimSpeed", Speed);
+        AnimationController.SetFloat(LeverAnimSpeedHash, Speed);
     }
     public void SetSpeed(float Speed)
     {
-        AnimationController.SetFloat("Speed", Speed);
+        AnimationController.SetFloat(SpeedHash, Speed);
     }
     public void SetJump()
     {
-        AnimationController.SetTrigger("Jump");
+        AnimationController.SetTrigger(JumpHash);
     }
     public void SetMantling()
     {
         AnimationController.applyRootMotion = true;
-        AnimationController.SetTrigger("Mantling");
+        AnimationController.SetTrigger(MantlingHash);
     }
     public void DisableRootMotion()
     {
@@ -135,7 +148,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetHangOnRope(bool IsHanging)
     {
-        AnimationController.SetBool("IsHanging", IsHanging);
+        AnimationController.SetBool(IsHangingHash, IsHanging);
         if (IsHanging)
         {
             SetRopePlaying(0.0f);
@@ -143,12 +156,12 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void SetRopePlaying(float Speed)
     {
-        AnimationController.SetFloat("RopeAnimSpeed", Speed);
+        AnimationController.SetFloat(RopeAnimSpeedHash, Speed);
     }
 
     public void SetTakeSpray(bool bHolding)
     {
-        AnimationController.SetTrigger("TakeSprayTrigger");
+        AnimationController.SetTrigger(TakeSprayTriggerHash);
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, 0.15f);
     }
     public void SetInterpolatedLayerWeight(ETargetLayer Layer, float TargetWeight, float Duration)

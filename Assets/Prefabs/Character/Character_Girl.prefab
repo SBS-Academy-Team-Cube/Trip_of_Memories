@@ -6121,6 +6121,7 @@ GameObject:
   - component: {fileID: 2190967078343995026}
   - component: {fileID: -3031481163088182191}
   - component: {fileID: 8063866914387844452}
+  - component: {fileID: 3525498608264676458}
   m_Layer: 0
   m_Name: Character_Girl
   m_TagString: Player
@@ -6266,6 +6267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1275952e56f8dcd42a5fa14b7c869db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+  State: {fileID: 4277910296705461236}
   AnimationController: {fileID: 7754373230862415023}
 --- !u!114 &6047770090477117709
 MonoBehaviour:
@@ -6355,7 +6357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  LedgeCheckForwardDistance: 0.5
+  LedgeCheckForwardDistance: 0.75
   ClimbableWallLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -6509,6 +6511,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallRespawner
   Controller: {fileID: 3888643630126887021}
   SafeFrameCount: 30
+--- !u!81 &3525498608264676458
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906570475976242287}
+  m_Enabled: 1
 --- !u!1 &3969301151861125994
 GameObject:
   m_ObjectHideFlags: 0
@@ -13885,13 +13895,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8127729063431384953}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.37472108, y: -0.29789746, z: -0.64346796, w: 0.5973192}
-  m_LocalPosition: {x: -0.045185786, y: 0.011648596, z: 0.0059806844}
+  m_LocalRotation: {x: 0.2876066, y: -0.20508964, z: -0.67877245, w: 0.64380795}
+  m_LocalPosition: {x: -0.045187496, y: 0.011650247, z: 0.005979224}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2604381430976028962}
-  m_LocalEulerAnglesHint: {x: 3.686, y: -57.125, z: -96.267}
+  m_LocalEulerAnglesHint: {x: 5.273, y: -41.094, z: -95.006}
 --- !u!1 &8162075542916893516
 GameObject:
   m_ObjectHideFlags: 0
