@@ -18,7 +18,8 @@ public class CheckPoint : MonoBehaviour
     private bool bHasAppliedEffectState = false;
     private bool bEffectCached = false;
     private ParticleSystem[] EnabledEffectParticles = Array.Empty<ParticleSystem>();
-    
+    private AudioSource[] EnabledEffectAudioSources = Array.Empty<AudioSource>();
+
     private void Awake()
     {
         CacheEnabledEffect();
@@ -42,8 +43,8 @@ public class CheckPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider Other)
     {
-        if (!Other.CompareTag("Player")) 
-        { 
+        if (!Other.CompareTag("Player"))
+        {
             return;
         }
 
@@ -133,6 +134,24 @@ public class CheckPoint : MonoBehaviour
 
             Particle.Play(true);
         }
+
+        foreach (AudioSource Audio in EnabledEffectAudioSources)
+        {
+            if (Audio == null)
+            {
+                continue;
+            }
+
+            if (bRestart)
+            {
+                Audio.Stop();
+            }
+
+            if (!Audio.isPlaying)
+            {
+                Audio.Play();
+            }
+        }
     }
 
     private void StopEnabledEffect()
@@ -149,6 +168,16 @@ public class CheckPoint : MonoBehaviour
             Particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
+        foreach (AudioSource Audio in EnabledEffectAudioSources)
+        {
+            if (Audio == null)
+            {
+                continue;
+            }
+
+            Audio.Stop();
+        }
+
         if (EnabledEffectRoot != null)
         {
             EnabledEffectRoot.gameObject.SetActive(false);
@@ -161,16 +190,16 @@ public class CheckPoint : MonoBehaviour
         {
             return;
         }
-
         if (EnabledEffectRoot == null)
         {
             EnabledEffectRoot = FindChildRecursive(transform, EnabledEffectRootName);
         }
-
         EnabledEffectParticles = EnabledEffectRoot != null
             ? EnabledEffectRoot.GetComponentsInChildren<ParticleSystem>(true)
             : Array.Empty<ParticleSystem>();
-
+        EnabledEffectAudioSources = EnabledEffectRoot != null
+            ? EnabledEffectRoot.GetComponentsInChildren<AudioSource>(true)
+            : Array.Empty<AudioSource>();
         bEffectCached = true;
     }
 

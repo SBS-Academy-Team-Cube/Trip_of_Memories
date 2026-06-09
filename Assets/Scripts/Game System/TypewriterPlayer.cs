@@ -5,9 +5,7 @@ using TMPro;
 public class TypewriterPlayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text TextUI;
-    [SerializeField] private AudioSource AudioSource;
     private Coroutine TypingCoroutine;
-    private Coroutine SoundCoroutine;
     public bool IsTyping { get; private set; }
     public System.Action OnTypingFinished;
     public void Play(string FullText, TypewriterEffect Effect)
@@ -24,10 +22,6 @@ public class TypewriterPlayer : MonoBehaviour
         {
             StopCoroutine(TypingCoroutine);
         }
-        if (SoundCoroutine != null)
-        {
-            StopCoroutine(SoundCoroutine);
-        }
         TextUI.text = FullText;
         IsTyping = false;
         OnTypingFinished?.Invoke();
@@ -36,42 +30,20 @@ public class TypewriterPlayer : MonoBehaviour
     {
         IsTyping = true;
         TextUI.text = "";
-        // if (SoundCoroutine != null)
-        // {
-        //     StopCoroutine(SoundCoroutine);
-        // }
-        // if (AudioSource != null && !Effect.TypingSounds.Empty())
-        // {
-        //     SoundCoroutine = StartCoroutine(PlayRandomSound(Effect));
-        // }
         int SoundChar = 2;
         int SoundIdx = 0;
         foreach (char Character in FullText)
         {
             TextUI.text += Character;
             SoundIdx++;
-            if (SoundIdx == SoundChar && AudioSource != null && !Effect.TypingSounds.Empty() && AudioManager.Instance != null)
+            if (SoundIdx == SoundChar && !Effect.TypingSounds.Empty() && AudioManager.Instance != null)
             {
                 SoundIdx = 0;
                 AudioManager.Instance.PlaySFX(Effect.TypingSounds.GetSound());
-                // AudioSource.PlayOneShot(Effect.TypingSounds.GetSound());
             }
             yield return new WaitForSeconds(Effect.Delay);
         }
         IsTyping = false;
-        // TypingCoroutine = null;
         OnTypingFinished?.Invoke();
-    }
-
-    private IEnumerator PlayRandomSound(TypewriterEffect Effect)
-    {
-        while (IsTyping)
-        {
-            AudioSource.pitch = Random.Range(0.9f, 1.35f);
-            AudioClip RandomClip = Effect.TypingSounds.GetSound();
-            AudioSource.PlayOneShot(RandomClip);
-            yield return new WaitForSeconds(RandomClip.length / AudioSource.pitch);
-        }
-        SoundCoroutine = null;
     }
 }

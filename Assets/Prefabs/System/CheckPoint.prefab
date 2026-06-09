@@ -121,6 +121,7 @@ MonoBehaviour:
   Data:
     SceneID: 6
     CheckpointID: CP_1-2_1
+  EnabledEffectRoot: {fileID: 7758145876487938850}
   SpawnPosition: {fileID: 4738582484371318002}
 --- !u!135 &4827280305132110879
 SphereCollider:
@@ -818,7 +819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: m_Volume
-      value: 0.8
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: m_Enabled
@@ -826,7 +827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: MaxDistance
-      value: 6
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: MinDistance
@@ -834,6 +835,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: rolloffMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4145591156296750619, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
