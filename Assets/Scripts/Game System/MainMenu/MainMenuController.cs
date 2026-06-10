@@ -7,7 +7,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject InitialPanel;
     [SerializeField] private List<GameObject> Panels;
     [SerializeField] private InputActionReference CancelAction;
-
     private readonly Stack<GameObject> PanelHistory = new();
 
     void Start()

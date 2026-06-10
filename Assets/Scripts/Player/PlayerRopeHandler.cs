@@ -20,7 +20,7 @@ public class PlayerRopeHandler : MonoBehaviour
         Animation.SetHangOnRope(true);
         if (State != null)
         {
-            State.SetInterAction(PlayerState.EInterAction.Hanging);
+            State.SetInterAction(PlayerState.EInterAction.RopeHanging);
         }
         if (TryGetComponent(out CharacterController cc))
         {

@@ -12,7 +12,7 @@ public class PlayerState : MonoBehaviour
 
     public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
-    public enum EInterAction { None, ItemHolding, Hanging, Pushing };
+    public enum EInterAction { None, ItemHolding, RopeHanging, LeverPushing };
     public enum EAbility { None, Spray, Lantern };
     public EGait Gait { get; private set; } = EGait.Walking;
     public EStance Stance { get; private set; } = EStance.Standing;
@@ -43,8 +43,12 @@ public class PlayerState : MonoBehaviour
                     ItemHandler.TryDrop();
                 }
                 break;
-            case EInterAction.Pushing:
-            
+            case EInterAction.LeverPushing:
+                if (LeverHandler != null)
+                {
+                    LeverHandler.ReleaseLever();
+                }
+                break;
             case EInterAction.None:
                 if (InteractionComponent != null)
                 {

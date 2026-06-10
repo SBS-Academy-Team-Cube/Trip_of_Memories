@@ -35,7 +35,13 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        else if (State.InterAction == PlayerState.EInterAction.Hanging)
+        else if (State.InterAction == PlayerState.EInterAction.LeverPushing)
+        {
+            Velocity = Vector3.zero;
+            Animation.SetIsMoving(false);
+            return;
+        }
+        else if (State.InterAction == PlayerState.EInterAction.RopeHanging)
         {
             DoHangingMove();
         }
@@ -90,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void TryJump()
     {
-        if (Controller.isGrounded || State.InterAction == PlayerState.EInterAction.Hanging)
+        if (Controller.isGrounded || State.InterAction == PlayerState.EInterAction.RopeHanging)
         {
             Velocity.y = JumpForce;
             Animation.SetJump();

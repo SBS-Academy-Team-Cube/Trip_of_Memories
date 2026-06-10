@@ -1,4 +1,3 @@
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,7 +52,7 @@ public class BinaryLandMapEditor : MonoBehaviour
 
         foreach(Transform grid in gridTrans)
         {
-            Destroy(grid.gameObject); // ÃÊ±âÈ­.. Áö¿ì±â
+            Destroy(grid.gameObject); // ï¿½Ê±ï¿½È­.. ï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
         tileMap = new Image[height,width];
