@@ -9,13 +9,11 @@ public class PlayerLeverHandler : MonoBehaviour
     public void HandleLever(Lever Target)
     {
         transform.SetParent(Target.transform);
-
-        Vector3 TargetPosition = Target.GetPosition();
-        transform.position = Target.GetPosition(); /*new Vector3(TargetPosition.x, transform.position.y, TargetPosition.z);*/
+        transform.position = Target.GetPosition();
         transform.localRotation = Quaternion.Euler(0f, Target.bClockwise ? 0f : 180.0f, 0f);
         if (State)
         {
-            State.SetAction(PlayerState.EAction.Pushing);
+            State.SetInterAction(PlayerState.EInterAction.Pushing);
         }
         Target.TryGetComponent(out TargetLever);
 
@@ -24,12 +22,12 @@ public class PlayerLeverHandler : MonoBehaviour
         Target.GetIKPosition(out Transform Left, out Transform Right);
         Animation.SetHandIKTargets(Left, Right);
         Animation.SetHandIKWeight(1.0f, 1.0f);
-        
+
         OnLeverHolding?.Invoke(true);
     }
     public void ReleaseLever()
     {
-        if(TargetLever != null)
+        if (TargetLever != null)
         {
             TargetLever.Release();
             TargetLever = null;
@@ -37,7 +35,7 @@ public class PlayerLeverHandler : MonoBehaviour
         transform.SetParent(null);
         if (State)
         {
-            State.SetAction(PlayerState.EAction.None);
+            State.SetInterAction(PlayerState.EInterAction.None);
         }
         Animation.SetLeverPush(false);
         Animation.ClearHandIK();

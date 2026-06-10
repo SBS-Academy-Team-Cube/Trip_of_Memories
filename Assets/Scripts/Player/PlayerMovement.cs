@@ -10,21 +10,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private PlayerState State;
     private Vector2 MoveInput;
-    Vector3 Velocity;
+    private Vector3 Velocity;
     public Transform CameraTransform { get; private set; }
-    public float MoveSpeed = 5f;
-    public float SprintSpeed;
+
+    [Header("Settings")]
+    [SerializeField] private float MoveSpeed = 5f;
+    [SerializeField] private float SprintSpeed;
 
     [SerializeField] private float RotateSpeed = 20.0f;
-    public float Gravity = -9.81f;
-    public float JumpForce = 5f;
-    public Vector2 LookInput { get; private set; }
-    private bool bAddGravity = true;
-    
-    public void SetGravity(bool bUse)
-    {
-        bAddGravity = bUse;
-    }
+    [SerializeField] private float Gravity = -9.81f;
+    [SerializeField] private float JumpForce = 5f;
     public void SetCameraTransform(Transform CameraTransform)
     {
         this.CameraTransform = CameraTransform;
@@ -36,21 +31,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DoMove()
     {
-        if(!State.CanMove())
+        if (!State.CanMove() || MantlingComponent.IsMantling || !Controller.enabled)
         {
             return;
         }
-
-        if (MantlingComponent.IsMantling || !Controller.enabled)
-        {
-            return;
-        }
-
-        if (State.Action == PlayerState.EAction.Pushing)
-        {
-
-        }
-        else if (State.Action == PlayerState.EAction.Hanging)
+        else if (State.InterAction == PlayerState.EInterAction.Hanging)
         {
             DoHangingMove();
         }
@@ -60,8 +45,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Velocity.y = -2f;
             }
-
-            if(State.IntendToMove)
+            if (State.IntendToMove)
             {
                 Animation.SetIsMoving(true);
 
@@ -74,8 +58,9 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 Move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
                 Move = Vector3.ClampMagnitude(Move, 1f);
 
-                Controller.Move((State.IntendToSprint ? SprintSpeed : MoveSpeed) * Time.deltaTime * Move);
-                Animation.SetGait(State.IntendToSprint ? 1 : 0);
+                Controller.Move((State.IntendToSprint && State.CanSprint() ? SprintSpeed : MoveSpeed) * Time.deltaTime * Move);
+                Animation.SetGait(State.IntendToSprint && State.CanSprint() ? 1 : 0);
+
                 if (Move.sqrMagnitude > 0.01f)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(Move);
@@ -90,13 +75,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 Animation.SetIsMoving(false);
             }
-
-            
-            if (bAddGravity)
-            {
-                Velocity.y += Gravity * Time.deltaTime;
-                Controller.Move(Velocity * Time.deltaTime);
-            }
+            Velocity.y += Gravity * Time.deltaTime;
+            Controller.Move(Velocity * Time.deltaTime);
         }
     }
     private void DoHangingMove()
@@ -107,11 +87,10 @@ public class PlayerMovement : MonoBehaviour
     public void TryMove(Vector2 Value)
     {
         MoveInput = Value;
-        // Animation.SetSpeed(MoveInput.magnitude);
     }
     public void TryJump()
     {
-        if (Controller.isGrounded || State.Action == PlayerState.EAction.Hanging)
+        if (Controller.isGrounded || State.InterAction == PlayerState.EInterAction.Hanging)
         {
             Velocity.y = JumpForce;
             Animation.SetJump();
@@ -120,9 +99,5 @@ public class PlayerMovement : MonoBehaviour
         {
             MantlingComponent.TryMantling();
         }
-    }
-    public void TryLook(InputValue Value)
-    {
-        LookInput = Value.Get<Vector2>();
     }
 }

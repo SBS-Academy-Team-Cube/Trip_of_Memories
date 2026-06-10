@@ -1,4 +1,3 @@
-using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,23 +7,20 @@ public class PlayerRopeHandler : MonoBehaviour
     [SerializeField] private PlayerAnimation Animation;
     public UnityEvent<bool> OnEnterHanging;
     public float Speed;
-    public void GrapRope(GameObject Target)
+    public bool TryGrapRope(GameObject Target)
     {
-        float clampedY;
-        if (Target.TryGetComponent(out Renderer renderer))
+        if (!Target.TryGetComponent(out Renderer renderer))
         {
-            Bounds bounds = renderer.bounds;
-            clampedY = Mathf.Clamp(transform.position.y, bounds.min.y, bounds.max.y);
+            return false;
         }
-        else
-        {
-            return;
-        }
+        Bounds bounds = renderer.bounds;
+        float clampedY = Mathf.Clamp(transform.position.y, bounds.min.y, bounds.max.y);
+
         OnEnterHanging?.Invoke(true);
         Animation.SetHangOnRope(true);
-        if (State)
+        if (State != null)
         {
-            State.SetAction(PlayerState.EAction.Hanging);
+            State.SetInterAction(PlayerState.EInterAction.Hanging);
         }
         if (TryGetComponent(out CharacterController cc))
         {
@@ -32,12 +28,13 @@ public class PlayerRopeHandler : MonoBehaviour
             transform.position = new Vector3(Target.transform.position.x, clampedY, Target.transform.position.z);
             cc.enabled = true;
         }
+        return true;
     }
     public void ReleaseRope()
     {
         if (State)
         {
-            State.SetAction(PlayerState.EAction.None);
+            State.SetInterAction(PlayerState.EInterAction.None);
         }
         OnEnterHanging?.Invoke(false);
         Animation.SetHangOnRope(false);

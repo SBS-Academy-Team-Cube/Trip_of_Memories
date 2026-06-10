@@ -13,8 +13,10 @@ public class Rope : MonoBehaviour, IInteractable
     {
         if (Interactor.TryGetComponent(out PlayerRopeHandler Handler))
         {
-            Handler.GrapRope(gameObject);
-            return true;
+            if (Handler.TryGrapRope(gameObject))
+            {
+                return true;
+            }
         }
         return false;
     }

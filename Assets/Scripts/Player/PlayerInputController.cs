@@ -12,7 +12,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerSprayAbility SprayComponent;
     [SerializeField] private PlayerState State;
     [SerializeField] private PlayerInput Input;
-    
+
     public void OnHangingRope(bool bHanging)
     {
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
@@ -21,20 +21,19 @@ public class PlayerInputController : MonoBehaviour
     {
         Input.SwitchCurrentActionMap(bHolding ? "Lever" : "Player");
     }
-
     public void OnInteract(InputValue Value)
     {
         if (Value.isPressed)
         {
-            if (Interaction)
+            if (State != null)
             {
-                Interaction.PerformInteraction();
+                State.TryInteraction();
             }
         }
     }
     public void OnMove(InputValue Value)
     {
-        if(State != null)
+        if (State != null)
         {
             State.TryMove(Value.Get<Vector2>().sqrMagnitude >= 0.01f);
         }
@@ -70,8 +69,6 @@ public class PlayerInputController : MonoBehaviour
             RopeHandler.ReleaseRope();
         }
     }
-
-    // Spray
     public void OnPickUpSpray(InputValue Value)
     {
         if (SprayComponent)
@@ -86,8 +83,6 @@ public class PlayerInputController : MonoBehaviour
             SprayComponent.TryUse();
         }
     }
-    
-    // Lever Action Map
     public void OnPush(InputValue Value)
     {
         if (!LeverHandler)

@@ -17,9 +17,11 @@ public class PickupItem : MonoBehaviour, IInteractable
     {
         if (Interactor.TryGetComponent(out PlayerItemHandler Handler))
         {
-            Handler.TryHold(gameObject);
-            enabled = false;
-            return true;
+            if (Handler.TryHold(gameObject))
+            {
+                enabled = false;
+                return true;
+            }
         }
         return false;
     }

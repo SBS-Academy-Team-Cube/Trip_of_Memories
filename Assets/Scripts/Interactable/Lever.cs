@@ -21,7 +21,6 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private Transform LeverHandleTransform;
     [SerializeField] private FLeverPosition Clockwise;
     [SerializeField] private FLeverPosition CounterClockwise;
-
     [SerializeField] private Trigger Trigger;
 
     public bool IsRotating = false;
@@ -45,7 +44,6 @@ public class Lever : MonoBehaviour, IInteractable
         {
             bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
             Handler.HandleLever(this);
-
             if (Trigger != null)
             {
                 Trigger.OnTrigger();

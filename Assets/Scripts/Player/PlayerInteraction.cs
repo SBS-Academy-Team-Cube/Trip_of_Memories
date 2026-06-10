@@ -1,22 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private PlayerItemHandler ItemHandler;
-    private IInteractable CurTarget;
+    private IInteractable CurTarget = null;
     private List<IInteractable> InteractableList = new List<IInteractable>();
-    public System.Action<string, Transform, bool> OnTargetChanged;
     public void PerformInteraction()
     {
-        if (ItemHandler.bIsHoldingItem)
-        {
-            ItemHandler.TryDrop();
-            return;
-        }
         if (CurTarget != null)
         {
             var Target = CurTarget;
@@ -28,16 +18,17 @@ public class PlayerInteraction : MonoBehaviour
             UpdateCurTarget();
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
-        // Return if interaction is not possible
+
         if (!other.TryGetComponent(out IInteractable interactable))
+        {
             return;
-        // Throw error if already present in the list
+        }
         if (InteractableList.Contains(interactable))
+        {
             return;
-        // Add to list and set curTarget based on distance comparison
+        }
         InteractableList.Add(interactable);
         UpdateCurTarget();
     }
@@ -48,9 +39,10 @@ public class PlayerInteraction : MonoBehaviour
         {
             return;
         }
-        // Throw error if not present in the list
         if (!InteractableList.Contains(interactable))
+        {
             return;
+        }
         InteractableList.Remove(interactable);
         UpdateCurTarget();
     }
@@ -58,12 +50,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (InteractableList.Count == 0)
         {
-            Debug.Log("Interactable List is Empty");
             CurTarget = null;
-            OnTargetChanged?.Invoke(null, null, false);
             return;
         }
-
         IInteractable closest = null;
         float minDistance = float.MaxValue;
         Vector3 PlayerPos = transform.position;
@@ -71,8 +60,6 @@ public class PlayerInteraction : MonoBehaviour
         for (int i = InteractableList.Count - 1; i >= 0; i--)
         {
             var item = InteractableList[i];
-
-            // Check if it is MonoBehaviour and actually exists
             if (item is MonoBehaviour mono)
             {
                 if (mono != null && mono.gameObject.activeInHierarchy)
@@ -88,15 +75,9 @@ public class PlayerInteraction : MonoBehaviour
             }
             else
             {
-                // Removed from list if SetActive(false) was called by interaction
                 InteractableList.RemoveAt(i);
             }
         }
         CurTarget = closest;
-        Debug.Log($"Current Target is {CurTarget.GetInteractionPrompt()}");
-        if (CurTarget != null)
-        {
-            OnTargetChanged?.Invoke(CurTarget.GetInteractionPrompt(), CurTarget.GetTransform(), true);
-        }
     }
 }

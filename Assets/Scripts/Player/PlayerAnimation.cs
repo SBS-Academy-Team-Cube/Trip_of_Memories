@@ -161,7 +161,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetFloat(RopeAnimSpeedHash, Speed);
     }
-
     public void SetTakeSpray(bool bHolding)
     {
         AnimationController.SetTrigger(TakeSprayTriggerHash);

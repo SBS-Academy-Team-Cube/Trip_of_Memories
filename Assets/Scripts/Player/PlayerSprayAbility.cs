@@ -15,12 +15,13 @@ public class PlayerSprayAbility : MonoBehaviour
     public bool IsUsing = false;
     public void TryTakeSpray()
     {
-        if (State.IsInteracting || IsUsing || !State.IsGrounded)
+        if (State.IsInteracting || IsUsing || !State.IsGrounded || State.InterAction != PlayerState.EInterAction.None)
         {
             return;
         }
         IsHolding = !IsHolding;
         CanUse = IsHolding;
+        State.SetAbility(PlayerState.EAbility.Spray);
         Animation.SetTakeSpray(IsHolding);
     }
     public void TryUse()

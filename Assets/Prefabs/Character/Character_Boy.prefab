@@ -1315,7 +1315,7 @@ MonoBehaviour:
       - Value: 1
       - Value: 2
       - Value: 2
-      maxConnectionDistance: 0.20827171
+      maxConnectionDistance: 0.20827173
       userEdit: 0
     preBuildData:
       enabled: 0
@@ -1956,6 +1956,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8867684770561325653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3284546065644269922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7347294129392780518}
+  m_Layer: 6
+  m_Name: Ledge Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7347294129392780518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3284546065644269922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.067, y: 4.295, z: 0.638}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7595537774341570303}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3632796362654978449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,6 +2143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8636836959811985707}
   - {fileID: 204855887847937515}
   - {fileID: 2442611429875207678}
   - {fileID: 2343829989850665645}
@@ -8150,6 +8182,7 @@ GameObject:
   - component: {fileID: 9188216396655173988}
   - component: {fileID: 4688576415671136052}
   - component: {fileID: 6632325326081986835}
+  - component: {fileID: 238079948334298157}
   m_Layer: 6
   m_Name: Character_Boy
   m_TagString: Player
@@ -8171,6 +8204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 45652398630349859}
+  - {fileID: 7347294129392780518}
   - {fileID: 9029400120683954368}
   - {fileID: 7321574534284774345}
   - {fileID: 2352463721298088057}
@@ -8189,14 +8223,17 @@ Animator:
   m_GameObject: {fileID: 7071519962568909893}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0b95d87e880c58542a9b8771d23486d8, type: 3}
-  m_Controller: {fileID: 9100000, guid: 52ce9918d4924cf448b12a506d848a00, type: 2}
+  m_Controller: {fileID: 22100000, guid: 8c12e0b7df4e7cc4c8a522fd0df3ccd1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip001 L Hand'\n\tTransform 'Bip001 L Hand'\n\tFrom
+    animation clip 'boy_key_down'\n\tFrom animation clip 'boy_key_up'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -8213,7 +8250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -8228,7 +8265,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!143 &6796627376150754009
@@ -8305,7 +8342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
   Interaction: {fileID: 7616992364311186369}
   Movement: {fileID: 4574003564027566870}
-  RopeHandler: {fileID: 0}
+  RopeHandler: {fileID: 6632325326081986835}
   LeverHandler: {fileID: 6259517903605364792}
   SprayComponent: {fileID: 9077918230599208255}
   State: {fileID: 6571652102100126584}
@@ -8322,7 +8359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff94aa3a6310a3742a913b7d1bbd85a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  ItemHandler: {fileID: 0}
 --- !u!114 &1491471424828711427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8335,9 +8371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee0e57969676a24181c2433fd9d6c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemHandler
-  HoldTransform: {fileID: 0}
-  Animation: {fileID: 0}
-  State: {fileID: 0}
+  HoldTransform: {fileID: 8636836959811985707}
+  Animation: {fileID: 330960429130089735}
+  State: {fileID: 6571652102100126584}
 --- !u!114 &4574003564027566870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8355,11 +8391,11 @@ MonoBehaviour:
   Controller: {fileID: 6796627376150754009}
   Animation: {fileID: 330960429130089735}
   State: {fileID: 6571652102100126584}
-  MoveSpeed: 5
-  SprintSpeed: 0
-  RotateSpeed: 20
-  Gravity: -9.81
-  JumpForce: 5
+  MoveSpeed: 1.45
+  SprintSpeed: 3
+  RotateSpeed: 18
+  Gravity: -9
+  JumpForce: 3
 --- !u!114 &6259517903605364792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8374,9 +8410,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLeverHandler
   OnLeverHolding:
     m_PersistentCalls:
-      m_Calls: []
-  State: {fileID: 0}
-  Animation: {fileID: 0}
+      m_Calls:
+      - m_Target: {fileID: 3635995030551461767}
+        m_TargetAssemblyTypeName: PlayerInputController, Assembly-CSharp
+        m_MethodName: OnHoldLever
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  State: {fileID: 6571652102100126584}
+  Animation: {fileID: 330960429130089735}
 --- !u!114 &5124531006896819086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8389,14 +8437,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  LedgeCheckForwardDistance: 1
+  LedgeCheckForwardDistance: 0.75
   ClimbableWallLayer:
     serializedVersion: 2
     m_Bits: 4096
   Animation: {fileID: 330960429130089735}
   animator: {fileID: 4578165793171006597}
   Controller: {fileID: 6796627376150754009}
-  LedgePoint: {fileID: 0}
+  LedgePoint: {fileID: 7347294129392780518}
   Move: {fileID: 4574003564027566870}
 --- !u!114 &6571652102100126584
 MonoBehaviour:
@@ -8410,11 +8458,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9a1e2671dd14741bd9379572ea1a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerState
-  IsGrounded: 1
+  InteractionComponent: {fileID: 7616992364311186369}
+  RopeHandler: {fileID: 6632325326081986835}
+  ItemHandler: {fileID: 1491471424828711427}
+  LeverHandler: {fileID: 6259517903605364792}
   IntendToMove: 0
   IntendToSprint: 0
   IsInteracting: 0
-  Gait: 0
   Controller: {fileID: 6796627376150754009}
   CameraPivot: {fileID: 45652398630349859}
 --- !u!114 &2123077553836012924
@@ -8429,7 +8479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333c43336336dd445a535b9c2ac3ab8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootStepNotify
-  Queue: {fileID: 0}
+  Queue: {fileID: 11400000, guid: 36ab9535784632744a371294292cb05e, type: 2}
 --- !u!114 &6366575212423698905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8442,8 +8492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0b00b9c7bc61646bba4c10564c1c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FacialController
-  TargetRenderer: {fileID: 0}
-  Duration: 1
+  TargetRenderer: {fileID: 7355680772645951794}
+  Duration: 0.35
 --- !u!114 &9077918230599208255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8456,13 +8506,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49c8f263b338024b9ceae51679339ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSprayAbility
-  Animation: {fileID: 0}
-  Spray: {fileID: 0}
-  State: {fileID: 0}
+  Animation: {fileID: 330960429130089735}
+  Spray: {fileID: 4523563580190219336}
+  State: {fileID: 6571652102100126584}
   CoolDownDelay: 2
-  ArmUpDelay: 0
-  ArmDownDelay: 0
-  WaitOffset: 0
+  ArmUpDelay: 0.1
+  ArmDownDelay: 0.1
+  WaitOffset: 0.1
   IsUsing: 0
 --- !u!114 &9188216396655173988
 MonoBehaviour:
@@ -8476,7 +8526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3f8e1ab35d93944a3e47d5500813aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  MaxHP: 0
+  MaxHP: 3
 --- !u!114 &4688576415671136052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8489,7 +8539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec06d0d0e27f0c47b1b9444c6fb8f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallRespawner
-  Controller: {fileID: 0}
+  Controller: {fileID: 6796627376150754009}
   SafeFrameCount: 30
 --- !u!114 &6632325326081986835
 MonoBehaviour:
@@ -8507,8 +8557,28 @@ MonoBehaviour:
   Animation: {fileID: 330960429130089735}
   OnEnterHanging:
     m_PersistentCalls:
-      m_Calls: []
-  Speed: 0
+      m_Calls:
+      - m_Target: {fileID: 3635995030551461767}
+        m_TargetAssemblyTypeName: PlayerInputController, Assembly-CSharp
+        m_MethodName: OnHangingRope
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Speed: 0.9
+--- !u!81 &238079948334298157
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071519962568909893}
+  m_Enabled: 1
 --- !u!1 &7293825529034046282
 GameObject:
   m_ObjectHideFlags: 0
@@ -14716,6 +14786,37 @@ Transform:
   - {fileID: 6087484169230152761}
   m_Father: {fileID: 5809303686155662791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9020509737895864834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8636836959811985707}
+  m_Layer: 6
+  m_Name: RightHandSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8636836959811985707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9020509737895864834}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.3208057, y: -0.3215006, z: -0.6306496, w: 0.62928694}
+  m_LocalPosition: {x: -0.233, y: -0.009, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5809303686155662791}
+  m_LocalEulerAnglesHint: {x: -0.1, y: -54.024, z: -90.073}
 --- !u!1 &9032898999812972119
 GameObject:
   m_ObjectHideFlags: 0

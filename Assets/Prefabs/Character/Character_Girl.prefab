@@ -1310,7 +1310,7 @@ Transform:
   m_GameObject: {fileID: 1386039193422561043}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.56377035, z: 0.013712505}
+  m_LocalPosition: {x: 0, y: 0.56377035, z: 0.013712505}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6152,8 +6152,8 @@ Transform:
   - {fileID: 2654187079756328097}
   - {fileID: 2891618209940478534}
   - {fileID: 5448552140842400036}
-  - {fileID: 2972998609524163290}
   - {fileID: 518556318746909115}
+  - {fileID: 2972998609524163290}
   - {fileID: 8987357522184598072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6300,7 +6300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff94aa3a6310a3742a913b7d1bbd85a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  ItemHandler: {fileID: 7860158377802488873}
 --- !u!114 &7860158377802488873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6384,10 +6383,10 @@ MonoBehaviour:
   Animation: {fileID: 1992077058490038071}
   State: {fileID: 4277910296705461236}
   MoveSpeed: 1.45
-  SprintSpeed: 3.25
+  SprintSpeed: 3
   RotateSpeed: 18
   Gravity: -9
-  JumpForce: 2.8
+  JumpForce: 3
 --- !u!114 &2277852743555200040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6430,11 +6429,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9a1e2671dd14741bd9379572ea1a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerState
-  IsGrounded: 1
+  InteractionComponent: {fileID: 98145813004360592}
+  RopeHandler: {fileID: 2277852743555200040}
+  ItemHandler: {fileID: 7860158377802488873}
+  LeverHandler: {fileID: 2957246077564859025}
   IntendToMove: 0
   IntendToSprint: 0
   IsInteracting: 0
-  Gait: 0
   Controller: {fileID: 3888643630126887021}
   CameraPivot: {fileID: 6773283079788716592}
 --- !u!114 &7321981670308109607
@@ -6479,7 +6480,7 @@ MonoBehaviour:
   Animation: {fileID: 1992077058490038071}
   Spray: {fileID: 7039715950781883315}
   State: {fileID: 4277910296705461236}
-  CoolDownDelay: 2.5
+  CoolDownDelay: 2
   ArmUpDelay: 0.1
   ArmDownDelay: 0.1
   WaitOffset: 0.1

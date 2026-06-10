@@ -1,26 +1,57 @@
 using UnityEngine;
+using System;
 
 public class PlayerState : MonoBehaviour
 {
+    [Header("Components Reference")]
+    [SerializeField] private PlayerInteraction InteractionComponent;
+    [Header("Interaction Components")]
+    [SerializeField] private PlayerRopeHandler RopeHandler;
+    [SerializeField] private PlayerItemHandler ItemHandler;
+    [SerializeField] private PlayerLeverHandler LeverHandler;
+
     public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
-    public enum EAction { None, Holding, Hanging, Pushing };
-
-    public bool IsGrounded = true;
+    public enum EInterAction { None, ItemHolding, Hanging, Pushing };
+    public enum EAbility { None, Spray, Lantern };
+    public EGait Gait { get; private set; } = EGait.Walking;
+    public EStance Stance { get; private set; } = EStance.Standing;
+    public EInterAction InterAction { get; private set; } = EInterAction.None;
+    public EAbility Ability { get; private set; } = EAbility.None;
+    public bool IsGrounded { get; private set; }
     public bool IntendToMove = false;
     public bool IntendToSprint = false;
     public bool IsInteracting = false;
-    public EGait Gait = EGait.Walking;
-    private EStance Stance = EStance.Standing;
-    public EAction Action { get; private set; } = EAction.None;
-    public event System.Action<EGait> OnGaitChanged;
-    public event System.Action<EStance> OnStanceChanged;
-    public event System.Action<EAction> OnActionChanged;
+
     [SerializeField] private CharacterController Controller;
     [SerializeField] private Transform CameraPivot;
-    public Transform GetCameraPivot() 
-    { 
+    public Transform GetCameraPivot()
+    {
         return CameraPivot;
+    }
+    public void TryInteraction()
+    {
+        if (Ability != EAbility.None)
+        {
+            return;
+        }
+        switch (InterAction)
+        {
+            case EInterAction.ItemHolding:
+                if (ItemHandler != null)
+                {
+                    ItemHandler.TryDrop();
+                }
+                break;
+            case EInterAction.Pushing:
+            
+            case EInterAction.None:
+                if (InteractionComponent != null)
+                {
+                    InteractionComponent.PerformInteraction();
+                }
+                return;
+        }
     }
     void Awake()
     {
@@ -37,7 +68,6 @@ public class PlayerState : MonoBehaviour
     {
         IsInteracting = false;
     }
-
     public void TryMove(bool bWantToMove)
     {
         if (IntendToMove != bWantToMove)
@@ -52,41 +82,30 @@ public class PlayerState : MonoBehaviour
             IntendToSprint = bWantToSprint;
         }
     }
-    public void SetGait(EGait NewGait)
-    {
-        if (NewGait == EGait.Running && !CanRun())
-        {
-            return;
-        }
-        // if(NewGait != EGait.Idle && !CanMove())
-        // {
-        //     return;
-        // }
-        if (NewGait != Gait)
-        {
-            Gait = NewGait;
-            OnGaitChanged?.Invoke(Gait);
-        }
-    }
     public void SetStance(EStance NewStance)
     {
         if (NewStance != Stance)
         {
             Stance = NewStance;
-            OnStanceChanged?.Invoke(Stance);
         }
     }
-    public void SetAction(EAction NewAction)
+    public void SetInterAction(EInterAction NewAction)
     {
-        if (NewAction != Action)
+        if (NewAction != InterAction)
         {
-            Action = NewAction;
-            OnActionChanged?.Invoke(Action);
+            InterAction = NewAction;
         }
     }
-    private bool CanRun()
+    public void SetAbility(EAbility NewAbility)
     {
-        return Action == EAction.None && !IsInteracting;
+        if (NewAbility != Ability)
+        {
+            Ability = NewAbility;
+        }
+    }
+    public bool CanSprint()
+    {
+        return InterAction == EInterAction.None && CanMove() && Stance == EStance.Standing;
     }
     public bool CanMove()
     {

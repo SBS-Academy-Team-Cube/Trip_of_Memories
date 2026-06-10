@@ -7,16 +7,22 @@ public class PlayerItemHandler : MonoBehaviour
     [SerializeField] private PlayerState State;
     private GameObject HoldingObject;
     public bool bIsHoldingItem { get; private set; } = false;
-
-    public void TryHold(GameObject Target)
+    public bool TryHold(GameObject Target)
     {
+        if (!State.IsGrounded || State.InterAction != PlayerState.EInterAction.None || HoldingObject != null || bIsHoldingItem || State.Stance != PlayerState.EStance.Standing ||
+        State.Ability != PlayerState.EAbility.None)
+        {
+            return false;
+        }
         HoldingObject = Target;
-        Animation.SetIsHolding(true);
+        State.SetInterAction(PlayerState.EInterAction.ItemHolding);
         State.IsInteracting = true;
+        Animation.SetIsHolding(true);
+        return true;
     }
     public void TryDrop()
     {
-        if (!bIsHoldingItem || HoldingObject == null)
+        if (!State.IsGrounded || !bIsHoldingItem || HoldingObject == null || State.InterAction != PlayerState.EInterAction.ItemHolding)
         {
             return;
         }
@@ -60,6 +66,7 @@ public class PlayerItemHandler : MonoBehaviour
             Collider.enabled = false;
         }
         bIsHoldingItem = true;
+        State.IsInteracting = false;
     }
     private void AlignItemGripToHoldTransform(Transform itemRoot, Transform grip)
     {
@@ -97,5 +104,11 @@ public class PlayerItemHandler : MonoBehaviour
         }
         HoldingObject = null;
         bIsHoldingItem = false;
+
+        if (State != null)
+        {
+            State.SetInterAction(PlayerState.EInterAction.None);
+            State.IsInteracting = false;
+        }
     }
 }
