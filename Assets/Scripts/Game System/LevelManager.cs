@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
     [SerializeField] private bool bKeepBGMPlaybackForNextScene;
+    [SerializeField] private bool IsLastScene = false;
     void OnEnable()
     {
         if (NextPortal != null)
@@ -35,8 +36,20 @@ public class LevelManager : MonoBehaviour
             AudioManager.Instance.PlayBGM(LevelBGM);
         }
     }
+    private void ClearStage()
+    {
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.CompleteCurrentLevel();
+        }
+    }
     private void LoadNextScene()
     {
+        if (IsLastScene)
+        {
+            ClearStage();
+        }
+
         if (GameDirector.Instance == null || GameDirector.Instance.Iris == null)
         {
             Debug.Log("Error with Load Next Scene in Level Manager...");
@@ -52,8 +65,16 @@ public class LevelManager : MonoBehaviour
         {
             BGMFadeDuration = AudioManager.Instance.StopBGM(bKeepBGMPlaybackForNextScene);
         }
-
         yield return new WaitForSeconds(Mathf.Max(IrisFadeDuration, BGMFadeDuration) + 0.1f);
-        GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
+        if (IsLastScene)
+        {
+            GameDirector.Instance.LoadScene(NextSceneId);
+        }
+        else
+        {
+            GameDirector.Instance.LoadSceneWithoutLoading(NextSceneId);
+        }
+
+
     }
 }

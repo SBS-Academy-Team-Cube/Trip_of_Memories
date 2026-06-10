@@ -7,7 +7,6 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject[] CharacterPrefabs;
     [SerializeField] private CameraManager CameraManager;
     [SerializeField] private CutsceneManager CutSceneManager;
-    public Action<GameObject> OnPlayerSpawned;
     [SerializeField] private UIHPController HPUI;
     private bool IsRespawning = false;
     private Health PlayerHP;
@@ -37,7 +36,6 @@ public class PlayerSpawner : MonoBehaviour
             return;
         }
         GameObject PlayerInstance = Instantiate(CharacterPrefabs[Index], spawnPosition, spawnRotation);
-        OnPlayerSpawned?.Invoke(PlayerInstance);
         Initialize(PlayerInstance);
 
         if (GameDirector.Instance && GameDirector.Instance.Iris)

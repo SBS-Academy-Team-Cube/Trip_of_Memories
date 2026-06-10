@@ -3,24 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public struct DialogueContext
-{
-    public int Index;
-    public string Text;
-    public string Speaker;
-}
 public class StoryManager : MonoBehaviour
 {
-    [Header("Story Data")]
-    [SerializeField] private List<DialogueData> StoryDialogues;
-    private DialogueData CurrentDialogue = null;
+
+    private StoryData CurrentStoryData = null;
 
     [Header("Skip Input Action Reference")]
     [SerializeField] private InputActionReference SkipAction;
     [SerializeField] private InputActionReference PlayerJumpAction;
     [Header("UI Object Reference")]
     [SerializeField] private GameObject StoryPanel;
-    public Action<DialogueContext> OnDialogueChanged;
+    public Action<FStoryContext, int> OnStoryChanged;
     public Action<string> OnSkipRequested;
     public Action OnStoryEnd;
     private int Index = 0;
@@ -33,15 +26,15 @@ public class StoryManager : MonoBehaviour
     {
         SkipAction.action.performed -= OnSkip;
     }
-    private void Start() 
+    private void Start()
     {
         StoryPanel?.SetActive(false);
     }
-    public void ShowStory(int Index)
+    public void ShowStory(StoryData Data)
     {
-        CurrentDialogue = StoryDialogues[Index];
+        CurrentStoryData = Data;
         StoryPanel?.SetActive(true);
-        this.Index = 0;
+        Index = 0;
         SkipAction?.action.Enable();
         PlayerJumpAction?.action.Disable();
         ShowCurrent();
@@ -55,17 +48,13 @@ public class StoryManager : MonoBehaviour
     }
     void ShowCurrent()
     {
-        if (Index >= CurrentDialogue.Dialogues.Count)
+        if (Index >= CurrentStoryData.Count)
         {
             EndStory();
             return;
         }
         IsTyping = true;
-        OnDialogueChanged?.Invoke(new DialogueContext
-        {
-            Index = Index,
-            Text = CurrentDialogue.GetText(Index)
-        });
+        OnStoryChanged?.Invoke(CurrentStoryData.Get(Index), Index);
     }
     public void NotifyTypingFinished()
     {
@@ -73,13 +62,13 @@ public class StoryManager : MonoBehaviour
     }
     private void OnSkip(InputAction.CallbackContext context)
     {
-        if (!CurrentDialogue)
+        if (!CurrentStoryData)
         {
             return;
         }
         if (IsTyping)
         {
-            OnSkipRequested?.Invoke(CurrentDialogue.GetText(Index));
+            OnSkipRequested?.Invoke(CurrentStoryData.Get(Index).Text);
             return;
         }
         Index++;

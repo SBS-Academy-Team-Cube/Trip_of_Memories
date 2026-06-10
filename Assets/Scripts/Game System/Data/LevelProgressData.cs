@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class LevelProgressData
 {
     public string LevelId;
-
     public int SessionMemoryRecoveryPercent;
     public int PlayerHealth;
 
@@ -81,7 +80,6 @@ public class LevelProgressData
     {
         return AddUniqueId(CompletedInteractionIds, interactionId);
     }
-
     public void AddMemoryRecovery(int amount)
     {
         SessionMemoryRecoveryPercent += Math.Max(0, amount);

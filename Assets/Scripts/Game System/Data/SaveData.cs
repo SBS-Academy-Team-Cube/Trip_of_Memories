@@ -8,8 +8,6 @@ public class SaveData
     public bool HasPlayed = false;
     public bool CanEnterLevelSelect = false;
 
-    // Progress
-    public int StageIndex;
 
     // Character Select
     public int SelectedCharacterModelIndex;
@@ -29,12 +27,10 @@ public class SaveData
         {
             ClearedLevelIds = new List<string>();
         }
-
         if (CollectedMemoryItemIds == null)
         {
             CollectedMemoryItemIds = new List<string>();
         }
-
         if (ClearedMiniGameIds == null)
         {
             ClearedMiniGameIds = new List<string>();
@@ -52,7 +48,6 @@ public class SaveData
     {
         return ContainsId(ClearedLevelIds, levelId);
     }
-
     public bool HasCollectedMemoryItem(string memoryItemId)
     {
         return ContainsId(CollectedMemoryItemIds, memoryItemId);

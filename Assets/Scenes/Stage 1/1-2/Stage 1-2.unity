@@ -19912,6 +19912,14 @@ PrefabInstance:
       propertyPath: UniqueID
       value: WaterGame 1-2
       objectReference: {fileID: 0}
+    - target: {fileID: 4510588619812067236, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
+      propertyPath: MiniGameID
+      value: WaterGame_1-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510588619812067236, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
+      propertyPath: MemoryRecoveryAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4712704400272853100, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
       propertyPath: m_Name
       value: WaterGameManager
@@ -42099,6 +42107,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1667952927}
     m_Modifications:
+    - target: {fileID: 2503081817212844515, guid: 8c014ac474558bb478a53c8fcf0a6b04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3981963920924463298, guid: 8c014ac474558bb478a53c8fcf0a6b04, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -45566,6 +45578,7 @@ MonoBehaviour:
   NextPortal: {fileID: 740443442}
   LevelBGM: {fileID: 8300000, guid: 8c0c24e7bc15e7c4788bbb8efae34b3a, type: 3}
   bKeepBGMPlaybackForNextScene: 1
+  IsLastScene: 0
 --- !u!1 &1668939047
 GameObject:
   m_ObjectHideFlags: 0
@@ -58225,18 +58238,6 @@ PrefabInstance:
       value: CheckPoint
       objectReference: {fileID: 0}
     - target: {fileID: 8258506018934834151, guid: 0dabb69a29289b74182cf7dceae63949, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.13839255
-      objectReference: {fileID: 0}
-    - target: {fileID: 8258506018934834151, guid: 0dabb69a29289b74182cf7dceae63949, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.13839255
-      objectReference: {fileID: 0}
-    - target: {fileID: 8258506018934834151, guid: 0dabb69a29289b74182cf7dceae63949, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.13839255
-      objectReference: {fileID: 0}
-    - target: {fileID: 8258506018934834151, guid: 0dabb69a29289b74182cf7dceae63949, type: 3}
       propertyPath: m_LocalPosition.x
       value: -56.373
       objectReference: {fileID: 0}
@@ -61009,6 +61010,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6794418185953413001, guid: 8234ae21ee110ee4a9618bdd97d75647, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2126360440}
+    - targetCorrespondingSourceObject: {fileID: 6794418185953413001, guid: 8234ae21ee110ee4a9618bdd97d75647, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2126360443}
   m_SourcePrefab: {fileID: 100100000, guid: 8234ae21ee110ee4a9618bdd97d75647, type: 3}
 --- !u!1 &2126360439 stripped
 GameObject:
@@ -61041,13 +61045,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC
   NPCId: Frog_Stage_1-2
-  Story: {fileID: 870950362}
+  StoryManager: {fileID: 870950362}
+  Animation: {fileID: 2126360440}
   MiniGame: {fileID: 808164217}
+  FirstTime: {fileID: 11400000, guid: 8aef1e023f3fc9c43ba1212d3705f037, type: 2}
+  ReTry: {fileID: 11400000, guid: cc7fa4b0a58e59a42ab2ebb4b8c75f18, type: 2}
+  Clear: {fileID: 11400000, guid: e8e5ec1637e26af47ab90de613e63ae2, type: 2}
+  Fail: {fileID: 11400000, guid: 4189a672e73b228408d96699ebfe8bc3, type: 2}
+  Trigger: {fileID: 2126360443}
 --- !u!95 &2126360442 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7535051783594158712, guid: 8234ae21ee110ee4a9618bdd97d75647, type: 3}
   m_PrefabInstance: {fileID: 2126360438}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &2126360443
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126360439}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.7
+  m_Center: {x: 0.38, y: 0.46, z: 0.6}
 --- !u!4 &2139419148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8964859838461161948, guid: c3598a15838400e4f8c58e4720fa0fd4, type: 3}

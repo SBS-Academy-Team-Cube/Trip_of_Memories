@@ -18,7 +18,7 @@ public class PentominoBoard : MonoBehaviour
 
     private bool[,] boardData;
     private Vector3[,] boardWorldPos;
-    private Dictionary<BoardPos, Vector3> board = new(); // �������ǥ�� ������������ ����
+    private Dictionary<BoardPos, Vector3> board = new();
     private Dictionary<Vector3, BoardPos> reverseDict = new();
 
     private Vector3 zeroPos = Vector3.zero;
@@ -29,11 +29,10 @@ public class PentominoBoard : MonoBehaviour
     private void Start()
     {
         gridSize *= transform.lossyScale.x;
-        zeroPos = transform.GetChild(0).position;// ù��° �ڽ��� ������ ����������
+        zeroPos = transform.GetChild(0).position;
     }
     public void Init()
     {
-        
         boardData = new bool[width, height];
         boardWorldPos = new Vector3[width, height];
 
@@ -43,22 +42,23 @@ public class PentominoBoard : MonoBehaviour
     }
     private void MakeBoard()
     {
-        for(int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++)
         {
-            for(int x = 0; x < width; x++)
+            for (int x = 0; x < width; x++)
             {
                 boardWorldPos[x, y] = new Vector3(zeroPos.x + x * gridSize, zeroPos.y, zeroPos.z + gridSize * y);
+                DebugExtension.DrawSphere(boardWorldPos[x, y], 0.001f, Color.red);
                 board.Add(new BoardPos() { x = x, y = y }, boardWorldPos[x, y]);
             }
         }
-        foreach(var value in board)
+        foreach (var value in board)
         {
-            reverseDict.Add(value.Value,value.Key);
+            reverseDict.Add(value.Value, value.Key);
         }
     }
     private void SetStartBoard(BoardPos[] notValidPos)
     {
-        if(notValidPos != null && notValidPos.Length != 0)
+        if (notValidPos != null && notValidPos.Length != 0)
         {
             foreach (BoardPos pos in notValidPos)
             {
@@ -67,7 +67,6 @@ public class PentominoBoard : MonoBehaviour
                 boardData[pos.x - 1, pos.y - 1] = true;
             }
         }
-
     }
     public Vector3 BoardPosToWorldPos(BoardPos pos)
     {
@@ -82,9 +81,12 @@ public class PentominoBoard : MonoBehaviour
         if (x >= 0 && x < width && y >= 0 && y < height)
             return new BoardPos { x = x, y = y };
 
-        return new BoardPos { x = -999, y = -999 }; // invalid ǥ��
+        return new BoardPos { x = -999, y = -999 };
     }
-
+    private bool OOB(BoardPos Point)
+    {
+        return Point.x < 0 || Point.x >= width || Point.y < 0 || Point.y >= height;
+    }
     public void SetActiveBoard(BoardPos[] boardPos, bool newActive)
     {
         foreach (var pos in boardPos)
@@ -101,23 +103,42 @@ public class PentominoBoard : MonoBehaviour
             DebugBoard();
         }
     }
-
-    public bool IsPlace(BoardPos[] worldPos)
+    public bool IsActiveBoard(BoardPos[] boardPos)
     {
-        foreach(var pos in worldPos)
+        foreach (var pos in boardPos)
         {
-            //BoardPos boardIndex = WorldPosToBoardPos(worldPos[i]); //Todo
+            if (OOB(pos) || !boardData[pos.x, pos.y])
+            {
+                return false;
+            }
 
-            // ���� ����� �� ���� ���� (IndexOutOfRange ����!)
+            if (pos.x < 0 || pos.x >= width ||
+                 pos.y < 0 || pos.y >= height)
+            {
+                return false;
+            }
+
+            if (!boardData[pos.x, pos.y])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool CanPlace(BoardPos[] worldPos)
+    {
+        foreach (var pos in worldPos)
+        {
             if (pos.x < 0 || pos.x >= width ||
                 pos.y < 0 || pos.y >= height)
             {
-                return false;// Out of board bounds
+                return false;
             }
 
             if (boardData[pos.x, pos.y])
             {
-                return false;// Position already occupied
+                return false;
             }
         }
         return true;
@@ -125,7 +146,7 @@ public class PentominoBoard : MonoBehaviour
 
     public void IsGameClearCheck()
     {
-        foreach(bool InPlace in boardData)
+        foreach (bool InPlace in boardData)
         {
             if (!InPlace)
                 return;
@@ -136,16 +157,15 @@ public class PentominoBoard : MonoBehaviour
     {
         Debug.Log("========== board  ==========");
 
-        for (int y = height - 1; y >= 0; y--)           // �� (Y��, ����Ʒ�)
+        for (int y = height - 1; y >= 0; y--)
         {
-            string row = $"Row {y:00} | ";         // �� ��ȣ ǥ��
-            for (int x = 0; x < width; x++)        // �� (X��, �ޡ����)
+            string row = $"Row {y:00} | ";
+            for (int x = 0; x < width; x++)
             {
                 row += boardData[x, y] ? " O " : " X ";
             }
             Debug.Log(row);
         }
-
         Debug.Log("=================================================");
     }
 }

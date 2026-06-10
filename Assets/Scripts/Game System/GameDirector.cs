@@ -52,6 +52,20 @@ public class GameDirector : Singleton<GameDirector>
             PauseAction.action.Enable();
         }
     }
+    public void EnablePauseAction(bool bEnable)
+    {
+        if (PauseAction)
+        {
+            if (bEnable)
+            {
+                PauseAction.action.Enable();
+            }
+            else
+            {
+                PauseAction.action.Disable();
+            }
+        }
+    }
     private void PauseGame(InputAction.CallbackContext Context)
     {
         if (CurrentState != GameState.InGame)

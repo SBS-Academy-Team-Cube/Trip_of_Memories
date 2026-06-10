@@ -5,25 +5,23 @@ public class CameraBlendZone : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera Camera;
     [SerializeField] private Trigger Trigger;
-    
+
     private bool bBlending = false;
 
     private void OnEnable()
     {
-        if(Trigger != null)
+        if (Trigger != null)
         {
             Trigger.OnTriggered += HandleCameraBlending;
         }
     }
-    
-    private void Disable()
+    private void OnDisable()
     {
-         if(Trigger != null)
+        if (Trigger != null)
         {
             Trigger.OnTriggered -= HandleCameraBlending;
         }
     }
-
     public void HandleCameraBlending()
     {
         bBlending = !bBlending;

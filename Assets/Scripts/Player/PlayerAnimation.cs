@@ -46,7 +46,10 @@ public class PlayerAnimation : MonoBehaviour
     }
     void Update()
     {
-        AnimationController.SetBool(IsGroundedHash, State.IsGrounded);
+        if (State)
+        {
+            AnimationController.SetBool(IsGroundedHash, State.IsGrounded);
+        }
     }
     private void OnAnimatorIK(int layerIndex)
     {

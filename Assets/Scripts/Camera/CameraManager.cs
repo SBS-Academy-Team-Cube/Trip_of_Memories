@@ -11,7 +11,6 @@ public class CameraManager : MonoBehaviour
     {
         return MainCameraTransform;
     }
-
     public void Init(GameObject Player)
     {
         if(Player.TryGetComponent(out PlayerState State))

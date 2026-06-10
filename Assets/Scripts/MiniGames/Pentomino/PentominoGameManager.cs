@@ -1,11 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
-public class PentominoGameManager : MonoBehaviour
+public class PentominoGameManager : MiniGameBase
 {
     [SerializeField] private PentominoInputHandler inputHandler;
     [SerializeField] private PentominoBoard board;
     [SerializeField] private PentominoPiece[] pieces;
+
+    public override event Action OnPlay;
+    public override event Action OnClear;
+    public override event Action OnFail;
+
+
 
     [SerializeField] private Trigger GameStartTrigger;
     [SerializeField] private Trigger GameClearTrigger;
@@ -14,15 +21,37 @@ public class PentominoGameManager : MonoBehaviour
     private bool IsTriggered = false;
     private void OnEnable()
     {
-        EventBus.PentominoClear += GameClear;
+        EventBus.PentominoClear += Clear;
     }
     private void OnDisable()
     {
-        EventBus.PentominoClear -= GameClear;
+        EventBus.PentominoClear -= Clear;
+
     }
-    public void GameStart()//
+    public override void Play()
     {
         Init();
+        OnPlay?.Invoke();
+    }
+    public override void Clear()
+    {
+        if (GameClearTrigger != null)
+        {
+            GameClearTrigger.OnTrigger();
+        }
+        OnClear?.Invoke();
+    }
+    public override void Fail()
+    {
+        OnFail?.Invoke();
+    }
+    public override bool HasCleared()
+    {
+        if (SaveManager.Instance)
+        {
+            return SaveManager.Instance.HasClearedMiniGame(MiniGameID);
+        }
+        return false;
     }
     public void GameReset()//
     {
@@ -39,7 +68,7 @@ public class PentominoGameManager : MonoBehaviour
     }
     void OnTriggerEnter(Collider Other)
     {
-        if (IsTriggered)
+        if (IsTriggered || HasCleared())
         {
             return;
         }
@@ -54,20 +83,12 @@ public class PentominoGameManager : MonoBehaviour
             {
                 GameDirector.Instance.ShowMouseCursor(true);
             }
-
             IsTriggered = true;
             if (GameStartTrigger != null)
             {
                 GameStartTrigger.OnTrigger();
             }
-            GameStart();
-        }
-    }
-    public void GameClear()
-    {
-        if (GameClearTrigger != null)
-        {
-            GameClearTrigger.OnTrigger();
+            Play();
         }
     }
 }

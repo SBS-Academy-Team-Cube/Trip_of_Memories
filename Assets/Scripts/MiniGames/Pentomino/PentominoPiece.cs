@@ -3,15 +3,19 @@ using UnityEngine;
 public class PentominoPiece : MonoBehaviour, IPentominoPickable
 {
     [SerializeField] private PieceShape pieceShape;
-    [SerializeField] private Transform PivotTransform;
-
     private Vector2 TransformPivotOffset;
-
+    private Vector3 homePos;
+    private Quaternion homeRot;
+    private BoardPos[] homeShape;
     private Vector3 startPos;
     private Quaternion startRot;
+    private BoardPos[] startShape;
     private PieceShape curShape;
 
     public BoardPos[] PieceShape => curShape.shape;
+
+    private bool _isPlaced = false;
+    public bool IsPlaced => _isPlaced;
 
     private bool _isPicked = false;
     public bool IsPicked => _isPicked;
@@ -19,16 +23,10 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
 
     public void Init()
     {
-        startPos = PivotTransform.position;
-        startRot = PivotTransform.rotation;
         curShape = Instantiate(pieceShape);
-
-        Vector3 Delta = transform.position - PivotTransform.position;
-        TransformPivotOffset = new Vector2(Delta.x, Delta.z);
-
-        transform.position = startPos;
-        transform.rotation = startRot;
-        InitRotateSet();
+        // InitRotateSet();
+        SaveHomeState();
+        SavePrevState();
     }
     private void InitRotateSet()
     {
@@ -44,32 +42,42 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
 
     public void RotatePiecePos(bool isRight)
     {
-        //if isright == true -> 90
-        //if isright == false -> -90
-        if (isRight)
+        for (int i = 0; i < curShape.shape.Length; ++i)
         {
-            for (int i = 0; i < curShape.shape.Length; ++i)
+            int x = curShape.shape[i].x;
+            int y = curShape.shape[i].y;
+            curShape.shape[i] = new BoardPos
             {
-                int x = curShape.shape[i].x;
-                int y = curShape.shape[i].y;
-                BoardPos newPiece = new BoardPos();
-                newPiece.x = y;
-                newPiece.y = -x;
-                curShape.shape[i] = newPiece;
-            }
+                x = isRight ? y : -y,
+                y = isRight ? -x : x
+            };
         }
-        else
-        {
-            for (int i = 0; i < curShape.shape.Length; ++i)
-            {
-                int x = curShape.shape[i].x;
-                int y = curShape.shape[i].y;
-                BoardPos newPiece = new BoardPos();
-                newPiece.x = -y;
-                newPiece.y = x;
-                curShape.shape[i] = newPiece;
-            }
-        }
+        // if (isRight)
+        // {
+        //     for (int i = 0; i < curShape.shape.Length; ++i)
+        //     {
+        //         int x = curShape.shape[i].x;
+        //         int y = curShape.shape[i].y;
+        //         // BoardPos newPiece =
+        //         curShape.shape[i] = new BoardPos
+        //         {
+        //             x = isRight ? y : y,
+        //             y = isRight ? -x : x
+        //         };
+        //     }
+        // }
+        // else
+        // {
+        //     for (int i = 0; i < curShape.shape.Length; ++i)
+        //     {
+        //         int x = curShape.shape[i].x;
+        //         int y = curShape.shape[i].y;
+        //         BoardPos newPiece = new BoardPos();
+        //         newPiece.x = -y;
+        //         newPiece.y = x;
+        //         curShape.shape[i] = newPiece;
+        //     }
+        // }
     }
     public void PickUp(float gridSize)
     {
@@ -81,23 +89,51 @@ public class PentominoPiece : MonoBehaviour, IPentominoPickable
         _isPicked = false;
         transform.rotation = startRot;
         transform.position = startPos;
+        curShape.shape = CopyShape(startShape);
 
     }
-    public void SetPreviewPosition(Vector3 Target)
+    public void ReturnToHome()
     {
-        // transform.position
-        transform.position = new Vector3(Target.x + TransformPivotOffset.x, Target.y, Target.z + TransformPivotOffset.y);
-
+        _isPicked = false;
+        transform.rotation = homeRot;
+        transform.position = homePos;
+        curShape.shape = CopyShape(homeShape);
+        SavePrevState();
     }
-
     public void Place(Vector3 position)
     {
         _isPicked = false;
+        _isPlaced = true;
+
         transform.position = new Vector3(position.x, position.y, position.z);
+        SavePrevState();
 
         DebugPiecePos();
     }
 
+    private void SavePrevState()
+    {
+        startPos = transform.position;
+        startRot = transform.rotation;
+        startShape = CopyShape(curShape.shape);
+    }
+
+    private void SaveHomeState()
+    {
+        homePos = transform.position;
+        homeRot = transform.rotation;
+        homeShape = CopyShape(curShape.shape);
+    }
+
+    private BoardPos[] CopyShape(BoardPos[] source)
+    {
+        BoardPos[] result = new BoardPos[source.Length];
+        for (int i = 0; i < source.Length; i++)
+        {
+            result[i] = source[i];
+        }
+        return result;
+    }
     private void DebugPiecePos()
     {
         Debug.Log($"{gameObject.name} worldPos = {transform.position}," +

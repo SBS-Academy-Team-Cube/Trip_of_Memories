@@ -42,7 +42,6 @@ public class SaveManager : Singleton<SaveManager>
         {
             Data = CreateNewData();
         }
-
         Data.Normalize();
 
         string json = JsonUtility.ToJson(Data, true);
@@ -63,7 +62,6 @@ public class SaveManager : Singleton<SaveManager>
     {
         return CurrentLevelProgress != null;
     }
-
     private void NotifyDisplayedMemoryRecoveryChanged()
     {
         OnDisplayedMemoryRecoveryChanged?.Invoke(GetDisplayedMemoryRecoveryPercent());
@@ -76,6 +74,27 @@ public class SaveManager : Singleton<SaveManager>
             : 0;
 
         return Mathf.Clamp(Data.MemoryRecoveryPercent + currentLevelAmount, 0, 100);
+    }
+
+    public bool HasCollectedMemoryItem(string memoryItemId)
+    {
+        EnsureData();
+        return Data.HasCollectedMemoryItem(memoryItemId)
+            || (CurrentLevelProgress != null && CurrentLevelProgress.HasCollectedMemoryItem(memoryItemId));
+    }
+
+    public bool HasClearedMiniGame(string miniGameId)
+    {
+        EnsureData();
+        return Data.HasClearedMiniGame(miniGameId)
+            || (CurrentLevelProgress != null && CurrentLevelProgress.HasClearedMiniGame(miniGameId));
+    }
+
+    public bool HasCompletedInteraction(string interactionId)
+    {
+        EnsureData();
+        return Data.HasCompletedInteraction(interactionId)
+            || (CurrentLevelProgress != null && CurrentLevelProgress.HasCompletedInteraction(interactionId));
     }
 
     public bool TryCollectMemoryItem(string memoryItemId, int memoryRecoveryAmount)
@@ -151,6 +170,11 @@ public class SaveManager : Singleton<SaveManager>
         Data.AddMemoryRecovery(CurrentLevelProgress.SessionMemoryRecoveryPercent);
         Data.AddClearedLevel(CurrentLevelProgress.LevelId);
 
+        if (CurrentLevelProgress.LevelId == "Stage 1")
+        {
+            Data.CanEnterLevelSelect = true;
+        }
+
         foreach (string memoryItemId in CurrentLevelProgress.CollectedMemoryItemIds)
         {
             Data.AddCollectedMemoryItem(memoryItemId);
@@ -181,7 +205,6 @@ public class SaveManager : Singleton<SaveManager>
         SaveData data = new SaveData
         {
             HasPlayed = false,
-            StageIndex = 0,
             SelectedCharacterModelIndex = -1,
         };
 

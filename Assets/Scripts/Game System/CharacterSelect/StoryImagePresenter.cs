@@ -16,22 +16,22 @@ public class StoryImagePresenter : MonoBehaviour
 
     private void OnEnable()
     {
-        storyManager.OnDialogueChanged += HandleDialogueChanged;
+        storyManager.OnStoryChanged += HandleStoryChanged;
         storyManager.OnStoryEnd += HandleDialougeEnd;
     }
 
     private void OnDisable()
     {
-        storyManager.OnDialogueChanged -= HandleDialogueChanged;
+        storyManager.OnStoryChanged -= HandleStoryChanged;
         storyManager.OnStoryEnd -= HandleDialougeEnd;
     }
-    void HandleDialogueChanged(DialogueContext Context)
+    void HandleStoryChanged(FStoryContext Context, int Index)
     {
         if (presentationData == null)
         {
             return;
         }
-        Sprite nextSprite = presentationData.GetBackground(Context.Index);
+        Sprite nextSprite = presentationData.GetBackground(Index);
         if (nextSprite == null)
         {
             return;

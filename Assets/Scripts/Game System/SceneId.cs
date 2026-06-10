@@ -5,11 +5,10 @@ public enum SceneId
     LevelSelect,
     MainMenu,
     Loading,
-    Stage1_1,
-    Stage1_2,
-    Stage1_3,
-    Stage1_4,
-    Stage2_3,
+    Stage1_1, Stage1_2, Stage1_3, Stage1_4,
+    Stage2_1, Stage2_2, Stage2_3, Stage2_4,
+    Stage3_1, Stage3_2, Stage3_3, Stage3_4,
+    Stage4_1, Stage4_2, Stage4_3, Stage4_4,
     NULL,
 }
 public static class SceneTable
@@ -19,26 +18,40 @@ public static class SceneTable
         return sceneId switch
         {
             SceneId.Boot => "BootScene",
-            SceneId.CharacterSelect => "CharacterSelectScene",
+            SceneId.CharacterSelect => "CharacterSelect",
             SceneId.MainMenu => "MainMenuScene",
             SceneId.Loading => "LoadingScene",
+            SceneId.LevelSelect => "StageSelect",
+
             SceneId.Stage1_1 => "Stage 1-1",
             SceneId.Stage1_2 => "Stage 1-2",
             SceneId.Stage1_3 => "Stage 1-3",
             SceneId.Stage1_4 => "Stage 1-4",
+
+            SceneId.Stage2_1 => "Stage 2-1",
+            SceneId.Stage2_2 => "Stage 2-2",
             SceneId.Stage2_3 => "Stage 2-3",
-            // _ => "MainMenuScene",
+            SceneId.Stage2_4 => "Stage 2-4",
+
+            SceneId.Stage3_1 => "Stage 3-1",
+            SceneId.Stage3_2 => "Stage 3-2",
+            SceneId.Stage3_3 => "Stage 3-3",
+            SceneId.Stage3_4 => "Stage 3-4",
+
+            SceneId.Stage4_1 => "Stage 4-1",
+            SceneId.Stage4_2 => "Stage 4-2",
+            SceneId.Stage4_3 => "Stage 4-3",
+            SceneId.Stage4_4 => "Stage 4-4",
+            _ => "MainMenuScene",
         };
     }
-
     public static GameState GetGameState(SceneId sceneId)
     {
         return sceneId switch
         {
             SceneId.CharacterSelect => GameState.CharacterSelect,
             SceneId.Loading => GameState.Loading,
-            SceneId.Stage1_1 or SceneId.Stage1_2 or SceneId.Stage1_3 or SceneId.Stage1_4 => GameState.InGame,
-            _ => GameState.None,
+            _ => GameState.InGame,
         };
     }
 }

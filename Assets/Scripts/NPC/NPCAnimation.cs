@@ -4,8 +4,11 @@ public class NPCAnimation : MonoBehaviour
 {
     [SerializeField] private Animator Animation;
 
-    public void SetTalking()   
+    public void SetTalking()
     {
-        Animation.SetTrigger("Talking");
+        if (!Animation.GetCurrentAnimatorStateInfo(0).IsName("Talking"))
+        {
+            Animation.SetTrigger("Talking");
+        }
     }
 }

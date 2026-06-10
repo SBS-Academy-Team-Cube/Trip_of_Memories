@@ -8,9 +8,13 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
     [SerializeField] private CharacterSelectController selectController;
     [SerializeField] private SceneId NextSceneID;
 
+    [Header("Story Data")]
+    [SerializeField] private StoryData SceneStroyData;
+
     [Header("UI")]
     [SerializeField] private GameObject storyUIRoot;
     [SerializeField] private GameObject selectUIRoot;
+
 
     private void OnEnable()
     {
@@ -45,8 +49,7 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
         selectUIRoot.SetActive(false);
 
         storyManager.enabled = true;
-        storyManager.ShowStory(0);
-        // storyManager.StartDialogue();
+        storyManager.ShowStory(SceneStroyData);
         selectController.enabled = false;
     }
     void EnterSelectState()

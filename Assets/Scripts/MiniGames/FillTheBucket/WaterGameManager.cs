@@ -1,40 +1,54 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System;
-public class WaterGameManager : MonoBehaviour
+public class WaterGameManager : MiniGameBase
 {
-    [SerializeField] private string UniqueID;
-    public string ID => UniqueID;
+    public override event Action OnPlay;
+    public override event Action OnClear;
+    public override event Action OnFail;
+    public string ID => MiniGameID;
     [SerializeField] private BucketManager BucketManager;
     [SerializeField] private BucketUIManager UI;
     [SerializeField] private GameObject Canvas;
-    public UnityEvent OnPlay;
-    public event Action OnClear;
-    public event Action OnFail;
-    public void Play()
+
+    public override bool HasCleared()
+    {
+        if (SaveManager.Instance != null)
+        {
+            return SaveManager.Instance.HasClearedMiniGame(MiniGameID);
+        }
+        return false;
+    }
+    public override void Play()
     {
         if (GameDirector.Instance)
         {
             GameDirector.Instance.ShowMouseCursor(true);
+            GameDirector.Instance.EnablePauseAction(false);
         }
         Canvas.SetActive(true);
         BucketManager.Init();
         OnPlay?.Invoke();
     }
-    public void Clear()
+    public override void Clear()
     {
         if (GameDirector.Instance)
         {
             GameDirector.Instance.ShowMouseCursor(false);
+            GameDirector.Instance.EnablePauseAction(true);
+        }
+        if (SaveManager.Instance)
+        {
+            SaveManager.Instance.TryClearMiniGame(MiniGameID, MemoryRecoveryAmount);
         }
         Canvas.SetActive(false);
         OnClear?.Invoke();
     }
-    public void Fail()
+    public override void Fail()
     {
         if (GameDirector.Instance)
         {
             GameDirector.Instance.ShowMouseCursor(false);
+            GameDirector.Instance.EnablePauseAction(true);
         }
         Canvas.SetActive(false);
         OnFail?.Invoke();

@@ -8,14 +8,14 @@ public class DialoguePresenter : MonoBehaviour
     [SerializeField] private TypewriterEffect effect;
     private void OnEnable()
     {
-        storyManager.OnDialogueChanged += HandleDialogueChanged;
+        storyManager.OnStoryChanged += HandleStoryChanged;
         storyManager.OnSkipRequested += HandleSkipRequested;
 
         player.OnTypingFinished += HandleTypingFinished;
     }
     private void OnDisable()
     {
-        storyManager.OnDialogueChanged -= HandleDialogueChanged;
+        storyManager.OnStoryChanged -= HandleStoryChanged;
         storyManager.OnSkipRequested -= HandleSkipRequested;
 
         player.OnTypingFinished -= HandleTypingFinished;
@@ -24,8 +24,9 @@ public class DialoguePresenter : MonoBehaviour
     {
         player.Skip(fullText);
     }
-    void HandleDialogueChanged(DialogueContext Context)
+    void HandleStoryChanged(FStoryContext Context, int Index)
     {
+        SpeakerName.text = Context.Speaker;
         player.Play(Context.Text, effect);
     }
     void HandleTypingFinished()
