@@ -32,6 +32,11 @@ public class LevelSelectSceneManager : MonoBehaviour
             return;
         }
         GameObject PlayerInstance = Instantiate(CharacterPrefabs[Index], transform.position, transform.rotation);
+        
+        if (PlayerInstance.TryGetComponent(out PlayerMovement Movement))
+        {
+            Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
+        }
         CameraManager.Init(PlayerInstance);
 
         if (GameDirector.Instance && GameDirector.Instance.Iris)

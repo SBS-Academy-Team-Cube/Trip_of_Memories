@@ -7,7 +7,8 @@ public enum GameState
     None,
     Loading,
     CharacterSelect,
-    InGame
+    InGame,
+    MainMenu,
 }
 public class GameDirector : Singleton<GameDirector>
 {
@@ -111,7 +112,6 @@ public class GameDirector : Singleton<GameDirector>
         bPaused = false;
         bSlowMode = false;
         Time.timeScale = 1.0f;
-
         if (WasPaused)
         {
             OnPaused?.Invoke(false);
@@ -150,7 +150,6 @@ public class GameDirector : Singleton<GameDirector>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetTimeControl();
-
         if (scene.name == SceneTable.GetSceneName(SceneId.Loading))
         {
             SetState(GameState.Loading);

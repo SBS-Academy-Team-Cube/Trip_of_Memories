@@ -51,6 +51,7 @@ public static class SceneTable
         {
             SceneId.CharacterSelect => GameState.CharacterSelect,
             SceneId.Loading => GameState.Loading,
+            SceneId.MainMenu => GameState.MainMenu,
             _ => GameState.InGame,
         };
     }

@@ -21,7 +21,7 @@ public class PlayerSprayAbility : MonoBehaviour
         }
         IsHolding = !IsHolding;
         CanUse = IsHolding;
-        State.SetAbility(PlayerState.EAbility.Spray);
+        State.SetAbility(IsHolding ? PlayerState.EAbility.Spray : PlayerState.EAbility.None);
         Animation.SetTakeSpray(IsHolding);
     }
     public void TryUse()

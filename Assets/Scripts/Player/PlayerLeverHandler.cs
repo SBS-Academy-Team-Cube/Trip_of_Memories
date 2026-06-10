@@ -13,7 +13,7 @@ public class PlayerLeverHandler : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, Target.bClockwise ? 0f : 180.0f, 0f);
         if (State)
         {
-            State.SetInterAction(PlayerState.EInterAction.Pushing);
+            State.SetInterAction(PlayerState.EInterAction.LeverPushing);
         }
         Target.TryGetComponent(out TargetLever);
 
