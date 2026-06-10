@@ -50,6 +50,7 @@ public class WaterGameManager : MiniGameBase
             GameDirector.Instance.ShowMouseCursor(false);
             GameDirector.Instance.EnablePauseAction(true);
         }
+        BucketManager.Reset();
         Canvas.SetActive(false);
         OnFail?.Invoke();
     }

@@ -1,20 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PentominoInputHandler : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private LayerMask _pieceLayer;
     [SerializeField] private LayerMask _boardLayer;
-
     [SerializeField] private PentominoBoard board;
-
+    public event Action OnQuitGame;
     private PentominoInputAction _inputActions;
-    private IPentominoPickable _currentPicked = null;
     private PentominoPiece _currentPiece = null;
-    private BoardPos[] _previousBoardPos = null;
-    private bool _shouldRestorePreviousBoard = false;
-
     private void Awake()
     {
         _inputActions = new PentominoInputAction();
@@ -23,99 +19,81 @@ public class PentominoInputHandler : MonoBehaviour
     {
         _inputActions.Disable();
         _inputActions.Gameplay.Click.performed -= OnClickPerformed;
+        _inputActions.Gameplay.Escape.performed -= OnEscape;
+        board.OnClear -= Clear;
     }
-
     private void Update()
     {
-        if (_currentPicked != null)
+        if (_currentPiece != null)
         {
             FollowMouse();
             HandleRotation();
         }
     }
-
     public void Init()
     {
         _inputActions.Enable();
         _inputActions.Gameplay.Click.performed += OnClickPerformed;
+        _inputActions.Gameplay.Escape.performed += OnEscape;
+        board.OnClear += Clear;
     }
     public void Clear()
     {
         _inputActions.Disable();
         _inputActions.Gameplay.Click.performed -= OnClickPerformed;
+        _inputActions.Gameplay.Escape.performed -= OnEscape;
+        board.OnClear -= Clear;
+    }
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        OnQuitGame?.Invoke();
     }
     private void OnClickPerformed(InputAction.CallbackContext context)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = _mainCamera.ScreenPointToRay(mousePos);
-
-        if (_currentPicked == null)
+        if (_currentPiece == null)
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _pieceLayer))
             {
-                IPentominoPickable pick = hit.collider.GetComponentInParent<IPentominoPickable>();
                 _currentPiece = hit.collider.GetComponentInParent<PentominoPiece>();
-                if (pick != null && _currentPiece != null)
+                if (_currentPiece != null)
                 {
-                    _currentPicked = pick;
-                    BoardPos[] currentBoardPos = GetBoardPos(_currentPiece.PieceShape, _currentPiece.Transform.position);
-                    _previousBoardPos = currentBoardPos;
-                    _shouldRestorePreviousBoard = board.IsActiveBoard(currentBoardPos);
-
-                    pick.PickUp(board.GridSize);
-
-                    if (_shouldRestorePreviousBoard)
-                        board.SetActiveBoard(currentBoardPos, false);// Clear old position on board
+                    bool IsPlacedPiece = _currentPiece.IsPlaced;
+                    _currentPiece.PickUp(board.GridSize);
+                    if (IsPlacedPiece)
+                        board.SetActiveBoard(GetBoardPos(_currentPiece.PieceShape, _currentPiece.transform.position), false);
                 }
             }
         }
-        else // place
+        else
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
             {
                 Vector3 snappedPos = SnapToGrid(hit.point);
                 BoardPos[] tryPositions = GetBoardPos(_currentPiece.PieceShape, snappedPos);
-                if (board.CanPlace(tryPositions))// Check if placement is valid
+                if (board.CanPlace(tryPositions))   // Check if placement is valid
                 {
-                    _currentPicked.Place(snappedPos);
-                    board.SetActiveBoard(tryPositions, true);// Mark board positions as occupied
+                    _currentPiece.Place(snappedPos);
+                    board.SetActiveBoard(tryPositions, true);   // Mark board positions as occupied
                     ClearCurrentPiece();
-                    board.IsGameClearCheck();// Game Clear Check;
-                }
-                else
-                {
-                    Debug.Log("Other Piece already taken");
-                    ReturnCurrentPiece();
+                    return;
                 }
             }
-            else // 보드 밖에 놓았다면
-            {
-                Debug.Log("There's invalid place");
-                RemoveCurrentPieceFromBoard();
-            }
+            RemoveCurrentPieceFromBoard();
         }
     }
     private void RemoveCurrentPieceFromBoard()
     {
-        _currentPiece.ReturnToHome();
-        ClearCurrentPiece();
+        if (_currentPiece)
+        {
+            _currentPiece.ReturnToOrigin();
+            ClearCurrentPiece();
+        }
     }
-
-    private void ReturnCurrentPiece()
-    {
-        _currentPiece.ReturnToStart();
-        if (_shouldRestorePreviousBoard && _previousBoardPos != null)
-            board.SetActiveBoard(_previousBoardPos, true);
-
-        ClearCurrentPiece();
-    }
-
     private void ClearCurrentPiece()
     {
-        _currentPicked = null;
         _currentPiece = null;
-        _previousBoardPos = null;
-        _shouldRestorePreviousBoard = false;
     }
     private void FollowMouse()
     {
@@ -125,7 +103,7 @@ public class PentominoInputHandler : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _boardLayer))
         {
             Vector3 snappedPos = SnapToGrid(hit.point);
-            _currentPicked.Transform.position = snappedPos;
+            _currentPiece.transform.position = snappedPos;
         }
     }
 
@@ -133,13 +111,11 @@ public class PentominoInputHandler : MonoBehaviour
     {
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
-            _currentPicked.Transform.Rotate(0, -90f, 0, Space.World);
-            _currentPiece.RotatePiecePos(false);
+            _currentPiece.RotatePiece(false);
         }
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
-            _currentPicked.Transform.Rotate(0, 90f, 0, Space.World);
-            _currentPiece.RotatePiecePos(true);
+            _currentPiece.RotatePiece(true);
         }
     }
     private Vector3 SnapToGrid(Vector3 worldPos)

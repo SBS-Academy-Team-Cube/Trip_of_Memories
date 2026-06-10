@@ -12,6 +12,10 @@ public class BucketUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI PopupText;
 
     public int Index = 0;
+    public void Reset()
+    {
+        bShowingHowToPanel(false);
+    }
     public void ShowPopup(string Text)
     {
         StopAllCoroutines();
@@ -48,7 +52,7 @@ public class BucketUIManager : MonoBehaviour
         {
             Index = 0;
         }
-        else if (Index > Dialogue.Dialogues.Count)
+        else if (Index >= Dialogue.Dialogues.Count)
         {
             Index = Dialogue.Dialogues.Count - 1;
         }

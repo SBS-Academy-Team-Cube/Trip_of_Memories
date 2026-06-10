@@ -45,8 +45,8 @@ public class Lever : MonoBehaviour, IInteractable
         {
             bClockwise = GetClockwise(transform, LeverHandleTransform, Interactor.transform);
             Handler.HandleLever(this);
-            
-            if(Trigger != null)
+
+            if (Trigger != null)
             {
                 Trigger.OnTrigger();
             }
@@ -62,9 +62,9 @@ public class Lever : MonoBehaviour, IInteractable
         IsRotating = bRotating;
         if (TargetRotators.Length > 0)
         {
-            foreach(Rotator Rotator in TargetRotators)
+            foreach (Rotator Rotator in TargetRotators)
             {
-                if(bRotating)
+                if (bRotating)
                 {
                     Rotator.StartRotate(bClockwise ? -1f : 1f);
                 }
@@ -73,7 +73,7 @@ public class Lever : MonoBehaviour, IInteractable
                     Rotator.EndRotate();
                 }
             }
-       }
+        }
     }
     private void Update()
     {
@@ -96,9 +96,10 @@ public class Lever : MonoBehaviour, IInteractable
     }
     public void Release()
     {
-        if(Trigger != null)
-            {
-                Trigger.OnTrigger();
-            }
+        IsRotating = false;
+        if (Trigger != null)
+        {
+            Trigger.OnTrigger();
+        }
     }
 }

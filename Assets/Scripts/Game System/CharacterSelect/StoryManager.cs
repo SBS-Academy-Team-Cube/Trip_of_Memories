@@ -36,11 +36,13 @@ public class StoryManager : MonoBehaviour
         StoryPanel?.SetActive(true);
         Index = 0;
         SkipAction?.action.Enable();
+        SkipAction.action.performed += OnSkip;
         PlayerJumpAction?.action.Disable();
         ShowCurrent();
     }
     private void EndStory()
     {
+        SkipAction.action.performed -= OnSkip;
         SkipAction?.action.Disable();
         PlayerJumpAction?.action.Enable();
         OnStoryEnd?.Invoke();

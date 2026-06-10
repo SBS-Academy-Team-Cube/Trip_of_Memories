@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
+using System;
+[Serializable]
 public struct BoardPos
 {
     public int x;
@@ -13,19 +13,15 @@ public class PentominoBoard : MonoBehaviour
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 6;
     [SerializeField] private float gridSize = 1f;
-
     [SerializeField] private BoardPos[] NotValidPos;
-
     private bool[,] boardData;
     private Vector3[,] boardWorldPos;
     private Dictionary<BoardPos, Vector3> board = new();
     private Dictionary<Vector3, BoardPos> reverseDict = new();
-
     private Vector3 zeroPos = Vector3.zero;
-
     public float GridSize => gridSize;
     public Vector3 ZeroPos => zeroPos;
-
+    public event Action OnClear;
     private void Start()
     {
         gridSize *= transform.lossyScale.x;
@@ -38,7 +34,6 @@ public class PentominoBoard : MonoBehaviour
 
         MakeBoard();
         SetStartBoard(NotValidPos);
-        DebugBoard();
     }
     private void MakeBoard()
     {
@@ -47,7 +42,6 @@ public class PentominoBoard : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 boardWorldPos[x, y] = new Vector3(zeroPos.x + x * gridSize, zeroPos.y, zeroPos.z + gridSize * y);
-                DebugExtension.DrawSphere(boardWorldPos[x, y], 0.001f, Color.red);
                 board.Add(new BoardPos() { x = x, y = y }, boardWorldPos[x, y]);
             }
         }
@@ -68,10 +62,6 @@ public class PentominoBoard : MonoBehaviour
             }
         }
     }
-    public Vector3 BoardPosToWorldPos(BoardPos pos)
-    {
-        return board[pos];
-    }
     public BoardPos WorldPosToBoardPos(Vector3 pos)
     {
         Vector3 local = pos - zeroPos;
@@ -91,81 +81,38 @@ public class PentominoBoard : MonoBehaviour
     {
         foreach (var pos in boardPos)
         {
-            if (pos.x >= 0 && pos.x < width &&
-                 pos.y >= 0 && pos.y < height)
+            if (OOB(pos))
             {
-                boardData[pos.x, pos.y] = newActive;
+                return;
             }
+        }
+        foreach (var pos in boardPos)
+        {
+            boardData[pos.x, pos.y] = newActive;
         }
         if (newActive)
         {
-            Debug.Log("=== Piece placed successfully - Current board state ===");
-            DebugBoard();
+            GameClearCheck();
         }
     }
-    public bool IsActiveBoard(BoardPos[] boardPos)
-    {
-        foreach (var pos in boardPos)
-        {
-            if (OOB(pos) || !boardData[pos.x, pos.y])
-            {
-                return false;
-            }
-
-            if (pos.x < 0 || pos.x >= width ||
-                 pos.y < 0 || pos.y >= height)
-            {
-                return false;
-            }
-
-            if (!boardData[pos.x, pos.y])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public bool CanPlace(BoardPos[] worldPos)
     {
         foreach (var pos in worldPos)
         {
-            if (pos.x < 0 || pos.x >= width ||
-                pos.y < 0 || pos.y >= height)
-            {
-                return false;
-            }
-
-            if (boardData[pos.x, pos.y])
+            if (OOB(pos) || boardData[pos.x, pos.y])
             {
                 return false;
             }
         }
         return true;
     }
-
-    public void IsGameClearCheck()
+    public void GameClearCheck()
     {
         foreach (bool InPlace in boardData)
         {
             if (!InPlace)
                 return;
         }
-        EventBus.PublishPentominoClear();
-    }
-    public void DebugBoard()
-    {
-        Debug.Log("========== board  ==========");
-
-        for (int y = height - 1; y >= 0; y--)
-        {
-            string row = $"Row {y:00} | ";
-            for (int x = 0; x < width; x++)
-            {
-                row += boardData[x, y] ? " O " : " X ";
-            }
-            Debug.Log(row);
-        }
-        Debug.Log("=================================================");
+        OnClear?.Invoke();
     }
 }

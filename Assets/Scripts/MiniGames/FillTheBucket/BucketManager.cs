@@ -11,7 +11,6 @@ public class BucketManager : MonoBehaviour
 
     [Header("UI Input")]
     [SerializeField] private InputActionReference CancelAction;
-
     private Bucket SourceBucket = null;
     private Bucket TargetBucket = null;
     public void Init()

@@ -4,45 +4,85 @@ using System;
 
 public class PentominoGameManager : MiniGameBase
 {
-    [SerializeField] private PentominoInputHandler inputHandler;
-    [SerializeField] private PentominoBoard board;
-    [SerializeField] private PentominoPiece[] pieces;
+    [SerializeField] private PentominoInputHandler InputHandler;
+    [SerializeField] private PentominoBoard Board;
+    [SerializeField] private PentominoPiece[] Pieces;
 
     public override event Action OnPlay;
     public override event Action OnClear;
     public override event Action OnFail;
-
-
 
     [SerializeField] private Trigger GameStartTrigger;
     [SerializeField] private Trigger GameClearTrigger;
 
     private PlayerInput PlayerInputSystem = null;
     private bool IsTriggered = false;
+
     private void OnEnable()
     {
-        EventBus.PentominoClear += Clear;
+        Board.OnClear += Clear;
+        InputHandler.OnQuitGame += Fail;
     }
     private void OnDisable()
     {
-        EventBus.PentominoClear -= Clear;
-
+        Board.OnClear -= Clear;
+        InputHandler.OnQuitGame -= Fail;
     }
     public override void Play()
     {
-        Init();
+        if (GameDirector.Instance != null)
+        {
+            GameDirector.Instance.ShowMouseCursor(true);
+            GameDirector.Instance.EnablePauseAction(false);
+        }
+        if (GameStartTrigger != null)
+        {
+            GameStartTrigger.OnTrigger();
+        }
+        Board.Init();
+        InputHandler.Init();
+        foreach (var piece in Pieces)
+        {
+            piece.Init();
+        }
         OnPlay?.Invoke();
     }
     public override void Clear()
     {
+        if (GameStartTrigger != null)
+        {
+            GameStartTrigger.OnTrigger();
+        }
         if (GameClearTrigger != null)
         {
             GameClearTrigger.OnTrigger();
+        }
+        if (GameDirector.Instance != null)
+        {
+            GameDirector.Instance.ShowMouseCursor(false);
+            GameDirector.Instance.EnablePauseAction(true);
+        }
+        if (PlayerInputSystem != null)
+        {
+            PlayerInputSystem.enabled = true;
         }
         OnClear?.Invoke();
     }
     public override void Fail()
     {
+        if (GameStartTrigger != null)
+        {
+            GameStartTrigger.OnTrigger();
+        }
+        if (PlayerInputSystem != null)
+        {
+            PlayerInputSystem.enabled = true;
+        }
+        if (GameDirector.Instance != null)
+        {
+            GameDirector.Instance.ShowMouseCursor(true);
+            GameDirector.Instance.EnablePauseAction(false);
+        }
         OnFail?.Invoke();
     }
     public override bool HasCleared()
@@ -52,19 +92,6 @@ public class PentominoGameManager : MiniGameBase
             return SaveManager.Instance.HasClearedMiniGame(MiniGameID);
         }
         return false;
-    }
-    public void GameReset()//
-    {
-        Init();
-    }
-    private void Init()
-    {
-        board.Init();
-        inputHandler.Init();
-        foreach (var piece in pieces)
-        {
-            piece.Init();
-        }
     }
     void OnTriggerEnter(Collider Other)
     {
@@ -78,17 +105,15 @@ public class PentominoGameManager : MiniGameBase
             {
                 PlayerInputSystem.enabled = false;
             }
-
-            if (GameDirector.Instance != null)
-            {
-                GameDirector.Instance.ShowMouseCursor(true);
-            }
             IsTriggered = true;
-            if (GameStartTrigger != null)
-            {
-                GameStartTrigger.OnTrigger();
-            }
             Play();
+        }
+    }
+    void OnTriggerExit(Collider Other)
+    {
+        if (Other.CompareTag("Player") && IsTriggered && !HasCleared())
+        {
+            IsTriggered = false;
         }
     }
 }

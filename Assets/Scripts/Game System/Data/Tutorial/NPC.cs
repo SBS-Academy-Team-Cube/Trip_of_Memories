@@ -48,7 +48,7 @@ public class NPC : MonoBehaviour
             return;
         }
         Triggered = true;
-        
+
         SubscribeStoryEvents(true);
 
         if (SaveManager.Instance.HasCompletedInteraction(NPCId))
