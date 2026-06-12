@@ -10,7 +10,8 @@ public class PlayerLeverHandler : MonoBehaviour
     {
         transform.SetParent(Target.transform);
         transform.position = Target.GetPosition();
-        transform.localRotation = Quaternion.Euler(0f, Target.bClockwise ? 0f : 180.0f, 0f);
+        transform.localRotation = Target.GetRotation();
+        
         if (State)
         {
             State.SetInterAction(PlayerState.EInterAction.LeverPushing);
@@ -32,6 +33,7 @@ public class PlayerLeverHandler : MonoBehaviour
             TargetLever.Release();
             TargetLever = null;
         }
+        
         transform.SetParent(null);
         if (State)
         {

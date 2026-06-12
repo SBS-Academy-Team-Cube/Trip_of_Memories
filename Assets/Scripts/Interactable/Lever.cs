@@ -22,9 +22,11 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private FLeverPosition Clockwise;
     [SerializeField] private FLeverPosition CounterClockwise;
     [SerializeField] private Trigger Trigger;
+    [SerializeField] private float ForwardRotationYawOffset = 0.0f;
 
     public bool IsRotating = false;
     public bool bClockwise { get; private set; }
+
     public string GetInteractionPrompt()
     {
         return itemName;
@@ -37,6 +39,10 @@ public class Lever : MonoBehaviour, IInteractable
     public Vector3 GetPosition()
     {
         return bClockwise ? CounterClockwise.GetPosition() : Clockwise.GetPosition();
+    }
+    public Quaternion GetRotation()
+    {
+        return Quaternion.Euler(0f, (bClockwise ? 270f : 90.0f) + ForwardRotationYawOffset, 0f);
     }
     public bool Interact(GameObject Interactor)
     {
@@ -95,6 +101,10 @@ public class Lever : MonoBehaviour, IInteractable
     public void Release()
     {
         IsRotating = false;
+        foreach (Rotator Rotator in TargetRotators)
+        {
+            Rotator.EndRotate();
+        }
         if (Trigger != null)
         {
             Trigger.OnTrigger();

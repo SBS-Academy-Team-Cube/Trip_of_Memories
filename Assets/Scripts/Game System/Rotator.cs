@@ -8,8 +8,6 @@ public class Rotator : MonoBehaviour
     public UnityEvent OnRotateEnd;
     private bool IsRotating = false;
     private float Direction;
-    [SerializeField] private float MaxYaw, MinYaw;
-    
     public void StartRotate(float ClockwiseDirection)
     {
         IsRotating = true;
