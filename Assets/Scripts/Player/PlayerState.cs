@@ -9,7 +9,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] private PlayerRopeHandler RopeHandler;
     [SerializeField] private PlayerItemHandler ItemHandler;
     [SerializeField] private PlayerLeverHandler LeverHandler;
-
+    [SerializeField] private PlayerAnimation AnimationComponent;
     public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
     public enum EInterAction { None, ItemHolding, RopeHanging, LeverPushing };
@@ -24,10 +24,20 @@ public class PlayerState : MonoBehaviour
     public bool IsInteracting = false;
 
     [SerializeField] private CharacterController Controller;
+    [SerializeField] private float CrouchRatio;
     [SerializeField] private Transform CameraPivot;
     public Transform GetCameraPivot()
     {
         return CameraPivot;
+    }
+    public void TryChangeStance()
+    {
+        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None)
+        {
+            return;
+        }
+        SetStance(Stance == EStance.Standing ? EStance.Crouching : EStance.Standing);
+
     }
     public void TryInteraction()
     {
@@ -84,6 +94,7 @@ public class PlayerState : MonoBehaviour
         if (IntendToSprint != bWantToSprint)
         {
             IntendToSprint = bWantToSprint;
+            SetGait(IntendToSprint ? EGait.Running : EGait.Walking);
         }
     }
     public void SetStance(EStance NewStance)
@@ -91,6 +102,22 @@ public class PlayerState : MonoBehaviour
         if (NewStance != Stance)
         {
             Stance = NewStance;
+            Controller.height *= CrouchRatio;
+            Controller.center *= CrouchRatio;
+            CrouchRatio = 1.0f / CrouchRatio;
+            AnimationComponent.SetStance((int)Stance);
+        }
+    }
+    private void SetGait(EGait NewGait)
+    {
+        if (Gait != NewGait)
+        {
+            if (NewGait == EGait.Running && !CanSprint())
+            {
+                return;
+            }
+            Gait = NewGait;
+            AnimationComponent.SetGait((int)Gait);
         }
     }
     public void SetInterAction(EInterAction NewAction)
@@ -109,7 +136,7 @@ public class PlayerState : MonoBehaviour
     }
     public bool CanSprint()
     {
-        return InterAction == EInterAction.None && CanMove() && Stance == EStance.Standing;
+        return InterAction == EInterAction.None && CanMove() && Stance == EStance.Standing && IsGrounded;
     }
     public bool CanMove()
     {

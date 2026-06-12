@@ -10,6 +10,7 @@ public enum ETargetLayer { LeftArm, RightArm, Head, Body };
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private PlayerState State;
+    private static readonly int StanceHash = Animator.StringToHash("Stance");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int GaitHash = Animator.StringToHash("Gait");
@@ -108,6 +109,10 @@ public class PlayerAnimation : MonoBehaviour
             return;
         }
         AnimationController.SetLayerWeight(LayerIndexs[(int)Layer], Mathf.Clamp01(Weight));
+    }
+    public void SetStance(int Stance)
+    {
+        AnimationController.SetInteger(StanceHash, Stance);
     }
     public void SetIsMoving(bool IsMoving)
     {

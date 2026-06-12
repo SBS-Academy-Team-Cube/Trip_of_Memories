@@ -15,8 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float MoveSpeed = 5f;
+    [SerializeField] private float CrouchedSpeed;
     [SerializeField] private float SprintSpeed;
 
+    public float CurrentSpeed;
     [SerializeField] private float RotateSpeed = 20.0f;
     [SerializeField] private float Gravity = -9.81f;
     [SerializeField] private float JumpForce = 5f;
@@ -64,9 +66,8 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 Move = CameraForward * MoveInput.y + CameraRight * MoveInput.x;
                 Move = Vector3.ClampMagnitude(Move, 1f);
 
-                Controller.Move((State.IntendToSprint && State.CanSprint() ? SprintSpeed : MoveSpeed) * Time.deltaTime * Move);
-                Animation.SetGait(State.IntendToSprint && State.CanSprint() ? 1 : 0);
-
+                CurrentSpeed = State.Stance == PlayerState.EStance.Standing ? (State.Gait == PlayerState.EGait.Running ? SprintSpeed : MoveSpeed) : CrouchedSpeed;
+                Controller.Move(CurrentSpeed * Time.deltaTime * Move);
                 if (Move.sqrMagnitude > 0.01f)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(Move);

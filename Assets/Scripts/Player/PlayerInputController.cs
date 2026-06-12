@@ -83,6 +83,13 @@ public class PlayerInputController : MonoBehaviour
             SprayComponent.TryUse();
         }
     }
+    public void OnCrouch(InputValue Value)
+    {
+        if(Value.isPressed)
+        {
+            State.TryChangeStance();
+        }
+    }
     public void OnPush(InputValue Value)
     {
         if (!LeverHandler)
