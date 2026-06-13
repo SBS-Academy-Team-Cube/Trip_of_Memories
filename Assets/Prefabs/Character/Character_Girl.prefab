@@ -6441,6 +6441,9 @@ MonoBehaviour:
   IsInteracting: 0
   Controller: {fileID: 3888643630126887021}
   CrouchRatio: 0.78
+  StandUpBlockLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   CameraPivot: {fileID: 6773283079788716592}
 --- !u!114 &7321981670308109607
 MonoBehaviour:
@@ -11380,13 +11383,13 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.9056604, g: 0.65768945, b: 0.43147027, a: 1}
-  m_Intensity: 1.5536567
+  m_Intensity: 7.957747
   m_Range: 1.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -11513,7 +11516,7 @@ MonoBehaviour:
   m_EvsmBlurPasses: 0
   m_LightlayersMask: 1
   m_LinkShadowLayers: 1
-  m_ShadowNearPlane: 0.1
+  m_ShadowNearPlane: 0.05
   m_BlockerSampleCount: 24
   m_FilterSampleCount: 16
   m_MinFilterSize: 0.1

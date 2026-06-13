@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
 
 public class Mover : MonoBehaviour
 {
@@ -26,19 +25,41 @@ public class Mover : MonoBehaviour
         CurrentMoveRoutine = StartCoroutine(MoveRoutine(TargetPosition));
         TargetPosition = TargetPosition == EndPosition ? StartPosition : EndPosition;
     }
+
+    private float GetCurrentMoveRatio()
+    {
+        Vector3 segment = EndPosition - StartPosition;
+
+        if (segment.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return 0f;
+        }
+
+        float ratio = Vector3.Dot(transform.localPosition - StartPosition, segment) / segment.sqrMagnitude;
+        return Mathf.Clamp01(ratio);
+    }
+
     private IEnumerator MoveRoutine(Vector3 Target)
     {
-        Vector3 Start = transform.localPosition;
-        float time = 0f;
-        while (time < Duration)
+        if (Duration <= Mathf.Epsilon)
         {
-            float t = time / Duration;
+            transform.localPosition = Target;
+            CurrentMoveRoutine = null;
+            yield break;
+        }
 
-            transform.localPosition = Vector3.Lerp(Start, Target, t);
+        float currentRatio = GetCurrentMoveRatio();
+        float targetRatio = Target == EndPosition ? 1f : 0f;
+        float moveSpeed = 1f / Duration;
 
-            time += Time.deltaTime;
+        while (!Mathf.Approximately(currentRatio, targetRatio))
+        {
+            currentRatio = Mathf.MoveTowards(currentRatio, targetRatio, moveSpeed * Time.deltaTime);
+            transform.localPosition = Vector3.Lerp(StartPosition, EndPosition, currentRatio);
             yield return null;
         }
+
         transform.localPosition = Target;
+        CurrentMoveRoutine = null;
     }
 }

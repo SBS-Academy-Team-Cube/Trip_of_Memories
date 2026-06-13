@@ -7,14 +7,10 @@ public class PlayerRopeHandler : MonoBehaviour
     [SerializeField] private PlayerAnimation Animation;
     public UnityEvent<bool> OnEnterHanging;
     public float Speed;
-    public bool TryGrapRope(GameObject Target)
+    public bool TryGrapRope(Rope Target)
     {
-        if (!Target.TryGetComponent(out Renderer renderer))
-        {
-            return false;
-        }
-        Bounds bounds = renderer.bounds;
-        float clampedY = Mathf.Clamp(transform.position.y, bounds.min.y, bounds.max.y);
+        Target.GetMinMaxY(out float Min, out float Max);
+        float clampedY = Mathf.Clamp(transform.position.y, Min, Max);
 
         OnEnterHanging?.Invoke(true);
         Animation.SetHangOnRope(true);

@@ -6,7 +6,7 @@ public enum SceneId
     MainMenu,
     Loading,
     Stage1_1, Stage1_2, Stage1_3, Stage1_4,
-    Stage2_1, Stage2_2, Stage2_3, Stage2_4,
+    Stage2_1, Stage2_2, Stage2_2_1, Stage2_3, Stage2_3_1, Stage2_4, Stage2_5,
     Stage3_1, Stage3_2, Stage3_3, Stage3_4,
     Stage4_1, Stage4_2, Stage4_3, Stage4_4,
     NULL,
@@ -30,8 +30,11 @@ public static class SceneTable
 
             SceneId.Stage2_1 => "Stage 2-1",
             SceneId.Stage2_2 => "Stage 2-2",
+            SceneId.Stage2_2_1 => "Stage 2-2-1",
             SceneId.Stage2_3 => "Stage 2-3",
+            SceneId.Stage2_3_1 => "Stage 2-3-1",
             SceneId.Stage2_4 => "Stage 2-4",
+            SceneId.Stage2_5 => "Stage 2-5",
 
             SceneId.Stage3_1 => "Stage 3-1",
             SceneId.Stage3_2 => "Stage 3-2",

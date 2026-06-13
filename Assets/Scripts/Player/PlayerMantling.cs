@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Runtime.Serialization;
-
 public class PlayerMantling : MonoBehaviour
 {
     [Header("Mantle Settings")]
@@ -17,31 +14,14 @@ public class PlayerMantling : MonoBehaviour
     Vector3 LeftHandTarget;
     Vector3 RightHandTarget;
     Vector3 WallNormal;
+    private Transform LeftHandIKTargetTransform;
+    private Transform RightHandIKTargetTransform;
 
-    void OnAnimatorIK(int layerIndex)
+    private void Awake()
     {
-        if (!IsMantling)
-        {
-            return;
-        }
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKWeight);
-
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKWeight);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKWeight);
-
-        animator.SetIKPosition(AvatarIKGoal.LeftHand, LeftHandTarget);
-        animator.SetIKPosition(AvatarIKGoal.RightHand, RightHandTarget);
-
-        Quaternion rot = Quaternion.LookRotation(-WallNormal);
-
-        animator.SetIKRotation(AvatarIKGoal.LeftHand, rot);
-        animator.SetIKRotation(AvatarIKGoal.RightHand, rot);
+        EnsureHandIKTargetTransforms();
     }
-    void Update()
-    {
-        HandIKWeight = animator.GetFloat("HandIKWeight");
-    }
+
     public void DoMantling(Vector3 TargetPosition)
     {
         IsMantling = true;
@@ -51,12 +31,20 @@ public class PlayerMantling : MonoBehaviour
         transform.position += TargetPosition - LedgePoint.position;
 
         CalculateHandTargets(TargetPosition);
+        ApplyHandIKTargetTransforms();
         Animation.SetMantling();
+        Animation.SetHandIKTargets(LeftHandIKTargetTransform, RightHandIKTargetTransform);
+        Animation.SetHandIKWeight(1.0f, 1.0f);
+    }
+    public void ReleaseHand()
+    {
+        Animation.ClearHandIK();
     }
     public void OnEndMantling()
     {
         IsMantling = false;
         Controller.enabled = true;
+        Animation.ClearHandIK();
         Animation.DisableRootMotion();
     }
     public void TryMantling()
@@ -70,27 +58,52 @@ public class PlayerMantling : MonoBehaviour
     void CalculateHandTargets(Vector3 TargetPosition)
     {
         Vector3 right = Vector3.Cross(Vector3.up, WallNormal).normalized;
-        float handOffset = -0.2f;
+        float handOffset = -0.15f;
         LeftHandTarget = TargetPosition - right * handOffset;
         RightHandTarget = TargetPosition + right * handOffset;
-
-        DebugExtension.DrawSphere(LeftHandTarget, 0.2f, Color.blue, 1f);
-        DebugExtension.DrawSphere(RightHandTarget, 0.2f, Color.red, 1f);
     }
+
+    private void EnsureHandIKTargetTransforms()
+    {
+        if (!LeftHandIKTargetTransform)
+        {
+            LeftHandIKTargetTransform = new GameObject($"{name}_Mantle_LeftHandIKTarget").transform;
+        }
+        if (!RightHandIKTargetTransform)
+        {
+            RightHandIKTargetTransform = new GameObject($"{name}_Mantle_RightHandIKTarget").transform;
+        }
+    }
+
+    private void ApplyHandIKTargetTransforms()
+    {
+        EnsureHandIKTargetTransforms();
+
+        Quaternion handRotation = Quaternion.LookRotation(-WallNormal);
+        LeftHandIKTargetTransform.SetPositionAndRotation(LeftHandTarget, handRotation);
+        RightHandIKTargetTransform.SetPositionAndRotation(RightHandTarget, handRotation);
+    }
+
+    private void OnDestroy()
+    {
+        if (LeftHandIKTargetTransform)
+        {
+            Destroy(LeftHandIKTargetTransform.gameObject);
+        }
+        if (RightHandIKTargetTransform)
+        {
+            Destroy(RightHandIKTargetTransform.gameObject);
+        }
+    }
+
     private bool LedgeCheck(out Vector3 OutLedgePosition)
     {
         OutLedgePosition = Vector3.zero;
-
-        Vector3 LedgetCheckDirection = new Vector3(Move.CameraTransform.forward.x, 0f, Move.CameraTransform.forward.z);
-        LedgetCheckDirection.Normalize();
+        Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.green, 10.0f);
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, LedgeCheckForwardDistance, ClimbableWallLayer))
         {
             // Wall Checking Debug Line
-            Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.green);
-            if (!WallHit.collider.CompareTag("ClimbableWall"))
-            {
-                return false;
-            }
+            Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.red, 10.0f);
             WallNormal = WallHit.normal;
 
             // Wall Hit Point Debug Sphere
@@ -101,24 +114,28 @@ public class PlayerMantling : MonoBehaviour
             // Ledge Plane Check Start Position Debug Sphere
             DebugExtension.DrawSphere(PlanCheckRayStartPosition, 0.05f, Color.red, 0.25f);
 
-            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgePoint.localPosition.y + 0.1f))
+            Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * (LedgePoint.localPosition.y + 0.1f), Color.red);
+            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgePoint.localPosition.y + 0.1f, ClimbableWallLayer))
             {
                 // Ledge Plane Check Debug Line
                 Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * PlanCheckRayStartPosition.y, Color.red);
-                if (!LedgeHit.collider.CompareTag("ClimbableWall"))
-                {
-                    return false;
-                }
+                // if (!LedgeHit.collider.CompareTag("ClimbableWall"))
+                // {
+                //     return false;
+                // }
                 OutLedgePosition = LedgeHit.point;
                 // Target Mantling Position Debug Sphere
                 DebugExtension.DrawSphere(OutLedgePosition, 0.05f, Color.orange, 0.25f);
                 return true;
             }
         }
+        else
+        {
+            Debug.Log("Doesn't Hit");
+        }
         return false;
     }
 }
-
 
 public static class DebugExtension
 {

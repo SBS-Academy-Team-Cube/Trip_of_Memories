@@ -22,6 +22,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float RotateSpeed = 20.0f;
     [SerializeField] private float Gravity = -9.81f;
     [SerializeField] private float JumpForce = 5f;
+    private bool IsFreeLookCamera = true;
+
+    public void ChangeCameraView(bool bFreeLookCamera)
+    {
+        IsFreeLookCamera = bFreeLookCamera;
+    }
     public void SetCameraTransform(Transform CameraTransform)
     {
         this.CameraTransform = CameraTransform;
@@ -57,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Animation.SetIsMoving(true);
 
-                Vector3 CameraForward = CameraTransform.forward;
+                Vector3 CameraForward = IsFreeLookCamera ? CameraTransform.forward : CameraTransform.up;
                 Vector3 CameraRight = CameraTransform.right;
 
                 CameraForward.y = 0;

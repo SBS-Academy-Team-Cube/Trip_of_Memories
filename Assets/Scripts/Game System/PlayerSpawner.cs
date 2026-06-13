@@ -8,6 +8,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private CameraManager CameraManager;
     [SerializeField] private CutsceneManager CutSceneManager;
     [SerializeField] private UIHPController HPUI;
+    [SerializeField] private bool IsTopViewScene = false;
     private bool IsRespawning = false;
     private Health PlayerHP;
     void Start()
@@ -48,6 +49,8 @@ public class PlayerSpawner : MonoBehaviour
         if (Player.TryGetComponent(out PlayerMovement Movement))
         {
             Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
+
+            Movement.ChangeCameraView(!IsTopViewScene);
         }
         CutSceneManager?.Init(Player);
         if (CameraManager != null)

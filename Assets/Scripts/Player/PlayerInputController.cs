@@ -76,6 +76,13 @@ public class PlayerInputController : MonoBehaviour
             SprayComponent.TryTakeSpray();
         }
     }
+    public void OnPickLantern(InputValue Value)
+    {
+        if (State != null)
+        {
+            State.TryTakeLantern();
+        }
+    }
     public void OnAbility(InputValue Value)
     {
         if (SprayComponent)
@@ -85,7 +92,7 @@ public class PlayerInputController : MonoBehaviour
     }
     public void OnCrouch(InputValue Value)
     {
-        if(Value.isPressed)
+        if (Value.isPressed)
         {
             State.TryChangeStance();
         }

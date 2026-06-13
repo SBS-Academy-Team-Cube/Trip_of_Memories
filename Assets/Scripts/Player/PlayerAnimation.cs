@@ -24,6 +24,7 @@ public class PlayerAnimation : MonoBehaviour
     private static readonly int IsHangingHash = Animator.StringToHash("IsHanging");
     private static readonly int RopeAnimSpeedHash = Animator.StringToHash("RopeAnimSpeed");
     private static readonly int TakeSprayTriggerHash = Animator.StringToHash("TakeSprayTrigger");
+    private static readonly int TakeLanternTriggerHash = Animator.StringToHash("TakeLanternTrigger");
     private static readonly string[] LayerNames =
     { "Left Arm Layer", "Right Arm Layer", "Head Layer", "Body Layer" };
     private int[] LayerIndexs = { -1, -1, -1, -1 };
@@ -56,13 +57,13 @@ public class PlayerAnimation : MonoBehaviour
     {
         ApplyHandIK(AvatarIKGoal.LeftHand, leftHandIKTarget, leftHandIKWeight);
         ApplyHandIK(AvatarIKGoal.RightHand, rightHandIKTarget, rightHandIKWeight);
-        Vector3 pos = AnimationController.GetIKPosition(AvatarIKGoal.RightHand);
-        Quaternion quat = AnimationController.GetIKRotation(AvatarIKGoal.RightHand);
+        // Vector3 pos = AnimationController.GetIKPosition(AvatarIKGoal.RightHand);
+        // Quaternion quat = AnimationController.GetIKRotation(AvatarIKGoal.RightHand);
 
-        float length = 1.0f;
-        Debug.DrawLine(pos, pos + quat * Vector3.forward * length, Color.blue);
-        Debug.DrawLine(pos, pos + quat * Vector3.up * length, Color.green);
-        Debug.DrawLine(pos, pos + quat * Vector3.right * length, Color.red);
+        // float length = 1.0f;
+        // Debug.DrawLine(pos, pos + quat * Vector3.forward * length, Color.blue);
+        // Debug.DrawLine(pos, pos + quat * Vector3.up * length, Color.green);
+        // Debug.DrawLine(pos, pos + quat * Vector3.right * length, Color.red);
     }
     public void SetHandIKTargets(Transform leftTarget, Transform rightTarget)
     {
@@ -171,6 +172,12 @@ public class PlayerAnimation : MonoBehaviour
         AnimationController.SetTrigger(TakeSprayTriggerHash);
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 1.0f, 0.15f);
     }
+    public void SetTakeLantern()
+    {
+        SetInterpolatedLayerWeight(ETargetLayer.LeftArm, 1.0f, 0.25f);
+        SetInterpolatedLayerWeight(ETargetLayer.Head, 1.0f, 0.25f);
+        AnimationController.SetTrigger(TakeLanternTriggerHash);
+    }
     public void SetInterpolatedLayerWeight(ETargetLayer Layer, float TargetWeight, float Duration)
     {
         if (InterpolatedLayers[(int)Layer] != null)
@@ -199,5 +206,14 @@ public class PlayerAnimation : MonoBehaviour
     public void OnTakeInSpray()
     {
         SetInterpolatedLayerWeight(ETargetLayer.RightArm, 0.0f, 0.5f);
+    }
+    public void OnTakeOutLantern()
+    {
+        SetInterpolatedLayerWeight(ETargetLayer.Head, 0.0f, 0.15f);
+    }
+    public void OnPutInLantern()
+    {
+        SetInterpolatedLayerWeight(ETargetLayer.LeftArm, 0.0f, 0.15f);
+        SetInterpolatedLayerWeight(ETargetLayer.Head, 0.0f, 0.15f);
     }
 }

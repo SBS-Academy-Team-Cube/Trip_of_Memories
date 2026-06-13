@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class PlayerState : MonoBehaviour
 {
@@ -25,7 +24,9 @@ public class PlayerState : MonoBehaviour
 
     [SerializeField] private CharacterController Controller;
     [SerializeField] private float CrouchRatio;
+    [SerializeField] private LayerMask StandUpBlockLayerMask = ~0;
     [SerializeField] private Transform CameraPivot;
+    private const float StandUpCheckSkin = 0.02f;
     public Transform GetCameraPivot()
     {
         return CameraPivot;
@@ -36,8 +37,24 @@ public class PlayerState : MonoBehaviour
         {
             return;
         }
-        SetStance(Stance == EStance.Standing ? EStance.Crouching : EStance.Standing);
 
+        EStance NewStance = Stance == EStance.Standing ? EStance.Crouching : EStance.Standing;
+        if (Stance == EStance.Crouching && NewStance == EStance.Standing && !CanStandUp())
+        {
+            return;
+        }
+
+        SetStance(NewStance);
+
+    }
+    public void TryTakeLantern()
+    {
+        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None || Ability == EAbility.Spray)
+        {
+            return;
+        }
+        SetAbility(Ability == EAbility.Lantern ? EAbility.None : EAbility.Lantern);
+        AnimationComponent.SetTakeLantern();
     }
     public void TryInteraction()
     {
@@ -107,6 +124,45 @@ public class PlayerState : MonoBehaviour
             CrouchRatio = 1.0f / CrouchRatio;
             AnimationComponent.SetStance((int)Stance);
         }
+    }
+    private bool CanStandUp()
+    {
+        if (Controller == null)
+        {
+            return true;
+        }
+
+        float StandHeight = Controller.height * CrouchRatio;
+        Vector3 StandCenter = Controller.center * CrouchRatio;
+        Vector3 WorldCenter = transform.TransformPoint(StandCenter);
+        Vector3 Up = transform.up;
+
+        float HeightScale = Mathf.Abs(transform.lossyScale.y);
+        float RadiusScale = Mathf.Max(Mathf.Abs(transform.lossyScale.x), Mathf.Abs(transform.lossyScale.z));
+        float Radius = Mathf.Max(0.0f, Controller.radius * RadiusScale - StandUpCheckSkin);
+        float HalfHeight = Mathf.Max(Radius, StandHeight * HeightScale * 0.5f);
+        float CapsuleOffset = Mathf.Max(0.0f, HalfHeight - Radius);
+
+        Vector3 Top = WorldCenter + Up * CapsuleOffset;
+        Vector3 Bottom = WorldCenter - Up * CapsuleOffset;
+        float CurrentTopHeight = Controller.bounds.max.y;
+
+        Collider[] Hits = Physics.OverlapCapsule(Bottom, Top, Radius, StandUpBlockLayerMask, QueryTriggerInteraction.Ignore);
+        foreach (Collider Hit in Hits)
+        {
+            if (Hit == null || Hit == Controller || Hit.transform.IsChildOf(transform))
+            {
+                continue;
+            }
+
+            if (Hit.bounds.max.y <= CurrentTopHeight + StandUpCheckSkin)
+            {
+                continue;
+            }
+            return false;
+        }
+
+        return true;
     }
     private void SetGait(EGait NewGait)
     {

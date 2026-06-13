@@ -19,7 +19,7 @@ public class PlayerLeverHandler : MonoBehaviour
         Target.TryGetComponent(out TargetLever);
 
         Animation.SetLeverPush(true);
-
+        
         Target.GetIKPosition(out Transform Left, out Transform Right);
         Animation.SetHandIKTargets(Left, Right);
         Animation.SetHandIKWeight(1.0f, 1.0f);
