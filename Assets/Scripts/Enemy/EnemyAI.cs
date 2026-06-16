@@ -293,7 +293,7 @@ public class EnemyAI : MonoBehaviour
         ExitState(CurrentState);
         CurrentState = State;
 
-        // PlaySound();
+        PlaySound();
         switch (CurrentState)
         {
             case EState.Idle:
@@ -488,7 +488,6 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
-
         AudioClip Clip = RuntimeSounds.GetSound();
         if (GatedAudio != null)
         {

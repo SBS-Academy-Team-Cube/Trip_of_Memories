@@ -17,6 +17,7 @@ public class NPC : MonoBehaviour
     private bool IsStoryChangedSubscribed = false;
     private bool IsConnectStoryEndSubscribed = false;
     private bool IsCleanupStoryEndSubscribed = false;
+    private PlayerInputController PlayerInputComponent = null;
     public void ResetTrigger()
     {
         Triggered = false;
@@ -33,6 +34,7 @@ public class NPC : MonoBehaviour
     }
     private void OnDisable()
     {
+        UnlockPlayerInput();
         Triggered = false;
         UnsubscribeStoryEvents();
         if (MiniGame != null)
@@ -50,6 +52,10 @@ public class NPC : MonoBehaviour
         Triggered = true;
 
         SubscribeStoryEvents(true);
+        if (Other.TryGetComponent(out PlayerInputComponent))
+        {
+            PlayerInputComponent.LockInput();
+        }
 
         if (SaveManager.Instance.HasCompletedInteraction(NPCId))
         {
@@ -60,7 +66,6 @@ public class NPC : MonoBehaviour
             SaveManager.Instance.TryCompleteInteraction(NPCId);
             StoryManager.ShowStory(FirstTime);
         }
-
     }
     private void OnTriggerExit(Collider Other)
     {
@@ -82,12 +87,12 @@ public class NPC : MonoBehaviour
         {
             return;
         }
+
         if (!IsStoryChangedSubscribed)
         {
             StoryManager.OnStoryChanged += TryTalk;
             IsStoryChangedSubscribed = true;
         }
-
         if (bConnectMiniGameOnEnd)
         {
             if (!IsConnectStoryEndSubscribed)
@@ -95,7 +100,6 @@ public class NPC : MonoBehaviour
                 StoryManager.OnStoryEnd += HandleConnectStroyMiniGame;
                 IsConnectStoryEndSubscribed = true;
             }
-
             if (IsCleanupStoryEndSubscribed)
             {
                 StoryManager.OnStoryEnd -= HandleStoryEndCleanup;
@@ -137,7 +141,19 @@ public class NPC : MonoBehaviour
 
     private void HandleStoryEndCleanup()
     {
+        UnlockPlayerInput();
         UnsubscribeStoryEvents();
+    }
+
+    private void UnlockPlayerInput()
+    {
+        if (PlayerInputComponent == null)
+        {
+            return;
+        }
+
+        PlayerInputComponent.UnLockInput();
+        PlayerInputComponent = null;
     }
 
     private void HandleConnectStroyMiniGame()
@@ -146,17 +162,18 @@ public class NPC : MonoBehaviour
         MiniGame.OnClear += HandleClear;
         MiniGame.OnFail += HandleFail;
         UnsubscribeStoryEvents();
-
     }
     private void HandleClear()
     {
         MiniGame.OnClear -= HandleClear;
+        MiniGame.OnFail -= HandleFail;
         SubscribeStoryEvents(false);
         StoryManager.ShowStory(Clear);
     }
 
     private void HandleFail()
     {
+        MiniGame.OnClear -= HandleClear;
         MiniGame.OnFail -= HandleFail;
         SubscribeStoryEvents(false);
         StoryManager.ShowStory(Fail);

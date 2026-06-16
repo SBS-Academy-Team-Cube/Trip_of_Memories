@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class StoryManager : MonoBehaviour
 {
-
     private StoryData CurrentStoryData = null;
 
     [Header("Skip Input Action Reference")]
@@ -18,13 +17,10 @@ public class StoryManager : MonoBehaviour
     public Action OnStoryEnd;
     private int Index = 0;
     private bool IsTyping = false;
-    void OnEnable()
-    {
-        SkipAction.action.performed += OnSkip;
-    }
+    private bool IsSkipSubscribed = false;
     void OnDisable()
     {
-        SkipAction.action.performed -= OnSkip;
+        UnsubscribeSkip();
     }
     private void Start()
     {
@@ -35,19 +31,42 @@ public class StoryManager : MonoBehaviour
         CurrentStoryData = Data;
         StoryPanel?.SetActive(true);
         Index = 0;
+        SubscribeSkip();
         SkipAction?.action.Enable();
-        SkipAction.action.performed += OnSkip;
         PlayerJumpAction?.action.Disable();
         ShowCurrent();
     }
     private void EndStory()
     {
-        SkipAction.action.performed -= OnSkip;
+        UnsubscribeSkip();
         SkipAction?.action.Disable();
         PlayerJumpAction?.action.Enable();
         OnStoryEnd?.Invoke();
         StoryPanel?.SetActive(false);
     }
+
+    private void SubscribeSkip()
+    {
+        if (IsSkipSubscribed || SkipAction == null)
+        {
+            return;
+        }
+
+        SkipAction.action.performed += OnSkip;
+        IsSkipSubscribed = true;
+    }
+
+    private void UnsubscribeSkip()
+    {
+        if (!IsSkipSubscribed || SkipAction == null)
+        {
+            return;
+        }
+
+        SkipAction.action.performed -= OnSkip;
+        IsSkipSubscribed = false;
+    }
+
     void ShowCurrent()
     {
         if (Index >= CurrentStoryData.Count)

@@ -9,7 +9,6 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         Pause,
         Stop
     }
-
     [SerializeField] private AudioSource Source;
     [SerializeField] private Transform Listener;
     [SerializeField] private bool AutoFindListener = true;
@@ -92,8 +91,7 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         {
             return;
         }
-
-        Source.PlayOneShot(Clip);
+        Source.PlayOneShot(Clip, Source.volume * (AudioManager.Instance ? AudioManager.Instance.SFX_VOLUME : 1.0f));
     }
 
     public void Stop()
@@ -175,7 +173,6 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         {
             return;
         }
-
         AudioListener FoundListener = FindFirstObjectByType<AudioListener>();
         if (FoundListener != null)
         {

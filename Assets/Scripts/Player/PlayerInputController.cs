@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +11,14 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerState State;
     [SerializeField] private PlayerInput Input;
 
+    public void LockInput()
+    {
+        Input.enabled = false;
+    }
+    public void UnLockInput()
+    {
+        Input.enabled = true;
+    }
     public void OnHangingRope(bool bHanging)
     {
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");

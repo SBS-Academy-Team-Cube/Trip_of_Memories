@@ -27,6 +27,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] private LayerMask StandUpBlockLayerMask = ~0;
     [SerializeField] private Transform CameraPivot;
     private const float StandUpCheckSkin = 0.02f;
+
     public Transform GetCameraPivot()
     {
         return CameraPivot;

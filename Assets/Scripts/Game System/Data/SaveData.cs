@@ -8,7 +8,11 @@ public class SaveData
     public bool HasPlayed = false;
     public bool CanEnterLevelSelect = false;
 
-
+    public void CompleteSelection(int SelectedIndex)
+    {
+        SelectedCharacterModelIndex = SelectedIndex;
+        HasPlayed = true;
+    }
     // Character Select
     public int SelectedCharacterModelIndex;
 

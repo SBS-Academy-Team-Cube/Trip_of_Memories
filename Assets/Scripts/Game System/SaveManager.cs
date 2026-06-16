@@ -35,7 +35,16 @@ public class SaveManager : Singleton<SaveManager>
 
         Data.Normalize();
     }
-
+    public void CompleteSelection(int SelectedIndex)
+    {
+        if (Data == null)
+        {
+            Load();
+        }
+        Data.Normalize();
+        Data.CompleteSelection(SelectedIndex);
+        Save();
+    }
     public void Save()
     {
         if (Data == null)
@@ -43,7 +52,6 @@ public class SaveManager : Singleton<SaveManager>
             Data = CreateNewData();
         }
         Data.Normalize();
-
         string json = JsonUtility.ToJson(Data, true);
         File.WriteAllText(Path, json);
         Debug.Log(Application.persistentDataPath);
@@ -97,7 +105,7 @@ public class SaveManager : Singleton<SaveManager>
             || (CurrentLevelProgress != null && CurrentLevelProgress.HasCompletedInteraction(interactionId));
     }
 
-    public bool TryCollectMemoryItem(string memoryItemId, int memoryRecoveryAmount)
+    public bool TryCollectMemoryItem(string memoryItemId, int memoryRecoveryAmount = 0)
     {
         EnsureLevelProgress();
 

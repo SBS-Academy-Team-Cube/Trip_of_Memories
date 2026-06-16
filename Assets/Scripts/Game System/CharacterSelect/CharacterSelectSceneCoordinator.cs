@@ -8,6 +8,8 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
     [SerializeField] private CharacterSelectController selectController;
     [SerializeField] private SceneId NextSceneID;
 
+    [SerializeField] private AudioClip BGM;
+
     [Header("Story Data")]
     [SerializeField] private StoryData SceneStroyData;
 
@@ -41,6 +43,10 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
     private void Start()
     {
         EnterStoryState();
+        if (AudioManager.Instance && BGM)
+        {
+            AudioManager.Instance.PlayBGM(BGM);
+        }
     }
 
     void EnterStoryState()
@@ -62,23 +68,17 @@ public class CharacterSelectSceneCoordinator : MonoBehaviour
     }
     void HandleCharacterConfirmed(int characterIndex)
     {
-        if (SaveManager.Instance != null)
+        if (SaveManager.Instance)
         {
-            SaveManager.Instance.Data.SelectedCharacterModelIndex = characterIndex;
-            SaveManager.Instance.Data.HasPlayed = true;
-            SaveManager.Instance.Save();
+            SaveManager.Instance.CompleteSelection(characterIndex);
         }
-        else
+        if (AudioManager.Instance)
         {
-            Debug.LogError("SaveManager is NULL");
+            AudioManager.Instance.StopBGM();
         }
-        if (GameDirector.Instance != null)
+        if (GameDirector.Instance)
         {
             GameDirector.Instance.LoadScene(NextSceneID);
-        }
-        else
-        {
-            Debug.LogError("GameDirector is NULL");
         }
     }
 }
