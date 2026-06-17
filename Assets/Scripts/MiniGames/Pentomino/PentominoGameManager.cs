@@ -8,6 +8,8 @@ public class PentominoGameManager : MiniGameBase
     [SerializeField] private PentominoBoard Board;
     [SerializeField] private PentominoPiece[] Pieces;
 
+    [SerializeField] private GameObject MiniGameRule;
+
     public override event Action OnPlay;
     public override event Action OnClear;
     public override event Action OnFail;
@@ -39,6 +41,12 @@ public class PentominoGameManager : MiniGameBase
         {
             GameStartTrigger.OnTrigger();
         }
+
+        if (MiniGameRule)
+        {
+            MiniGameRule.SetActive(true);
+        }
+
         Board.Init();
         InputHandler.Init();
         foreach (var piece in Pieces)
@@ -66,6 +74,12 @@ public class PentominoGameManager : MiniGameBase
         {
             PlayerInputSystem.enabled = true;
         }
+
+        if (MiniGameRule)
+        {
+            MiniGameRule.SetActive(false);
+        }
+
         OnClear?.Invoke();
     }
     public override void Fail()
@@ -83,6 +97,12 @@ public class PentominoGameManager : MiniGameBase
             GameDirector.Instance.ShowMouseCursor(true);
             GameDirector.Instance.EnablePauseAction(false);
         }
+
+        if (MiniGameRule)
+        {
+            MiniGameRule.SetActive(false);
+        }
+
         OnFail?.Invoke();
     }
     public override bool HasCleared()

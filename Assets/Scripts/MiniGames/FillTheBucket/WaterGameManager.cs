@@ -7,7 +7,6 @@ public class WaterGameManager : MiniGameBase
     public override event Action OnFail;
     public string ID => MiniGameID;
     [SerializeField] private BucketManager BucketManager;
-    [SerializeField] private BucketUIManager UI;
     [SerializeField] private GameObject Canvas;
 
     public override bool HasCleared()

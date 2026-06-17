@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7022252786118337042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6689022032274004670}
+  - component: {fileID: 8191107267217195196}
+  - component: {fileID: 4522540021616613052}
+  m_Layer: 0
+  m_Name: Cutscene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6689022032274004670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022252786118337042}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000055204175, y: 0.9996997, z: 0.002689886, w: 0.02435601}
+  m_LocalPosition: {x: -1954.658, y: 1720.88, z: 812.5138}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -0.308, y: 177.209, z: 0.001}
+--- !u!320 &8191107267217195196
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022252786118337042}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 8926922492085062499, guid: dd4e5702e64a3ed4581e10b4b9cbf904, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References:
+    - 90beabbcbabe9074fa8a460089587014: {fileID: 0}
+    - ddfc6f0ff6ec6784db5f7b1318a0f0d4: {fileID: 0}
+    - bfe6a34a5d4de0741a0295b260a513a3: {fileID: 0}
+    - d3879ecc7cbda8741b8b19d69eccebca: {fileID: 0}
+    - 47179c2168dcb0842bd9dd0d55ac4470: {fileID: 0}
+    - 62dd55eb9ac713040a23690cb35f36db: {fileID: 0}
+--- !u!114 &4522540021616613052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022252786118337042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7fc582bde4e9f349bfdcd6aaeadbf73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  Director: {fileID: 8191107267217195196}
+  Triggers:
+  - {fileID: 0}

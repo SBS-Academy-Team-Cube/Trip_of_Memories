@@ -14,7 +14,11 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
     [SerializeField] private bool AutoFindListener = true;
     [SerializeField] private bool UseAudioSourceMaxDistance = true;
     [SerializeField] private float AudibleDistance = 25f;
-    [SerializeField] private float CheckInterval = 0.2f;
+    [SerializeField] private bool UseDistanceAttenuation = true;
+    [SerializeField] private bool UseAudioSourceMinDistance = true;
+    [SerializeField] private float FullVolumeDistance = 1f;
+    [SerializeField] private AnimationCurve DistanceVolumeCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
+    [SerializeField] private float CheckInterval = 0.5f;
     [SerializeField] private OutOfRangeBehaviour OutOfRangeMode = OutOfRangeBehaviour.Pause;
     [SerializeField] private bool ResumeLoopWhenInRange = true;
 
@@ -31,7 +35,6 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         {
             Source = GetComponent<AudioSource>();
         }
-
         OriginalVolume = Source != null ? Source.volume : 1f;
         FindListenerIfNeeded();
         RefreshAudibility();
@@ -71,7 +74,7 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
 
         if (IsWithinAudibleRange)
         {
-            RestoreInRangeState();
+            RestoreInRangeState(Distance);
         }
         else
         {
@@ -131,14 +134,14 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         }
     }
 
-    private void RestoreInRangeState()
+    private void RestoreInRangeState(float Distance = 0f)
     {
         if (Source == null)
         {
             return;
         }
 
-        Source.volume = OriginalVolume;
+        Source.volume = OriginalVolume * GetDistanceVolumeMultiplier(Distance);
 
         if (!WasStoppedByGate || !ResumeLoopWhenInRange || !Source.loop || Source.clip == null)
         {
@@ -165,6 +168,45 @@ public class DistanceGatedAudioSource : MonoBehaviour, IAudible3D
         }
 
         return AudibleDistance;
+    }
+
+    private float GetFullVolumeDistance()
+    {
+        if (UseAudioSourceMinDistance && Source != null)
+        {
+            return Source.minDistance;
+        }
+
+        return FullVolumeDistance;
+    }
+
+    private float GetDistanceVolumeMultiplier(float Distance)
+    {
+        if (!UseDistanceAttenuation)
+        {
+            return 1f;
+        }
+
+        float MaxDistance = Mathf.Max(0f, GetAudibleDistance());
+        float MinDistance = Mathf.Clamp(GetFullVolumeDistance(), 0f, MaxDistance);
+
+        if (Distance <= MinDistance)
+        {
+            return 1f;
+        }
+
+        if (MaxDistance <= MinDistance)
+        {
+            return 0f;
+        }
+
+        float NormalizedDistance = Mathf.Clamp01((Distance - MinDistance) / (MaxDistance - MinDistance));
+        if (DistanceVolumeCurve == null)
+        {
+            return 1f - NormalizedDistance;
+        }
+
+        return Mathf.Clamp01(DistanceVolumeCurve.Evaluate(NormalizedDistance));
     }
 
     private void FindListenerIfNeeded()

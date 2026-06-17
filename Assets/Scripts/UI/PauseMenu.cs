@@ -6,6 +6,8 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private Image BackgroundImg;
     [SerializeField] private GameObject PauseMenuUI;
+    [SerializeField] private GameObject VolumeOptionPanel;
+    [SerializeField] private GameObject ButtonsPanel;
     [SerializeField] private Button ContinueBtn;
     [SerializeField] private Button ToMainMenuBtn;
     private GameDirector Director;
@@ -19,12 +21,7 @@ public class PauseMenu : MonoBehaviour
             ToMainMenuBtn.onClick.AddListener(ToMainMenuRoutine);
 
             HandlePause(Director.IsPaused);
-            Debug.Log("GameDirector in Scene");
             return;
-        }
-        else
-        {
-            Debug.Log("No GameDirector in Scene");
         }
         HandlePause(false);
     }
@@ -40,6 +37,11 @@ public class PauseMenu : MonoBehaviour
     }
     private void HandlePause(bool bPaused)
     {
+        if (!bPaused)
+        {
+            VolumeOptionPanel?.SetActive(false);
+            ButtonsPanel.SetActive(true);
+        }
         BackgroundImg.enabled = bPaused;
         PauseMenuUI.SetActive(bPaused);
     }

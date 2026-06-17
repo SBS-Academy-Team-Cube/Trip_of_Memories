@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 public class BucketManager : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class BucketManager : MonoBehaviour
     [SerializeField] private Bucket Bucket_3L;
     [SerializeField] private Bucket Bucket_7L;
     [SerializeField] private Bucket Bucket_5L;
-    [SerializeField] private BucketUIManager UI;
+    [SerializeField] private UIPopUp PopUp;
 
     [Header("UI Input")]
     [SerializeField] private InputActionReference CancelAction;
@@ -50,7 +49,7 @@ public class BucketManager : MonoBehaviour
             TargetBucket = SelectedBucket;
             if (SourceBucket.CurrentAmount == 0)
             {
-                UI.ShowPopup("옮길 양동이가 비어있습니다!");
+                PopUp.ShowPopup("옮길 양동이가 비어있습니다!");
                 TargetBucket.EnableButton();
                 TargetBucket = null;
                 SourceBucket.PickDownBucket();
@@ -59,7 +58,7 @@ public class BucketManager : MonoBehaviour
             }
             else if (!TargetBucket.CanFill(SourceBucket.CurrentAmount))
             {
-                UI.ShowPopup("해당 양동이에는 물을 채울 수 없습니다!");
+                PopUp.ShowPopup("해당 양동이에는 물을 채울 수 없습니다!");
                 TargetBucket.EnableButton();
                 TargetBucket = null;
             }

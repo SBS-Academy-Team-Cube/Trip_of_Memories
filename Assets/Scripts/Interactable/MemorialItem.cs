@@ -40,7 +40,7 @@ public class MemorialItem : MonoBehaviour
             }
             StoryManager.ShowStory(Story);
             StoryManager.OnStoryEnd += OnStoryEnd;
-
+            
             if (Trigger)
             {
                 Trigger.OnTrigger();

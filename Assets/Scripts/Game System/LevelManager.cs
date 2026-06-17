@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Scene Settings")]
+    [SerializeField] private bool IsLastScene = false;
     public string LevelId;
     [SerializeField] private SceneId FirstSceneId;
     [SerializeField] private SceneId NextSceneId;
     [SerializeField] private Portal NextPortal;
     [Header("Audio Settings")]
     [SerializeField] private AudioClip LevelBGM;
+    [SerializeField] private float BGMVolumeBase = 1.0f;
     [SerializeField] private bool bKeepBGMPlaybackForNextScene;
-    [SerializeField] private bool IsLastScene = false;
     void OnEnable()
     {
         if (NextPortal != null)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,6 @@ public class AudioManager : Singleton<AudioManager>
 {
     [Header("BGM")]
     [SerializeField] private AudioSource BgmSource;
-    [SerializeField] private List<AudioClip> BgmList;
     [SerializeField] private float BGMFadeOutDuration = 1.0f;
     [SerializeField] private float BGMFadeInDuration = 1.0f;
 
@@ -14,10 +14,12 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource SFXSource;
     [SerializeField] private AudioClip ButtonClickSFX;
 
+    public event Action OnSFXVolumeBaseChanged;
     private float SFXVolumeMultiplier = 1.0f;
     public float SFX_VOLUME => SFXVolumeMultiplier;
     private float BGMVolumeMultiplier = 1.0f;
     public float BGM_VOLUME => BGMVolumeMultiplier;
+    private float CurrentBGMVolumeBase = 1.0f;
     private Coroutine BGMFadeCoroutine;
 
     protected override void Awake()
@@ -34,30 +36,24 @@ public class AudioManager : Singleton<AudioManager>
         BGMVolumeMultiplier = Mathf.Clamp01(Volume);
         if (BgmSource != null && BGMFadeCoroutine == null)
         {
-            BgmSource.volume = BGMVolumeMultiplier;
+            BgmSource.volume = CurrentBGMVolumeBase * BGMVolumeMultiplier;
         }
     }
     public void SetSFXVolume(float Volume)
     {
         SFXVolumeMultiplier = Volume;
+        OnSFXVolumeBaseChanged?.Invoke();
     }
     // ------------------------
     // BGM
     // ------------------------
-    public void PlayBGM(int Index)
-    {
-        if (Index < 0 || Index >= BgmList.Count)
-            return;
-
-        PlayBGM(BgmList[Index]);
-    }
-    public void PlayBGM(AudioClip Clip)
+    public void PlayBGM(AudioClip Clip, float VolumeBase = 1.0f)
     {
         if (Clip == null || BgmSource == null)
         {
             return;
         }
-
+        CurrentBGMVolumeBase = VolumeBase;
         if (BgmSource.clip == Clip)
         {
             BgmSource.loop = true;
@@ -65,7 +61,7 @@ public class AudioManager : Singleton<AudioManager>
             {
                 BgmSource.Play();
             }
-            StartBGMFade(BgmSource.volume, BGMVolumeMultiplier, BGMFadeInDuration, false);
+            StartBGMFade(BgmSource.volume, VolumeBase * BGMVolumeMultiplier, BGMFadeInDuration, false);
             return;
         }
 
@@ -74,7 +70,7 @@ public class AudioManager : Singleton<AudioManager>
         BgmSource.clip = Clip;
         BgmSource.loop = true;
         BgmSource.Play();
-        StartBGMFade(0.0f, BGMVolumeMultiplier, BGMFadeInDuration, false);
+        StartBGMFade(0.0f, VolumeBase * BGMVolumeMultiplier, BGMFadeInDuration, false);
     }
     public float StopBGM(bool bKeepPlayback = false)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 public class FootStepNotify : MonoBehaviour
 {
     [SerializeField] private RandomSoundQueue Queue;
-    public void Play()
+    public void PlayFootStep()
     {
         if (AudioManager.Instance != null && Queue != null && !Queue.Empty())
         {

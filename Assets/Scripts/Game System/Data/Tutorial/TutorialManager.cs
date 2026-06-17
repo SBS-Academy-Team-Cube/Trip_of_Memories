@@ -18,6 +18,7 @@ public class TutorialManager : MonoBehaviour
         if (CurrentRoutine != null)
         {
             StopCoroutine(CurrentRoutine);
+            CurrentRoutine = null;
         }
 
         PlayerJumpAction.action.Disable();
@@ -26,11 +27,11 @@ public class TutorialManager : MonoBehaviour
         Text.SetText(TutorialDialogues.GetText(Index));
         TextPanel.SetActive(true);
 
-        CurrentRoutine = StartCoroutine(VisibleDuration());
+        CurrentRoutine = StartCoroutine(VisibleDuration(Duration));
     }
-    private IEnumerator VisibleDuration()
+    private IEnumerator VisibleDuration(float Delay = 1.0f)
     {
-        yield return new WaitForSeconds(Duration);
+        yield return new WaitForSeconds(Delay);
 
         PlayerJumpAction.action.Enable();
         SkipAction.action.Disable();
@@ -54,9 +55,7 @@ public class TutorialManager : MonoBehaviour
         if (CurrentRoutine != null)
         {
             StopCoroutine(CurrentRoutine);
-            CurrentRoutine = null;
-
-            TextPanel.SetActive(false);
+            CurrentRoutine = StartCoroutine(VisibleDuration());
             PlayerJumpAction.action.Enable();
             SkipAction.action.Disable();
         }

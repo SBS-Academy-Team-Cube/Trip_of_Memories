@@ -26,7 +26,6 @@ public class UIHPController : MonoBehaviour
     }
     private void OnHealthChanged(int CurrentRemain)
     {
-        Debug.Log($"Current HP : {CurrentRemain}");
         if (CurrentRemain > HPUIs.Length || CurrentRemain < 0)
         {
             return;

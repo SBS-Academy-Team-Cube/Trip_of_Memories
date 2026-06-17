@@ -18,13 +18,13 @@ public class PlayerHitEffect : MonoBehaviour
     }
     private void OnEnable()
     {
-        HP.OnHPChanged += Play;
+        HP.OnHPChanged += HitEffect;
     }
     private void OnDisable()
     {
-        HP.OnHPChanged -= Play;
+        HP.OnHPChanged -= HitEffect;
     }
-    private void Play(int _)
+    private void HitEffect(int _)
     {
         foreach (var effect in Effects)
         {

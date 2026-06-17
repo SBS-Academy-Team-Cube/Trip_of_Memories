@@ -8182,7 +8182,6 @@ GameObject:
   - component: {fileID: 9188216396655173988}
   - component: {fileID: 4688576415671136052}
   - component: {fileID: 6632325326081986835}
-  - component: {fileID: 238079948334298157}
   m_Layer: 6
   m_Name: Character_Boy
   m_TagString: Player
@@ -8392,7 +8391,9 @@ MonoBehaviour:
   Animation: {fileID: 330960429130089735}
   State: {fileID: 6571652102100126584}
   MoveSpeed: 1.45
+  CrouchedSpeed: 0
   SprintSpeed: 3
+  CurrentSpeed: 0
   RotateSpeed: 18
   Gravity: -9
   JumpForce: 3
@@ -8462,10 +8463,15 @@ MonoBehaviour:
   RopeHandler: {fileID: 6632325326081986835}
   ItemHandler: {fileID: 1491471424828711427}
   LeverHandler: {fileID: 6259517903605364792}
+  AnimationComponent: {fileID: 0}
   IntendToMove: 0
   IntendToSprint: 0
   IsInteracting: 0
   Controller: {fileID: 6796627376150754009}
+  CrouchRatio: 0
+  StandUpBlockLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   CameraPivot: {fileID: 45652398630349859}
 --- !u!114 &2123077553836012924
 MonoBehaviour:
@@ -8571,14 +8577,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Speed: 0.9
---- !u!81 &238079948334298157
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7071519962568909893}
-  m_Enabled: 1
 --- !u!1 &7293825529034046282
 GameObject:
   m_ObjectHideFlags: 0

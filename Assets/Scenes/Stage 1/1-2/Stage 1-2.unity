@@ -19852,6 +19852,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2333900811661537914, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
+      propertyPath: m_Name
+      value: UI Panel_Popup
+      objectReference: {fileID: 0}
     - target: {fileID: 4208105178025979657, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
       propertyPath: OnClear.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -19945,7 +19949,9 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3946751353470502783, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
+    - {fileID: 7402148433119354304, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b7e52e408547c42814427d08c8bb36, type: 3}
@@ -30965,6 +30971,7 @@ GameObject:
   - component: {fileID: 1171019273}
   - component: {fileID: 1171019272}
   - component: {fileID: 1171019275}
+  - component: {fileID: 1171019276}
   m_Layer: 0
   m_Name: _______ Waterfall Medium (1)
   m_TagString: Untagged
@@ -35806,7 +35813,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e916dd262e12909498d28a0f7c7a33d2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.9
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -35815,7 +35822,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1.5
-  MaxDistance: 200
+  MaxDistance: 9
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -35890,6 +35897,54 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1171019276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171019271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76fb1b505e44f1ab39636f9f20f3008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DistanceGatedLoopSFXAudioSource
+  Source: {fileID: 1171019275}
+  Listener: {fileID: 1967614153}
+  AutoFindListener: 1
+  PlayOnEnable: 1
+  UseAudioSourceMaxDistance: 1
+  AudibleDistance: 25
+  UseDistanceAttenuation: 1
+  UseAudioSourceMinDistance: 1
+  FullVolumeDistance: 1
+  DistanceVolumeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CheckInterval: 0.5
+  OutOfRangeMode: 0
+  ResumeLoopWhenInRange: 1
 --- !u!1001 &1174760630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45572,13 +45627,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af293b4591ee2564f80ca02e0dc0402c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  IsLastScene: 0
   LevelId: Stage 1
   FirstSceneId: 5
   NextSceneId: 7
   NextPortal: {fileID: 740443442}
   LevelBGM: {fileID: 8300000, guid: 8c0c24e7bc15e7c4788bbb8efae34b3a, type: 3}
+  BGMVolumeBase: 1
   bKeepBGMPlaybackForNextScene: 1
-  IsLastScene: 0
 --- !u!1 &1668939047
 GameObject:
   m_ObjectHideFlags: 0
@@ -57028,6 +57084,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960226708}
   m_Mesh: {fileID: 538262280}
+--- !u!4 &1967614153 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 528534479291047164, guid: 96129951d915d734da4f469188eb9162, type: 3}
+  m_PrefabInstance: {fileID: 143264337}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1968973773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61931,7 +61992,6 @@ SceneRoots:
   - {fileID: 583962110}
   - {fileID: 1355601749}
   - {fileID: 1818667052}
-  - {fileID: 1409192973}
   - {fileID: 740443444}
   - {fileID: 75269421}
   - {fileID: 1589452332}
@@ -61944,3 +62004,4 @@ SceneRoots:
   - {fileID: 760463719}
   - {fileID: 680338793}
   - {fileID: 2089973625}
+  - {fileID: 1409192973}

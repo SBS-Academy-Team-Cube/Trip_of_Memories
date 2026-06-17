@@ -84,7 +84,7 @@ public class GameDirector : Singleton<GameDirector>
 
         bPaused = Paused;
         ApplyTimeScale();
-        ShowMouseCursor(bPaused || CurrentState != GameState.InGame);
+        ShowMouseCursor(bPaused);
         OnPaused?.Invoke(bPaused);
     }
     public void ContinueGame()

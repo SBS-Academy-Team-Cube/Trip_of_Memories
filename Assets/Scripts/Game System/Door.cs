@@ -32,8 +32,9 @@ public class Door : MonoBehaviour
         if (CurrentCondition == RequiredCondition)
         {
             DoorMover.Move();
-            if (Audio && Audio.clip)
+            if (Audio && Audio.clip && AudioManager.Instance)
             {
+                Audio.volume *= AudioManager.Instance.SFX_VOLUME;
                 Audio.Play();
             }
         }

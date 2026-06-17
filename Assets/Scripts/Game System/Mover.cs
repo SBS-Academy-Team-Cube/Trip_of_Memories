@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using UnityEngine.Events;
 public class Mover : MonoBehaviour
 {
     [SerializeField] Vector3 LocalOffset;
@@ -10,6 +10,9 @@ public class Mover : MonoBehaviour
     private Vector3 TargetPosition;
     private Coroutine CurrentMoveRoutine;
 
+
+    public UnityEvent OnMoveStart;
+    public UnityEvent OnMoveEnd;
     private void Awake()
     {
         StartPosition = transform.localPosition;
@@ -41,6 +44,7 @@ public class Mover : MonoBehaviour
 
     private IEnumerator MoveRoutine(Vector3 Target)
     {
+        OnMoveStart?.Invoke();
         if (Duration <= Mathf.Epsilon)
         {
             transform.localPosition = Target;
@@ -61,5 +65,6 @@ public class Mover : MonoBehaviour
 
         transform.localPosition = Target;
         CurrentMoveRoutine = null;
+        OnMoveEnd?.Invoke();
     }
 }
