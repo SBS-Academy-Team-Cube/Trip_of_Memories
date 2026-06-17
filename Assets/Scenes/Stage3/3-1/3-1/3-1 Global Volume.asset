@@ -436,6 +436,7 @@ MonoBehaviour:
   - {fileID: 8870688443700426139}
   - {fileID: 5452441297299868169}
   - {fileID: -1298783508258195089}
+  - {fileID: 2860283081367681973}
 --- !u!114 &1347868690469958282
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -480,6 +481,46 @@ MonoBehaviour:
   cascadeShadowBorder3:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &2860283081367681973
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1be1b6c95cd2e41b27903b9270817f, type: 3}
+  m_Name: Vignette
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.Vignette
+  active: 1
+  mode:
+    m_OverrideState: 1
+    m_Value: 0
+  color:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.433
+  smoothness:
+    m_OverrideState: 1
+    m_Value: 0.172
+  roundness:
+    m_OverrideState: 0
+    m_Value: 1
+  rounded:
+    m_OverrideState: 0
+    m_Value: 0
+  mask:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+  opacity:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &4918270947519558288
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -912,7 +953,7 @@ MonoBehaviour:
   active: 0
   rotation:
     m_OverrideState: 1
-    m_Value: 208.19998
+    m_Value: 207.6246
   skyIntensityMode:
     m_OverrideState: 1
     m_Value: 0
@@ -968,7 +1009,7 @@ MonoBehaviour:
       multiplyValue: 1
   sunInitialRotation:
     m_OverrideState: 0
-    m_Value: -208.19998
+    m_Value: -207.6246
   lockSun:
     m_OverrideState: 1
     m_Value: 1
