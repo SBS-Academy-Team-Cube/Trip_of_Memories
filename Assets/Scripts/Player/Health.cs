@@ -19,12 +19,12 @@ public class Health : MonoBehaviour
     public void TakeDamage()
     {
         HP--;
-        if (HP <= 0)
+        if (HP == 0)
         {
             OnHPChanged?.Invoke(HP);
             OnDead?.Invoke();
         }
-        else
+        else if (HP > 0)
         {
             OnHPChanged?.Invoke(HP);
         }

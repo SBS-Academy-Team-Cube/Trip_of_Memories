@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float Gravity = -9.81f;
     [SerializeField] private float JumpForce = 5f;
     private bool IsFreeLookCamera = true;
-
     public void ChangeCameraView(bool bFreeLookCamera)
     {
         IsFreeLookCamera = bFreeLookCamera;
@@ -52,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
         else if (State.InterAction == PlayerState.EInterAction.RopeHanging)
         {
             DoHangingMove();
+        }
+        else if (State.InterAction == PlayerState.EInterAction.KeyDragging)
+        {
+            DoDraggingMove();
         }
         else
         {
@@ -91,6 +94,14 @@ public class PlayerMovement : MonoBehaviour
             Velocity.y += Gravity * Time.deltaTime;
             Controller.Move(Velocity * Time.deltaTime);
         }
+    }
+    private void DoDraggingMove()
+    {
+        Controller.Move(0.5f * transform.forward * Time.deltaTime * MoveInput.y);
+        Debug.Log(MoveInput.y);
+        int DraggingState = MoveInput.y >= 1.0f ? 1 : 2;
+        float AnimPlayingSpeed = Mathf.Abs(MoveInput.y) > 0 ? 1.0f : 0.0f;
+        Animation.SetDragging(DraggingState, AnimPlayingSpeed);
     }
     private void DoHangingMove()
     {

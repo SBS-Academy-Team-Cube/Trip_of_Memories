@@ -6,7 +6,6 @@ public class TypewriterPlayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text TextUI;
     private Coroutine TypingCoroutine;
-    public bool IsTyping { get; private set; }
     public System.Action OnTypingFinished;
     public void Play(string FullText, TypewriterEffect Effect)
     {
@@ -16,6 +15,11 @@ public class TypewriterPlayer : MonoBehaviour
         }
         TypingCoroutine = StartCoroutine(TypeRoutine(FullText, Effect));
     }
+    public void Play(string FullText)
+    {
+        TextUI.text = FullText;
+        OnTypingFinished?.Invoke();
+    }
     public void Skip(string FullText)
     {
         if (TypingCoroutine != null)
@@ -23,12 +27,10 @@ public class TypewriterPlayer : MonoBehaviour
             StopCoroutine(TypingCoroutine);
         }
         TextUI.text = FullText;
-        IsTyping = false;
         OnTypingFinished?.Invoke();
     }
     private IEnumerator TypeRoutine(string FullText, TypewriterEffect Effect)
     {
-        IsTyping = true;
         TextUI.text = "";
         int SoundChar = 2;
         int SoundIdx = 0;
@@ -43,7 +45,6 @@ public class TypewriterPlayer : MonoBehaviour
             }
             yield return new WaitForSeconds(Effect.Delay);
         }
-        IsTyping = false;
         OnTypingFinished?.Invoke();
     }
 }

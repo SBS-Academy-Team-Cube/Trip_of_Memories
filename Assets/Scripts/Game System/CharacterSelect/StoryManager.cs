@@ -28,6 +28,10 @@ public class StoryManager : MonoBehaviour
     }
     public void ShowStory(StoryData Data)
     {
+        if (Data == null)
+        {
+            return;
+        }
         CurrentStoryData = Data;
         StoryPanel?.SetActive(true);
         Index = 0;
@@ -39,7 +43,7 @@ public class StoryManager : MonoBehaviour
     private void EndStory()
     {
         UnsubscribeSkip();
-        SkipAction?.action.Disable();
+        // SkipAction?.action.Disable();
         PlayerJumpAction?.action.Enable();
         OnStoryEnd?.Invoke();
         StoryPanel?.SetActive(false);

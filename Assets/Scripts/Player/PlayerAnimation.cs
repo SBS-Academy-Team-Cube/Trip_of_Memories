@@ -10,7 +10,10 @@ public enum ETargetLayer { LeftArm, RightArm, Head, Body };
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private PlayerState State;
+
     private static readonly int StanceHash = Animator.StringToHash("Stance");
+    private static readonly int DraggingStateHash = Animator.StringToHash("DraggingState");
+    private static readonly int OnDeathHash = Animator.StringToHash("OnDeath");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int GaitHash = Animator.StringToHash("Gait");
@@ -115,6 +118,10 @@ public class PlayerAnimation : MonoBehaviour
     {
         AnimationController.SetInteger(StanceHash, Stance);
     }
+    public void SetDeath()
+    {
+        AnimationController.SetTrigger(OnDeathHash);
+    }
     public void SetIsMoving(bool IsMoving)
     {
         AnimationController.SetBool(IsMovingHash, IsMoving);
@@ -133,6 +140,16 @@ public class PlayerAnimation : MonoBehaviour
         // AnimationController.SetTrigger(bPushing ? "StartLeverPushTrigger" : "EndLeverPushTrigger");
         AnimationController.SetTrigger(LeverPushTriggerHash);
         SetLeverPlaying(0.0f);
+    }
+    public void SetDragging(int DraggingState, float Speed = 1.0f)
+    {
+        if (Speed != 1.0f)
+        {
+            SetLeverPlaying(Speed);
+            return;
+        }
+        SetLeverPlaying(Speed);
+        AnimationController.SetInteger(DraggingStateHash, DraggingState);
     }
     public void SetLeverPlaying(float Speed)
     {

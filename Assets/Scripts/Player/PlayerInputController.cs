@@ -19,6 +19,10 @@ public class PlayerInputController : MonoBehaviour
     {
         Input.enabled = true;
     }
+    public void OnDraggingKey(bool bDragging)
+    {
+        Input.SwitchCurrentActionMap(bDragging ? "Drag" : "Player");
+    }
     public void OnHangingRope(bool bHanging)
     {
         Input.SwitchCurrentActionMap(bHanging ? "Hang" : "Player");
@@ -111,14 +115,18 @@ public class PlayerInputController : MonoBehaviour
         }
         LeverHandler.SetRotating(Value.isPressed);
     }
+    public void OnDrag(InputValue Value)
+    {
+        if (Movement != null)
+        {
+            Movement.TryMove(Value.Get<Vector2>());
+        }
+    }
     public void OnEscape(InputValue Value)
     {
-        if (!LeverHandler)
+        if (State)
         {
-            return;
+            State.TryEscape();
         }
-
-        LeverHandler.ReleaseLever();
-        OnHoldLever(false);
     }
 }

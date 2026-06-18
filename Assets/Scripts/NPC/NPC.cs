@@ -2,6 +2,7 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     [SerializeField] private string NPCId;
+    [SerializeField] private string SpeakerName;
     [SerializeField] private StoryManager StoryManager;
     [SerializeField] private NPCAnimation Animation;
     [SerializeField] private MiniGameBase MiniGame;
@@ -50,8 +51,8 @@ public class NPC : MonoBehaviour
             return;
         }
         Triggered = true;
-
         SubscribeStoryEvents(true);
+
         if (Other.TryGetComponent(out PlayerInputComponent))
         {
             PlayerInputComponent.LockInput();
@@ -76,7 +77,7 @@ public class NPC : MonoBehaviour
     }
     private void TryTalk(FStoryContext Context, int Index)
     {
-        if (Animation)
+        if (Animation && Context.Speaker.Equals(SpeakerName))
         {
             Animation.SetTalking();
         }

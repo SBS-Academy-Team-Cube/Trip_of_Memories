@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
     {
         if (AudioManager.Instance && LevelBGM)
         {
-            AudioManager.Instance.PlayBGM(LevelBGM);
+            AudioManager.Instance.PlayBGM(LevelBGM, BGMVolumeBase);
         }
     }
     private void ClearStage()

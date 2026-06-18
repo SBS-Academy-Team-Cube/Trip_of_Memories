@@ -8,10 +8,12 @@ public class PlayerState : MonoBehaviour
     [SerializeField] private PlayerRopeHandler RopeHandler;
     [SerializeField] private PlayerItemHandler ItemHandler;
     [SerializeField] private PlayerLeverHandler LeverHandler;
+    [SerializeField] private PlayerDragHandler DragHandler;
     [SerializeField] private PlayerAnimation AnimationComponent;
+    [SerializeField] private Health HP;
     public enum EGait { Walking, Running };
     public enum EStance { Standing, Crouching };
-    public enum EInterAction { None, ItemHolding, RopeHanging, LeverPushing };
+    public enum EInterAction { None, ItemHolding, RopeHanging, LeverPushing, KeyDragging };
     public enum EAbility { None, Spray, Lantern };
     public EGait Gait { get; private set; } = EGait.Walking;
     public EStance Stance { get; private set; } = EStance.Standing;
@@ -21,12 +23,35 @@ public class PlayerState : MonoBehaviour
     public bool IntendToMove = false;
     public bool IntendToSprint = false;
     public bool IsInteracting = false;
-
+    private bool IsAlive = true;
+    public event System.Action OnDeathEnd;
     [SerializeField] private CharacterController Controller;
     [SerializeField] private float CrouchRatio;
     [SerializeField] private LayerMask StandUpBlockLayerMask = ~0;
     [SerializeField] private Transform CameraPivot;
     private const float StandUpCheckSkin = 0.02f;
+
+    private void OnEnable()
+    {
+        HP.OnDead += OnDead;
+    }
+    private void OnDisable()
+    {
+        HP.OnDead -= OnDead;
+    }
+    private void OnDead()
+    {
+        IsAlive = false;
+        if (ItemHandler.bIsHoldingItem)
+        {
+            ItemHandler.DropItem();
+        }
+        AnimationComponent.SetDeath();
+    }
+    private void HandleDeathEnd()
+    {
+        OnDeathEnd?.Invoke();
+    }
 
     public Transform GetCameraPivot()
     {
@@ -34,7 +59,7 @@ public class PlayerState : MonoBehaviour
     }
     public void TryChangeStance()
     {
-        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None)
+        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None || !IsAlive)
         {
             return;
         }
@@ -44,13 +69,12 @@ public class PlayerState : MonoBehaviour
         {
             return;
         }
-
         SetStance(NewStance);
 
     }
     public void TryTakeLantern()
     {
-        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None || Ability == EAbility.Spray)
+        if (!IsGrounded || Gait == EGait.Running || InterAction != EInterAction.None || Ability == EAbility.Spray || !IsAlive)
         {
             return;
         }
@@ -59,6 +83,10 @@ public class PlayerState : MonoBehaviour
     }
     public void TryInteraction()
     {
+        if (!IsAlive)
+        {
+            return;
+        }
         if (Ability != EAbility.None)
         {
             return;
@@ -85,6 +113,18 @@ public class PlayerState : MonoBehaviour
                 return;
         }
     }
+    public void TryEscape()
+    {
+        switch (InterAction)
+        {
+            case EInterAction.LeverPushing:
+                LeverHandler.ReleaseLever();
+                break;
+            case EInterAction.KeyDragging:
+                DragHandler.TryRelease();
+                break;
+        }
+    }
     void Awake()
     {
         if (Controller == null)
@@ -102,6 +142,10 @@ public class PlayerState : MonoBehaviour
     }
     public void TryMove(bool bWantToMove)
     {
+        if (!IsAlive)
+        {
+            return;
+        }
         if (IntendToMove != bWantToMove)
         {
             IntendToMove = bWantToMove;
@@ -109,6 +153,10 @@ public class PlayerState : MonoBehaviour
     }
     public void TrySprint(bool bWantToSprint)
     {
+        if (!IsAlive)
+        {
+            return;
+        }
         if (IntendToSprint != bWantToSprint)
         {
             IntendToSprint = bWantToSprint;
@@ -117,6 +165,10 @@ public class PlayerState : MonoBehaviour
     }
     public void SetStance(EStance NewStance)
     {
+        if (!IsAlive)
+        {
+            return;
+        }
         if (NewStance != Stance)
         {
             Stance = NewStance;
@@ -128,7 +180,7 @@ public class PlayerState : MonoBehaviour
     }
     private bool CanStandUp()
     {
-        if (Controller == null)
+        if (Controller == null || !IsAlive)
         {
             return true;
         }
@@ -193,10 +245,10 @@ public class PlayerState : MonoBehaviour
     }
     public bool CanSprint()
     {
-        return InterAction == EInterAction.None && CanMove() && Stance == EStance.Standing && IsGrounded;
+        return InterAction == EInterAction.None && CanMove() && Stance == EStance.Standing && IsGrounded && IsAlive;
     }
     public bool CanMove()
     {
-        return !IsInteracting;
+        return !IsInteracting && IsAlive;
     }
 };

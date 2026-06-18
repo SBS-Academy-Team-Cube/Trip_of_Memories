@@ -10,6 +10,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private UIHPController HPUI;
     [SerializeField] private bool IsTopViewScene = false;
     private bool IsRespawning = false;
+    private PlayerState PlayerState;
     private Health PlayerHP;
     void Start()
     {
@@ -49,13 +50,22 @@ public class PlayerSpawner : MonoBehaviour
         if (Player.TryGetComponent(out PlayerMovement Movement))
         {
             Movement.SetCameraTransform(CameraManager?.GetCameraTransform());
-
             Movement.ChangeCameraView(!IsTopViewScene);
         }
         CutSceneManager?.Init(Player);
         if (CameraManager != null)
         {
             CameraManager.Init(Player);
+        }
+
+        if (Player.TryGetComponent(out PlayerState State))
+        {
+            if (PlayerState != null)
+            {
+                PlayerState.OnDeathEnd -= ReSpawn;
+            }
+            PlayerState = State;
+            PlayerState.OnDeathEnd += ReSpawn;
         }
 
         if (Player.TryGetComponent(out Health PlayerHealth))
@@ -70,7 +80,8 @@ public class PlayerSpawner : MonoBehaviour
         if (PlayerHP != null)
         {
             PlayerHP.OnHPChanged -= OnPlayerHPChanged;
-            PlayerHP.OnDead -= ReSpawn;
+
+            // PlayerHP.OnDead -= ReSpawn;
         }
 
         PlayerHP = PlayerHealth;
@@ -82,7 +93,7 @@ public class PlayerSpawner : MonoBehaviour
         PlayerHP.Init(InitialHealth);
         SaveManager.Instance.SetCurrentPlayerHealth(PlayerHP.HP);
         PlayerHP.OnHPChanged += OnPlayerHPChanged;
-        PlayerHP.OnDead += ReSpawn;
+        // PlayerHP.OnDead += ReSpawn;
     }
 
     private void OnDestroy()
@@ -90,7 +101,11 @@ public class PlayerSpawner : MonoBehaviour
         if (PlayerHP != null)
         {
             PlayerHP.OnHPChanged -= OnPlayerHPChanged;
-            PlayerHP.OnDead -= ReSpawn;
+            // PlayerHP.OnDead -= ReSpawn;
+        }
+        if (PlayerState != null)
+        {
+            PlayerState.OnDeathEnd -= ReSpawn;
         }
     }
 

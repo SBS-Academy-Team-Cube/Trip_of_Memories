@@ -11,7 +11,7 @@ public class PlayerLeverHandler : MonoBehaviour
         transform.SetParent(Target.transform);
         transform.position = Target.GetPosition();
         transform.localRotation = Target.GetRotation();
-        
+
         if (State)
         {
             State.SetInterAction(PlayerState.EInterAction.LeverPushing);
@@ -19,7 +19,7 @@ public class PlayerLeverHandler : MonoBehaviour
         Target.TryGetComponent(out TargetLever);
 
         Animation.SetLeverPush(true);
-        
+
         Target.GetIKPosition(out Transform Left, out Transform Right);
         Animation.SetHandIKTargets(Left, Right);
         Animation.SetHandIKWeight(1.0f, 1.0f);
@@ -33,7 +33,7 @@ public class PlayerLeverHandler : MonoBehaviour
             TargetLever.Release();
             TargetLever = null;
         }
-        
+
         transform.SetParent(null);
         if (State)
         {
@@ -41,6 +41,8 @@ public class PlayerLeverHandler : MonoBehaviour
         }
         Animation.SetLeverPush(false);
         Animation.ClearHandIK();
+
+        OnLeverHolding?.Invoke(false);
     }
     public void SetRotating(bool bRotate)
     {

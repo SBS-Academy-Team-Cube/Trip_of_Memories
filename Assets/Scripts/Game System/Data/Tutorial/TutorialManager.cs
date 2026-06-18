@@ -13,6 +13,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private InputActionReference SkipAction;
     [SerializeField] private InputActionReference PlayerJumpAction;
     private Coroutine CurrentRoutine = null;
+    private bool IsSkipSubscribed = false;
     public void ShowTutorialText(int Index)
     {
         if (CurrentRoutine != null)
@@ -22,25 +23,46 @@ public class TutorialManager : MonoBehaviour
         }
 
         PlayerJumpAction.action.Disable();
-        SkipAction.action.Enable();
 
+        SubscribeSkip();
         Text.SetText(TutorialDialogues.GetText(Index));
         TextPanel.SetActive(true);
 
         CurrentRoutine = StartCoroutine(VisibleDuration(Duration));
     }
-    private IEnumerator VisibleDuration(float Delay = 1.0f)
+    private void SubscribeSkip()
+    {
+        if (IsSkipSubscribed || SkipAction == null)
+        {
+            return;
+        }
+
+        SkipAction.action.performed += OnSkip;
+        IsSkipSubscribed = true;
+    }
+    private void UnsubscribeSkip()
+    {
+        if (!IsSkipSubscribed || SkipAction == null)
+        {
+            return;
+        }
+
+        SkipAction.action.performed -= OnSkip;
+        IsSkipSubscribed = false;
+    }
+    private IEnumerator VisibleDuration(float Delay = 0.5f)
     {
         yield return new WaitForSeconds(Delay);
-
+        UnsubscribeSkip();
         PlayerJumpAction.action.Enable();
-        SkipAction.action.Disable();
+        // SkipAction.action.Disable();
         TextPanel.SetActive(false);
         CurrentRoutine = null;
     }
     private void OnEnable()
     {
-        SkipAction.action.performed += OnSkip;
+        SkipAction.action.Enable();
+        // SkipAction.action.performed += OnSkip;
         if (TextPanel != null)
         {
             TextPanel.SetActive(false);
@@ -48,7 +70,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        SkipAction.action.performed -= OnSkip;
+        UnsubscribeSkip();
     }
     void OnSkip(InputAction.CallbackContext Context)
     {
@@ -56,8 +78,9 @@ public class TutorialManager : MonoBehaviour
         {
             StopCoroutine(CurrentRoutine);
             CurrentRoutine = StartCoroutine(VisibleDuration());
+            UnsubscribeSkip();
             PlayerJumpAction.action.Enable();
-            SkipAction.action.Disable();
+
         }
     }
 }

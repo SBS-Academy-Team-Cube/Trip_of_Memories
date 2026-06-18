@@ -27,7 +27,18 @@ public class DialoguePresenter : MonoBehaviour
     void HandleStoryChanged(FStoryContext Context, int Index)
     {
         SpeakerName.text = Context.Speaker;
-        player.Play(Context.Text, effect);
+        if (Context.NoEffect)
+        {
+            player.Play(Context.Text);
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySFX(Context.SFX);
+            }
+        }
+        else
+        {
+            player.Play(Context.Text, effect);
+        }
     }
     void HandleTypingFinished()
     {

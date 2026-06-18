@@ -31,9 +31,13 @@ public struct FStoryContext
     public string Speaker;
     [TextArea(3, 10)]
     public string Text;
-    public FStoryContext(string Text, string Speaker = "???")
+    public bool NoEffect;
+    public AudioClip SFX;
+    public FStoryContext(string Text, string Speaker = "???", bool NoEffect = true, AudioClip SFX = null)
     {
         this.Speaker = Speaker;
         this.Text = Text;
+        this.NoEffect = NoEffect;
+        this.SFX = SFX;
     }
 }

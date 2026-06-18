@@ -49,6 +49,10 @@ public class PauseMenu : MonoBehaviour
     {
         Director.ContinueGame();
         HandlePause(false);
+        if (SaveManager.Instance)
+        {
+            SaveManager.Instance.ClearCurrentLevelProgress();
+        }
         StartCoroutine(ToMainMenu());
     }
     private IEnumerator ToMainMenu()
