@@ -21444,6 +21444,7 @@ Transform:
   - {fileID: 1646173761}
   - {fileID: 779168072}
   - {fileID: 1570565351}
+  - {fileID: 2070865382}
   - {fileID: 1756324337}
   - {fileID: 1336073029}
   - {fileID: 452416671}
@@ -68964,7 +68965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumePerSceneData
   serializedBakingSet: {fileID: 0}
-  sceneGUID: d227e68b6899d8c4e938121e7373aa9d
+  sceneGUID: 177a046047cd5e24985310ab52cec855
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
   obsoleteCellSupportDataAsset: {fileID: 0}
@@ -71140,6 +71141,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6975551850636965817, guid: 1e10a3d1828dbce489a5e0069e648113, type: 3}
   m_PrefabInstance: {fileID: 1944167223}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2070865381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2070865382}
+  - component: {fileID: 2070865383}
+  m_Layer: 3
+  m_Name: Invisible Wall (33)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &2070865382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070865381}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.1939154, y: 0.980819, z: -0.0061150515, w: 0.018804118}
+  m_LocalPosition: {x: 327.18, y: -1.13, z: -53.85}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 632549573}
+  m_LocalEulerAnglesHint: {x: 0.269, y: 177.75, z: -22.372}
+--- !u!65 &2070865383
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070865381}
+  m_Material: {fileID: 13400000, guid: 351856b393e143d4ca22a23bf4a4dbd9, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 70, y: 35, z: 2.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2072049688
 PrefabInstance:
   m_ObjectHideFlags: 0
