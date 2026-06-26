@@ -3,21 +3,35 @@ using UnityEngine.EventSystems;
 
 public class ButtonHover : MonoBehaviour,
     IPointerEnterHandler,
-    IPointerExitHandler
+    IPointerExitHandler,
+    IPointerClickHandler
 {
     [SerializeField] private RectTransform Rect;
     [SerializeField] private UnderlineEffect Effect;
-    float EffectTargetPosY;
     private void Awake()
     {
-        EffectTargetPosY = Rect.anchoredPosition.y - Rect.rect.height / 2;
+        if (Rect == null)
+        {
+            Rect = transform as RectTransform;
+        }
     }
     public void OnPointerEnter(PointerEventData EventData)
     {
-        Effect.Play(EffectTargetPosY);
+        Effect.Play(Rect);
     }
     public void OnPointerExit(PointerEventData EventData)
     {
         Effect.Stop();
+    }
+    public void OnPointerClick(PointerEventData EventData)
+    {
+        Effect.Stop();
+    }
+    private void OnDisable()
+    {
+        if (Effect != null)
+        {
+            Effect.Stop();
+        }
     }
 }

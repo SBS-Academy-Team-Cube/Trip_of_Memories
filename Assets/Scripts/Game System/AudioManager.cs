@@ -1,10 +1,20 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer Mixer;
+    [SerializeField] private AudioMixerGroup BGMOutputGroup;
+    [SerializeField] private AudioMixerGroup SFXOutputGroup;
+    [SerializeField] private AudioMixerSnapshot NormalSnapshot;
+    [SerializeField] private AudioMixerSnapshot MiniGameSnapshot;
+    [SerializeField] private string BGMVolumeParameter = "BGMVolume";
+    [SerializeField] private string SFXVolumeParameter = "SFXVolume";
+    [SerializeField] private float SnapshotTransitionDuration = 0.25f;
+
     [Header("BGM")]
     [SerializeField] private AudioSource BgmSource;
     [SerializeField] private float BGMFadeOutDuration = 1.0f;
@@ -25,6 +35,9 @@ public class AudioManager : Singleton<AudioManager>
     protected override void Awake()
     {
         base.Awake();
+        ApplyOutputGroups();
+        ApplyMixerVolume(BGMVolumeParameter, BGMVolumeMultiplier);
+        ApplyMixerVolume(SFXVolumeParameter, SFXVolumeMultiplier);
         UIEventBus.OnAnyButtonClicked += PlayButtonClick;
     }
     private void OnDestroy()
@@ -34,6 +47,12 @@ public class AudioManager : Singleton<AudioManager>
     public void SetBGMVolume(float Volume)
     {
         BGMVolumeMultiplier = Mathf.Clamp01(Volume);
+        if (Mixer != null)
+        {
+            ApplyMixerVolume(BGMVolumeParameter, BGMVolumeMultiplier);
+            return;
+        }
+
         if (BgmSource != null && BGMFadeCoroutine == null)
         {
             BgmSource.volume = CurrentBGMVolumeBase * BGMVolumeMultiplier;
@@ -41,8 +60,25 @@ public class AudioManager : Singleton<AudioManager>
     }
     public void SetSFXVolume(float Volume)
     {
-        SFXVolumeMultiplier = Volume;
+        SFXVolumeMultiplier = Mathf.Clamp01(Volume);
+        ApplyMixerVolume(SFXVolumeParameter, SFXVolumeMultiplier);
         OnSFXVolumeBaseChanged?.Invoke();
+    }
+    public void TransitionToNormalSnapshot()
+    {
+        TransitionToSnapshot(NormalSnapshot, SnapshotTransitionDuration);
+    }
+    public void TransitionToMiniGameSnapshot()
+    {
+        TransitionToSnapshot(MiniGameSnapshot, SnapshotTransitionDuration);
+    }
+    public void TransitionToNormalSnapshot(float Duration)
+    {
+        TransitionToSnapshot(NormalSnapshot, Duration);
+    }
+    public void TransitionToMiniGameSnapshot(float Duration)
+    {
+        TransitionToSnapshot(MiniGameSnapshot, Duration);
     }
     // ------------------------
     // BGM
@@ -61,7 +97,7 @@ public class AudioManager : Singleton<AudioManager>
             {
                 BgmSource.Play();
             }
-            StartBGMFade(BgmSource.volume, VolumeBase * BGMVolumeMultiplier, BGMFadeInDuration, false);
+            StartBGMFade(BgmSource.volume, GetBGMSourceVolume(VolumeBase), BGMFadeInDuration, false);
             return;
         }
 
@@ -70,7 +106,7 @@ public class AudioManager : Singleton<AudioManager>
         BgmSource.clip = Clip;
         BgmSource.loop = true;
         BgmSource.Play();
-        StartBGMFade(0.0f, VolumeBase * BGMVolumeMultiplier, BGMFadeInDuration, false);
+        StartBGMFade(0.0f, GetBGMSourceVolume(VolumeBase), BGMFadeInDuration, false);
     }
     public float StopBGM(bool bKeepPlayback = false)
     {
@@ -131,11 +167,11 @@ public class AudioManager : Singleton<AudioManager>
     // ------------------------
     public void PlaySFX(AudioClip Clip)
     {
-        if (Clip == null)
+        if (Clip == null || SFXSource == null)
         {
             return;
         }
-        SFXSource.volume = SFXVolumeMultiplier;
+        SFXSource.volume = Mixer != null ? 1.0f : SFXVolumeMultiplier;
         SFXSource.PlayOneShot(Clip);
     }
     public void PlaySFX(AudioClip Clip, float VolumeBase)
@@ -144,11 +180,53 @@ public class AudioManager : Singleton<AudioManager>
         {
             return;
         }
-        SFXSource.volume = Mathf.Clamp01(VolumeBase * SFXVolumeMultiplier);
-        SFXSource.PlayOneShot(Clip);
+        SFXSource.volume = Mixer != null ? 1.0f : SFXVolumeMultiplier;
+        SFXSource.PlayOneShot(Clip, Mathf.Clamp01(VolumeBase));
     }
     private void PlayButtonClick()
     {
         PlaySFX(ButtonClickSFX);
+    }
+
+    private void ApplyOutputGroups()
+    {
+        if (BgmSource != null && BGMOutputGroup != null)
+        {
+            BgmSource.outputAudioMixerGroup = BGMOutputGroup;
+        }
+
+        if (SFXSource != null && SFXOutputGroup != null)
+        {
+            SFXSource.outputAudioMixerGroup = SFXOutputGroup;
+        }
+    }
+
+    private float GetBGMSourceVolume(float VolumeBase)
+    {
+        float ClampedVolumeBase = Mathf.Clamp01(VolumeBase);
+        return Mixer != null ? ClampedVolumeBase : ClampedVolumeBase * BGMVolumeMultiplier;
+    }
+
+    private void ApplyMixerVolume(string ParameterName, float LinearVolume)
+    {
+        if (Mixer == null || string.IsNullOrEmpty(ParameterName))
+        {
+            return;
+        }
+
+        Mixer.SetFloat(ParameterName, LinearToDecibel(LinearVolume));
+    }
+
+    private static float LinearToDecibel(float LinearVolume)
+    {
+        return LinearVolume <= 0.0001f ? -80.0f : Mathf.Log10(LinearVolume) * 20.0f;
+    }
+
+    private static void TransitionToSnapshot(AudioMixerSnapshot Snapshot, float Duration)
+    {
+        if (Snapshot != null)
+        {
+            Snapshot.TransitionTo(Mathf.Max(0.0f, Duration));
+        }
     }
 }

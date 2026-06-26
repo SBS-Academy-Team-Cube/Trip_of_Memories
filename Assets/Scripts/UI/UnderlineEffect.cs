@@ -1,10 +1,10 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UnderlineEffect : MonoBehaviour
 {
+    [SerializeField] private Canvas RootCanvas;
     [SerializeField] private Image UnderlineImage;
     [SerializeField] private Image PencilImage;
     [SerializeField] private RectTransform UnderlineRect;
@@ -16,11 +16,24 @@ public class UnderlineEffect : MonoBehaviour
 
     private void Awake()
     {
-        Audio.ignoreListenerPause = true;
+        CacheRootCanvas();
+        if (Audio)
+        {
+            Audio.ignoreListenerPause = true;
+        }
     }
-    public void Play(float TargetPosY)
+    public void Play(RectTransform TargetRect)
     {
-        UnderlineRect.anchoredPosition = new Vector2(UnderlineRect.anchoredPosition.x, TargetPosY);
+        MoveUnderlineToCanvasY(GetCanvasBottomY(TargetRect));
+        PlayEffect();
+    }
+    public void Play(float TargetCanvasPosY)
+    {
+        MoveUnderlineToCanvasY(TargetCanvasPosY);
+        PlayEffect();
+    }
+    private void PlayEffect()
+    {
         UnderlineImage.enabled = true;
         PencilImage.enabled = true;
         PlayingEffect = StartCoroutine(Effect());
@@ -58,5 +71,51 @@ public class UnderlineEffect : MonoBehaviour
     {
         UnderlineImage.fillAmount = T;
         PencilRect.anchoredPosition = new Vector2(EndPosX * T, 0.0f);
+    }
+    private void MoveUnderlineToCanvasY(float TargetCanvasPosY)
+    {
+        RectTransform CanvasRect = GetRootCanvasRect();
+        if (CanvasRect == null || UnderlineRect == null)
+        {
+            return;
+        }
+
+        Vector3 CanvasPosition = CanvasRect.InverseTransformPoint(UnderlineRect.position);
+        CanvasPosition.y = TargetCanvasPosY;
+        UnderlineRect.position = CanvasRect.TransformPoint(CanvasPosition);
+    }
+    private float GetCanvasBottomY(RectTransform TargetRect)
+    {
+        RectTransform CanvasRect = GetRootCanvasRect();
+        if (CanvasRect == null || TargetRect == null)
+        {
+            return UnderlineRect != null ? UnderlineRect.anchoredPosition.y : 0.0f;
+        }
+
+        Bounds TargetBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(CanvasRect, TargetRect);
+        return TargetBounds.min.y;
+    }
+    private RectTransform GetRootCanvasRect()
+    {
+        CacheRootCanvas();
+        return RootCanvas != null ? RootCanvas.transform as RectTransform : null;
+    }
+    private void CacheRootCanvas()
+    {
+        if (RootCanvas != null)
+        {
+            RootCanvas = RootCanvas.rootCanvas;
+            return;
+        }
+
+        if (UnderlineRect != null)
+        {
+            RootCanvas = UnderlineRect.GetComponentInParent<Canvas>()?.rootCanvas;
+        }
+
+        if (RootCanvas == null)
+        {
+            RootCanvas = GetComponentInParent<Canvas>()?.rootCanvas;
+        }
     }
 }

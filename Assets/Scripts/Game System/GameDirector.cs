@@ -19,7 +19,10 @@ public class GameDirector : Singleton<GameDirector>
     private readonly SceneId LoadingSceneID = SceneId.Loading;
     public GameState CurrentState { get; private set; } = GameState.None;
     public Action<GameState> OnGameStateChanged;
-    public IrisController Iris;
+
+    [Header("Director's Components")]
+    public IrisController Iris { get; private set; } = null;
+    [SerializeField] private MouseCursorManager CursorManager = null;
     [SerializeField] private InputActionReference SlowModeAction;
     [SerializeField] private InputActionReference PauseAction;
     private bool bPaused = false;
@@ -150,7 +153,8 @@ public class GameDirector : Singleton<GameDirector>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetTimeControl();
-        if (scene.name == SceneTable.GetSceneName(SceneId.Loading))
+
+        if (SceneTable.IsLoadingScene(scene))
         {
             SetState(GameState.Loading);
             ShowMouseCursor(true);
@@ -173,16 +177,15 @@ public class GameDirector : Singleton<GameDirector>
         CurrentState = NewState;
         OnGameStateChanged?.Invoke(CurrentState);
     }
-    public void ShowMouseCursor(bool show)
+    public void ShowMouseCursor(bool bShow)
     {
-        if (MouseCursorManager.Instance != null)
+        if (CursorManager != null)
         {
-            MouseCursorManager.Instance.SetVisible(show);
+            CursorManager.SetVisible(bShow);
             return;
         }
-
-        Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = show;
+        // Cursor.lockState = bShow ? CursorLockMode.None : CursorLockMode.Locked;
+        // Cursor.visible = bShow;
     }
 
     public void QuitGame()

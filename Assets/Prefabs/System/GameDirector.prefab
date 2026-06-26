@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7724527854787674550}
   - component: {fileID: 8628266233459207031}
+  - component: {fileID: 3054505575368821626}
   m_Layer: 0
   m_Name: GameDirector
   m_TagString: Untagged
@@ -45,9 +46,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dfab91a9cca5042b686aad3ca3e95e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameDirector
-  Iris: {fileID: 5269059817831842356}
+  bTesting: 0
+  CursorManager: {fileID: 3054505575368821626}
   SlowModeAction: {fileID: -2070050814746413930, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   PauseAction: {fileID: -6329457010167822253, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
+--- !u!114 &3054505575368821626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6052796941457147908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b516f8268c540149a0e20395c6f3551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MouseCursorManager
+  DefaultCursor: {fileID: 2800000, guid: ed653c6f3f195ff40a210a9986f5d15e, type: 3}
+  SelectableCursor: {fileID: 2800000, guid: ca19715f1d1d9a1488ba7c72cbb76755, type: 3}
+  DefaultHotspot: {x: 0, y: 0}
+  SelectableHotspot: {x: 0, y: 0}
+  Mode: 0
+  RaycastCamera: {fileID: 0}
+  WorldRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  WorldRaycastDistance: 100
+  WorldTriggerInteraction: 2
+  MaxWorldRaycastHits: 32
 --- !u!1 &8503600922096206504
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,8 +205,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

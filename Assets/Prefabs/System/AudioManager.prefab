@@ -46,9 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b04c4e469631e4abda6ac23b25415a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  Mixer: {fileID: 24100000, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
+  BGMOutputGroup: {fileID: 7769058201871315341, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
+  SFXOutputGroup: {fileID: -1305839750735889615, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
+  NormalSnapshot: {fileID: 24500006, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
+  MiniGameSnapshot: {fileID: -4376853538085179262, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
+  BGMVolumeParameter: BGMVolume
+  SFXVolumeParameter: SFXVolume
+  SnapshotTransitionDuration: 0.25
   BgmSource: {fileID: 4625058970824780436}
-  BgmList:
-  - {fileID: 8300000, guid: c19d418806fcc7e48941c5b2eb106955, type: 3}
+  BGMFadeOutDuration: 1
+  BGMFadeInDuration: 1
   SFXSource: {fileID: 1707469125934140989}
   ButtonClickSFX: {fileID: 8300000, guid: 35cf7766e9e2aa542811e896fde57989, type: 3}
 --- !u!82 &4625058970824780436
@@ -60,7 +68,7 @@ AudioSource:
   m_GameObject: {fileID: 1890713933135155424}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7769058201871315341, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -157,7 +165,7 @@ AudioSource:
   m_GameObject: {fileID: 1890713933135155424}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1305839750735889615, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

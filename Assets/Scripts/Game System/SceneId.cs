@@ -1,3 +1,4 @@
+using UnityEngine.SceneManagement;
 public enum SceneId
 {
     Boot,
@@ -59,5 +60,9 @@ public static class SceneTable
             SceneId.MainMenu => GameState.MainMenu,
             _ => GameState.InGame,
         };
+    }
+    public static bool IsLoadingScene(Scene scene)
+    {
+        return scene.name.Equals(GetSceneName(SceneId.Loading));
     }
 }
