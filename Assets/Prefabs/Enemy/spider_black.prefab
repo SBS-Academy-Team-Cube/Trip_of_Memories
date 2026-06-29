@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 1492682155563325141}
   - component: {fileID: 2468469884166083331}
   - component: {fileID: 3629233282209404084}
-  - component: {fileID: 6141810606184199010}
+  - component: {fileID: 1683310724806388756}
   m_Layer: 0
   m_Name: spider_black
   m_TagString: Untagged
@@ -1052,16 +1052,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7213b5fa8c422f346b2e21bdf09ab453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PatrolSpeed: 0.7
-  ChaseSpeed: 1.5
   Agent: {fileID: 1492682155563325141}
   AnimController: {fileID: 3746224072034212611}
   Detecter: {fileID: 703537621424879906}
   Attacker: {fileID: 8925338703501205391}
   HP: {fileID: 2468469884166083331}
-  Audio: {fileID: 3629233282209404084}
-  GatedAudio: {fileID: 6141810606184199010}
-  Sounds: {fileID: 11400000, guid: 50cbf78d591c4d24c9faae029eb2579e, type: 2}
+  Audio: {fileID: 1683310724806388756}
+  PatrolSpeed: 0.7
+  ChaseSpeed: 1.5
   PatrolRadius: 3
   PatrolTimeMin: 2
   PatrolTimeMax: 5
@@ -1110,7 +1108,7 @@ AudioSource:
   m_GameObject: {fileID: 4536276901986341415}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1305839750735889615, guid: 3d2d72c0f77fbab4aad92afa86c2b8df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -1123,9 +1121,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 15
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1133,23 +1131,59 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.04
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -25.00996
+      outSlope: -25.00996
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.08
+      value: 0.45440674
+      inSlope: -6.25249
+      outSlope: -6.25249
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16
+      value: 0.20440674
+      inSlope: -1.5631225
+      outSlope: -1.5631225
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.32
+      value: 0.07940674
+      inSlope: -0.39078063
+      outSlope: -0.39078063
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.64
+      value: 0.016906738
+      inSlope: -0.09769516
+      outSlope: -0.09769516
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.04001595
+      outSlope: -0.04001595
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1198,7 +1232,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6141810606184199010
+--- !u!114 &1683310724806388756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1207,44 +1241,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4536276901986341415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4b1c2d3e5f4768a9b0c1d2e3f4a5b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cbff3e7299095b43a119908390a3fec, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DistanceGatedAudioSource
+  m_EditorClassIdentifier: '::'
   Source: {fileID: 3629233282209404084}
-  Listener: {fileID: 0}
-  AutoFindListener: 1
-  UseAudioSourceMaxDistance: 1
-  AudibleDistance: 25
-  UseDistanceAttenuation: 1
-  UseAudioSourceMinDistance: 1
-  FullVolumeDistance: 1
-  DistanceVolumeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  CheckInterval: 0.2
-  OutOfRangeMode: 0
-  ResumeLoopWhenInRange: 1
+  SoundQueueData: {fileID: 11400000, guid: 50cbf78d591c4d24c9faae029eb2579e, type: 2}
 --- !u!1 &4741645127220409325
 GameObject:
   m_ObjectHideFlags: 0

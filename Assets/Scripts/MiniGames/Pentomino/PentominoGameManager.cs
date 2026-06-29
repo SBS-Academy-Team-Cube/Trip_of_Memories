@@ -41,7 +41,6 @@ public class PentominoGameManager : MiniGameBase
         {
             GameStartTrigger.OnTrigger();
         }
-
         if (MiniGameRule)
         {
             MiniGameRule.SetActive(true);

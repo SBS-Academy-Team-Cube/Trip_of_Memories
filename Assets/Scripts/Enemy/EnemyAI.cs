@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EState { Idle, Patrolling, Chasing, AttackWaiting, Attacking, Stunned, Death, None };
-
+[RequireComponent(typeof(EnemyAudio), typeof(Health))]
 public class EnemyAI : MonoBehaviour
 {
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
@@ -13,21 +13,19 @@ public class EnemyAI : MonoBehaviour
 
     private EState CurrentState = EState.None;
 
-    [SerializeField] private float PatrolSpeed, ChaseSpeed;
+    [Header("Enemy Components")]
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Animator AnimController;
     [SerializeField] private EnemyDetecter Detecter;
     [SerializeField] private EnemyAttacker Attacker;
     [SerializeField] private Health HP;
+    [SerializeField] private EnemyAudio Audio;
 
-    [SerializeField] private AudioSource Audio;
-    [SerializeField] private DistanceGatedAudioSource GatedAudio;
-    [SerializeField] private RandomSoundQueue Sounds;
-
-    private RandomSoundQueue RuntimeSounds;
-
-    [SerializeField] private float PatrolRadius = 5f;
-    [SerializeField] private float PatrolTimeMin = 1.5f;
+    [Header("Patrol Value Settings")]
+    [SerializeField] private float PatrolSpeed = 0.7f;
+    [SerializeField] private float ChaseSpeed = 1.5f;
+    [SerializeField] private float PatrolRadius = 3f;
+    [SerializeField] private float PatrolTimeMin = 2.0f;
     [SerializeField] private float PatrolTimeMax = 5f;
     [SerializeField] private float AttackableNavMeshDistance = 1f;
 
@@ -62,16 +60,16 @@ public class EnemyAI : MonoBehaviour
         }
         if (Audio == null)
         {
-            Audio = GetComponent<AudioSource>();
+            Audio = GetComponent<EnemyAudio>();
         }
-        if (GatedAudio == null)
-        {
-            GatedAudio = GetComponent<DistanceGatedAudioSource>();
-        }
-        if (Sounds != null)
-        {
-            RuntimeSounds = Instantiate(Sounds);
-        }
+        // if (GatedAudio == null)
+        // {
+        //     GatedAudio = GetComponent<DistanceGatedAudioSource>();
+        // }
+        // if (Sounds != null)
+        // {
+        //     RuntimeSounds = Instantiate(Sounds);
+        // }
         PatrolRadius *= transform.lossyScale.x;
     }
     private void OnEnable()
@@ -293,7 +291,8 @@ public class EnemyAI : MonoBehaviour
         ExitState(CurrentState);
         CurrentState = State;
 
-        PlaySound();
+        Audio.Play();
+
         switch (CurrentState)
         {
             case EState.Idle:
@@ -480,24 +479,6 @@ public class EnemyAI : MonoBehaviour
         else
         {
             Debug.Log("Can't Find Random Destination");
-        }
-    }
-    private void PlaySound()
-    {
-        if (RuntimeSounds == null || RuntimeSounds.Empty())
-        {
-            return;
-        }
-        AudioClip Clip = RuntimeSounds.GetSound();
-        if (GatedAudio != null)
-        {
-            GatedAudio.PlayOneShot(Clip);
-            return;
-        }
-
-        if (Audio != null)
-        {
-            Audio.PlayOneShot(Clip);
         }
     }
 }

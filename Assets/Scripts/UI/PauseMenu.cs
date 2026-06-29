@@ -64,4 +64,8 @@ public class PauseMenu : MonoBehaviour
             AudioManager.Instance.StopBGM();
         }
     }
+    public void OnButtonClicked()
+    {
+        UIEventBus.OnAnyButtonClicked?.Invoke();
+    }
 }

@@ -21,7 +21,8 @@ public class GameDirector : Singleton<GameDirector>
     public Action<GameState> OnGameStateChanged;
 
     [Header("Director's Components")]
-    public IrisController Iris { get; private set; } = null;
+    [SerializeField] private IrisController irisController = null;
+    public IrisController Iris => irisController;
     [SerializeField] private MouseCursorManager CursorManager = null;
     [SerializeField] private InputActionReference SlowModeAction;
     [SerializeField] private InputActionReference PauseAction;
