@@ -18,19 +18,22 @@ public class PentominoBoard : MonoBehaviour
     private Vector3[,] boardWorldPos;
     private Dictionary<BoardPos, Vector3> board = new();
     private Dictionary<Vector3, BoardPos> reverseDict = new();
+    [SerializeField] private Transform ZeroPosTransform = null;
     private Vector3 zeroPos = Vector3.zero;
     public float GridSize => gridSize;
     public Vector3 ZeroPos => zeroPos;
     public event Action OnClear;
-    private void Start()
-    {
-        gridSize *= transform.lossyScale.x;
-        zeroPos = transform.GetChild(0).position;
-    }
     public void Init()
     {
+        if (ZeroPosTransform)
+        {
+            zeroPos = ZeroPosTransform.position;
+        }
         boardData = new bool[width, height];
         boardWorldPos = new Vector3[width, height];
+
+        board.Clear();
+        reverseDict.Clear();
 
         MakeBoard();
         SetStartBoard(NotValidPos);

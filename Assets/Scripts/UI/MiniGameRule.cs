@@ -11,7 +11,11 @@ public class MiniGameRule : MonoBehaviour
     {
         UIEventBus.OnAnyButtonClicked?.Invoke();
     }
-    public void HowToReset()
+    void OnEnable()
+    {
+        Reset();
+    }
+    public void Reset()
     {
         if (HowToText == null || Dialogue == null)
         {

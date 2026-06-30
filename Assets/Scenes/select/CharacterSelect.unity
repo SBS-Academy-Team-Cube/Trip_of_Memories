@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 914165018}
   - component: {fileID: 914165017}
   - component: {fileID: 914165016}
+  - component: {fileID: 914165019}
   m_Layer: 5
   m_Name: Btn_Confirm
   m_TagString: Untagged
@@ -906,14 +907,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 84acfd5f9ee417845aa6f94755ff3bcf, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -931,6 +932,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914165014}
   m_CullTransparentMesh: 1
+--- !u!114 &914165019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914165014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d46963411b24d8488b4d9a138ea27c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorVisualProvider
+  Visual: 1
 --- !u!1001 &982376041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1011,6 +1025,14 @@ PrefabInstance:
       propertyPath: HP
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8045863773019188328, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
+      propertyPath: State
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045863773019188328, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
+      propertyPath: OnKeyDragging.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7738563987996214902, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
     - {fileID: 6047770090477117709, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
@@ -1033,6 +1055,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3906570475976242287, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
       insertIndex: -1
       addedObject: {fileID: 982376043}
+    - targetCorrespondingSourceObject: {fileID: 3906570475976242287, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 982376044}
   m_SourcePrefab: {fileID: 100100000, guid: a4d28728101ca4843b8d3909df1ad410, type: 3}
 --- !u!1 &982376042 stripped
 GameObject:
@@ -1054,6 +1079,19 @@ MonoBehaviour:
   MyIndex: 1
   MoveDistance: 1
   MoveDuration: 0.8
+--- !u!114 &982376044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982376042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d46963411b24d8488b4d9a138ea27c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorVisualProvider
+  Visual: 1
 --- !u!1001 &1206907282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1973,6 +2011,10 @@ PrefabInstance:
       propertyPath: State
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1789540523637123770, guid: 7cec6c73ec0849a4aa2140175aaea5af, type: 3}
+      propertyPath: HP
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6571652102100126584, guid: 7cec6c73ec0849a4aa2140175aaea5af, type: 3}
       propertyPath: Controller
       value: 
@@ -2042,6 +2084,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7071519962568909893, guid: 7cec6c73ec0849a4aa2140175aaea5af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2083220028}
+    - targetCorrespondingSourceObject: {fileID: 7071519962568909893, guid: 7cec6c73ec0849a4aa2140175aaea5af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2083220029}
   m_SourcePrefab: {fileID: 100100000, guid: 7cec6c73ec0849a4aa2140175aaea5af, type: 3}
 --- !u!1 &2083220027 stripped
 GameObject:
@@ -2063,6 +2108,19 @@ MonoBehaviour:
   MyIndex: 0
   MoveDistance: 1
   MoveDuration: 0.8
+--- !u!114 &2083220029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083220027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d46963411b24d8488b4d9a138ea27c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorVisualProvider
+  Visual: 1
 --- !u!1 &2085136745
 GameObject:
   m_ObjectHideFlags: 0

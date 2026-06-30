@@ -19,6 +19,7 @@ public class PentominoGameManager : MiniGameBase
 
     private PlayerInput PlayerInputSystem = null;
     private bool IsTriggered = false;
+    private bool IsCleared = false;
 
     private void OnEnable()
     {
@@ -78,7 +79,8 @@ public class PentominoGameManager : MiniGameBase
         {
             MiniGameRule.SetActive(false);
         }
-
+        IsCleared = true;
+        
         OnClear?.Invoke();
     }
     public override void Fail()
@@ -114,7 +116,7 @@ public class PentominoGameManager : MiniGameBase
     }
     void OnTriggerEnter(Collider Other)
     {
-        if (IsTriggered || HasCleared())
+        if (IsCleared || IsTriggered)
         {
             return;
         }
@@ -130,7 +132,7 @@ public class PentominoGameManager : MiniGameBase
     }
     void OnTriggerExit(Collider Other)
     {
-        if (Other.CompareTag("Player") && IsTriggered && !HasCleared())
+        if (Other.CompareTag("Player") && IsTriggered)
         {
             IsTriggered = false;
         }
