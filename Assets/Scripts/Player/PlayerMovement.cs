@@ -98,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
     private void DoDraggingMove()
     {
         Controller.Move(0.5f * transform.forward * Time.deltaTime * MoveInput.y);
-        Debug.Log(MoveInput.y);
         int DraggingState = MoveInput.y >= 1.0f ? 1 : 2;
         float AnimPlayingSpeed = Mathf.Abs(MoveInput.y) > 0 ? 1.0f : 0.0f;
         Animation.SetDragging(DraggingState, AnimPlayingSpeed);

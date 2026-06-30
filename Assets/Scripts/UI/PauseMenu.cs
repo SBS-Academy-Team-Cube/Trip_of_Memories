@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject ButtonsPanel;
     [SerializeField] private Button ContinueBtn;
     [SerializeField] private Button ToMainMenuBtn;
+    [SerializeField] private TMP_Text[] Texts;
     private GameDirector Director;
     private void OnEnable()
     {
@@ -22,6 +24,10 @@ public class PauseMenu : MonoBehaviour
 
             HandlePause(Director.IsPaused);
             return;
+        }
+        for (int i = 0; i < Texts.Length; i++)
+        {
+            Texts[i].color = i == QualitySettings.GetQualityLevel() ? Color.red : Color.black;
         }
         HandlePause(false);
     }
@@ -67,5 +73,13 @@ public class PauseMenu : MonoBehaviour
     public void OnButtonClicked()
     {
         UIEventBus.OnAnyButtonClicked?.Invoke();
+    }
+    public void SetQualityLevel(int Index)
+    {
+        for (int i = 0; i < Texts.Length; i++)
+        {
+            Texts[i].color = i == Index ? Color.red : Color.black;
+        }
+        QualitySettings.SetQualityLevel(Index, true);
     }
 }
