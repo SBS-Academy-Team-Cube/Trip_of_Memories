@@ -11261,13 +11261,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519735700603317288}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.033, z: 0.179}
+  m_LocalRotation: {x: -0, y: -0.055174697, z: -0, w: 0.99847674}
+  m_LocalPosition: {x: -0.0074, y: 1.033, z: 0.1316}
   m_LocalScale: {x: 0.090909995, y: 0.090909995, z: 0.090909995}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4430765275547692757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -6.326, z: 0}
 --- !u!1 &1568442841016655793
 GameObject:
   m_ObjectHideFlags: 0
@@ -20798,6 +20798,7 @@ GameObject:
   - component: {fileID: 7860158377802488873}
   - component: {fileID: 2957246077564859025}
   - component: {fileID: 8790651158409448300}
+  - component: {fileID: 5330174219824375901}
   - component: {fileID: 3979145623285424344}
   - component: {fileID: 2277852743555200040}
   - component: {fileID: 4277910296705461236}
@@ -21043,7 +21044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc70c38d7a2d55f4fa811c4a70e71e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMantling
-  LedgeCheckForwardDistance: 0.75
+  FrontWallCheckDistance: 1.5
+  LedgeAllowDistance: 0.8
+  handOffset: 0.125
+  handUpOffset: 0.05
   ClimbableWallLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -21052,6 +21056,23 @@ MonoBehaviour:
   Controller: {fileID: 3888643630126887021}
   LedgePoint: {fileID: 7165164728841305915}
   Move: {fileID: 3979145623285424344}
+--- !u!114 &5330174219824375901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906570475976242287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6e5d4c3b2a19088776655443322110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterXRaySilhouette
+  VisibleMaskMaterial: {fileID: 2100000, guid: 490c8a6705bd49fa813fc65fb93c0814, type: 2}
+  XRayMaterial: {fileID: 2100000, guid: b1e6a8c2d78f4d9ab2c3e5f60718293a, type: 2}
+  IncludeInactiveRenderers: 0
+  IncludeMeshRenderers: 1
+  ShowXRay: 1
 --- !u!114 &3979145623285424344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26582,8 +26603,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d148ff59f4d64c54186f7e3bc18b06db, type: 2}
-  - {fileID: 2100000, guid: 3e08ccaf088d6ce44b46fda17e3fbe2d, type: 2}
-  - {fileID: 2100000, guid: bf795ff9ae8ef6347b098423bbbc52dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26788,7 +26807,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: de12dffcb48e2404d8838c89140736f3, type: 2}
-  - {fileID: 2100000, guid: d148ff59f4d64c54186f7e3bc18b06db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -33590,7 +33608,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3e08ccaf088d6ce44b46fda17e3fbe2d, type: 2}
-  - {fileID: 2100000, guid: ba9530a03d273c14782054705bce2ee7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

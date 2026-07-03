@@ -1,16 +1,24 @@
 using UnityEngine;
+using UnityEngine.XR;
 public class PlayerMantling : MonoBehaviour
 {
     [Header("Mantle Settings")]
-    public float LedgeCheckForwardDistance = 1.0f;
+    [SerializeField] private float FrontWallCheckDistance = 1.5f;
+    [SerializeField] private float LedgeAllowDistance = 1.0f;
+    [SerializeField] private float handOffset = .125f;
+    [SerializeField] private float handUpOffset = .05f;
     [SerializeField] private LayerMask ClimbableWallLayer = ~0;
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController Controller;
     [SerializeField] private Transform LedgePoint;
     [SerializeField] private PlayerMovement Move;
+
+
     public bool IsMantling { get; private set; }
-    private float HandIKWeight;
+
+    private Vector3 LedgeTargetPoint = Vector3.zero;
+
     Vector3 LeftHandTarget;
     Vector3 RightHandTarget;
     Vector3 WallNormal;
@@ -27,8 +35,11 @@ public class PlayerMantling : MonoBehaviour
         IsMantling = true;
         Controller.enabled = false;
 
-        transform.rotation = Quaternion.LookRotation(-WallNormal);
-        transform.position += TargetPosition - LedgePoint.position;
+        WallNormal = TargetPosition - transform.position;
+        WallNormal.y = 0.0f;
+        WallNormal.Normalize();
+
+        transform.SetPositionAndRotation(transform.position + (TargetPosition - LedgePoint.position), Quaternion.LookRotation(WallNormal));
 
         CalculateHandTargets(TargetPosition);
         ApplyHandIKTargetTransforms();
@@ -58,9 +69,8 @@ public class PlayerMantling : MonoBehaviour
     void CalculateHandTargets(Vector3 TargetPosition)
     {
         Vector3 right = Vector3.Cross(Vector3.up, WallNormal).normalized;
-        float handOffset = -0.15f;
-        LeftHandTarget = TargetPosition - right * handOffset;
-        RightHandTarget = TargetPosition + right * handOffset;
+        LeftHandTarget = TargetPosition - right * handOffset + Vector3.up * handUpOffset;
+        RightHandTarget = TargetPosition + right * handOffset + Vector3.up * handUpOffset;
     }
 
     private void EnsureHandIKTargetTransforms()
@@ -79,7 +89,7 @@ public class PlayerMantling : MonoBehaviour
     {
         EnsureHandIKTargetTransforms();
 
-        Quaternion handRotation = Quaternion.LookRotation(-WallNormal);
+        Quaternion handRotation = Quaternion.LookRotation(WallNormal);
         LeftHandIKTargetTransform.SetPositionAndRotation(LeftHandTarget, handRotation);
         RightHandIKTargetTransform.SetPositionAndRotation(RightHandTarget, handRotation);
     }
@@ -99,39 +109,23 @@ public class PlayerMantling : MonoBehaviour
     private bool LedgeCheck(out Vector3 OutLedgePosition)
     {
         OutLedgePosition = Vector3.zero;
-        Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.green, 10.0f);
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, LedgeCheckForwardDistance, ClimbableWallLayer))
+        Debug.DrawLine(transform.position, transform.position + transform.forward * FrontWallCheckDistance, Color.green, 10.0f);
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit WallHit, FrontWallCheckDistance, ClimbableWallLayer))
         {
             // Wall Checking Debug Line
-            Debug.DrawLine(transform.position, transform.position + transform.forward * LedgeCheckForwardDistance, Color.red, 10.0f);
+            Debug.DrawLine(transform.position, transform.position + transform.forward * FrontWallCheckDistance, Color.red, 10.0f);
             WallNormal = WallHit.normal;
 
             // Wall Hit Point Debug Sphere
             DebugExtension.DrawSphere(WallHit.point, 0.05f, Color.green, 0.25f);
 
-            Vector3 PlanCheckRayStartPosition = WallHit.point + Vector3.up * (LedgePoint.localPosition.y + 0.1f) - WallHit.normal * 0.075f;
-
-            // Ledge Plane Check Start Position Debug Sphere
-            DebugExtension.DrawSphere(PlanCheckRayStartPosition, 0.05f, Color.red, 0.25f);
-
-            Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * (LedgePoint.localPosition.y + 0.1f), Color.red);
-            if (Physics.Raycast(PlanCheckRayStartPosition, Vector3.down, out RaycastHit LedgeHit, LedgePoint.localPosition.y + 0.1f, ClimbableWallLayer))
+            if (WallHit.collider.TryGetComponent(out Ledge ledge))
             {
-                // Ledge Plane Check Debug Line
-                Debug.DrawLine(PlanCheckRayStartPosition, PlanCheckRayStartPosition + Vector3.down * PlanCheckRayStartPosition.y, Color.red);
-                // if (!LedgeHit.collider.CompareTag("ClimbableWall"))
-                // {
-                //     return false;
-                // }
-                OutLedgePosition = LedgeHit.point;
-                // Target Mantling Position Debug Sphere
-                DebugExtension.DrawSphere(OutLedgePosition, 0.05f, Color.orange, 0.25f);
-                return true;
+                if (ledge.TryGetLedgePoint(LedgePoint.position, out OutLedgePosition, out float distance))
+                {
+                    return distance <= LedgeAllowDistance;
+                }
             }
-        }
-        else
-        {
-            Debug.Log("Doesn't Hit");
         }
         return false;
     }
