@@ -5,6 +5,9 @@ public class PlayerItemHandler : MonoBehaviour
     [SerializeField] private Transform HoldTransform;
     [SerializeField] private PlayerAnimation Animation;
     [SerializeField] private PlayerState State;
+
+    [Header("Drop Settings")]
+    [SerializeField] private Vector2 dropOffset;
     private GameObject HoldingObject;
     public bool bIsHoldingItem { get; private set; } = false;
     public bool TryHold(GameObject Target)
@@ -83,8 +86,11 @@ public class PlayerItemHandler : MonoBehaviour
             return;
         }
         HoldingObject.transform.SetParent(null, true);
-        float YRotation = HoldingObject.transform.eulerAngles.y;
-        HoldingObject.transform.rotation = Quaternion.Euler(0f, YRotation, 0f);
+
+        Quaternion DropRotation = Quaternion.Euler(0f, HoldingObject.transform.eulerAngles.y, 0f);
+        Vector3 DropPosition = transform.position + transform.forward * dropOffset.x + transform.up * dropOffset.y;
+        HoldingObject.transform.SetPositionAndRotation(DropPosition, DropRotation);
+
         Animation.EnableHoldingLayer(false);
         Animation.ClearHandIK();
 
