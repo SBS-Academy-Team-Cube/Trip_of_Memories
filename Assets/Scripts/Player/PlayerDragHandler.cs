@@ -6,8 +6,10 @@ public class PlayerDragHandler : MonoBehaviour
     private enum EDraggingState { Released, Pushing, Pulling };
     [SerializeField] private PlayerState State;
     [SerializeField] private PlayerAnimation Animation;
+
+    
     private GameObject DraggingChild = null;
-    public bool TryGrap(GameObject Child, DraggingGrap TargetGrap)
+    public bool TryGrab(GameObject Child, DraggingGrip TargetGrap)
     {
         TargetGrap.GetStandPosition(out Vector3 TargetPosition, out Quaternion TargetRotation);
 

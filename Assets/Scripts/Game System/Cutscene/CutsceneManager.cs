@@ -15,7 +15,7 @@ public class CutsceneManager : MonoBehaviour
         Player.TryGetComponent(out PlayerMovement);
         Player.TryGetComponent(out PlayerAnimation);
     }
-    private void OnEnable() 
+    private void OnEnable()
     {
         if (Director != null)
         {

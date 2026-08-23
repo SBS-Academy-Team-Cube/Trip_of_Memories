@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class DraggingKey : MonoBehaviour, IInteractable
 {
-    [SerializeField] private List<DraggingGrap> Graps;
+    [SerializeField] private List<DraggingGrip> Grips;
+    private int CurrentDirectionGripIndex = -1;
+    public bool CanPush { get; private set; } = true;
     public string GetInteractionPrompt()
     {
         return string.Empty;
@@ -12,7 +14,7 @@ public class DraggingKey : MonoBehaviour, IInteractable
     {
         if (Interactor.TryGetComponent(out PlayerDragHandler Handler))
         {
-            return Handler.TryGrap(gameObject, GetClosest(Interactor));
+            return Handler.TryGrab(gameObject, GetClosest(Interactor));
         }
         return false;
     }
@@ -20,19 +22,36 @@ public class DraggingKey : MonoBehaviour, IInteractable
     {
         return transform;
     }
-    private DraggingGrap GetClosest(GameObject Object)
+    private DraggingGrip GetClosest(GameObject Object)
     {
-        DraggingGrap Result = null;
-        float Min = float.MaxValue;
-        foreach (DraggingGrap Grap in Graps)
+        DraggingGrip Result = null;
+
+        if (CurrentDirectionGripIndex >= 0)
         {
-            float Distance = Vector3.Distance(Grap.transform.position, Object.transform.position);
+            Grips[CurrentDirectionGripIndex].OnBlocked -= HandleBlocked;
+            CurrentDirectionGripIndex = -1;
+        }
+
+        float Min = float.MaxValue;
+        for (int i = 0; i < Grips.Count; i++)
+        {
+            DraggingGrip Grip = Grips[i];
+            float Distance = Vector3.Distance(Grip.transform.position, Object.transform.position);
             if (Distance < Min)
             {
                 Min = Distance;
-                Result = Grap;
+                Result = Grip;
+                CurrentDirectionGripIndex = i + 2 % Grips.Count;
             }
         }
+        if (CurrentDirectionGripIndex >= 0)
+        {
+            Grips[CurrentDirectionGripIndex].OnBlocked += HandleBlocked;
+        }
         return Result;
+    }
+    private void HandleBlocked(bool bBlocked)
+    {
+        CanPush = !bBlocked;
     }
 }

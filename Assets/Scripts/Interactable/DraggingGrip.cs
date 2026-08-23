@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class DraggingGrap : MonoBehaviour
+public class DraggingGrip : MonoBehaviour
 {
     [SerializeField] private Transform StandPosition;
     [SerializeField] private Transform RightHand;
     [SerializeField] private Transform LeftHand;
-    public event System.Action OnBlocked;
+    public event System.Action<bool> OnBlocked;
     public void GetStandPosition(out Vector3 Position, out Quaternion Rotation)
     {
         Position = StandPosition.position;
@@ -22,6 +22,10 @@ public class DraggingGrap : MonoBehaviour
     }
     void OnCollisionEnter(Collision Collision)
     {
-        OnBlocked?.Invoke();
+        OnBlocked?.Invoke(true);
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        OnBlocked?.Invoke(false);
     }
 }

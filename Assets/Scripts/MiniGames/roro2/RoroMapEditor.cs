@@ -1,4 +1,4 @@
-#if UNITY_EDITOR // ºôµå Á¦¿Ü
+#if UNITY_EDITOR // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 using UnityEditor;
 using UnityEngine;
@@ -158,7 +158,7 @@ public class RoroMapEditor : Editor
         if (data.laserStatues == null)
             data.laserStatues = new LaserStatueData[0];
 
-        // ÀÌ¹Ì ÀÖÀ¸¸é ¹æÇâ¸¸ º¯°æ
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¸ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < data.laserStatues.Length; i++)
         {
             if (data.laserStatues[i].pos == pos)
@@ -196,4 +196,4 @@ public class RoroMapEditor : Editor
         return false;
     }
 }
-#endif // ºôµå Á¦¿Ü
+#endif // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
